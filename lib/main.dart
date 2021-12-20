@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body:
       Column(
         children: <Widget>[
-        IconButton(onPressed: _settings, icon: Image.asset( 'icons/settingsButton.png'), iconSize: 50,)],
+        IconButton(onPressed: _settings, icon: Image.asset( 'icons/settingsButtonIcon.png'), iconSize: 50,)],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
