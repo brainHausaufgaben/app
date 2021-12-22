@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -45,12 +46,27 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body:
       Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-        IconButton(onPressed: _settings, icon: Image.asset( 'icons/settingsButtonIcon.png'), iconSize: 50,)],
+          //Settings Button
+          IconButton(
+            onPressed: _settings,
+            icon: Image.asset( 'icons/settingsButtonIcon.png'),
+            iconSize: 25,
+            splashRadius: 10,
+          ),
+
+          const Text(
+            "Übersicht",
+            style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
+            
+
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        tooltip: 'add',
         child: const Icon(Icons.add),
       ),
     );
