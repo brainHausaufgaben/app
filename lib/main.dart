@@ -44,25 +44,26 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          //Settings Button
-          IconButton(
-            onPressed: _settings,
-            icon: Image.asset( 'icons/settingsButtonIcon.png'),
-            iconSize: 25,
-            splashRadius: 10,
-          ),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 20),
+        child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            //Settings Button
+            IconButton(
+              padding: const EdgeInsets.only(left: 0,bottom: 12,top: 8,right: 0),
+              onPressed: _settings,
+              icon: Image.asset( 'icons/settingsButtonIcon.png'),
+              iconSize: 25,
+              splashRadius: 10,
+            ),
 
-          const Text(
+            const Text(
             "Übersicht",
             style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
-            
-
-          )
-        ],
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
