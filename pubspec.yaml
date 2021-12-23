@@ -79,6 +79,8 @@ flutter:
      fonts:
        - asset: fonts/Nunito/Nunito-ExtraBold.ttf
          weight: 800
+       - asset: fonts/Nunito/Nunito-Regular.ttf
+       - weight: 400
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
