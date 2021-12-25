@@ -41,9 +41,21 @@ class _MyHomePageState extends State<MyHomePage> {
     print("settngs");
   }
 
+  String getDateString(){
+
+    List weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
+
+    String day = DateTime.now().day.toString();
+    String month = DateTime.now().month.toString();
+    String year = DateTime.now().year.toString();
+
+    String weekDay =  weekDays[DateTime.now().weekday];
+
+    return weekDay + ", " + day + "." + month + "." + year;
+  }
+
   @override
   Widget build(BuildContext context) {
-    //TEST
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 20),
@@ -52,16 +64,23 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             //Settings Button
             IconButton(
-              padding: const EdgeInsets.only(left: 0,bottom: 12,top: 8,right: 0),
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 0,bottom: 45,top: 8,right: 0),
               onPressed: _settings,
               icon: Image.asset( 'icons/settingsButtonIcon.png'),
               iconSize: 25,
-              splashRadius: 10,
+              splashRadius: 1,
             ),
-
-            const Text(
-            "Übersicht",
-            style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
+            const Padding(
+                padding: EdgeInsets.only(left: 0,bottom: 0,top: 0,right: 0),
+                child: Text(
+                  "Übersicht",
+                  style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
+              ),
+            ),
+            Text(
+              getDateString(),
+              style: const TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w400,fontSize:20 ),
             )
           ],
         ),
