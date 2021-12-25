@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String month = DateTime.now().month.toString();
     String year = DateTime.now().year.toString();
 
-    String weekDay =  weekDays[DateTime.now().weekday];
+    String weekDay =  weekDays[DateTime.now().weekday - 1];
 
     return weekDay + ", " + day + "." + month + "." + year;
   }
