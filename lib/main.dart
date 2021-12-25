@@ -43,6 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //TEST
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(left: 20),
@@ -51,23 +52,16 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             //Settings Button
             IconButton(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 0,bottom: 45,top: 8,right: 0),
+              padding: const EdgeInsets.only(left: 0,bottom: 12,top: 8,right: 0),
               onPressed: _settings,
               icon: Image.asset( 'icons/settingsButtonIcon.png'),
               iconSize: 25,
-              splashRadius: 1,
+              splashRadius: 10,
             ),
-            const Padding(
-                padding: EdgeInsets.only(left: 0,bottom: 0,top: 0,right: 0),
-                child: Text(
-                  "Übersicht",
-                  style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
-              ),
-            ),
+
             const Text(
-              "Donnerstag, 28.11.2012",
-              style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w400,fontSize:20 ),
+            "Übersicht",
+            style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
             )
           ],
         ),
