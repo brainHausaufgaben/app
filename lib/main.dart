@@ -58,24 +58,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 20),
+        padding: const EdgeInsets.only(left: 15, top: 40, right: 15, bottom: 25),
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Settings Button
             IconButton(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 0,bottom: 45,top: 8,right: 0),
+              padding: const EdgeInsets.only(bottom: 40),
               onPressed: _settings,
               icon: Image.asset( 'icons/settingsButtonIcon.png'),
-              iconSize: 25,
+              iconSize: 26,
               splashRadius: 1,
             ),
             const Padding(
-                padding: EdgeInsets.only(left: 0,bottom: 0,top: 0,right: 0),
+                padding: EdgeInsets.only(left: 0,bottom: 0,top: 22,right: 0),
                 child: Text(
                   "Übersicht",
-                  style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:40 ),
+                  style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:38, height: 0.6 ),
               ),
             ),
             Text(
