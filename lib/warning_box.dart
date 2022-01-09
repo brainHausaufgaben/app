@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'utilities.dart';
 
 class WarningBox extends StatelessWidget {
-  const WarningBox({Key? key}) : super(key: key);
+  String text = "empty";
+  var icons = {'icons/settingsButtonIcon.png', 'icons/settingsButtonIcon.png'};
+  int iconIndex = 0;
+
+   WarningBox({
+    Key? key,
+    required this.text,
+     required this.iconIndex,
+
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +22,17 @@ class WarningBox extends StatelessWidget {
             color: AppTheme.mainColor,
             borderRadius: AppTheme.borderRadius
         ),
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 0),
         child: Row(
             children: [
+               Padding(
+                  padding: const EdgeInsets.only(left: 15,bottom: 0,top: 0,right: 8) ,
+                  child: Image.asset( icons.elementAt(iconIndex),scale: 3,color: AppTheme.mainTextColor),
+
+              ),
               Flexible(
                 child: Text(
-                  "Du hast noch unerledigte Hausaufgaben in 2 Fächern",
+                  text,
                   style: TextStyle(color: AppTheme.mainTextColor),
                 )
               )
