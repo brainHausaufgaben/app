@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'warning_box.dart';
 
-// Ich versteh nicht wie ich da ein widget rein geb und das unten anfüge also ist das fürs erste nicht so
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key, required this.title}) : super(key: key);
+class PageTemplate extends StatefulWidget {
+  const PageTemplate({Key? key, required this.title, required this.child}) : super(key: key);
+  final Widget child;
   final String title;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<PageTemplate> createState() => _PageTemplateState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _PageTemplateState extends State<PageTemplate> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -60,24 +59,24 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
-                  const Text(
-                    "Übersicht",
-                    style: TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w800,fontSize:38, height: 0.6 ),
+                  Text(
+                    widget.title,
+                    style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800, fontSize:38, height: 0.6),
                   ),
                   Text(
                     getDateString(),
-                    style: const TextStyle(fontFamily: "Nunito",fontWeight: FontWeight.w400,fontSize:20 ),
+                    style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w400, fontSize:20),
                   )
                 ],
               ),
             ),
-            const WarningBox()
+            widget.child
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'add',
+        tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
     );

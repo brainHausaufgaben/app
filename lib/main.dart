@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'page_template.dart';
 import 'utilities.dart';
+import 'Pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,9 +14,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
       theme: ThemeData(
-        primarySwatch: createMaterialColor(AppTheme.mainColor),
+        primarySwatch: AppTheme.swatch,
       ),
-      home: const HomePage(title: 'Brain App'),
+      home: const HomePage(),
     );
   }
 }
