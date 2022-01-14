@@ -39,7 +39,7 @@ class _PageTemplateState extends State<PageTemplate> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 15, top: 40, right: 15, bottom: 25),
+        padding: EdgeInsets.only(left: 15, top: MediaQuery.of(context).viewPadding.top + 10, right: 15, bottom: 25),
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
