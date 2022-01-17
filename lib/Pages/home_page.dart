@@ -1,3 +1,4 @@
+import 'package:brain_app/Box.dart';
 import 'package:flutter/material.dart';
 import 'page_template.dart';
 import '../Components/warning_box.dart';
@@ -9,9 +10,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageTemplate(
         title: 'Übersicht',
-        child: WarningBox(
-            text: "Du hast noch unerledigte Hausaufgaben in 2 Fächern", 
-            iconIndex: 0
+        child: Column(
+          children: [
+            WarningBox(
+                text: "Du hast noch unerledigte Hausaufgaben in 2 Fächern",
+                iconIndex: 0
+            ),
+            const Box()
+          ],
         )
     );
   }

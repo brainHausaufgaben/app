@@ -3,7 +3,7 @@ import '../utilities.dart';
 
 class WarningBox extends StatelessWidget {
   String text = "empty";
-  var icons = {'icons/settingsButtonIcon.png', 'icons/settingsButtonIcon.png'};
+  var icons = {'../icons/redExclamationMark.png', '../icons/yellowExclamationMark.png', '../icons/greenCheckmark'};
   int iconIndex = 0;
 
   WarningBox({
@@ -26,7 +26,7 @@ class WarningBox extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 12) ,
-                  child: Image.asset(icons.elementAt(iconIndex), scale: 3, color: AppTheme.mainTextColor),
+                  child: Image.asset(icons.elementAt(iconIndex), scale: 2),
                 ),
                 Flexible(
                     child: Text(
