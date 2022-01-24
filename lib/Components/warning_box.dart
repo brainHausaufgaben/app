@@ -3,7 +3,7 @@ import '../utilities.dart';
 
 class WarningBox extends StatelessWidget {
   String text = "empty";
-  var icons = {'../icons/redExclamationMark.png', '../icons/yellowExclamationMark.png', '../icons/greenCheckmark'};
+  List icons = ['../icons/redExclamationMark.png', '../icons/yellowExclamationMark.png', '../icons/greenCheckmark'];
   int iconIndex = 0;
 
   WarningBox({

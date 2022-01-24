@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import '../utilities.dart';
 
-class Box extends StatelessWidget {
-  const Box({Key? key}) : super(key: key);
+class Box extends StatefulWidget {
+   Box({Key? key, required this.child}) : super(key: key);
+   Widget child;
+
+
+
+  @override
+  State<StatefulWidget> createState() =>  _BoxState();
+
+  }
+class _BoxState extends  State<Box>{
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.symmetric(vertical: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Stundenplan Heute",
-              style: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600, fontSize:24, height: 0.6
-              ),
-            ),
+        child:
             Container(
               decoration: BoxDecoration(
                   color: AppTheme.mainTextColor,
@@ -25,24 +27,11 @@ class Box extends StatelessWidget {
               // Was? Warum? Warum geht das nicht ohne row
               child: Row(
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Test",
-                          style: TextStyle(color: AppTheme.mainColor, fontSize: 15),
-                        ),
-                        Text(
-                          "Test",
-                          style: TextStyle(color: AppTheme.mainColor, fontSize: 15),
-                        )
-                      ],
-                    )
+                   widget.child
                   ]
               ),
             )
-          ],
-        )
     );
   }
+
 }
