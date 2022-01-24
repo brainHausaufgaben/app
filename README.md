@@ -17,4 +17,4 @@
 ##Recompile Instructions
     flutter sdk: ">=2.15.0 <3.0.0"
     dart: so ziemlich das gleiche
-![](C:\Users\merkse\IdeaProjects\brain_app\images\compiled html asset.png)
+![](images/compiled html asset.png)
