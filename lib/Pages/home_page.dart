@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
               style: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600, fontSize:24, height: 0.6
               ),
             ),
-             Box(child: PointElement(child: Text("amongus"),color: Colors.pink,primaryText: "nein",))
+             Box(child: PointElement(child: Text("okok"),color: Colors.pink,primaryText: "aa",secondaryText: "Ja",))
           ],
         )
     );
