@@ -18,12 +18,7 @@ class HomePage extends StatelessWidget {
                 text: "Du hast noch unerledigte Hausaufgaben in 2 Fächern",
                 iconIndex: 0
             ),
-            const Text(
-              "Stundenplan Heute",
-              style: TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600, fontSize:24, height: 0.6
-              ),
-            ),
-             Box(child: PointElement(child: Text("okok"),color: Colors.pink,primaryText: "aa",secondaryText: "Ja",))
+            Box(child: PointElement(child: Text("okok"),color: Colors.pink,primaryText: "aa",secondaryText: "Ja"), headline: "yes",)
           ],
         )
     );
