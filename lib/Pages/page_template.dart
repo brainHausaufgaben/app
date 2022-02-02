@@ -48,11 +48,11 @@ class _PageTemplateState extends State<PageTemplate> {
               alignment: Alignment.centerLeft,
               // Der dumme button braucht constraints weil er sonst viel zu groß wird aber jetzt scheint er keine collision mehr zu haben
               constraints: const BoxConstraints(),
-              padding: const EdgeInsets.only(bottom: 15),
+              padding: const EdgeInsets.all( 0),
               onPressed: _settings,
-              icon: Image.asset( 'icons/settingsButtonIcon.png'),
+              icon: const Icon(Icons.settings_rounded),
               iconSize: 26,
-              splashRadius: 1,
+              splashRadius: 15,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
