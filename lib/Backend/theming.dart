@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
 
-// dummes fucking zeug nur um ein swatch zu machen was man braucht um material sachen zu färben
+AppTheme currentTheme = AppTheme();
+
+class AppTheme with ChangeNotifier {
+  // Ich weiß nicht ob man die oberen 2 noch braucht also lass ich die zur sicherheit
+  static Color mainColor = const Color(0xFF303540);
+  static Color mainTextColor = const Color(0xFFFFFFFF);
+  static BorderRadius borderRadius = BorderRadius.circular(10);
+
+  static ThemeData currentTheme = monochromeTheme;
+  // Test themes
+  static ThemeData monochromeTheme = generateAppTheme(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540));
+  static ThemeData monochromeDarkTheme = generateAppTheme(const Color(0xFF6954A6), const Color(0xFF303540), const Color(0xFF484F5F), const Color(0xFFFFFFFF));
+  static ThemeData keineAhnung = generateAppTheme(const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF));
+
+  void toggleTheme(ThemeData theme) {
+    currentTheme = theme;
+    notifyListeners();
+  }
+}
+
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
   final swatch = <int, Color>{};
@@ -22,6 +41,7 @@ MaterialColor createMaterialColor(Color color) {
 }
 
 ThemeData generateAppTheme(Color primaryColor, Color backgroundColor, Color secondaryBackground, Color textColor) {
+  // Könnte besser sein, vielleicht geht das sogar mit einer custom class
   return ThemeData(
       primarySwatch: createMaterialColor(primaryColor),
       primaryColor: primaryColor,
@@ -38,23 +58,4 @@ ThemeData generateAppTheme(Color primaryColor, Color backgroundColor, Color seco
           bodyText2: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: secondaryBackground)
       )
   );
-}
-
-AppTheme currentTheme = AppTheme();
-
-class AppTheme with ChangeNotifier {
-  static bool _isDarkTheme = true;
-  ThemeMode get currentTheme => _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
-
-  void toggleTheme() {
-    _isDarkTheme = !_isDarkTheme;
-    notifyListeners();
-  }
-
-  static Color mainColor = const Color(0xFF303540);
-  static Color mainTextColor = const Color(0xFFFFFFFF);
-  static BorderRadius borderRadius = BorderRadius.circular(10);
-
-  static ThemeData monochromeTheme = generateAppTheme(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540));
-  static ThemeData pastelGreenTheme = generateAppTheme(const Color(0xFF6954A6), const Color(0xFF303540), const Color(0xFF484F5F), const Color(0xFFFFFFFF));
 }

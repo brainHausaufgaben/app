@@ -1,24 +1,20 @@
 import 'dart:math';
 
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:brain_app/Backend/theming.dart';
 import 'package:flutter/material.dart';
-import 'utilities.dart';
 import 'Pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyApp createState() => _MyApp();
-
 }
-
 
 class _MyApp extends State<MyApp> {
   @override
@@ -26,17 +22,16 @@ class _MyApp extends State<MyApp> {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
       home: const HomePage(),
-      theme: AppTheme.monochromeTheme, //3
-      darkTheme: AppTheme.pastelGreenTheme, //4
-      themeMode: currentTheme.currentTheme
+      theme: AppTheme.currentTheme,
     );
   }
 
   @override
   void initState(){
     super.initState();
+    // Macht dass widgets neu geladen werden wenn sich das Theme ändert oder so
     currentTheme.addListener(() {
-      setState(() {});
+      setState((){});
     });
 
     TimeTable.init();

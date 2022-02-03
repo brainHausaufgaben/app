@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import '../utilities.dart';
 
 class PointElement extends StatefulWidget {
   PointElement({Key? key, required this.color, required this.primaryText,this.secondaryText,this.child}) : super(key: key);

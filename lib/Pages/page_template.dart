@@ -1,5 +1,6 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:brain_app/utilities.dart';
+import 'package:brain_app/Backend/theming.dart';
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({Key? key, required this.title, required this.child}) : super(key: key);
@@ -76,10 +77,13 @@ class _PageTemplateState extends State<PageTemplate> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => currentTheme.toggleTheme(),
+        onPressed: () => currentTheme.toggleTheme(themes.elementAt(random.nextInt(3))),
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
     );
   }
 }
+
+Random random = Random();
+List<ThemeData> themes = [AppTheme.monochromeTheme, AppTheme.monochromeDarkTheme, AppTheme.keineAhnung];
