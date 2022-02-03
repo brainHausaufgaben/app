@@ -21,23 +21,24 @@ class MyApp extends StatefulWidget {
 
 
 class _MyApp extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      theme: ThemeData(
-        primarySwatch: AppTheme.swatch,
-      ),
       home: const HomePage(),
+      theme: AppTheme.monochromeTheme, //3
+      darkTheme: AppTheme.pastelGreenTheme, //4
+      themeMode: currentTheme.currentTheme
     );
   }
 
   @override
   void initState(){
-
-
     super.initState();
+    currentTheme.addListener(() {
+      setState(() {});
+    });
+
     TimeTable.init();
 
     //unnötig aber mir war langweilig

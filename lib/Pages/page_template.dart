@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brain_app/utilities.dart';
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({Key? key, required this.title, required this.child}) : super(key: key);
@@ -61,11 +62,11 @@ class _PageTemplateState extends State<PageTemplate> {
                 children: <Widget> [
                   Text(
                     widget.title,
-                    style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800, fontSize:38, height: 0.6),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                   Text(
                     getDateString(),
-                    style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w400, fontSize:20),
+                    style: Theme.of(context).textTheme.subtitle1,
                   )
                 ],
               ),
@@ -75,7 +76,7 @@ class _PageTemplateState extends State<PageTemplate> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () => currentTheme.toggleTheme(),
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),

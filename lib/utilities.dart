@@ -21,9 +21,40 @@ MaterialColor createMaterialColor(Color color) {
   return MaterialColor(color.value, swatch);
 }
 
-class AppTheme {
+ThemeData generateAppTheme(Color primaryColor, Color backgroundColor, Color secondaryBackground, Color textColor) {
+  return ThemeData(
+      primarySwatch: createMaterialColor(primaryColor),
+      primaryColor: primaryColor,
+      backgroundColor: secondaryBackground,
+      scaffoldBackgroundColor: backgroundColor,
+      fontFamily: "Nunito",
+
+      textTheme: TextTheme(
+          headline1: TextStyle(fontWeight: FontWeight.w800, fontSize:38, height: 0.6, color: textColor),
+          headline2: TextStyle(fontWeight: FontWeight.w600, fontSize:24, height: 0.6, color: textColor),
+          headline3: TextStyle(fontWeight: FontWeight.w400, fontSize:17,height: 1, color: textColor),
+          subtitle1: TextStyle(fontWeight: FontWeight.w400, fontSize:20, color: textColor),
+          bodyText1: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: textColor),
+          bodyText2: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: secondaryBackground)
+      )
+  );
+}
+
+AppTheme currentTheme = AppTheme();
+
+class AppTheme with ChangeNotifier {
+  static bool _isDarkTheme = true;
+  ThemeMode get currentTheme => _isDarkTheme ? ThemeMode.dark : ThemeMode.light;
+
+  void toggleTheme() {
+    _isDarkTheme = !_isDarkTheme;
+    notifyListeners();
+  }
+
   static Color mainColor = const Color(0xFF303540);
   static Color mainTextColor = const Color(0xFFFFFFFF);
   static BorderRadius borderRadius = BorderRadius.circular(10);
-  static MaterialColor swatch = createMaterialColor(mainColor);
+
+  static ThemeData monochromeTheme = generateAppTheme(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540));
+  static ThemeData pastelGreenTheme = generateAppTheme(const Color(0xFF6954A6), const Color(0xFF303540), const Color(0xFF484F5F), const Color(0xFFFFFFFF));
 }

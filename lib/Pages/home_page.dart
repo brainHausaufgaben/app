@@ -21,8 +21,6 @@ class HomePage extends StatelessWidget {
                 text: "Du hast noch unerledigte Hausaufgaben in 2 Fächern",
                 iconIndex: 0
             ),
-            HomePageDay(day:DateTime.now().weekday, headline: "Stundenplan Heute",),
-            HomePageDay(day:DateTime.now().weekday + 1, headline: "Stundenplan Morgen",),
           ],
         )
     );
