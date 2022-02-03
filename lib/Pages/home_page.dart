@@ -1,4 +1,7 @@
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Box.dart';
+import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 import 'page_template.dart';
@@ -18,9 +21,11 @@ class HomePage extends StatelessWidget {
                 text: "Du hast noch unerledigte Hausaufgaben in 2 Fächern",
                 iconIndex: 0
             ),
-            Box(child: PointElement(child: Text("okok"),color: Colors.pink,primaryText: "aa",secondaryText: "Ja"), headline: "yes",)
+            HomePageDay(day:DateTime.now().weekday, headline: "Stundenplan Heute",),
+            HomePageDay(day:DateTime.now().weekday + 1, headline: "Stundenplan Morgen",),
           ],
         )
     );
-  }
+}
+
 } 
