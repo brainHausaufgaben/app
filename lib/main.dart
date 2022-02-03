@@ -35,13 +35,12 @@ class _MyApp extends State<MyApp> {
 
   @override
   void initState(){
-
-
     super.initState();
     TimeTable.init();
 
     //unnötig aber mir war langweilig
-    List<String> names = ["schwanz", "cock", "amongus", "deutsch", "keine ahnung", "bubatz", "mathematik","hurensohn","er hat ein neues lied", "all meine entchen", "schwimmen auf dir", "kartoffelbrei", "jeremias", "fett", "sylenth1", "übergewichtig", "oh gott", "christian winkler", "bildungschicht","ähhh", "12 punkte schnitt", "nee es reicht glaub ich"];
+    List<String> names = ["schwanz", "cock", "amongus", "deutsch", "keine ahnung", "bubatz", "mathematik","hurensohn","er hat ein neues lied", "all meine entchen", "schwimmen auf dir", "kartoffelbrei", "jeremias", "fett", "sylenth1", "übergewichtig", "oh gott", "christian winkler", "bildungschicht","ähhh", "12 punkte schnitt", "nee es reicht glaub ich","birnenkomptt","keeenuuu weeeves", "ist wolkenmeer in diesem fall ein neologismus", "qrxvy (hund)", "batman", "five night freddy", "ich überlege", "gay lesson", "debug", "micheal","jackson","wendler bitter", "how to be GAYY!!", "trans learning", "gay recess", "crossdressing hour", "transgender lunch", "blm period"];
+    List<String> weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
     Random random = Random();
     for(int day = 1; day < 8; day++){
       for(int i = 0; i < 6; i++){
@@ -52,8 +51,8 @@ class _MyApp extends State<MyApp> {
            endTime = TimeOfDay(hour: random.nextInt(24),minute: random.nextInt(59));
         }
         TimeTable.addSubject(day, names[random.nextInt(names.length)], Colors.primaries[random.nextInt(Colors.primaries.length)],startTime ,endTime);
-
       }
+      TimeTable.addSubject(day, weekDays[day-1], Colors.black, TimeOfDay(hour: 0,minute: 0), TimeOfDay(hour: 0,minute: 0));
       
       
     }

@@ -6,7 +6,7 @@ class Subject{
   TimeOfDay startTime = const TimeOfDay(hour: 0, minute: 0);
   TimeOfDay endTime = const TimeOfDay(hour: 0, minute: 0);
 
-  Color color = Colors.pink;
+  Color color = Colors.white;
 
   Subject(this.name, this.startTime, this.endTime, this.color);
 
