@@ -60,8 +60,8 @@ class _HomePage extends State<HomePage>{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             WarningBox(
-                text: "Du hast noch unerledigte Hausaufgaben in 2 Fächern",
-                iconIndex: 0
+                text: "du bist enorm fett geworden aber nicht negativ gemeint",
+                iconIndex: 2
             ),
             Flexible(child:
             ListView(
@@ -69,7 +69,7 @@ class _HomePage extends State<HomePage>{
                 shrinkWrap: true,
                 children: getDays(),
               ),
-            )
+            ),
           ],
         )
     )

@@ -3,8 +3,17 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:flutter/material.dart';
 
 class Day{
-  List<Subject> subjects = [];
+  List<Subject?> subjects = [];
 
+  Day(int length){
+    subjects = List.filled(length, null);
+  }
+
+  void addSubject(Subject subject){
+    subjects[subject.lesson] = subject;
+  }
+
+/*
   void addSubject(String name, Color color, TimeOfDay startTime, TimeOfDay endTime){
       Subject subject = Subject(name,startTime,endTime,color);
       for(int i = 0; i < subjects.length; i++){
@@ -19,5 +28,9 @@ class Day{
       }
       subjects.add(subject);
   }
+
+ */
+
+
 
 }

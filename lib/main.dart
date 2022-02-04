@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Backend/subject.dart';
 import 'utilities.dart';
 import 'Pages/home_page.dart';
 
@@ -43,18 +44,10 @@ class _MyApp extends State<MyApp> {
     List<String> weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
     Random random = Random();
     for(int day = 1; day < 8; day++){
-      for(int i = 0; i < 6; i++){
-        TimeOfDay startTime = TimeOfDay(hour: random.nextInt(24),minute: random.nextInt(59));
-        TimeOfDay endTime = TimeOfDay(hour: random.nextInt(24),minute: random.nextInt(59));
-        while(startTime.hour > endTime.hour || startTime.minute > endTime.minute){
-           startTime = TimeOfDay(hour: random.nextInt(24),minute: random.nextInt(59));
-           endTime = TimeOfDay(hour: random.nextInt(24),minute: random.nextInt(59));
-        }
-        TimeTable.addSubject(day, names[random.nextInt(names.length)], Colors.primaries[random.nextInt(Colors.primaries.length)],startTime ,endTime);
+      for(int i = 1; i < TimeTable.lessons.length; i++){
+        Subject(names[random.nextInt(names.length)],day,i,Colors.primaries[random.nextInt(Colors.primaries.length)]);
       }
-      TimeTable.addSubject(day, weekDays[day-1], Colors.black, TimeOfDay(hour: 0,minute: 0), TimeOfDay(hour: 0,minute: 0));
-      
-      
+      Subject(weekDays[day-1],day,0,Colors.black);
     }
 
 

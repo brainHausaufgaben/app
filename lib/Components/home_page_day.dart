@@ -16,7 +16,7 @@ class HomePageDay extends StatefulWidget {
   String headline;
 
   List<Widget> getWidgets(){
-    List<Subject> subjects = TimeTable.getDay(day).subjects;
+    List<Subject> subjects = TimeTable.getSubjects(day);
     List<Widget> subjectWidgets = [];
     for(Subject subject in subjects){
       subjectWidgets.add(

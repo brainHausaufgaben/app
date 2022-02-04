@@ -3,7 +3,7 @@ import '../utilities.dart';
 
 class WarningBox extends StatelessWidget {
   String text = "empty";
-  List icons = ['../icons/redExclamationMark.png', '../icons/yellowExclamationMark.png', '../icons/greenCheckmark'];
+  List icons = [const Icon(Icons.warning_rounded,color: Colors.red,size: 35,), const Icon(Icons.warning_rounded,color: Colors.orange,size: 35,), const Icon(Icons.check,color: Colors.green,size: 35,)];
   int iconIndex = 0;
 
   WarningBox({
@@ -15,7 +15,7 @@ class WarningBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.only(bottom: 0),
         child: Container(
           decoration: BoxDecoration(
               color: AppTheme.mainColor,
@@ -26,7 +26,7 @@ class WarningBox extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(right: 12) ,
-                  child: Image.asset(icons.elementAt(iconIndex), scale: 2),
+                  child: icons[iconIndex],
                 ),
                 Flexible(
                     child: Text(

@@ -10,7 +10,6 @@ class PointElement extends StatefulWidget {
   String? secondaryText;
   Widget? child;
 
-
   @override
   State<StatefulWidget> createState() =>  _PointElementState();
 
