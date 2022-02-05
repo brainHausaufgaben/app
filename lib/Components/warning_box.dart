@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
-
 class WarningBox extends StatelessWidget {
   String text = "empty";
-  List icons = ['../icons/redExclamationMark.png', '../icons/yellowExclamationMark.png', '../icons/greenCheckmark'];
+  List icons = ['icons/redExclamationMark.png', 'icons/yellowExclamationMark.png', 'icons/greenCheckmark'];
   int iconIndex = 0;
 
   WarningBox({
@@ -19,8 +18,8 @@ class WarningBox extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 20),
         child: Container(
           decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: AppTheme.borderRadius
+              color: AppDesign.current.primaryColor,
+              borderRadius: AppDesign.current.boxStyle.borderRadius
           ),
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
           child: Row(
@@ -32,7 +31,7 @@ class WarningBox extends StatelessWidget {
                 Flexible(
                     child: Text(
                       text,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: AppDesign.current.textStyles.warningBoxText,
                     )
                 )
               ]

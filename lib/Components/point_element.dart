@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brain_app/Backend/theming.dart';
 
 class PointElement extends StatefulWidget {
   PointElement({Key? key, required this.color, required this.primaryText,this.secondaryText,this.child}) : super(key: key);
@@ -6,7 +7,6 @@ class PointElement extends StatefulWidget {
   String primaryText;
   String? secondaryText;
   Widget? child;
-
 
   @override
   State<StatefulWidget> createState() =>  _PointElementState();
@@ -27,13 +27,16 @@ class _PointElementState extends  State<PointElement>{
             children: [
               Text(
                 widget.primaryText,
-                style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w400, fontSize:17,height: 1),
+                style: AppDesign.current.textStyles.pointElementPrimary,
               ),
               if (widget.child != null) widget.child!
             ],
           ),
         ),
-        if (widget.secondaryText != null) Text(widget.secondaryText!)
+        if (widget.secondaryText != null) Text(
+            widget.secondaryText!,
+            style: AppDesign.current.textStyles.pointElementSecondary,
+        )
       ],
     );
   }

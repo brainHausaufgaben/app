@@ -1,5 +1,5 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:brain_app/Backend/theming.dart';
 
 class PageTemplate extends StatefulWidget {
@@ -12,20 +12,11 @@ class PageTemplate extends StatefulWidget {
 }
 
 class _PageTemplateState extends State<PageTemplate> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   void _settings(){
     print("settngs");
   }
 
   String getDateString(){
-
     List weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
     String day = DateTime.now().day.toString();
@@ -50,24 +41,24 @@ class _PageTemplateState extends State<PageTemplate> {
               alignment: Alignment.centerLeft,
               // Der dumme button braucht constraints weil er sonst viel zu groß wird aber jetzt scheint er keine collision mehr zu haben
               constraints: const BoxConstraints(),
-              padding: const EdgeInsets.all( 0),
+              padding: const EdgeInsets.all(0),
               onPressed: _settings,
-              icon: const Icon(Icons.settings_rounded),
+              icon: Icon(Icons.settings_rounded, color: AppDesign.current.textStyles.color),
               iconSize: 26,
               splashRadius: 15,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
+              padding: const EdgeInsets.only(top: 45, bottom: 35),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget> [
                   Text(
                     widget.title,
-                    style: Theme.of(context).textTheme.headline1,
+                    style: AppDesign.current.textStyles.pageHeadline,
                   ),
                   Text(
                     getDateString(),
-                    style: Theme.of(context).textTheme.subtitle1,
+                    style: AppDesign.current.textStyles.pageSubtitle,
                   )
                 ],
               ),
@@ -77,7 +68,7 @@ class _PageTemplateState extends State<PageTemplate> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => currentTheme.toggleTheme(themes.elementAt(random.nextInt(3))),
+        onPressed: () => currentDesign.toggleTheme(themes.elementAt(random.nextInt(4))),
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),
@@ -86,4 +77,4 @@ class _PageTemplateState extends State<PageTemplate> {
 }
 
 Random random = Random();
-List<ThemeData> themes = [AppTheme.monochromeTheme, AppTheme.monochromeDarkTheme, AppTheme.keineAhnung];
+List<DesignPackage> themes = [Designs.monochromeTheme, Designs.monochromeDarkTheme, Designs.purpleTheme, Designs.greenDarkTheme];

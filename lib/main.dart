@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Backend/theming.dart';
-import 'package:flutter/material.dart';
+import 'Backend/time_table.dart';
+import 'Backend/theming.dart';
 import 'Pages/home_page.dart';
 
 void main() {
@@ -20,17 +20,17 @@ class _MyApp extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Brain Hausaufgabenheft',
-      home: const HomePage(),
-      theme: AppTheme.currentTheme,
+        title: 'Brain Hausaufgabenheft',
+        home: HomePage(), // HomePage darf nicht const sein, auch wenn der das will!!!!
+        theme: AppDesign.current.themeData
     );
   }
 
   @override
   void initState(){
     super.initState();
-    // Macht dass widgets neu geladen werden wenn sich das Theme ändert oder so
-    currentTheme.addListener(() {
+    // Macht dass widgets neu geladen werden wenn sich das Theme ändert
+    currentDesign.addListener(() {
       setState((){});
     });
 
@@ -48,16 +48,9 @@ class _MyApp extends State<MyApp> {
            endTime = TimeOfDay(hour: random.nextInt(24),minute: random.nextInt(59));
         }
         TimeTable.addSubject(day, names[random.nextInt(names.length)], Colors.primaries[random.nextInt(Colors.primaries.length)],startTime ,endTime);
-
       }
-      
-      
     }
-
-
   }
-
-
 }
 
 

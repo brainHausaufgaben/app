@@ -1,24 +1,103 @@
 import 'package:flutter/material.dart';
 
-AppTheme currentTheme = AppTheme();
+// Braucht man für das toggleTheme und den ChangeNotifier
+AppDesign currentDesign = AppDesign();
 
-class AppTheme with ChangeNotifier {
-  // Ich weiß nicht ob man die oberen 2 noch braucht also lass ich die zur sicherheit
-  static Color mainColor = const Color(0xFF303540);
-  static Color mainTextColor = const Color(0xFFFFFFFF);
-  static BorderRadius borderRadius = BorderRadius.circular(10);
+class AppDesign with ChangeNotifier {
+  static bool darkMode = false;
+  static DesignPackage current = Designs.greenDarkTheme;
 
-  static ThemeData currentTheme = monochromeTheme;
-  // Test themes
-  static ThemeData monochromeTheme = generateAppTheme(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540));
-  static ThemeData monochromeDarkTheme = generateAppTheme(const Color(0xFF6954A6), const Color(0xFF303540), const Color(0xFF484F5F), const Color(0xFFFFFFFF));
-  static ThemeData keineAhnung = generateAppTheme(const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF));
-
-  void toggleTheme(ThemeData theme) {
-    currentTheme = theme;
+  void toggleTheme(DesignPackage designPackage) {
+    current = designPackage;
     notifyListeners();
   }
 }
+
+class Designs {
+  static DesignPackage monochromeTheme = generateDesign(
+      const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
+  );
+  static DesignPackage monochromeDarkTheme = generateDesign(
+      const Color(0xFF442A43), const Color(0xFF16191E), const Color(0xFF20232C), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF)
+  );
+  static DesignPackage purpleTheme = generateDesign(
+      const Color(0xFF58419F), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
+  );
+  static DesignPackage greenDarkTheme = generateDesign(
+      const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229)
+  );
+}
+
+class DesignPackage {
+  Color primaryColor;
+  TextStyles textStyles;
+  BoxStyle boxStyle;
+
+  // Für material shit
+  ThemeData themeData;
+
+  DesignPackage({
+    required this.primaryColor,
+    required this.textStyles,
+    required this.themeData,
+    required this.boxStyle
+  });
+}
+
+class TextStyles {
+  Color color;
+  TextStyle pageHeadline;
+  TextStyle pageSubtitle;
+  TextStyle boxHeadline;
+  TextStyle pointElementPrimary;
+  TextStyle pointElementSecondary;
+  TextStyle warningBoxText;
+
+  TextStyles({
+    required this.color,
+    required this.pageHeadline,
+    required this.pageSubtitle,
+    required this.boxHeadline,
+    required this.pointElementPrimary,
+    required this.pointElementSecondary,
+    required this.warningBoxText
+  });
+}
+
+class BoxStyle {
+   BorderRadius borderRadius = BorderRadius.circular(10);
+   Color backgroundColor;
+
+   BoxStyle({
+     required this.backgroundColor
+  });
+}
+
+DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color containerBackground, Color textColor, Color primaryContrast) {
+  return DesignPackage(
+      primaryColor: primaryColor,
+      themeData: ThemeData(
+          primarySwatch: createMaterialColor(primaryColor),
+          primaryColor: primaryColor,
+          scaffoldBackgroundColor: backgroundColor,
+          fontFamily: "Nunito",
+      ),
+      textStyles: TextStyles(
+        color: textColor,
+        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
+        pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
+        boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:19, height: 0.6, color: textColor),
+        pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor),
+        pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: textColor), // Probably wrong
+        warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: primaryContrast)
+      ),
+      boxStyle: BoxStyle(
+          backgroundColor: containerBackground
+      )
+  );
+}
+
+// -------------------------- Utility stuff --------------------------
 
 MaterialColor createMaterialColor(Color color) {
   List strengths = <double>[.05];
@@ -38,24 +117,4 @@ MaterialColor createMaterialColor(Color color) {
     );
   }
   return MaterialColor(color.value, swatch);
-}
-
-ThemeData generateAppTheme(Color primaryColor, Color backgroundColor, Color secondaryBackground, Color textColor) {
-  // Könnte besser sein, vielleicht geht das sogar mit einer custom class
-  return ThemeData(
-      primarySwatch: createMaterialColor(primaryColor),
-      primaryColor: primaryColor,
-      backgroundColor: secondaryBackground,
-      scaffoldBackgroundColor: backgroundColor,
-      fontFamily: "Nunito",
-
-      textTheme: TextTheme(
-          headline1: TextStyle(fontWeight: FontWeight.w800, fontSize:38, height: 0.6, color: textColor),
-          headline2: TextStyle(fontWeight: FontWeight.w600, fontSize:24, height: 0.6, color: textColor),
-          headline3: TextStyle(fontWeight: FontWeight.w400, fontSize:17,height: 1, color: textColor),
-          subtitle1: TextStyle(fontWeight: FontWeight.w400, fontSize:20, color: textColor),
-          bodyText1: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: textColor),
-          bodyText2: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: secondaryBackground)
-      )
-  );
 }

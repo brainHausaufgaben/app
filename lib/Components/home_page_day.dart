@@ -2,7 +2,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
-import '../Box.dart';
+import 'box.dart';
 
 
 class HomePageDay extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utilities.dart';
+import 'package:brain_app/Backend/theming.dart';
 
 class Box extends StatefulWidget {
    Box({Key? key, required this.child, this.headline}) : super(key: key);
@@ -8,10 +8,9 @@ class Box extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>  _BoxState();
-
 }
 
-class _BoxState extends  State<Box>{
+class _BoxState extends State<Box>{
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -21,20 +20,17 @@ class _BoxState extends  State<Box>{
         children: [
           if (widget.headline != null) Text(
               widget.headline!,
-              style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w600, fontSize:24, height: 0.6)
+              style: AppDesign.current.textStyles.boxHeadline
           ),
           Padding(
             padding: widget.headline != null ? const EdgeInsets.only(top: 8) : const EdgeInsets.only(),
-            child:
-            Container(
-                decoration: BoxDecoration(
-                    color: AppTheme.mainTextColor,
-                    borderRadius: AppTheme.borderRadius
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
-                // Was? Warum? Warum geht das nicht ohne row
-                child:
-                widget.child
+            child: Container(
+              decoration: BoxDecoration(
+                  color: AppDesign.current.boxStyle.backgroundColor,
+                  borderRadius: AppDesign.current.boxStyle.borderRadius
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
+              child: widget.child
             ),
           )
         ]
