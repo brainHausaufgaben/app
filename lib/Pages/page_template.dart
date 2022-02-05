@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:brain_app/Backend/theming.dart';
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({Key? key, required this.title, required this.child}) : super(key: key);
@@ -10,14 +11,6 @@ class PageTemplate extends StatefulWidget {
 }
 
 class _PageTemplateState extends State<PageTemplate> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   void _settings(){
     print("settngs");
   }
@@ -50,7 +43,7 @@ class _PageTemplateState extends State<PageTemplate> {
               constraints: const BoxConstraints(),
               padding: const EdgeInsets.all( 0),
               onPressed: _settings,
-              icon: const Icon(Icons.settings_rounded),
+              icon: Icon(Icons.settings_rounded, color: AppDesign.current.textStyles.color),
               iconSize: 26,
               splashRadius: 15,
             ),
@@ -61,11 +54,11 @@ class _PageTemplateState extends State<PageTemplate> {
                 children: <Widget> [
                   Text(
                     widget.title,
-                    style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w800, fontSize:38, height: 0.6),
+                    style: AppDesign.current.textStyles.pageHeadline,
                   ),
                   Text(
                     getDateString(),
-                    style: const TextStyle(fontFamily: "Nunito", fontWeight: FontWeight.w400, fontSize:20),
+                    style: AppDesign.current.textStyles.pageSubtitle,
                   )
                 ],
               ),
@@ -75,7 +68,7 @@ class _PageTemplateState extends State<PageTemplate> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {currentDesign.toggleTheme(Designs.randomTheme());},
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../utilities.dart';
+import 'package:brain_app/Backend/theming.dart';
 
 class WarningBox extends StatelessWidget {
   String text = "empty";
@@ -18,10 +18,10 @@ class WarningBox extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 0),
         child: Container(
           decoration: BoxDecoration(
-              color: AppTheme.mainColor,
-              borderRadius: AppTheme.borderRadius
+              color: AppDesign.current.primaryColor,
+              borderRadius: AppDesign.current.boxStyle.borderRadius
           ),
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 18),
+          padding: const EdgeInsets.all(17),
           child: Row(
               children: [
                 Padding(
@@ -31,7 +31,7 @@ class WarningBox extends StatelessWidget {
                 Flexible(
                     child: Text(
                       text,
-                      style: TextStyle(color: AppTheme.mainTextColor, fontSize: 15),
+                      style: AppDesign.current.textStyles.warningBoxText,
                     )
                 )
               ]

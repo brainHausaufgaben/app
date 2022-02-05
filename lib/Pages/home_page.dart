@@ -1,11 +1,11 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Box.dart';
+import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/home_page_day.dart';
+import 'package:brain_app/Components/warning_box.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 import 'page_template.dart';
-import '../Components/warning_box.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -52,28 +52,24 @@ class _HomePage extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
 
-    return
-      PageTemplate(
-        title: 'Übersicht',
-        child:
-        Expanded( child:Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            WarningBox(
-                text: "du bist enorm fett geworden aber nicht negativ gemeint",
-                iconIndex: 2
+    return PageTemplate(
+      title: 'Übersicht',
+      child: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          WarningBox(
+              text: "du bist enorm fett geworden aber nicht negativ gemeint",
+              iconIndex: 2
+          ),
+          Flexible(child: ListView(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: getDays(),
             ),
-            Flexible(child:
-            ListView(
-                 scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: getDays(),
-              ),
-            ),
-          ],
-        )
-    )
-      );
+          ),
+        ],
+      ))
+    );
   }
 
 }

@@ -1,10 +1,9 @@
 import 'dart:math';
 
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
-import 'utilities.dart';
+import 'Backend/theming.dart';
 import 'Pages/home_page.dart';
 
 void main() {
@@ -27,16 +26,19 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      theme: ThemeData(
-        primarySwatch: AppTheme.swatch,
-      ),
-      home: const HomePage(),
+      // Der will dass HomePage const ist aber dann geht theming nichtmehr!!!
+      home: HomePage(),
+      theme: AppDesign.current.themeData
     );
   }
 
   @override
   void initState(){
     super.initState();
+    // Reloaded alle widgets wenn das Theme geändert wird
+    currentDesign.addListener(() {
+      setState((){});
+    });
     TimeTable.init();
 
     //unnötig aber mir war langweilig

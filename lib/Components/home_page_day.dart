@@ -3,7 +3,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 
-import '../Box.dart';
+import 'box.dart';
 
 
 class HomePageDay extends StatefulWidget {
@@ -20,10 +20,7 @@ class HomePageDay extends StatefulWidget {
     List<Widget> subjectWidgets = [];
     for(Subject subject in subjects){
       subjectWidgets.add(
-        Padding(
-            padding:const EdgeInsets.only(bottom: 8),
-            child:PointElement(color: subject.color,primaryText: subject.name,secondaryText: subject.getStartTimeString())
-        )
+          PointElement(color: subject.color,primaryText: subject.name,secondaryText: subject.getStartTimeString())
       );
     }
     return subjectWidgets;
@@ -36,9 +33,11 @@ class _HomePageDay extends  State<HomePageDay>{
   Widget build(BuildContext context){
     return  Box(
         headline: widget.headline,
-        child: Column(
-            children: widget.getWidgets(),
-          )
+        // Mit wrap kann man besser spacing zwischen den kindern machen
+        child: Wrap(
+          runSpacing: 10,
+          children: widget.getWidgets(),
+        )
     );
 
 
