@@ -66,7 +66,7 @@ class _HomePage extends State<HomePage>{
       String text = "";
 
       if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
-      if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch" + homework.toString() + "unerledigte Hausaufgaben";
+      if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgaben";
 
       return WarningBox(text: text, iconIndex: iconIndex);
   }
