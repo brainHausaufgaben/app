@@ -1,24 +1,29 @@
 import 'dart:core';
+import 'package:brain_app/Backend/day.dart';
+import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/material.dart';
 
 class Subject{
   String name = "";
-  int day = 0;
-  int lesson = 0;
-
   Color color = Colors.white;
 
   //Subject(this.name, this.startTime, this.endTime, this.color);
-  Subject (this.name,this.day,this.lesson,this.color){
+  Subject (this.name,this.color){
     TimeTable.addSubject(this);
   }
 
-  String getStartTimeString(){
-    String startTimeHour = TimeTable.lessons[lesson].startTime.hour.toString();
-    String startTimeMinute = TimeTable.lessons[lesson].startTime.minute.toString();
-    return ((startTimeHour.length == 1 ? "0" : "") + startTimeHour) + ":" + ((startTimeMinute.length == 1 ? "0" : "") + startTimeMinute);
+  DateTime? getNextDate(){
+    for(Day day in TimeTable.week){
+      for(SubjectInstance? subject in day.subjects){
+        if(subject != null){
+          if(subject.subject == this) return subject.getDate();
+        }
+      }
+    }
+    return null;
   }
+
 
 
 

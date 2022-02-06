@@ -23,7 +23,7 @@ class _PointElementState extends  State<PointElement>{
           child: Icon(Icons.circle, color: widget.color, size: 13)
         ),
         Expanded(child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            crossAxisAlignment: CrossAxisAlignment.start   ,
             children: [
               Text(
                 widget.primaryText,

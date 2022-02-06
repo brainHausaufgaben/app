@@ -1,15 +1,16 @@
 import 'dart:core';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:flutter/material.dart';
 
 class Day{
-  List<Subject?> subjects = [];
+  List<SubjectInstance?> subjects = [];
 
   Day(int length){
     subjects = List.filled(length, null);
   }
 
-  void addSubject(Subject subject){
+  void addSubject(SubjectInstance subject){
     subjects[subject.lesson] = subject;
   }
 

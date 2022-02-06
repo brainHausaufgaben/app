@@ -1,13 +1,18 @@
 import 'dart:core';
 import 'package:brain_app/Backend/day.dart';
+import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_interval.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class TimeTable{
 
   static List<Day> week = [];
-  static List<TimeInterval> lessons = [
+  static List<Subject> subjects = [];
+  static List<Homework> homeworks = [];
+  static List<TimeInterval> lessonTimes = [
     TimeInterval(const TimeOfDay(hour: 8, minute: 00), const TimeOfDay(hour: 8, minute: 45)),
     TimeInterval(const TimeOfDay(hour: 8, minute: 45), const TimeOfDay(hour: 9, minute: 30)),
     TimeInterval(const TimeOfDay(hour: 9, minute: 45), const TimeOfDay(hour: 10, minute: 30)),
@@ -19,15 +24,26 @@ class TimeTable{
     TimeInterval(const TimeOfDay(hour: 15, minute: 35), const TimeOfDay(hour: 16, minute: 20)),
     TimeInterval(const TimeOfDay(hour: 16, minute: 20), const TimeOfDay(hour: 17, minute: 05)),
   ];
+  static State<MyApp>? app;
 
-
-  static void addSubject(Subject subject){
+  static void addLesson(SubjectInstance subject){
     week[subject.day - 1].addSubject(subject);
   }
+  static void addSubject(Subject subject){
+    subjects.add(subject);
+  }
+  static void addHomework(Homework homework){
+    homeworks.add(homework);
+  }
+  static void removeHomework(Homework homework){
+    if(homeworks.contains(homework))homeworks.remove(homework);
+    app!.setState(() {});
+  }
 
-  static List<Subject> getSubjects(int day){
-    List<Subject> subjects = [];
-    for(Subject? subject in week[day-1].subjects){
+
+  static List<SubjectInstance> getSubjects(int day){
+    List<SubjectInstance> subjects = [];
+    for(SubjectInstance? subject in week[day-1].subjects){
       if(subject != null) {
         subjects.add(subject);
       }
@@ -35,14 +51,26 @@ class TimeTable{
     return subjects;
   }
 
+  static List<Homework> getHomework(DateTime date,Subject subject){
+    List<Homework> homework = [];
+    for(Homework hom in homeworks){
+      if(hom.isDue(date) && hom.subject == subject){
+        homework.add(hom);
+      }
+    }
+    return homework;
+  }
+
   static Day getDay(int day){
     return week[day-1];
   }
 
-  static void init(){
+  static void init(State<MyApp> appl){
     for(int i = 0;  i < 7; i++){
-      week.add(Day(lessons.length));
+      week.add(Day(lessonTimes.length));
     }
+    app = appl;
+
   }
 
 

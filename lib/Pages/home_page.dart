@@ -1,11 +1,11 @@
+import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/home_page_day.dart';
-import 'package:brain_app/Components/warning_box.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 import 'page_template.dart';
+import '../Components/warning_box.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -49,28 +49,53 @@ class _HomePage extends State<HomePage>{
     return days;
   }
 
+  Widget getWarningBox(){
+      int homework = TimeTable.homeworks.length;
+      int iconIndex = 0;
+      DateTime nextHomework = DateTime(99999);
+      for(Homework hom in TimeTable.homeworks){
+        if(nextHomework.isAfter(hom.dueTime)) nextHomework = hom.dueTime;
+      }
+      if(homework == 0) {
+        iconIndex = 2;
+      } else if(nextHomework.day == DateTime.now().day && nextHomework.month == DateTime.now().month) {
+        iconIndex = 0;
+      }else {
+        iconIndex = 1;
+      }
+      String text = "";
+
+      if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
+      if(iconIndex == 1 || iconIndex ==  0)text = "Du hast noch unerledigte Hausaufgaben in " + homework.toString() + " Fächern!";
+
+      return WarningBox(text: text, iconIndex: iconIndex);
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
-
-    return PageTemplate(
-      title: 'Übersicht',
-      child: Expanded(child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          WarningBox(
-              text: "du bist enorm fett geworden aber nicht negativ gemeint",
-              iconIndex: 2
-          ),
-          Flexible(child: ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              children: getDays(),
+    //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
+    return
+      PageTemplate(
+        title: 'Übersicht',
+        child:
+        Expanded( child:Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+           getWarningBox(),
+            Flexible(child:
+              ListView(
+                  padding: EdgeInsets.only(top:20),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  children: getDays(),
+                ),
             ),
-          ),
-        ],
-      ))
-    );
+          ],
+        )
+    )
+      );
   }
 
 }

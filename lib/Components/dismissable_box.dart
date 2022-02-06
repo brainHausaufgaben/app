@@ -1,14 +1,20 @@
+import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/material.dart';
 
 class DismissableBox extends StatelessWidget {
-  const DismissableBox({Key? key}) : super(key: key);
+   DismissableBox({Key? key,required this.homework}) : super(key: key);
+  Homework homework;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.only(top: 2),
         child: Dismissible(
+          onDismissed: (DismissDirection){
+            TimeTable.removeHomework(homework);
+          },
             secondaryBackground: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -48,7 +54,7 @@ class DismissableBox extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: Text("Sussy", style: AppDesign.current.textStyles.pointElementSecondary),
+                child: Text(homework.name, style: AppDesign.current.textStyles.pointElementSecondary),
               ),
             )
         ),
