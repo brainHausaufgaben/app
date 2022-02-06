@@ -7,7 +7,7 @@ AppDesign currentDesign = AppDesign();
 
 class AppDesign with ChangeNotifier {
   static bool darkMode = SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
-  static DesignPackage current = Designs.monochromeTheme;
+  static DesignPackage current = Designs.yelo;
 
   void toggleTheme(DesignPackage designPackage) {
     current = designPackage;
@@ -25,6 +25,9 @@ class Designs {
   );
   static DesignPackage purpleThemeButLightMode = generateDesign(
       const Color(0xFF58419F), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
+  );
+  static DesignPackage yelo = generateDesign(
+      const Color(0xFFE1D12A), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
   );
   static DesignPackage greenDarkTheme = generateDesign(
       const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229)
@@ -76,10 +79,12 @@ class TextStyles {
 
 class BoxStyle {
   BorderRadius borderRadius = BorderRadius.circular(10);
+  BoxShadow boxShadow;
   Color backgroundColor;
 
   BoxStyle({
-    required this.backgroundColor
+    required this.backgroundColor,
+    required this.boxShadow
   });
 }
 
@@ -102,7 +107,13 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
           warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor)
       ),
       boxStyle: BoxStyle(
-          backgroundColor: boxBackground
+          backgroundColor: boxBackground,
+          boxShadow: BoxShadow(
+              color: boxBackground.computeLuminance() > 0.5 ? const Color(0xFF303540).withOpacity(0.2) : Colors.white.withOpacity(0.2),
+              spreadRadius: 0,
+              blurRadius: 2,
+              offset: const Offset(0, 1)
+        )
       )
   );
 }
