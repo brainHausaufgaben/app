@@ -11,13 +11,7 @@ class HomeworkPage extends StatefulWidget {
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
-  late TextEditingController _controller;
-
-  @override // tus
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
+  final homeworkController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +23,9 @@ class _HomeworkPage extends State<HomeworkPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const TextField(
-                decoration: InputDecoration (
+              TextField(
+                controller: homeworkController,
+                decoration: const InputDecoration (
                   border: OutlineInputBorder(),
                   labelText: 'Hausaufgaben',
                 ),
@@ -39,7 +34,7 @@ class _HomeworkPage extends State<HomeworkPage> {
                 padding: const EdgeInsets.only(bottom: 15),
                 child: ElevatedButton (
                     onPressed: (){
-                      Homework(TimeTable.subjects[0], TimeTable.subjects[0].getNextDate()!, "jesph");
+                      Homework(TimeTable.subjects[0], TimeTable.subjects[0].getNextDate()!, homeworkController.text);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
