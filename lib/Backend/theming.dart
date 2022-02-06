@@ -7,7 +7,7 @@ AppDesign currentDesign = AppDesign();
 
 class AppDesign with ChangeNotifier {
   static bool darkMode = SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
-  static DesignPackage current = Designs.yelo;
+  static DesignPackage current = Designs.monochromeTheme;
 
   void toggleTheme(DesignPackage designPackage) {
     current = designPackage;
@@ -31,6 +31,9 @@ class Designs {
   );
   static DesignPackage greenDarkTheme = generateDesign(
       const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229)
+  );
+  static DesignPackage richtigFuckingEkelhaftesTheme = generateDesign(
+      const Color(0xFF0225E0), const Color(0xFF43A606), const Color(0xFF9F1B7E), const Color(0xFFF80202), const Color(0xFF07B0AA)
   );
 
   static List<DesignPackage> themeList = [monochromeTheme, weirdPurpleThemeIDK, purpleThemeButLightMode, greenDarkTheme];

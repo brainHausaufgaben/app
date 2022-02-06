@@ -9,29 +9,29 @@ class DismissableBox extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(top: 2),
         child: Dismissible(
-            background: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.red,
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Align(
-                      child: Icon(Icons.delete, color: Colors.white),
-                      alignment: Alignment.centerLeft
-                  ),
-                )
-            ),
             secondaryBackground: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  color: Colors.red,
+                  color: Colors.yellow,
                 ),
                 child: const Padding(
                   padding: EdgeInsets.only(right: 10),
                   child: Align(
-                      child: Icon(Icons.delete, color: Colors.white),
+                      child: Icon(Icons.access_time, color: Colors.black),
                       alignment: Alignment.centerRight
+                  ),
+                )
+            ),
+            background: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.green,
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Align(
+                      child: Icon(Icons.check_circle, color: Colors.white),
+                      alignment: Alignment.centerLeft
                   ),
                 )
             ),
