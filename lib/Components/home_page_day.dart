@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
+import 'dismissable_box.dart';
 
 import 'box.dart';
 
@@ -20,7 +21,7 @@ class HomePageDay extends StatefulWidget {
     List<Widget> subjectWidgets = [];
     for(Subject subject in subjects){
       subjectWidgets.add(
-          PointElement(color: subject.color,primaryText: subject.name,secondaryText: subject.getStartTimeString())
+          PointElement(color: subject.color,primaryText: subject.name,secondaryText: subject.getStartTimeString(), child: DismissableBox())
       );
     }
     return subjectWidgets;

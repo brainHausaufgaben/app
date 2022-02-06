@@ -68,7 +68,10 @@ class _PageTemplateState extends State<PageTemplate> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {currentDesign.toggleTheme(Designs.randomTheme());},
+        onPressed: () {
+          AppDesign.darkMode = !AppDesign.darkMode;
+          currentDesign.toggleTheme(Designs.monochromeTheme);
+        },
         tooltip: 'Add',
         child: const Icon(Icons.add),
       ),

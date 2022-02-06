@@ -17,17 +17,18 @@ class HomePage extends StatefulWidget {
 }
 class _HomePage extends State<HomePage>{
 
-  List<int> getDayIndexes(){
-    List<int> dayIndexes =  [];
+  List<int> getDayIndices(){
+    List<int> dayIndices =  [];
     int currentDay = DateTime.now().weekday;
     int day = currentDay;
 
-    while(true){
-      if(day == 6)day = 1;
-      dayIndexes.add(day);
+    for (int i=1; i<=5; i++) {
+      if (day >= 6) day = 1;
+      dayIndices.add(day);
       day++;
-      if(day == currentDay)return dayIndexes;
     }
+
+    return dayIndices;
   }
 
   List<Widget> getDays(){
@@ -37,7 +38,7 @@ class _HomePage extends State<HomePage>{
 
 
     List<Widget> days = [];
-    List<int> dayIndexes = getDayIndexes();
+    List<int> dayIndexes = getDayIndices();
     for(int i = 0; i < dayIndexes.length; i++){
       String headline = weekDays[dayIndexes[i] - 1];
       if(dayIndexes[i] == DateTime.now().weekday) headline = "Stundenplan Heute";

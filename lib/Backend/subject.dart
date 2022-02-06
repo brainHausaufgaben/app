@@ -15,7 +15,9 @@ class Subject{
   }
 
   String getStartTimeString(){
-    return  TimeTable.lessons[lesson].startTime.hour.toString()  + ":" + TimeTable.lessons[lesson].startTime.minute.toString();
+    String startTimeHour = TimeTable.lessons[lesson].startTime.hour.toString();
+    String startTimeMinute = TimeTable.lessons[lesson].startTime.minute.toString();
+    return ((startTimeHour.length == 1 ? "0" : "") + startTimeHour) + ":" + ((startTimeMinute.length == 1 ? "0" : "") + startTimeMinute);
   }
 
 

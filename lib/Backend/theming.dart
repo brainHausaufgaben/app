@@ -1,13 +1,13 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 // Braucht man für das toggleTheme und den ChangeNotifier
 AppDesign currentDesign = AppDesign();
 
 class AppDesign with ChangeNotifier {
-  static bool darkMode = false;
-  static DesignPackage current = Designs.greenDarkTheme;
+  static bool darkMode = SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
+  static DesignPackage current = Designs.monochromeTheme;
 
   void toggleTheme(DesignPackage designPackage) {
     current = designPackage;
@@ -16,9 +16,10 @@ class AppDesign with ChangeNotifier {
 }
 
 class Designs {
-  static DesignPackage monochromeTheme = generateDesign(
-      const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
-  );
+  static DesignPackage get monochromeTheme => AppDesign.darkMode ?
+    generateDesign(const Color(0xFFFFFFFF), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229)) :
+    generateDesign(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF));
+
   static DesignPackage weirdPurpleThemeIDK = generateDesign(
       const Color(0xFF442A43), const Color(0xFF16191E), const Color(0xFF20232C), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF)
   );
@@ -97,7 +98,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
           pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
           boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
           pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),
-          pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:15, color: textColor.withAlpha(190)), // Probably wrong
+          pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)), // Probably wrong
           warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor)
       ),
       boxStyle: BoxStyle(
