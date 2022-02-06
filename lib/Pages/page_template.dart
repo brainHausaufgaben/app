@@ -16,7 +16,6 @@ class _PageTemplateState extends State<PageTemplate> {
   void _settings(){
     AppDesign.darkMode = !AppDesign.darkMode;
     currentDesign.toggleTheme(Designs.monochromeTheme);
-    print("settngs");
   }
 
   void _back() {

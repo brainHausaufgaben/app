@@ -70,11 +70,19 @@ class _MyApp extends State<MyApp> {
         SubjectInstance(TimeTable.subjects[random.nextInt(TimeTable.subjects.length)],day,i);
       }
     }
-    for(int i = 0; i < TimeTable.subjects.length; i++){
-      //DIESE DING HAUSAUFGABE !!!!!!
-      if(TimeTable.subjects[i].getNextDate() != null)  Homework(TimeTable.subjects[i],TimeTable.subjects[i].getNextDate()!,names[random.nextInt(names.length)]);
+    /*
+    for( int k = 1; k < 7; k++){
+      for(SubjectInstance? subIn in TimeTable.getDay(k).subjects) {
+        if (subIn != null) {
+          for (int j = 0; j < 4; j++) {
+            Homework(subIn.subject, subIn.getDate(),
+                names[random.nextInt(names.length)]);
+          }
+        }
+      }
 
     }
+    */
 
   }
 
