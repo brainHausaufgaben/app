@@ -1,10 +1,12 @@
+import 'package:brain_app/Pages/homework.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
 class PageTemplate extends StatefulWidget {
-  const PageTemplate({Key? key, required this.title, required this.child}) : super(key: key);
+  const PageTemplate({Key? key, required this.title, required this.child, this.backButton}) : super(key: key);
   final Widget child;
   final String title;
+  final bool? backButton;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -12,7 +14,13 @@ class PageTemplate extends StatefulWidget {
 
 class _PageTemplateState extends State<PageTemplate> {
   void _settings(){
+    AppDesign.darkMode = !AppDesign.darkMode;
+    currentDesign.toggleTheme(Designs.monochromeTheme);
     print("settngs");
+  }
+
+  void _back() {
+    Navigator.pop(context);
   }
 
   String getDateString(){
@@ -36,14 +44,14 @@ class _PageTemplateState extends State<PageTemplate> {
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            //Settings Button
+            //Settings Button / oder back button °o°
             IconButton(
               alignment: Alignment.centerLeft,
-              // Der dumme button braucht constraints weil er sonst viel zu groß wird aber jetzt scheint er keine collision mehr zu haben
+              // Idk
               constraints: const BoxConstraints(),
-              padding: const EdgeInsets.all( 0),
-              onPressed: _settings,
-              icon: Icon(Icons.settings_rounded, color: AppDesign.current.textStyles.color),
+              padding: const EdgeInsets.all(0),
+              onPressed: widget.backButton == null ? _settings : _back,
+              icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
               iconSize: 26,
               splashRadius: 15,
             ),
@@ -67,12 +75,14 @@ class _PageTemplateState extends State<PageTemplate> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: widget.backButton != null ? null : FloatingActionButton(
         onPressed: () {
-          AppDesign.darkMode = !AppDesign.darkMode;
-          currentDesign.toggleTheme(Designs.monochromeTheme);
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeworkPage())
+          );
         },
-        tooltip: 'Add',
+        tooltip: 'Hausaufgabe',
         child: const Icon(Icons.add),
       ),
     );

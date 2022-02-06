@@ -68,6 +68,7 @@ class TextStyles {
   TextStyle pointElementPrimary;
   TextStyle pointElementSecondary;
   TextStyle warningBoxText;
+  TextStyle buttonText;
 
   TextStyles({
     required this.color,
@@ -76,7 +77,8 @@ class TextStyles {
     required this.boxHeadline,
     required this.pointElementPrimary,
     required this.pointElementSecondary,
-    required this.warningBoxText
+    required this.warningBoxText,
+    required this.buttonText
   });
 }
 
@@ -101,13 +103,14 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
         fontFamily: "Nunito",
       ),
       textStyles: TextStyles(
-          color: textColor,
-          pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
-          pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
-          boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
-          pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),
-          pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)), // Probably wrong
-          warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor)
+        color: textColor,
+        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
+        pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
+        boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
+        pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),
+        pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)), // Probably wrong
+        warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor),
+        buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: contrastColor)
       ),
       boxStyle: BoxStyle(
           backgroundColor: boxBackground,

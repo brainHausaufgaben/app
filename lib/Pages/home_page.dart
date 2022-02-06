@@ -66,21 +66,18 @@ class _HomePage extends State<HomePage>{
       String text = "";
 
       if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
-      if(iconIndex == 1 || iconIndex ==  0)text = "Du hast noch unerledigte Hausaufgaben in " + homework.toString() + " Fächern!";
+      if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch" + homework.toString() + "unerledigte Hausaufgaben";
 
       return WarningBox(text: text, iconIndex: iconIndex);
-
   }
 
 
   @override
   Widget build(BuildContext context) {
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
-    return
-      PageTemplate(
+    return PageTemplate(
         title: 'Übersicht',
-        child:
-        Expanded( child:Column(
+        child: Expanded(child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
            getWarningBox(),

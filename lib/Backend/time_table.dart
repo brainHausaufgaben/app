@@ -34,6 +34,7 @@ class TimeTable{
   }
   static void addHomework(Homework homework){
     homeworks.add(homework);
+    app!.setState(() {});
   }
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);

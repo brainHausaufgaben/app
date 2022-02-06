@@ -25,7 +25,7 @@ class WarningBox extends StatelessWidget {
           child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(right: 12) ,
+                  padding: const EdgeInsets.only(right: 12),
                   child: icons[iconIndex],
                 ),
                 Flexible(
