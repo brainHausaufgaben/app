@@ -78,7 +78,7 @@ class _PageTemplateState extends State<PageTemplate> {
         onPressed: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const HomeworkPage())
+              MaterialPageRoute(builder: (context) => HomeworkPage())
           );
         },
         tooltip: 'Hausaufgabe',

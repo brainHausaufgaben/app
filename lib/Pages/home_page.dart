@@ -83,7 +83,7 @@ class _HomePage extends State<HomePage>{
            getWarningBox(),
             Flexible(child:
               ListView(
-                  padding: EdgeInsets.only(top:20),
+                  padding: const EdgeInsets.only(top:20),
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   children: getDays(),

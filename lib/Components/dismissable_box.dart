@@ -12,7 +12,7 @@ class DismissableBox extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(top: 2),
         child: Dismissible(
-          onDismissed: (DismissDirection){
+          onDismissed: (DismissDirection direction){
             TimeTable.removeHomework(homework);
           },
             secondaryBackground: Container(

@@ -41,23 +41,42 @@ class _HomeworkPage extends State<HomeworkPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TextField(
-                controller: homeworkController,
-                decoration: const InputDecoration (
-                  border: OutlineInputBorder(),
-                  labelText: 'Hausaufgaben',
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: TextField(
+                  autocorrect: true,
+                  controller: homeworkController,
+                  style: AppDesign.current.textStyles.input,
+                  decoration: InputDecoration (
+                    filled: true,
+                    fillColor: AppDesign.current.boxStyle.backgroundColor,
+                    label: Text("Hausaufgabe", style: AppDesign.current.textStyles.input),
+                  ),
                 ),
               ),
-              DropdownButton<Subject>(
-                value:selectedSubject ,
-                hint: const Text("Fach"),
-                items: getDropdowns(),
-                onChanged: (Subject? newValue) {
-                  setState(() {
-                  selectedSubject = newValue!;
-                  });
-                },
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
+              DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+                  color: AppDesign.current.boxStyle.backgroundColor
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                  child: DropdownButton<Subject>(
+                    underline: Container(),
+                    isExpanded: true,
+                    dropdownColor: AppDesign.current.boxStyle.backgroundColor,
+                    style: AppDesign.current.textStyles.input,
+                    value: selectedSubject,
+                    hint: Text("Fach", style: AppDesign.current.textStyles.input),
+                    items: getDropdowns(),
+                    onChanged: (Subject? newValue) {
+                      setState(() {
+                        selectedSubject = newValue!;
+                      });
+                    },
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
+                )
               ),
               const Spacer(),
               Padding(

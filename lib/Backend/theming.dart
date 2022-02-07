@@ -69,6 +69,7 @@ class TextStyles {
   TextStyle pointElementSecondary;
   TextStyle warningBoxText;
   TextStyle buttonText;
+  TextStyle input;
 
   TextStyles({
     required this.color,
@@ -78,12 +79,14 @@ class TextStyles {
     required this.pointElementPrimary,
     required this.pointElementSecondary,
     required this.warningBoxText,
-    required this.buttonText
+    required this.buttonText,
+    required this.input
   });
 }
 
 class BoxStyle {
   BorderRadius borderRadius = BorderRadius.circular(10);
+  BorderRadius inputBorderRadius = BorderRadius.circular(5);
   BoxShadow boxShadow;
   Color backgroundColor;
 
@@ -110,7 +113,8 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
         pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),
         pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)), // Probably wrong
         warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor),
-        buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: contrastColor)
+        buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: contrastColor),
+        input: TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: textColor.withAlpha(210))
       ),
       boxStyle: BoxStyle(
           backgroundColor: boxBackground,
