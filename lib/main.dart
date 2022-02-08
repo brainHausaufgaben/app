@@ -28,6 +28,11 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
+        localizationsDelegates: GlobalMaterialLocalizations,
+        supportedLocales: [
+          const Locale('en', 'US'),
+          const Locale('en', 'GB'),
+        ],
       // Der will dass HomePage const ist aber dann geht theming nichtmehr!!!
       home: HomePage(),
       theme: AppDesign.current.themeData

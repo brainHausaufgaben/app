@@ -22,15 +22,15 @@ class _PageTemplateState extends State<PageTemplate> {
     Navigator.pop(context);
   }
 
-  String getDateString(){
+  String getDateString(DateTime date){
 
     List weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
-    String day = DateTime.now().day.toString();
-    String month = DateTime.now().month.toString();
-    String year = DateTime.now().year.toString();
+    String day = date.day.toString();
+    String month = date.month.toString();
+    String year = date.year.toString();
 
-    String weekDay =  weekDays[DateTime.now().weekday - 1];
+    String weekDay =  weekDays[date.weekday - 1];
 
     return weekDay + ", " + day + "." + month + "." + year;
   }
@@ -64,7 +64,7 @@ class _PageTemplateState extends State<PageTemplate> {
                     style: AppDesign.current.textStyles.pageHeadline,
                   ),
                   Text(
-                    getDateString(),
+                    getDateString(DateTime.now()),
                     style: AppDesign.current.textStyles.pageSubtitle,
                   )
                 ],
