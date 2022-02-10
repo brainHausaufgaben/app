@@ -66,6 +66,10 @@ class TimeTable{
     return week[day-1];
   }
 
+  static Day getDayFromDate(DateTime day){
+    return week[day.weekday - 1];
+  }
+
   static void init(State<MyApp> appl){
     for(int i = 0;  i < 7; i++){
       week.add(Day(lessonTimes.length));

@@ -28,11 +28,6 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-        localizationsDelegates: GlobalMaterialLocalizations,
-        supportedLocales: [
-          const Locale('en', 'US'),
-          const Locale('en', 'GB'),
-        ],
       // Der will dass HomePage const ist aber dann geht theming nichtmehr!!!
       home: HomePage(),
       theme: AppDesign.current.themeData
@@ -75,21 +70,23 @@ class _MyApp extends State<MyApp> {
         SubjectInstance(TimeTable.subjects[random.nextInt(TimeTable.subjects.length)],day,i);
       }
     }
-    /*
+
+
+/*
     for( int k = 1; k < 7; k++){
       for(SubjectInstance? subIn in TimeTable.getDay(k).subjects) {
         if (subIn != null) {
-          for (int j = 0; j < 4; j++) {
-            Homework(subIn.subject, subIn.getDate(),
-                names[random.nextInt(names.length)]);
+          for (int j = 0; j < 1; j++) {
+            Homework(subIn.subject, subIn.getDate(), names[random.nextInt(names.length)]);
           }
         }
       }
 
     }
-    */
 
+*/
   }
+
 
 
 }

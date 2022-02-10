@@ -22,12 +22,12 @@ class SubjectInstance{
     return ((startTimeHour.length == 1 ? "0" : "") + startTimeHour) + ":" + ((startTimeMinute.length == 1 ? "0" : "") + startTimeMinute);
   }
 
+  //returns the date of the current week
   DateTime getDate(){
-    int day =  DateTime.now().weekday - this.day;
-    if(DateTime.now().weekday > this.day) day = 7 - day;
+    int day = this.day - DateTime.now().weekday;
+    if(DateTime.now().weekday > this.day) day += 7;
     int hour = TimeTable.lessonTimes[lesson].startTime.hour;
     int minute = TimeTable.lessonTimes[lesson].startTime.minute;
-
     DateTime now = DateTime.now().subtract(Duration(hours: DateTime.now().hour,minutes: DateTime.now().minute,seconds: DateTime.now().second));
     DateTime time = now.add(Duration(days: day,hours: hour,minutes: minute));
     return time;
