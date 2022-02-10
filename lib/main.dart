@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
 import 'Backend/theming.dart';
@@ -11,7 +12,6 @@ import 'Pages/home_page.dart';
 void main() {
   runApp(const MyApp());
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -30,7 +30,14 @@ class _MyApp extends State<MyApp> {
       title: 'Brain Hausaufgabenheft',
       // Der will dass HomePage const ist aber dann geht theming nichtmehr!!!
       home: HomePage(),
-      theme: AppDesign.current.themeData
+      theme: AppDesign.current.themeData,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        ],
+      supportedLocales: const [
+        Locale('de', 'DE')
+      ],
     );
   }
 

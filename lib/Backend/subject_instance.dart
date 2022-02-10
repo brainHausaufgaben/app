@@ -42,7 +42,4 @@ class SubjectInstance{
   List<Homework> getHomework(){
     return TimeTable.getHomework(getDate(), subject);
   }
-
-
-
 }

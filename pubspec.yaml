@@ -28,6 +28,8 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter_rounded_date_picker: 2.0.2
+  flutter_localizations:
+    sdk: flutter
   flutter:
     sdk: flutter
 

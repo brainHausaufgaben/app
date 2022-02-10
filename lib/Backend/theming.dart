@@ -16,27 +16,16 @@ class AppDesign with ChangeNotifier {
 }
 
 class Designs {
+  // generateDesign(primaryColor, backgroundColor, boxBackground, textColor, contrastColor, overrideIconColor)
   static DesignPackage get monochromeTheme => AppDesign.darkMode ?
-    generateDesign(const Color(0xFFFFFFFF), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229)) :
-    generateDesign(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF));
+    generateDesign(const Color(0xFFFFFFFF), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), false) :
+    generateDesign(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), false);
 
-  static DesignPackage weirdPurpleThemeIDK = generateDesign(
-      const Color(0xFF442A43), const Color(0xFF16191E), const Color(0xFF20232C), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF)
-  );
-  static DesignPackage purpleThemeButLightMode = generateDesign(
-      const Color(0xFF58419F), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
-  );
-  static DesignPackage yelo = generateDesign(
-      const Color(0xFFE1D12A), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF)
-  );
-  static DesignPackage greenDarkTheme = generateDesign(
-      const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229)
-  );
-  static DesignPackage richtigFuckingEkelhaftesTheme = generateDesign(
-      const Color(0xFF0225E0), const Color(0xFF43A606), const Color(0xFF9F1B7E), const Color(0xFFF80202), const Color(0xFF07B0AA)
-  );
+  static DesignPackage get greenDarkTheme => AppDesign.darkMode ?
+    generateDesign(const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
+    generateDesign(const Color(0xFF82A914), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
-  static List<DesignPackage> themeList = [monochromeTheme, weirdPurpleThemeIDK, purpleThemeButLightMode, greenDarkTheme];
+  static List<DesignPackage> themeList = [monochromeTheme, greenDarkTheme];
 
   static DesignPackage randomTheme() {
     Random random = Random();
@@ -48,6 +37,7 @@ class DesignPackage {
   Color primaryColor;
   TextStyles textStyles;
   BoxStyle boxStyle;
+  bool overrideIconColor;
 
   // Für material shit
   ThemeData themeData;
@@ -56,29 +46,34 @@ class DesignPackage {
     required this.primaryColor,
     required this.textStyles,
     required this.themeData,
-    required this.boxStyle
+    required this.boxStyle,
+    required this.overrideIconColor
   });
 }
 
 class TextStyles {
   Color color;
+  Color contrastColor;
   TextStyle pageHeadline;
   TextStyle pageSubtitle;
   TextStyle boxHeadline;
   TextStyle pointElementPrimary;
   TextStyle pointElementSecondary;
-  TextStyle warningBoxText;
+  TextStyle collapsibleText;
+  TextStyle collapsibleTextContrast;
   TextStyle buttonText;
   TextStyle input;
 
   TextStyles({
     required this.color,
+    required this.contrastColor,
     required this.pageHeadline,
     required this.pageSubtitle,
     required this.boxHeadline,
     required this.pointElementPrimary,
     required this.pointElementSecondary,
-    required this.warningBoxText,
+    required this.collapsibleText,
+    required this.collapsibleTextContrast,
     required this.buttonText,
     required this.input
   });
@@ -96,8 +91,9 @@ class BoxStyle {
   });
 }
 
-DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color boxBackground, Color textColor, Color contrastColor) {
+DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color boxBackground, Color textColor, Color contrastColor, bool overrideIconColor) {
   return DesignPackage(
+      overrideIconColor: overrideIconColor,
       primaryColor: primaryColor,
       themeData: ThemeData(
         primarySwatch: createMaterialColor(primaryColor),
@@ -107,12 +103,14 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       ),
       textStyles: TextStyles(
         color: textColor,
+        contrastColor: contrastColor,
         pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
         pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
         boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
         pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),
-        pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)), // Probably wrong
-        warningBoxText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor),
+        pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)),
+        collapsibleText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: textColor),
+        collapsibleTextContrast: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor),
         buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: contrastColor),
         input: TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: textColor.withAlpha(210))
       ),

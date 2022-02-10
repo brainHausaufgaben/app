@@ -1,11 +1,12 @@
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 import 'page_template.dart';
-import '../Components/warning_box.dart';
+import '../Components/collapsible_box.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -50,6 +51,8 @@ class _HomePage extends State<HomePage>{
   }
 
   Widget getWarningBox(){
+      List<IconData> icons = [Icons.warning_rounded, Icons.warning_rounded, Icons.check];
+      List<Color> iconColors = [Colors.red, Colors.orange, Colors.green];
       int homework = TimeTable.homeworks.length;
       int iconIndex = 0;
       DateTime nextHomework = DateTime(99999);
@@ -68,7 +71,7 @@ class _HomePage extends State<HomePage>{
       if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
       if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgaben";
 
-      return WarningBox(text: text, iconIndex: iconIndex);
+      return CollapsibleBox(text: text, icon: icons[iconIndex], iconColor: iconColors[iconIndex], dark: true);
   }
 
 
@@ -80,7 +83,15 @@ class _HomePage extends State<HomePage>{
         child: Expanded(child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           getWarningBox(),
+            getWarningBox(),
+            Padding(
+              padding: const EdgeInsets.only(top: 7),
+              child: CollapsibleBox(
+                text: "Wie nennt man einen Freddy five knight splier der denkt der bite of 83 ist der bite of 87? Markplir 🤣😛😛",
+                icon: Icons.accessible_forward_rounded,
+                dark: true
+              ),
+            ),
             Flexible(child:
               ListView(
                   padding: const EdgeInsets.only(top:25),
