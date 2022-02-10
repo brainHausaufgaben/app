@@ -1,10 +1,7 @@
 import 'dart:core';
-import 'dart:math';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:flutter/material.dart';
 
 class SubjectInstance{
   Subject subject;
@@ -31,6 +28,15 @@ class SubjectInstance{
     DateTime now = DateTime.now().subtract(Duration(hours: DateTime.now().hour,minutes: DateTime.now().minute,seconds: DateTime.now().second));
     DateTime time = now.add(Duration(days: day,hours: hour,minutes: minute));
     return time;
+  }
+  DateTime getDateFromDate(DateTime date){
+
+
+
+    int hour = TimeTable.lessonTimes[lesson].startTime.hour;
+    int minute = TimeTable.lessonTimes[lesson].startTime.minute;
+
+    return(DateTime(date.year,date.month,date.year,hour,minute));
   }
 
   List<Homework> getHomework(){

@@ -31,6 +31,13 @@ class Subject{
       i++;
       if(i > 7) i = 1;
     }
+    for(SubjectInstance? subject in TimeTable.getDay(DateTime.now().weekday).subjects){
+      if(subject != null){
+        if(subject.subject == this) return subject.getDateFromDate(DateTime.now().add(const Duration(days:7)));
+      }
+    }
+
+
     return null;
   }
 
