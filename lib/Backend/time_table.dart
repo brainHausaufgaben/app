@@ -7,7 +7,7 @@ import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
-class TimeTable{
+class TimeTable {
   static List<Day> week = [];
   static List<Subject> subjects = [];
   static List<Homework> homeworks = [];

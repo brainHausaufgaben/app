@@ -1,4 +1,5 @@
-import 'package:brain_app/Pages/homework.dart';
+import 'package:brain_app/Pages/add_homework.dart';
+import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
@@ -14,8 +15,10 @@ class PageTemplate extends StatefulWidget {
 
 class _PageTemplateState extends State<PageTemplate> {
   void _settings(){
-    AppDesign.darkMode = !AppDesign.darkMode;
-    currentDesign.toggleTheme(Designs.monochromeTheme);
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => TimeTablePage())
+    );
   }
 
   void _back() {

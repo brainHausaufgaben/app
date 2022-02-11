@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CollapsibleBox extends StatefulWidget {
   String text = "empty";
   IconData icon;
   Color? iconColor;
-  bool collapsed = false;
+  bool collapsed;
   bool dark;
 
   CollapsibleBox({
     Key? key,
     required this.text,
     required this.icon,
+    this.collapsed = false,
     this.dark = false,
     this.iconColor
   }) : super(key: key);
@@ -25,7 +27,9 @@ class _CollapsibleBox extends State<CollapsibleBox> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {widget.collapsed = !widget.collapsed;});
+        setState(() {
+          widget.collapsed = !widget.collapsed;
+        });
       },
       child: AnimatedContainer (
         decoration: BoxDecoration(

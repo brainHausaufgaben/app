@@ -21,7 +21,6 @@ class HomePageDay extends StatefulWidget {
   List<Widget> getHomework(SubjectInstance subject){
     List<Widget> homeworkWidgets = [];
     if(subjectsOccurred.contains(subject.subject)) {
-      // print('${subject.subject.name} hat ${subject.getHomework().length} Hausaufgaben');
       return homeworkWidgets;
     } else {
       subjectsOccurred.add(subject.subject);
@@ -49,7 +48,6 @@ class HomePageDay extends StatefulWidget {
     }
     return subjectWidgets;
   }
-
 }
 
 class _HomePageDay extends  State<HomePageDay>{
