@@ -30,12 +30,8 @@ class SubjectInstance{
     return time;
   }
   DateTime getDateFromDate(DateTime date){
-
-
-
     int hour = TimeTable.lessonTimes[lesson].startTime.hour;
     int minute = TimeTable.lessonTimes[lesson].startTime.minute;
-
     return(DateTime(date.year,date.month,date.year,hour,minute));
   }
 

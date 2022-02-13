@@ -1,7 +1,9 @@
 import 'dart:math';
 
 
+import 'package:brain_app/Backend/data_store.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Backend/time_table.dart';
@@ -41,14 +43,23 @@ class _MyApp extends State<MyApp> {
     );
   }
 
+  //an computi funktioniert nicht wenn das nicht rauskommentiert ist :(
+  void databaseOperations() async{
+    MyDatabase database = MyDatabase();
+    await database.addTodo(TodosCompanion(name: Value("sus"), color: Value("sda") ));
+    print(await database.allTodoEntries);
+}
+
   @override
-  void initState(){
+  void initState() {
     super.initState();
     // Reloaded alle widgets wenn das Theme geändert wird
     currentDesign.addListener(() {
       setState((){});
     });
     TimeTable.init(this);
+    databaseOperations();
+
 
     //unnötig aber mir war langweilig
     /*
