@@ -8,6 +8,7 @@ import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
 import 'Backend/theming.dart';
 import 'Pages/home_page.dart';
+import 'Pages/time_table.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,6 @@ class MyApp extends StatefulWidget {
 
 
 class _MyApp extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,7 +68,7 @@ class _MyApp extends State<MyApp> {
     */
     Random random = Random();
     //List<String> names = ["schwanz", "cock", "amongus", "deutsch", "keine ahnung", "bubatz", "mathematik","hurensohn","er hat ein neues lied", "all meine entchen", "schwimmen auf dir", "kartoffelbrei", "jeremias", "fett", "sylenth1", "übergewichtig", "oh gott", "christian winkler", "bildungschicht","ähhh", "12 punkte schnitt", "nee es reicht glaub ich","birnenkomptt","keeenuuu weeeves", "ist wolkenmeer in diesem fall ein neologismus", "qrxvy (hund)", "batman", "five night freddy", "ich überlege", "gay lesson", "debug", "micheal","jackson","wendler bitter", "how to be GAYY!!", "trans learning", "gay recess", "crossdressing hour", "transgender lunch", "blm period"];
-    List<String> subjectsNames = ["Informatik","DHL","Schwanz","Crewmate(amongaus)","five night frederik","frederik burger",'Frau Julia "j.sterk" Sterk'];
+    List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport"];
     for(int sub = 0; sub < subjectsNames.length; sub++){
       Subject(subjectsNames[sub],Colors.primaries[sub]);
     }
@@ -77,7 +77,6 @@ class _MyApp extends State<MyApp> {
         SubjectInstance(TimeTable.subjects[random.nextInt(TimeTable.subjects.length)],day,i);
       }
     }
-    SubjectInstance(Subject("schwanz balls",Colors.limeAccent),4,0);
 
 
 /*

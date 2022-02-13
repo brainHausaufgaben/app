@@ -8,16 +8,16 @@ import 'package:flutter/material.dart';
 import 'page_template.dart';
 import '../Components/collapsible_box.dart';
 
+double scrollOffset = 0.0;
+
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}): super(key: key);
+
   @override
   State<HomePage> createState() => _HomePage();
-
-
-
 }
-class _HomePage extends State<HomePage>{
 
+class _HomePage extends State<HomePage>{
   List<int> getDayIndices(){
     List<int> dayIndices =  [];
     int currentDay = DateTime.now().weekday;
@@ -74,36 +74,46 @@ class _HomePage extends State<HomePage>{
       return CollapsibleBox(text: text, icon: icons[iconIndex], iconColor: iconColors[iconIndex], dark: true);
   }
 
-
   @override
   Widget build(BuildContext context) {
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return PageTemplate(
-        title: 'Übersicht',
-        child: Expanded(child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            getWarningBox(),
-            Padding(
-              padding: const EdgeInsets.only(top: 7),
-              child: CollapsibleBox(
-                text: "Wie nennt man einen Freddy five knight splier der denkt der bite of 83 ist der bite of 87? Markplir 🤣😛😛",
-                icon: Icons.accessible_forward_rounded,
-                dark: true
+      title: 'Übersicht',
+      child: Expanded(child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          getWarningBox(),
+          Padding(
+            padding: const EdgeInsets.only(top: 7),
+            child: CollapsibleBox(
+              text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.",
+              icon: Icons.accessible_forward_rounded,
+              dark: true
+            ),
+          ),
+          Expanded(child:
+            StretchingOverscrollIndicator(
+              axisDirection: AxisDirection.down,
+              child: ScrollConfiguration(
+                behavior: RemoveBubbleIndicator(),
+                child: ListView(
+                    padding: const EdgeInsets.only(top:25),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    children: getDays()
+                ),
               ),
             ),
-            Flexible(child:
-              ListView(
-                  padding: const EdgeInsets.only(top:25),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  children: getDays(),
-                ),
-            ),
-          ],
-        )
-    )
-      );
+          ),
+        ],
+      )
+    ));
   }
+}
 
+class RemoveBubbleIndicator extends ScrollBehavior {
+  @override
+  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
+    return child;
+  }
 }

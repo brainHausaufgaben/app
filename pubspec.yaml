@@ -28,10 +28,13 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter_rounded_date_picker: 2.0.2
+  shared_preferences: 2.0.13
   flutter_localizations:
     sdk: flutter
   flutter:
     sdk: flutter
+  sqflite:
+  path:
 
 
   # The following adds the Cupertino Icons font to your application.

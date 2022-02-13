@@ -36,6 +36,7 @@ class CustomDropdown<ItemType> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: InputDecorator ausprobieren
     return DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: AppDesign.current.boxStyle.inputBorderRadius,

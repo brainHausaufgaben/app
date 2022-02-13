@@ -7,7 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 AppDesign currentDesign = AppDesign();
 
 class AppDesign with ChangeNotifier {
-  static bool darkMode = SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
+  // static bool darkMode = SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
+  static bool darkMode = false;
   static DesignPackage current = Designs.monochromeTheme;
 
   AppDesign() {

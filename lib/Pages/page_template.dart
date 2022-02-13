@@ -40,10 +40,10 @@ class _PageTemplateState extends State<PageTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold (
       body: Padding(
         padding: EdgeInsets.only(left: 15, top: MediaQuery.of(context).viewPadding.top + 10, right: 15),
-        child:Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             //Settings Button / oder back button °o°
