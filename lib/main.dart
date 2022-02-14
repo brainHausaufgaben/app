@@ -1,9 +1,9 @@
 import 'dart:math';
 
 
-import 'package:brain_app/Backend/data_store.dart';
+//import 'package:brain_app/Backend/data_store.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
-import 'package:drift/drift.dart';
+//import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Backend/time_table.dart';
@@ -40,15 +40,23 @@ class _MyApp extends State<MyApp> {
       supportedLocales: const [
         Locale('de', 'DE')
       ],
+      builder: (context, child) {
+        return ScrollConfiguration(
+          behavior: StretchingIndicator(),
+          child: child!,
+        );
+      },
     );
   }
 
   //an computi funktioniert nicht wenn das nicht rauskommentiert ist :(
+  /*
   void databaseOperations() async{
     MyDatabase database = MyDatabase();
     await database.addTodo(TodosCompanion(name: Value("sus"), color: Value("sda") ));
     print(await database.allTodoEntries);
 }
+   */
 
   @override
   void initState() {
@@ -58,7 +66,7 @@ class _MyApp extends State<MyApp> {
       setState((){});
     });
     TimeTable.init(this);
-    databaseOperations();
+    //databaseOperations();
 
 
     //unnötig aber mir war langweilig
@@ -79,7 +87,7 @@ class _MyApp extends State<MyApp> {
     */
     Random random = Random();
     //List<String> names = ["schwanz", "cock", "amongus", "deutsch", "keine ahnung", "bubatz", "mathematik","hurensohn","er hat ein neues lied", "all meine entchen", "schwimmen auf dir", "kartoffelbrei", "jeremias", "fett", "sylenth1", "übergewichtig", "oh gott", "christian winkler", "bildungschicht","ähhh", "12 punkte schnitt", "nee es reicht glaub ich","birnenkomptt","keeenuuu weeeves", "ist wolkenmeer in diesem fall ein neologismus", "qrxvy (hund)", "batman", "five night freddy", "ich überlege", "gay lesson", "debug", "micheal","jackson","wendler bitter", "how to be GAYY!!", "trans learning", "gay recess", "crossdressing hour", "transgender lunch", "blm period"];
-    List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport"];
+    List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport","Physik","Biologie","P Seminar Brain","W Seminar","Religion","Wirtschaft","Geschichte"];
     for(int sub = 0; sub < subjectsNames.length; sub++){
       Subject(subjectsNames[sub],Colors.primaries[sub]);
     }
@@ -109,4 +117,12 @@ class _MyApp extends State<MyApp> {
 
 }
 
-
+class StretchingIndicator extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return StretchingOverscrollIndicator(
+        child: child,
+        axisDirection: AxisDirection.down
+    );
+  }
+}

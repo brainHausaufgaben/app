@@ -4,6 +4,7 @@ import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/Pages/add_homework.dart';
 import 'package:flutter/material.dart';
 import 'page_template.dart';
 import '../Components/collapsible_box.dart';
@@ -79,6 +80,7 @@ class _HomePage extends State<HomePage>{
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return PageTemplate(
       title: 'Übersicht',
+      addButtonAction: HomeworkPage(),
       child: Expanded(child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -86,34 +88,21 @@ class _HomePage extends State<HomePage>{
           Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
-              text: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.",
-              icon: Icons.accessible_forward_rounded,
+              text: "fun fact: Sebastian und Manuel sind extremst cool",
+              icon: Icons.ac_unit,
               dark: true
             ),
           ),
           Expanded(child:
-            StretchingOverscrollIndicator(
-              axisDirection: AxisDirection.down,
-              child: ScrollConfiguration(
-                behavior: RemoveBubbleIndicator(),
-                child: ListView(
-                    padding: const EdgeInsets.only(top:25),
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    children: getDays()
-                ),
-              ),
-            ),
+          ListView(
+              padding: const EdgeInsets.only(top:25),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: getDays()
+          )
           ),
         ],
       )
     ));
-  }
-}
-
-class RemoveBubbleIndicator extends ScrollBehavior {
-  @override
-  Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
-    return child;
   }
 }

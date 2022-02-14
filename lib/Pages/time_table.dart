@@ -4,6 +4,8 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/Pages/add_homework.dart';
+import 'package:brain_app/Pages/add_subject.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -41,6 +43,16 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           )
       );
     }
+    subjects.add(DropdownMenuItem<Subject>(
+      child: Padding(
+        padding: const EdgeInsets.only(top: 17),
+        child: PointElement(
+            primaryText: TimeTable.emptySubject.name,
+            color: TimeTable.emptySubject.color
+        ),
+      ),
+      value: TimeTable.emptySubject,
+    ));
     return subjects;
   }
 
@@ -49,16 +61,20 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
     for (int day=0; day<5; day++) {
       List<Widget> entries = [];
       for (int i=0; i<10; i++) {
-        String? startTime = TimeTable.week[day].subjects[i]?.getStartTimeString();
+        String? startTime = TimeTable.getDay(day+1).subjects[i]?.getStartTimeString();
         entries.add(
             Padding(
               padding: const EdgeInsets.only(bottom: 5),
               child: CustomDropdown(
-                defaultText: Text("Frei", style: AppDesign.current.textStyles.input),
+                defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
                 currentValue: TimeTable.week[day].subjects[i]?.subject,
                 items: getDropdowns(),
                 onChanged: (value) {
-                  TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
+                  if(value == TimeTable.emptySubject) {
+                    TimeTable.week[day].subjects[i] = null;
+                  } else {
+                    TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
+                  }
                   // TODO: Das ist dumm, man sollte die app irgendwie anders neu laden können
                   TimeTable.app!.setState(() {});
                 },
@@ -79,12 +95,13 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     int weekDay = DateTime.now().weekday;
-    // TODO: Irgendwie machen dass man da scrollen kann in der TabBarView
+    // TODO: Irgendwie machen dass die Tabbarview den ganzen screen füllt, wahrscheinlich mit scaffold in page_template
     return PageTemplate(
       title: "Stundenplan",
       backButton: true,
+      addButtonAction: SubjectPage(),
       child: DefaultTabController(
-        initialIndex: weekDay > 5 ? 0 : weekDay,
+        initialIndex: weekDay > 5 ? 0 : weekDay - 1,
         length: 5,
         child: Column(
             children: [
