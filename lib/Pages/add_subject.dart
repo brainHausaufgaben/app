@@ -20,21 +20,6 @@ class SubjectPage extends StatefulWidget {
 }
 
 class _SubjectPage extends State<SubjectPage> {
-
-
-  List<DropdownMenuItem<Subject>> getDropdowns(){
-    List<DropdownMenuItem<Subject>> subjects = [];
-    for(Subject subject in TimeTable.subjects){
-      subjects.add(
-          DropdownMenuItem<Subject>(
-            child: Text(subject.name),
-            value: subject,
-          )
-      );
-    }
-    return subjects;
-  }
-
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
@@ -52,17 +37,31 @@ class _SubjectPage extends State<SubjectPage> {
               TextButton(
                 onPressed: () {showDialog(
                   context: context,
-                  child:
-                )},
+                  builder: (BuildContext _test) {
+                    return AlertDialog(
+                      actions: const [
+                        Text("Abbrechen"),
+                        Text("Bestätigen")
+                      ],
+                      title: const Text("Farbe auswählen"),
+                      content: MaterialPicker(pickerColor: widget.pickerColor, onColorChanged: (color){
+                        setState(() {
+                          widget.pickerColor = color;
+                        });
+                        Navigator.pop(context);
+                      }),
+                    );
+                  }
+                );},
                 child: Text("ok"),
               ),
-              MaterialPicker(pickerColor: widget.pickerColor,portraitOnly: true, onColorChanged: (color){print("ok");}),
               const Spacer(),
               Padding(
                 padding: const EdgeInsets.only(bottom: 15),
                 child: ElevatedButton (
                     onPressed: (){
-
+                      Subject(widget.subjectController.text, widget.pickerColor);
+                      Navigator.pop(context);
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
