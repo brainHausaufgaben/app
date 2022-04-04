@@ -81,28 +81,28 @@ class _HomePage extends State<HomePage>{
     return PageTemplate(
       title: 'Übersicht',
       addButtonAction: HomeworkPage(),
-      child: Expanded(child: Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getWarningBox(),
           Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
-              text: "fun fact: Sebastian und Manuel sind extremst cool",
-              icon: Icons.ac_unit,
-              dark: true
+                text: "fun fact: Sebastian und Manuel sind extremst cool",
+                icon: Icons.ac_unit,
+                dark: true
             ),
           ),
-          Expanded(child:
-          ListView(
-              padding: const EdgeInsets.only(top:25),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              children: getDays()
-          )
+          Expanded(
+            child: ListView(
+                padding: const EdgeInsets.only(top:25),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: getDays()
+            ),
           ),
         ],
       )
-    ));
+    );
   }
 }

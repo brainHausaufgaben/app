@@ -1,11 +1,16 @@
+import 'dart:math';
+
+import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 class CustomTextField extends TextField {
   CustomTextField({
     Key? key,
     required controller,
+    required placeHolder,
     autocorrect
   }) : super(
     key: key,
@@ -15,7 +20,7 @@ class CustomTextField extends TextField {
     decoration: InputDecoration (
       filled: true,
       fillColor: AppDesign.current.boxStyle.backgroundColor,
-      label: Text("Hausaufgabe", style: AppDesign.current.textStyles.input),
+      label: Text(placeHolder, style: AppDesign.current.textStyles.input),
     ),
   );
 }
@@ -36,15 +41,15 @@ class CustomDropdown<ItemType> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: InputDecorator ausprobieren
     return DecoratedBox(
         decoration: BoxDecoration(
             borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
             color: AppDesign.current.boxStyle.backgroundColor
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           child: DropdownButton<dynamic>(
+            isDense: true,
             underline: Container(),
             isExpanded: true,
             dropdownColor: AppDesign.current.boxStyle.backgroundColor,
@@ -119,6 +124,59 @@ class CustomDateButton extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomColorPicker extends StatelessWidget {
+  CustomColorPicker({
+    Key? key,
+    required this.pickerColor,
+    required this.onColorSelect
+  }) : super(key: key);
+
+  Color pickerColor;
+  Function(Color) onColorSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+            color: AppDesign.current.boxStyle.backgroundColor
+          ),
+          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+          child: Row(
+            children: [
+              Container(
+                height: 25.0,
+                width: 25.0,
+                decoration: BoxDecoration(
+                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+                  color: pickerColor
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text("Farbe", style: AppDesign.current.textStyles.input),
+              )
+            ],
+          ),
+        ),
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+        ),
+        onPressed: () {showDialog(
+            context: context,
+            builder: (BuildContext _test) {
+              return AlertDialog(
+                title: const Text("Farbe auswählen"),
+                content: MaterialPicker(pickerColor: pickerColor, onColorChanged: onColorSelect),
+              );
+            }
+        );
+        }
     );
   }
 }

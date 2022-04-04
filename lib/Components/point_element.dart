@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
 class PointElement extends StatefulWidget {
-  PointElement({Key? key, required this.color, required this.primaryText,this.secondaryText,this.child}) : super(key: key);
+  PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child}) : super(key: key);
   Color color;
   String primaryText;
   String? secondaryText;
@@ -22,8 +22,9 @@ class _PointElementState extends  State<PointElement>{
           padding: const EdgeInsets.only(right: 5),
           child: Icon(Icons.circle, color: widget.color, size: 13)
         ),
-        Expanded(child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start   ,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.primaryText,

@@ -1,15 +1,12 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/add_homework.dart';
 import 'package:brain_app/Pages/add_subject.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/main.dart';
 
 class TimeTablePage extends StatefulWidget {
   const TimeTablePage({Key? key}) : super(key: key);
@@ -33,7 +30,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       subjects.add(
           DropdownMenuItem<Subject>(
             child: Padding(
-              padding: const EdgeInsets.only(top: 17),
+              padding: const EdgeInsets.only(top: 5),
               child: PointElement(
                   primaryText: subject.name,
                   color: subject.color
@@ -44,12 +41,9 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       );
     }
     subjects.add(DropdownMenuItem<Subject>(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 17),
-        child: PointElement(
-            primaryText: TimeTable.emptySubject.name,
-            color: TimeTable.emptySubject.color
-        ),
+      child: PointElement(
+          primaryText: TimeTable.emptySubject.name,
+          color: TimeTable.emptySubject.color
       ),
       value: TimeTable.emptySubject,
     ));
@@ -95,7 +89,6 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     int weekDay = DateTime.now().weekday;
-    // TODO: Irgendwie machen dass die Tabbarview den ganzen screen füllt, wahrscheinlich mit scaffold in page_template
     return PageTemplate(
       title: "Stundenplan",
       backButton: true,
@@ -103,87 +96,44 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       child: DefaultTabController(
         initialIndex: weekDay > 5 ? 0 : weekDay - 1,
         length: 5,
-        child: Column(
-            children: [
-              Container(
-                clipBehavior: Clip.antiAlias,
-                decoration: BoxDecoration(
-                  color:  AppDesign.current.boxStyle.backgroundColor,
-                  borderRadius: BorderRadius.circular(10)
-                ),
-                child: TabBar(
-                  labelStyle: AppDesign.current.textStyles.tab,
-                  labelColor: AppDesign.current.textStyles.contrastColor,
-                  unselectedLabelColor: AppDesign.current.textStyles.color,
-                  indicator: BoxDecoration(
-                      color: AppDesign.current.primaryColor
+        // TODO: Remove the TabBar from the NestedScrollView
+        child: NestedScrollView(
+          headerSliverBuilder: (context, value) {
+            return [
+              SliverToBoxAdapter(
+                child: Container(
+                  clipBehavior: Clip.antiAlias,
+                  decoration: BoxDecoration(
+                      color:  AppDesign.current.boxStyle.backgroundColor,
+                      borderRadius: BorderRadius.circular(10)
                   ),
-                  tabs: const [
-                    Tab(text: "Mo", height: 55),
-                    Tab(text: "Di", height: 55),
-                    Tab(text: "Mi", height: 55),
-                    Tab(text: "Do", height: 55),
-                    Tab(text: "Fr", height: 55)
-                  ],
-                ),
+                  child: TabBar(
+                    labelStyle: AppDesign.current.textStyles.tab,
+                    labelColor: AppDesign.current.textStyles.contrastColor,
+                    unselectedLabelColor: AppDesign.current.textStyles.color,
+                    indicator: BoxDecoration(
+                        color: AppDesign.current.primaryColor
+                    ),
+                    tabs: const [
+                      Tab(text: "Mo", height: 55),
+                      Tab(text: "Di", height: 55),
+                      Tab(text: "Mi", height: 55),
+                      Tab(text: "Do", height: 55),
+                      Tab(text: "Fr", height: 55)
+                    ],
+                  ),
+                )
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: SizedBox(
-                    height: 560,
-                    child: TabBarView(
-                      children: generateTimetableTabs(),
-                    )
-                ),
-              )
-            ]
-        ),
-      ),
+            ];
+          },
+          body: Padding(
+            padding: const EdgeInsets.only(top: 15),
+            child: TabBarView(
+              children: generateTimetableTabs(),
+            ),
+          )
+        )
+      )
     );
   }
 }
-
-/*
-return PageTemplate(
-      title: "Stundenplan",
-      backButton: true,
-      child: DefaultTabController(
-        initialIndex: weekDay > 5 ? 0 : weekDay,
-        length: 5,
-        child: Column(
-          children: [
-            Container(
-              clipBehavior: Clip.antiAlias,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10)
-              ),
-              child: TabBar(
-                labelStyle: AppDesign.current.textStyles.tab,
-                labelColor: AppDesign.current.textStyles.contrastColor,
-                unselectedLabelColor: AppDesign.current.textStyles.color,
-                indicator: BoxDecoration(
-                    color: AppDesign.current.primaryColor
-                ),
-                tabs: const [
-                  Tab(text: "M", height: 55),
-                  Tab(text: "D", height: 55),
-                  Tab(text: "M", height: 55),
-                  Tab(text: "D", height: 55),
-                  Tab(text: "F", height: 55)
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: SizedBox(
-                height: 550,
-                child: TabBarView(
-                  children: generateTimetableTabs(),
-                )
-              ),
-            )
-          ]
-        ),
-      ),
-    )
- */

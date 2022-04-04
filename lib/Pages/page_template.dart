@@ -44,39 +44,46 @@ class _PageTemplateState extends State<PageTemplate> {
     return Scaffold (
       body: Padding(
         padding: EdgeInsets.only(left: 15, top: MediaQuery.of(context).viewPadding.top + 10, right: 15),
-        child: Column(
+        child: Column (
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            //Settings Button / oder back button °o°
-            IconButton(
-              alignment: Alignment.centerLeft,
-              // Idk
-              constraints: const BoxConstraints(),
-              padding: const EdgeInsets.all(0),
-              onPressed: widget.backButton == null ? _settings : _back,
-              icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
-              iconSize: 26,
-              splashRadius: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget> [
-                  Text(
-                    widget.title,
-                    style: AppDesign.current.textStyles.pageHeadline,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                //Settings Button / oder back button °o°
+                IconButton(
+                  alignment: Alignment.centerLeft,
+                  // Idk
+                  constraints: const BoxConstraints(),
+                  padding: const EdgeInsets.all(0),
+                  onPressed: widget.backButton == null ? _settings : _back,
+                  icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
+                  iconSize: 26,
+                  splashRadius: 15,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget> [
+                      Text(
+                        widget.title,
+                        style: AppDesign.current.textStyles.pageHeadline,
+                      ),
+                      Text(
+                        getDateString(DateTime.now()),
+                        style: AppDesign.current.textStyles.pageSubtitle,
+                      )
+                    ],
                   ),
-                  Text(
-                    getDateString(DateTime.now()),
-                    style: AppDesign.current.textStyles.pageSubtitle,
-                  )
-                ],
-              ),
+                ),
+              ],
             ),
-            widget.child
+            Flexible(
+              child: widget.child
+            )
           ],
-        ),
+        )
       ),
       floatingActionButton: widget.addButtonAction == null ? null : FloatingActionButton(
         onPressed: () {
