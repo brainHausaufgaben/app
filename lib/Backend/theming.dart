@@ -27,6 +27,7 @@ class AppDesign with ChangeNotifier {
   }
 
   void toggleDarkMode() async {
+    // TODO: notifyListeners when toggling darkmode (probably change the theme system a bit)
     darkMode = !darkMode;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -94,6 +95,7 @@ class TextStyles {
   TextStyle tab;
   TextStyle alertDialogHeader;
   TextStyle alertDialogDescription;
+  TextStyle settingsSubMenu;
 
   TextStyles({
     required this.color,
@@ -109,7 +111,8 @@ class TextStyles {
     required this.input,
     required this.tab,
     required this.alertDialogHeader,
-    required this.alertDialogDescription
+    required this.alertDialogDescription,
+    required this.settingsSubMenu
   });
 }
 
@@ -149,7 +152,8 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
         input: TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: textColor.withAlpha(210)),
         tab: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: textColor),
         alertDialogHeader: TextStyle(fontWeight: FontWeight.w600, fontSize:22, color: textColor),
-        alertDialogDescription: TextStyle(fontWeight: FontWeight.w500, fontSize:17, color: textColor)
+        alertDialogDescription: TextStyle(fontWeight: FontWeight.w500, fontSize:17, color: textColor),
+        settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:17, height: 1, color: textColor.withAlpha(210))
       ),
       boxStyle: BoxStyle(
           backgroundColor: boxBackground,

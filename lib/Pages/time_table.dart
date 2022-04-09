@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -55,23 +56,33 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
     for (int day=0; day<5; day++) {
       List<Widget> entries = [];
       for (int i=0; i<10; i++) {
-        String? startTime = TimeTable.getDay(day+1).subjects[i]?.getStartTimeString();
         entries.add(
             Padding(
-              padding: const EdgeInsets.only(bottom: 5),
-              child: CustomDropdown(
-                defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
-                currentValue: TimeTable.week[day].subjects[i]?.subject,
-                items: getDropdowns(),
-                onChanged: (value) {
-                  if(value == TimeTable.emptySubject) {
-                    TimeTable.week[day].subjects[i] = null;
-                  } else {
-                    TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
-                  }
-                  // TODO: Das ist dumm, man sollte die app irgendwie anders neu laden können
-                  TimeTable.app!.setState(() {});
-                },
+              padding: const EdgeInsets.only(bottom: 5, left: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
+                  ),
+                  Flexible(
+                    flex: 5,
+                    child: CustomDropdown(
+                      defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
+                      currentValue: TimeTable.week[day].subjects[i]?.subject,
+                      items: getDropdowns(),
+                      onChanged: (value) {
+                        if(value == TimeTable.emptySubject) {
+                          TimeTable.week[day].subjects[i] = null;
+                        } else {
+                          TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
+                        }
+                        // TODO: Das ist dumm, man sollte die app irgendwie anders neu laden können
+                        TimeTable.app!.setState(() {});
+                      },
+                    ),
+                  )
+                ],
               ),
             )
         );
@@ -96,12 +107,22 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       child: DefaultTabController(
         initialIndex: weekDay > 5 ? 0 : weekDay - 1,
         length: 5,
-        // TODO: Remove the TabBar from the NestedScrollView
         child: NestedScrollView(
           headerSliverBuilder: (context, value) {
             return [
-              SliverToBoxAdapter(
-                child: Container(
+              SliverAppBar(
+                  shape:  RoundedRectangleBorder(
+                  borderRadius: AppDesign.current.boxStyle.borderRadius
+                ),
+                expandedHeight: 0,
+                titleSpacing: 0,
+                primary: false,
+                backgroundColor: Colors.transparent,
+                elevation: 2,
+                shadowColor: Colors.grey.shade50,
+                automaticallyImplyLeading: false,
+                pinned: true,
+                title: Container(
                   clipBehavior: Clip.antiAlias,
                   decoration: BoxDecoration(
                       color:  AppDesign.current.boxStyle.backgroundColor,

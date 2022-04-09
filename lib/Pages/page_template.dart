@@ -1,12 +1,14 @@
 import 'package:brain_app/Pages/add_homework.dart';
+import 'package:brain_app/Pages/settings.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
 class PageTemplate extends StatefulWidget {
-  const PageTemplate({Key? key, required this.title, required this.child, this.backButton, this.addButtonAction}) : super(key: key);
+  const PageTemplate({Key? key, required this.title, required this.child, this.backButton, this.addButtonAction, this.subtitle}) : super(key: key);
   final Widget child;
   final String title;
+  final String? subtitle;
   final bool? backButton;
   final Widget? addButtonAction;
 
@@ -18,7 +20,7 @@ class _PageTemplateState extends State<PageTemplate> {
   void _settings(){
     Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => TimeTablePage())
+        MaterialPageRoute(builder: (context) => SettingsPage())
     );
   }
 
@@ -71,7 +73,7 @@ class _PageTemplateState extends State<PageTemplate> {
                         style: AppDesign.current.textStyles.pageHeadline,
                       ),
                       Text(
-                        getDateString(DateTime.now()),
+                        widget.subtitle ?? getDateString(DateTime.now()),
                         style: AppDesign.current.textStyles.pageSubtitle,
                       )
                     ],
@@ -92,7 +94,6 @@ class _PageTemplateState extends State<PageTemplate> {
               MaterialPageRoute(builder: (context) => widget.addButtonAction!)
           );
         },
-        tooltip: 'Hausaufgabe',
         child: const Icon(Icons.add),
       ),
     );

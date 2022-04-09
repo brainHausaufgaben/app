@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -177,6 +178,45 @@ class CustomColorPicker extends StatelessWidget {
             }
         );
         }
+    );
+  }
+}
+
+class CustomSettingsButton<ItemType> extends StatelessWidget {
+  CustomSettingsButton({
+    Key? key,
+    required this.text,
+    required this.action
+  }) : super(key: key);
+
+  String text;
+  bool navigator = true;
+  Function() action;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: ButtonStyle(
+          padding: MaterialStateProperty.all<EdgeInsets>(
+              const EdgeInsets.symmetric(vertical: 20, horizontal: 15)
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+              AppDesign.current.boxStyle.backgroundColor
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: AppDesign.current.boxStyle.borderRadius,
+              )
+          )
+      ),
+      onPressed: action,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          Icon(Icons.arrow_forward_ios_rounded, color: AppDesign.current.primaryColor, size: 20)
+        ],
+      ),
     );
   }
 }

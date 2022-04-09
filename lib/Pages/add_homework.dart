@@ -25,6 +25,7 @@ class _HomeworkPage extends State<HomeworkPage> {
     for(Subject subject in TimeTable.subjects){
       subjects.add(
         DropdownMenuItem<Subject>(
+          alignment: Alignment.bottomCenter,
           child: PointElement(primaryText: subject.name, color: subject.color),
           value: subject,
         )
