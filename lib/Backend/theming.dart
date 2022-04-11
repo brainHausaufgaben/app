@@ -30,6 +30,9 @@ class AppDesign with ChangeNotifier {
       case "militaryGreen":
         current = Designs.militaryGreen;
         break;
+      case "pastellRed":
+        current = Designs.pastellRed;
+        break;
       case "help":
         current = Designs.help;
         break;
@@ -80,12 +83,16 @@ class Designs {
     generateDesign(const Color(0xFFA3BDA6), const Color(0xFF445346), const Color(0xFF637265), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
     generateDesign(const Color(0xFF455147), const Color(0xFFAABCAC), const Color(0xFFC9D4CA), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
+  static DesignPackage get pastellRed => AppDesign.darkMode ?
+  generateDesign(const Color(0xFFEF6363), const Color(0xFF4B2B2B), const Color(0xFF5F3A3A), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :
+  generateDesign(const Color(0xFFEF6363), const Color(0xFFFCE8E8), const Color(0xFFF9DFDF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+
   static DesignPackage get help => AppDesign.darkMode ?
     generateDesign(const Color(0xFFFF0000), const Color(0xFF000000), const Color(0xFF6B1919), const Color(0xFFFF0000), const Color(0xFF000000), true) :
     generateDesign(const Color(0xFFFAE100), const Color(0xFFD34DE9), const Color(0xFF61C200), const Color(0xFF0050FF), const Color(0xFFFFFFFF), true);
 
 
-  static List<String> themeList = ["monochrome", "orange", "poisonGreen", "militaryGreen", "help"];
+  static List<String> themeList = ["monochrome", "orange", "poisonGreen", "militaryGreen", "pastellRed", "help"];
 }
 
 class DesignPackage {

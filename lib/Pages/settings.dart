@@ -12,7 +12,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPage extends State<SettingsPage> {
-  final List<bool> radioList = [false, false, false, false, false];
+  final List<bool> radioList = List.filled(Designs.themeList.length, false);
 
   @override
   void initState() {
@@ -73,7 +73,8 @@ class _SettingsPage extends State<SettingsPage> {
                       IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png"),
                       IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png"),
                       IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png"),
-                      IconRadio(isSelected: radioList[4], path: "icons/helpThemeIcon.png")
+                      IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png"),
+                      IconRadio(isSelected: radioList[5], path: "icons/helpThemeIcon.png")
                     ]
                   )
                 )
