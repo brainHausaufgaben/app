@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -7,9 +6,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 AppDesign currentDesign = AppDesign();
 
 class AppDesign with ChangeNotifier {
-  // static bool darkMode = SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
   static bool darkMode = false;
-  static DesignPackage current = Designs.monochromeTheme;
+  static DesignPackage current = Designs.monochrome;
+  static String currentThemeName = "monochrome";
 
   AppDesign() {
     getDarkmode();
@@ -17,8 +16,23 @@ class AppDesign with ChangeNotifier {
   }
 
   void toggleTheme(String theme) async {
-    if (theme == "monochromeTheme") {
-      current = Designs.monochromeTheme;
+    currentThemeName = theme;
+    switch (theme) {
+      case "monochrome":
+        current = Designs.monochrome;
+        break;
+      case "poisonGreen":
+        current = Designs.poisonGreen;
+        break;
+      case "orange":
+        current = Designs.orange;
+        break;
+      case "militaryGreen":
+        current = Designs.militaryGreen;
+        break;
+      case "help":
+        current = Designs.help;
+        break;
     }
     notifyListeners();
 
@@ -27,8 +41,8 @@ class AppDesign with ChangeNotifier {
   }
 
   void toggleDarkMode() async {
-    // TODO: notifyListeners when toggling darkmode (probably change the theme system a bit)
     darkMode = !darkMode;
+    toggleTheme(currentThemeName);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("darkMode", darkMode);
@@ -36,30 +50,42 @@ class AppDesign with ChangeNotifier {
 
   void getDarkmode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    darkMode = prefs.getBool("darkMode") ?? darkMode;
+    darkMode = prefs.getBool("darkMode") ?? SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
   }
 
   void getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? theme = prefs.getString("theme");
-    if (theme != null) toggleTheme(theme);
+    if (theme != null) {
+      toggleTheme(theme);
+    }
   }
 }
 
 class Designs {
   // generateDesign(primaryColor, backgroundColor, boxBackground, textColor, contrastColor, overrideIconColor)
-  static DesignPackage get monochromeTheme => AppDesign.darkMode ?
+  static DesignPackage get monochrome => AppDesign.darkMode ?
     generateDesign(const Color(0xFFFFFFFF), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), false) :
     generateDesign(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), false);
 
-  static DesignPackage get greenTheme => AppDesign.darkMode ?
+  static DesignPackage get poisonGreen => AppDesign.darkMode ?
     generateDesign(const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
     generateDesign(const Color(0xFF82A914), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
-  static Map<String, DesignPackage> themeList = {
-    "monochromeTheme" : monochromeTheme,
-    "greenTheme" : greenTheme
-  };
+  static DesignPackage get orange => AppDesign.darkMode ?
+    generateDesign(const Color(0xFFE06E04), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
+    generateDesign(const Color(0xFFE06E04), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+
+  static DesignPackage get militaryGreen => AppDesign.darkMode ?
+    generateDesign(const Color(0xFFA3BDA6), const Color(0xFF445346), const Color(0xFF637265), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
+    generateDesign(const Color(0xFF455147), const Color(0xFFAABCAC), const Color(0xFFC9D4CA), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+
+  static DesignPackage get help => AppDesign.darkMode ?
+    generateDesign(const Color(0xFFFF0000), const Color(0xFF000000), const Color(0xFF6B1919), const Color(0xFFFF0000), const Color(0xFF000000), true) :
+    generateDesign(const Color(0xFFFAE100), const Color(0xFFD34DE9), const Color(0xFF61C200), const Color(0xFF0050FF), const Color(0xFFFFFFFF), true);
+
+
+  static List<String> themeList = ["monochrome", "orange", "poisonGreen", "militaryGreen", "help"];
 }
 
 class DesignPackage {

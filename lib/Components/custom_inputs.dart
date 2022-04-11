@@ -1,7 +1,3 @@
-import 'dart:math';
-
-import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -20,6 +16,11 @@ class CustomTextField extends TextField {
     style: AppDesign.current.textStyles.input,
     decoration: InputDecoration (
       filled: true,
+      enabledBorder: UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppDesign.current.textStyles.color
+        )
+      ),
       fillColor: AppDesign.current.boxStyle.backgroundColor,
       label: Text(placeHolder, style: AppDesign.current.textStyles.input),
     ),
@@ -50,6 +51,7 @@ class CustomDropdown<ItemType> extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
           child: DropdownButton<dynamic>(
+            iconEnabledColor: AppDesign.current.textStyles.color,
             isDense: true,
             underline: Container(),
             isExpanded: true,
@@ -121,7 +123,7 @@ class CustomDateButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(value.year == 10 ? text : getDateString(value), style: AppDesign.current.textStyles.input),
-            const Icon(Icons.date_range),
+            Icon(Icons.date_range, color: AppDesign.current.textStyles.color),
           ],
         ),
       ),
@@ -182,41 +184,116 @@ class CustomColorPicker extends StatelessWidget {
   }
 }
 
-class CustomSettingsButton<ItemType> extends StatelessWidget {
-  CustomSettingsButton({
+class SettingsNavigatorButton extends StatelessWidget {
+  SettingsNavigatorButton({
     Key? key,
     required this.text,
     required this.action
   }) : super(key: key);
 
   String text;
-  bool navigator = true;
   Function() action;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(
-              const EdgeInsets.symmetric(vertical: 20, horizontal: 15)
-          ),
-          backgroundColor: MaterialStateProperty.all<Color>(
-              AppDesign.current.boxStyle.backgroundColor
-          ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: AppDesign.current.boxStyle.borderRadius,
-              )
-          )
-      ),
       onPressed: action,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
-          Icon(Icons.arrow_forward_ios_rounded, color: AppDesign.current.primaryColor, size: 20)
+          Icon(Icons.arrow_forward_ios_rounded, color: AppDesign.current.textStyles.color, size: 20)
         ],
       ),
     );
   }
 }
+
+class SettingsSwitchButton extends StatefulWidget {
+  SettingsSwitchButton({
+    Key? key,
+    required this.text,
+    required this.action
+  }) : super(key: key);
+
+  String text;
+  Function() action;
+
+  @override
+  State<StatefulWidget> createState() =>  _SettingsSwitchButton();
+}
+
+class _SettingsSwitchButton extends State<SettingsSwitchButton> {
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        widget.action();
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(widget.text, style: AppDesign.current.textStyles.settingsSubMenu),
+          Container(
+            width: 22,
+            height: 22,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(
+                color: AppDesign.current.textStyles.color,
+                width: 2
+              )
+            ),
+            child: Center(
+              child: Container(
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    color: AppDesign.darkMode ? AppDesign.current.textStyles.color : Colors.transparent,
+                    borderRadius: BorderRadius.circular(3)
+                  ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsEntry extends StatelessWidget {
+  SettingsEntry({
+    Key? key,
+    required this.children
+  }) : super(key: key);
+
+  List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      decoration: BoxDecoration(
+        color: AppDesign.current.boxStyle.backgroundColor,
+        borderRadius: AppDesign.current.boxStyle.borderRadius
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
+    );
+  }
+}
+
+class ColorThemeSelection extends StatelessWidget {
+  ColorThemeSelection({Key? key}) : super(key: key);
+
+  int currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+

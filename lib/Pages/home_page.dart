@@ -89,7 +89,7 @@ class _HomePage extends State<HomePage>{
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
                 text: "fun fact: Sebastian und Manuel sind extremst cool",
-                icon: Icons.ac_unit,
+                icon: Icons.celebration,
                 dark: true
             ),
           ),

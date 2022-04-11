@@ -51,8 +51,10 @@ class _SubjectPage extends State<SubjectPage> {
               padding: const EdgeInsets.only(bottom: 15),
               child: ElevatedButton (
                   onPressed: (){
-                    Subject(widget.subjectController.text, widget.pickerColor);
-                    Navigator.pop(context);
+                    if (widget.subjectController.text.isNotEmpty) {
+                      Subject(widget.subjectController.text, widget.pickerColor);
+                      Navigator.pop(context);
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
