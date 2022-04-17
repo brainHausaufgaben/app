@@ -43,19 +43,23 @@ class DismissableBox extends StatelessWidget {
           ),
           key: UniqueKey(),
           direction: DismissDirection.horizontal,
-          child: Container(
-            constraints: const BoxConstraints.expand(height: 40), // Temporärer fix weil sonst nicht ganze breite
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: AppDesign.current.boxStyle.backgroundColor,
-                boxShadow: [
-                  AppDesign.current.boxStyle.boxShadow
-                ]
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Text(homework.name, style: AppDesign.current.textStyles.pointElementSecondary),
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: AppDesign.current.boxStyle.backgroundColor,
+                    boxShadow: [
+                      AppDesign.current.boxStyle.boxShadow
+                    ]
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Text(homework.name, style: AppDesign.current.textStyles.pointElementSecondary),
+                ),
+              )
+            ],
           )
         ),
     );

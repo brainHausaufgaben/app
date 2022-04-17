@@ -1,16 +1,16 @@
-import 'package:brain_app/Pages/add_homework.dart';
 import 'package:brain_app/Pages/settings.dart';
-import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class PageTemplate extends StatefulWidget {
-  const PageTemplate({Key? key, required this.title, required this.child, this.backButton, this.addButtonAction, this.subtitle}) : super(key: key);
+  const PageTemplate({Key? key, required this.title, required this.child, this.backButton, this.subtitle, this.floatingActionButton}) : super(key: key);
+
   final Widget child;
   final String title;
   final String? subtitle;
   final bool? backButton;
-  final Widget? addButtonAction;
+  final Widget? floatingActionButton;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -87,15 +87,7 @@ class _PageTemplateState extends State<PageTemplate> {
           ],
         )
       ),
-      floatingActionButton: widget.addButtonAction == null ? null : FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => widget.addButtonAction!)
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: widget.floatingActionButton
     );
   }
 }

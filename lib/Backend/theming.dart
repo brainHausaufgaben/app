@@ -8,7 +8,7 @@ AppDesign currentDesign = AppDesign();
 class AppDesign with ChangeNotifier {
   static bool darkMode = false;
   static DesignPackage current = Designs.monochrome;
-  static String currentThemeName = "monochrome";
+  static String currentThemeName = "Monochrome";
 
   AppDesign() {
     getDarkmode();
@@ -18,22 +18,25 @@ class AppDesign with ChangeNotifier {
   void toggleTheme(String theme) async {
     currentThemeName = theme;
     switch (theme) {
-      case "monochrome":
+      case "Monochrome":
         current = Designs.monochrome;
         break;
-      case "poisonGreen":
+      case "Poison Green":
         current = Designs.poisonGreen;
         break;
-      case "orange":
-        current = Designs.orange;
+      case "Carrot Orange":
+        current = Designs.carrotOrange;
         break;
-      case "militaryGreen":
+      case "Military Green":
         current = Designs.militaryGreen;
         break;
-      case "pastellRed":
+      case "Pastell Red":
         current = Designs.pastellRed;
         break;
-      case "help":
+      case "Jeremias":
+        current = Designs.jeremiasTheme;
+        break;
+      case "Help":
         current = Designs.help;
         break;
     }
@@ -66,6 +69,8 @@ class AppDesign with ChangeNotifier {
 }
 
 class Designs {
+  static List<String> themeList = ["Monochrome", "Carrot Orange", "Poison Green", "Military Green", "Pastell Red", "Jeremias", "Help"];
+
   // generateDesign(primaryColor, backgroundColor, boxBackground, textColor, contrastColor, overrideIconColor)
   static DesignPackage get monochrome => AppDesign.darkMode ?
     generateDesign(const Color(0xFFFFFFFF), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), false) :
@@ -75,7 +80,7 @@ class Designs {
     generateDesign(const Color(0xFF82A914), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
     generateDesign(const Color(0xFF82A914), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
-  static DesignPackage get orange => AppDesign.darkMode ?
+  static DesignPackage get carrotOrange => AppDesign.darkMode ?
     generateDesign(const Color(0xFFE06E04), const Color(0xFF15161D), const Color(0xFF1C1D24), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
     generateDesign(const Color(0xFFE06E04), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
@@ -84,15 +89,16 @@ class Designs {
     generateDesign(const Color(0xFF455147), const Color(0xFFAABCAC), const Color(0xFFC9D4CA), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
   static DesignPackage get pastellRed => AppDesign.darkMode ?
-  generateDesign(const Color(0xFFEF6363), const Color(0xFF4B2B2B), const Color(0xFF5F3A3A), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :
-  generateDesign(const Color(0xFFEF6363), const Color(0xFFFCE8E8), const Color(0xFFF9DFDF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+    generateDesign(const Color(0xFFEF6363), const Color(0xFF4B2B2B), const Color(0xFF5F3A3A), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :
+    generateDesign(const Color(0xFFEF6363), const Color(0xFFFCE8E8), const Color(0xFFF9DFDF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
   static DesignPackage get help => AppDesign.darkMode ?
     generateDesign(const Color(0xFFFF0000), const Color(0xFF000000), const Color(0xFF6B1919), const Color(0xFFFF0000), const Color(0xFF000000), true) :
     generateDesign(const Color(0xFFFAE100), const Color(0xFFD34DE9), const Color(0xFF61C200), const Color(0xFF0050FF), const Color(0xFFFFFFFF), true);
 
-
-  static List<String> themeList = ["monochrome", "orange", "poisonGreen", "militaryGreen", "pastellRed", "help"];
+  static DesignPackage get jeremiasTheme => AppDesign.darkMode ?
+    generateDesign(const Color(0xFF6249AB), const Color(0xFF2D2648), const Color(0xFF382F59), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :
+    generateDesign(const Color(0xFF6249AB), const Color(0xFFD7CBFB), const Color(0xFFE9E1FF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 }
 
 class DesignPackage {
@@ -101,7 +107,6 @@ class DesignPackage {
   BoxStyle boxStyle;
   bool overrideIconColor;
 
-  // Für material shit
   ThemeData themeData;
 
   DesignPackage({
@@ -166,6 +171,8 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       overrideIconColor: overrideIconColor,
       primaryColor: primaryColor,
       themeData: ThemeData(
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         primarySwatch: createMaterialColor(primaryColor),
         primaryColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,

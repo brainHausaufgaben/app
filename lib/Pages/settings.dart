@@ -69,12 +69,13 @@ class _SettingsPage extends State<SettingsPage> {
                     renderBorder: false,
                     isSelected: radioList,
                     children: [
-                      IconRadio(isSelected: radioList[0], path: "icons/monochromeThemeIcon.png"),
-                      IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png"),
-                      IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png"),
-                      IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png"),
-                      IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png"),
-                      IconRadio(isSelected: radioList[5], path: "icons/helpThemeIcon.png")
+                      IconRadio(isSelected: radioList[0], path: "icons/monochromeThemeIcon.png", tooltip: "Monochrome"),
+                      IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png", tooltip: "Carrot Orange"),
+                      IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png", tooltip: "Poison Green"),
+                      IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png", tooltip: "Military Green"),
+                      IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png", tooltip: "Pastell Red"),
+                      IconRadio(isSelected: radioList[5], path: "icons/jeremiasThemeIcon.png", tooltip: "Jeremias"),
+                      IconRadio(isSelected: radioList[6], path: "icons/helpThemeIcon.png", tooltip: "Help")
                     ]
                   )
                 )
@@ -91,23 +92,28 @@ class IconRadio extends StatelessWidget {
   IconRadio({
     Key? key,
     required this.isSelected,
-    required this.path
+    required this.path,
+    required this.tooltip
   }) : super(key: key);
 
   bool isSelected;
+  String tooltip;
   String path;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 70,
-      decoration: BoxDecoration(
-        color: isSelected ? AppDesign.current.primaryColor.withAlpha(50) : null,
-        borderRadius: BorderRadius.circular(5)
-      ),
-      child: Center(
-        child: Image(image: AssetImage(path), width: 45, height: 55),
+    return Tooltip(
+      message: tooltip,
+      child: Container(
+        width: 50,
+        height: 70,
+        decoration: BoxDecoration(
+            color: isSelected ? AppDesign.current.primaryColor.withAlpha(50) : null,
+            borderRadius: BorderRadius.circular(5)
+        ),
+        child: Center(
+          child: Image(image: AssetImage(path), width: 45, height: 55),
+        ),
       ),
     );
   }

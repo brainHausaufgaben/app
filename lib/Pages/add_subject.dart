@@ -10,8 +10,12 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key}) : super(key: key);
+  SubjectPage({Key? key, this.previous}) : super(key: key) {
+    subjectController.text = previous != null ? previous!.name : "";
+    pickerColor = previous != null ? previous!.color : Colors.red;
+  }
 
+  Subject? previous;
   final subjectController = TextEditingController();
   Color pickerColor = Colors.red;
 
@@ -23,47 +27,51 @@ class _SubjectPage extends State<SubjectPage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-        backButton: true,
-        title: "Neues Fach",
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CustomTextField(
-                controller: widget.subjectController,
-                placeHolder: "Fach Name",
-                autocorrect: true
+      backButton: true,
+      title: widget.previous != null ? "Fach Bearbeiten" : "Neues Fach",
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CustomTextField(
+              controller: widget.subjectController,
+              placeHolder: "Fach Name",
+              autocorrect: true
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: CustomColorPicker(
+              pickerColor: widget.pickerColor,
+              onColorSelect: (color) {
+                setState(() {
+                  widget.pickerColor = color;
+                });
+                Navigator.pop(context);
+              },
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: CustomColorPicker(
-                pickerColor: widget.pickerColor,
-                onColorSelect: (color) {
-                  setState(() {
-                    widget.pickerColor = color;
-                  });
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: ElevatedButton (
+              onPressed: (){
+                if (widget.subjectController.text.isNotEmpty) {
+                  if (widget.previous != null) {
+                    int index = TimeTable.subjects.indexOf(widget.previous!);
+                    TimeTable.subjects.removeAt(index);
+                  }
+                  Subject(widget.subjectController.text, widget.pickerColor);
                   Navigator.pop(context);
-                },
-              ),
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+              )
             ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: ElevatedButton (
-                  onPressed: (){
-                    if (widget.subjectController.text.isNotEmpty) {
-                      Subject(widget.subjectController.text, widget.pickerColor);
-                      Navigator.pop(context);
-                    }
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
-                  )
-              ),
-            )
-          ],
-        )
+          )
+        ],
+      )
     );
   }
 }

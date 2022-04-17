@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class CustomTextField extends TextField {
   CustomTextField({
@@ -11,13 +13,16 @@ class CustomTextField extends TextField {
     autocorrect
   }) : super(
     key: key,
+    maxLines: null,
     autocorrect: autocorrect,
     controller: controller,
     style: AppDesign.current.textStyles.input,
     decoration: InputDecoration (
       filled: true,
       enabledBorder: UnderlineInputBorder(
+        borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
         borderSide: BorderSide(
+          width: 4,
           color: AppDesign.current.textStyles.color
         )
       ),
@@ -126,6 +131,41 @@ class CustomDateButton extends StatelessWidget {
             Icon(Icons.date_range, color: AppDesign.current.textStyles.color),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class CustomIconButton extends StatelessWidget {
+  CustomIconButton({
+    Key? key,
+    required this.action,
+    required this.child,
+    required this.icon,
+    this.dense = false
+  }) : super(key: key);
+
+  Function() action;
+  Widget child;
+  IconData icon;
+  bool dense;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: action,
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.symmetric(vertical: dense ? 10 : 14, horizontal: 12),
+        backgroundColor: AppDesign.current.boxStyle.backgroundColor
+      ),
+      child: Flex(
+        direction: Axis.horizontal,
+        children: [
+          Flexible(
+            child: child,
+          ),
+          Icon(icon, color: AppDesign.current.textStyles.color),
+        ],
       ),
     );
   }
@@ -272,7 +312,7 @@ class SettingsEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       decoration: BoxDecoration(
         color: AppDesign.current.boxStyle.backgroundColor,
         borderRadius: AppDesign.current.boxStyle.borderRadius
@@ -285,15 +325,21 @@ class SettingsEntry extends StatelessWidget {
   }
 }
 
-class ColorThemeSelection extends StatelessWidget {
-  ColorThemeSelection({Key? key}) : super(key: key);
+class CustomMenuButton extends StatelessWidget {
+  const CustomMenuButton({Key? key, required this.menuEntries, required this.icon}) : super(key: key);
 
-  int currentIndex = 0;
+  final List<SpeedDialChild> menuEntries;
+  final Icon icon;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return SpeedDial(
+      child: icon,
+      children: menuEntries,
+      overlayColor: Colors.black,
+      overlayOpacity: 0.6,
+      spacing: 5,
+    );
   }
 }
 

@@ -12,6 +12,7 @@ import 'Backend/theming.dart';
 import 'Pages/home_page.dart';
 import 'Pages/time_table.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -30,7 +31,6 @@ class _MyApp extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      // Der will dass HomePage const ist aber dann geht theming nichtmehr!!!
       home: HomePage(),
       theme: AppDesign.current.themeData,
       localizationsDelegates: const [

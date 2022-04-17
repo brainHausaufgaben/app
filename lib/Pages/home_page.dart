@@ -2,10 +2,11 @@ import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
-import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/add_homework.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'page_template.dart';
 import '../Components/collapsible_box.dart';
 
@@ -80,7 +81,25 @@ class _HomePage extends State<HomePage>{
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return PageTemplate(
       title: 'Übersicht',
-      addButtonAction: HomeworkPage(),
+      floatingActionButton: CustomMenuButton(
+        icon: const Icon(Icons.add),
+        menuEntries: [
+          SpeedDialChild(
+            backgroundColor: AppDesign.current.primaryColor,
+            foregroundColor: AppDesign.current.textStyles.contrastColor,
+            labelBackgroundColor: AppDesign.current.primaryColor,
+            labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+            label: "Hausaufgaben",
+            child: const Icon(Icons.description_rounded),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeworkPage())
+              );
+            }
+          )
+        ],
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

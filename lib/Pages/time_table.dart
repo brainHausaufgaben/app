@@ -1,10 +1,9 @@
-import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/add_subject.dart';
+import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -17,25 +16,14 @@ class TimeTablePage extends StatefulWidget {
 }
 
 class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin {
-  TabController? _tabController;
-
-  @override
-  void initState() {
-    _tabController = TabController(length: 5, vsync: this);
-    super.initState();
-  }
-
-  List<DropdownMenuItem<Subject>> getDropdowns(){
+  List<DropdownMenuItem<Subject>> getDropdowns() {
     List<DropdownMenuItem<Subject>> subjects = [];
     for(Subject subject in TimeTable.subjects){
       subjects.add(
           DropdownMenuItem<Subject>(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 5),
-              child: PointElement(
-                  primaryText: subject.name,
-                  color: subject.color
-              ),
+            child: PointElement(
+                primaryText: subject.name,
+                color: subject.color
             ),
             value: subject,
           )
@@ -103,7 +91,17 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
     return PageTemplate(
       title: "Stundenplan",
       backButton: true,
-      addButtonAction: SubjectPage(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.edit),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SubjectOverview())
+          ).then((value) {
+            setState(() {});
+          });
+        }
+      ),
       child: DefaultTabController(
         initialIndex: weekDay > 5 ? 0 : weekDay - 1,
         length: 5,
