@@ -11,8 +11,6 @@ import '../Components/collapsible_box.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:csv/csv.dart';
 
-double scrollOffset = 0.0;
-
 class HomePage extends StatefulWidget {
   HomePage({Key? key}): super(key: key);
 
@@ -21,6 +19,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage>{
+  String collabsibleBoxText = "Wird geladen...";
+
+  @override
+  void initState() {
+    _setup();
+    super.initState();
+  }
+
+  _setup() async {
+    // TODO: Modify icon based on category
+    parseJokes().then((value) {
+      setState(() {
+        collabsibleBoxText = value ?? "Heute keine Schule :)";
+      });
+    });
+  }
+
   List<int> getDayIndices(){
     List<int> dayIndices =  [];
     int currentDay = DateTime.now().weekday;
@@ -44,7 +59,7 @@ class _HomePage extends State<HomePage>{
       DateTime now = DateTime.now();
 
       if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
-        return "";
+        return entry[2];
       }
     }
   }
@@ -90,7 +105,6 @@ class _HomePage extends State<HomePage>{
 
   @override
   Widget build(BuildContext context) {
-    parseJokes();
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return PageTemplate(
       title: 'Übersicht',
@@ -120,7 +134,7 @@ class _HomePage extends State<HomePage>{
           Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
-                text: "fun fact: Sebastian und Manuel sind extremst cool",
+                text: collabsibleBoxText,
                 icon: Icons.celebration,
                 dark: true
             ),
