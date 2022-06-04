@@ -2,6 +2,7 @@ import 'dart:math';
 
 
 //import 'package:brain_app/Backend/data_store.dart';
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 //import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
@@ -97,7 +98,8 @@ class _MyApp extends State<MyApp> {
       }
     }
 
-
+  SaveSystem.saveSubjects();
+    print(SaveSystem.getSubjects());
 /*
     for( int k = 1; k < 7; k++){
       for(SubjectInstance? subIn in TimeTable.getDay(k).subjects) {

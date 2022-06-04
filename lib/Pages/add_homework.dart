@@ -61,12 +61,13 @@ class _HomeworkPage extends State<HomeworkPage> {
                     }
                 )
             ),
+            //TODO: Wenn man bei date selctor dings abbricht dann macht null exception aber keine ahung was man machen kann???
             CustomDateButton(
                 value: selectedDate,
                 text: "Nächste Stunde",
                 onDateSelect: (value) {
                   setState((){
-                    selectedDate = value;
+                      selectedDate = value;
                   });
                 }
             ),
@@ -84,8 +85,10 @@ class _HomeworkPage extends State<HomeworkPage> {
                             selectedDate.year, selectedDate.month,
                             selectedDate.day, time.startTime.hour,
                             time.startTime.minute);
-                        Homework(selectedSubject!, date,
+                          Homework(selectedSubject!, date,
                             homeworkController.text);
+
+
                       }
                       else {
                         Homework(selectedSubject!,selectedSubject!

@@ -8,15 +8,20 @@ import 'package:flutter/material.dart';
 class Subject{
   String name = "";
   Color color = Colors.white;
+  static int lastID = 0;
+  int id = 0;
 
   //Subject(this.name, this.startTime, this.endTime, this.color);
   Subject (this.name,this.color){
+    id = lastID + 1;
+    lastID++;
     TimeTable.addSubject(this);
   }
 
   Subject.empty(){
     name = "Freistunde";
     color = Colors.grey;
+    id = 0;
   }
 
 
@@ -45,6 +50,14 @@ class Subject{
 
 
     return null;
+  }
+
+  Map toJSONEncodable(){
+    Map<String,dynamic> map = new Map();
+    map["name"] = name;
+    map["color"] = color.value;
+
+    return map;
   }
 
 

@@ -18,6 +18,14 @@ class Homework {
     }
   }
 
+  Map toJSONEncodable(){
+    Map<String,dynamic> map = new Map();
+    map["name"] = name;
+    map["dueTime"] = dueTime;
+
+    return map;
+  }
+
 
 
 }

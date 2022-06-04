@@ -17,19 +17,17 @@ class Todos extends Table {
 
 @DataClassName("Category")
 class Categories extends Table {
-
   IntColumn get id => integer().autoIncrement()();
-
 }
 
 LazyDatabase _openConnection() {
 
   return LazyDatabase(() async {
-
     final dbFolder = await getApplicationDocumentsDirectory();
     final file = File(p.join(dbFolder.path, 'subjects.sqlite'));
     return NativeDatabase(file);
-  });
+  }
+  );
 }
 
 @DriftDatabase(tables: [Todos, Categories])

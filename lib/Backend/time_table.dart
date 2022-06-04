@@ -77,6 +77,16 @@ class TimeTable {
     app = appl;
 
   }
+  static List subjectsToJSONEncodeable(){
+     return subjects.map((item)
+       {
+         return item.toJSONEncodable();
+       }
+     ).toList();
+
+  }
+
+
 
 
 
