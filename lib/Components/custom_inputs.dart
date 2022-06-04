@@ -120,7 +120,7 @@ class CustomDateButton extends StatelessWidget {
               colorArrowPrevious: AppDesign.current.textStyles.color,
             )
         );
-        newDateTime.then((value) => onDateSelect(value!));
+        newDateTime.then((_value) => onDateSelect(_value ?? value));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),

@@ -54,13 +54,13 @@ class _SubjectPage extends State<SubjectPage> {
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
             child: ElevatedButton (
-              onPressed: (){
+              onPressed: () {
                 if (widget.subjectController.text.isNotEmpty) {
                   if (widget.previous != null) {
-                    int index = TimeTable.subjects.indexOf(widget.previous!);
-                    TimeTable.subjects.removeAt(index);
+                    TimeTable.getSubject(widget.previous!.id)!.edit(widget.subjectController.text, widget.pickerColor);
+                  } else {
+                    Subject(widget.subjectController.text, widget.pickerColor);
                   }
-                  Subject(widget.subjectController.text, widget.pickerColor);
                   Navigator.pop(context);
                 }
               },

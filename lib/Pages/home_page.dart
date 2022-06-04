@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/homework.dart';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
@@ -9,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'page_template.dart';
 import '../Components/collapsible_box.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:csv/csv.dart';
 
 double scrollOffset = 0.0;
 
@@ -34,11 +35,22 @@ class _HomePage extends State<HomePage>{
     return dayIndices;
   }
 
+  Future<String?> parseJokes() async {
+    final rawData = await rootBundle.loadString("data/witze.csv");
+    List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
+
+    for (List<dynamic> entry in listData) {
+      DateTime parsedTime = DateTime.parse(entry[0]);
+      DateTime now = DateTime.now();
+
+      if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
+        return "";
+      }
+    }
+  }
+
   List<Widget> getDays(){
-
     List<String> weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
-
-
 
     List<Widget> days = [];
     List<int> dayIndexes = getDayIndices();
@@ -78,6 +90,7 @@ class _HomePage extends State<HomePage>{
 
   @override
   Widget build(BuildContext context) {
+    parseJokes();
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return PageTemplate(
       title: 'Übersicht',
