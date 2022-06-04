@@ -52,6 +52,11 @@ class Subject{
     return null;
   }
 
+  void edit(String? newName,Color? newColor){
+    if(newName != null) name = newName;
+    if(newColor != null) color = newColor;
+  }
+
   Map toJSONEncodable(){
     Map<String,dynamic> map = new Map();
     map["name"] = name;

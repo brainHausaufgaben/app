@@ -41,6 +41,12 @@ class TimeTable {
     app!.setState(() {});
   }
 
+  static Subject ?getSubject(int id){
+    for(Subject subject in subjects){
+      if(subject.id == id) return subject;
+    }
+  }
+
 
   static List<SubjectInstance> getSubjects(int day){
     List<SubjectInstance> subjects = [];
