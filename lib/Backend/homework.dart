@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
@@ -8,6 +9,7 @@ class Homework {
 
   Homework(this.subject,this.dueTime,this.name){
     TimeTable.addHomework(this);
+
   }
 
   bool isDue(DateTime date){
@@ -20,9 +22,15 @@ class Homework {
 
   Map toJSONEncodable(){
     Map<String,dynamic> map = new Map();
-    map["name"] = name;
-    map["dueTime"] = dueTime;
+    List due = [];
+    due.add(dueTime.year);
+    due.add(dueTime.month);
+    due.add(dueTime.day);
 
+
+    map["name"] = name;
+    map["dueTime"] = due;
+    map["SubjectID"] = subject.id;
     return map;
   }
 

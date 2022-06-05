@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -65,6 +66,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                         } else {
                           TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
                         }
+                        SaveSystem.saveTimeTable();
                         // TODO: Das ist dumm, man sollte die app irgendwie anders neu laden können
                         TimeTable.app!.setState(() {});
                       },
