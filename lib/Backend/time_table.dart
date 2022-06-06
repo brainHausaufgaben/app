@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:brain_app/Backend/day.dart';
+import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -12,6 +13,7 @@ class TimeTable {
   static List<Day> week = [];
   static List<Subject> subjects = [];
   static List<Homework> homeworks = [];
+  static List<Event> events = [];
   static List<TimeInterval> lessonTimes = [
     TimeInterval(const TimeOfDay(hour: 8, minute: 00), const TimeOfDay(hour: 8, minute: 45)),
     TimeInterval(const TimeOfDay(hour: 8, minute: 45), const TimeOfDay(hour: 9, minute: 30)),
@@ -41,6 +43,14 @@ class TimeTable {
     app!.setState(() {});
     if(saveEnabled) SaveSystem.saveHomework();
   }
+  static void addEvent(Event event){
+    events.add(event);
+  }
+  static void removeEvent(Event event){
+    if(events.contains(event))events.remove(event);
+
+  }
+
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);
     app!.setState(() {});
