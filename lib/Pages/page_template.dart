@@ -11,12 +11,23 @@ class PageTemplate extends StatefulWidget {
   final String? subtitle;
   final bool? backButton;
   final Widget? floatingActionButton;
+  static int navigationBarIndex = 0;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
 }
 
 class _PageTemplateState extends State<PageTemplate> {
+  void _onItemTapped(int index) {
+    setState(() {
+      PageTemplate.navigationBarIndex = index;
+
+      if (index == 1) {
+        _settings();
+      }
+    });
+  }
+
   void _settings(){
     Navigator.push(
         context,
@@ -29,7 +40,6 @@ class _PageTemplateState extends State<PageTemplate> {
   }
 
   String getDateString(DateTime date){
-
     List weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 
     String day = date.day.toString();

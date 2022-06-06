@@ -4,12 +4,12 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Pages/add_homework.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'page_template.dart';
-import '../Components/collapsible_box.dart';
-import 'package:flutter/services.dart' show rootBundle;
-import 'package:csv/csv.dart';
+import 'package:brain_app/Components/collapsible_box.dart';
+
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}): super(key: key);
@@ -19,29 +19,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage>{
-  String collabsibleBoxText = "Wird geladen...";
-  IconData collabsibleIcon = Icons.autorenew_rounded;
-
-  @override
-  void initState() {
-    _setup();
-    super.initState();
-  }
-
-  _setup() async {
-    parseJokes().then((value) {
-      setState(() {
-        if (value != null) {
-          collabsibleBoxText = value.key;
-          collabsibleIcon = value.value;
-        } else {
-          collabsibleBoxText = "Keine Schule heute :)";
-          collabsibleIcon = Icons.celebration;
-        }
-      });
-    });
-  }
-
   List<int> getDayIndices(){
     List<int> dayIndices =  [];
     int currentDay = DateTime.now().weekday;
@@ -54,39 +31,6 @@ class _HomePage extends State<HomePage>{
     }
 
     return dayIndices;
-  }
-
-  Future<MapEntry<String, IconData>?> parseJokes() async {
-    final rawData = await rootBundle.loadString("data/witze.csv");
-    List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
-
-    for (List<dynamic> entry in listData) {
-      DateTime parsedTime = DateTime.parse(entry[0]);
-      DateTime now = DateTime.now();
-
-      if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
-        IconData icon;
-
-        switch (entry[1]) {
-          case "Fun Fact":
-            icon = Icons.lightbulb;
-            break;
-          case "Witz":
-            icon = Icons.celebration;
-            break;
-          case "Tipp":
-            icon = Icons.verified;
-            break;
-          case "Zitat":
-            icon = Icons.format_quote;
-            break;
-          default:
-            icon = Icons.celebration;
-        }
-
-        return MapEntry(entry[2], icon);
-      }
-    }
   }
 
   List<Widget> getDays(){
@@ -159,8 +103,8 @@ class _HomePage extends State<HomePage>{
           Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
-                text: collabsibleBoxText,
-                icon: collabsibleIcon,
+                text: BrainApp.boxText,
+                icon: BrainApp.icon,
                 dark: true
             ),
           ),

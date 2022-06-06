@@ -1,36 +1,39 @@
 import 'dart:math';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:csv/csv.dart';
 
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
 import 'Backend/theming.dart';
-import 'Pages/home_page.dart';
-import 'Pages/time_table.dart';
-
 
 void main() {
-  runApp(const MyApp());
+  runApp(BrainApp());
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class BrainApp extends StatefulWidget {
+  BrainApp({Key? key}) : super(key: key);
+
+  static String boxText = "Wird geladen...";
+  static IconData icon = Icons.autorenew_rounded;
 
   @override
-  _MyApp createState() => _MyApp();
+  _BrainApp createState() => _BrainApp();
 
 }
 
 
-class _MyApp extends State<MyApp> {
+class _BrainApp extends State<BrainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      home: HomePage(),
+      home: NavigationHelper(),
       theme: AppDesign.current.themeData,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -46,6 +49,39 @@ class _MyApp extends State<MyApp> {
         );
       },
     );
+  }
+
+  Future<MapEntry<String, IconData>?> parseJokes() async {
+    final rawData = await rootBundle.loadString("data/witze.csv");
+    List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
+
+    for (List<dynamic> entry in listData) {
+      DateTime parsedTime = DateTime.parse(entry[0]);
+      DateTime now = DateTime.now();
+
+      if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
+        IconData icon;
+
+        switch (entry[1]) {
+          case "Fun Fact":
+            icon = Icons.lightbulb;
+            break;
+          case "Witz":
+            icon = Icons.celebration;
+            break;
+          case "Tipp":
+            icon = Icons.verified;
+            break;
+          case "Zitat":
+            icon = Icons.format_quote;
+            break;
+          default:
+            icon = Icons.celebration;
+        }
+
+        return MapEntry(entry[2], icon);
+      }
+    }
   }
 
   //an computi funktioniert nicht wenn das nicht rauskommentiert ist :(
@@ -101,6 +137,20 @@ class _MyApp extends State<MyApp> {
 
   }
 
+  void getBoxText() async {
+    parseJokes().then((value) {
+      setState(() {
+        if (value != null) {
+          BrainApp.boxText = value.key;
+          BrainApp.icon = value.value;
+        } else {
+          BrainApp.boxText = "Keine Schule heute :)";
+          BrainApp.icon = Icons.celebration;
+        }
+      });
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -109,7 +159,7 @@ class _MyApp extends State<MyApp> {
       setState((){});
     });
     TimeTable.init(this);
-
+    getBoxText();
     /*
     List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport","Physik","Biologie","P Seminar Brain","W Seminar","Religion","Wirtschaft","Geschichte"];
     for(int sub = 0; sub < subjectsNames.length; sub++){

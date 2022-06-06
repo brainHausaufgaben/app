@@ -26,7 +26,7 @@ class TimeTable {
   ];
   static bool saveEnabled = false;
   static Subject emptySubject = Subject.empty();
-  static State<MyApp>? app;
+  static State<BrainApp>? app;
 
   static void addLesson(SubjectInstance subject){
     week[subject.day - 1].addSubject(subject);
@@ -82,7 +82,7 @@ class TimeTable {
     return week[day.weekday - 1];
   }
 
-  static void init(State<MyApp> appl){
+  static void init(State<BrainApp> appl){
     for(int i = 0;  i < 7; i++){
       week.add(Day(lessonTimes.length));
     }
