@@ -17,14 +17,14 @@ class _PointElementState extends  State<PointElement>{
   Widget build(BuildContext context) {
     return Flex(
       direction: Axis.horizontal,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: widget.child == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
       children: [
         Flexible(
           child: Row(
             crossAxisAlignment: widget.child != null ? CrossAxisAlignment.start : CrossAxisAlignment.center,
             children: [
               Padding(
-                  padding: const EdgeInsets.only(right: 5),
+                  padding: const EdgeInsets.only(right: 5, bottom: 3),
                   child: Icon(Icons.circle, color: widget.color, size: 13)
               ),
               Expanded(
@@ -45,31 +45,3 @@ class _PointElementState extends  State<PointElement>{
     );
   }
 }
-
-/*
-return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 5),
-          child: Icon(Icons.circle, color: widget.color, size: 13)
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.primaryText,
-                style: AppDesign.current.textStyles.pointElementPrimary,
-              ),
-              if (widget.child != null) widget.child!
-            ],
-          ),
-        ),
-        if (widget.secondaryText != null) Text(
-          widget.secondaryText!,
-          style: AppDesign.current.textStyles.pointElementSecondary,
-        )
-      ],
-    );
- */

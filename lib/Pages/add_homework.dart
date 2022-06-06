@@ -7,7 +7,6 @@ import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 class HomeworkPage extends StatefulWidget {
   const HomeworkPage({Key? key}) : super(key: key);
@@ -61,7 +60,6 @@ class _HomeworkPage extends State<HomeworkPage> {
                     }
                 )
             ),
-            //TODO: Wenn man bei date selctor dings abbricht dann macht null exception aber keine ahung was man machen kann???
             CustomDateButton(
                 value: selectedDate,
                 text: "Nächste Stunde",

@@ -1,13 +1,9 @@
 import 'dart:math';
 
-
-//import 'package:brain_app/Backend/data_store.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
-//import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
@@ -85,7 +81,7 @@ class _MyApp extends State<MyApp> {
       for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 10; j++) {
           int id = await SaveSystem.getTimeTable()[i][j];
-          if (id != 0) new SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
+          if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
         }
       }
 
@@ -96,8 +92,8 @@ class _MyApp extends State<MyApp> {
     }
     for (Map item in await SaveSystem.getHomework()) {
       List t = item["dueTime"];
-      DateTime time = new DateTime(t[0],t[1],t[2]);
-      new Homework(TimeTable.getSubject(item["SubjectID"])!,time, item["name"]);
+      DateTime time = DateTime(t[0],t[1],t[2]);
+      Homework(TimeTable.getSubject(item["SubjectID"])!,time, item["name"]);
     }
     TimeTable.saveEnabled = true;
 

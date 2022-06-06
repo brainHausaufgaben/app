@@ -6,14 +6,12 @@ class CollapsibleBox extends StatefulWidget {
   String text = "empty";
   IconData icon;
   Color? iconColor;
-  bool collapsed;
   bool dark;
 
   CollapsibleBox({
     Key? key,
     required this.text,
     required this.icon,
-    this.collapsed = false,
     this.dark = false,
     this.iconColor
   }) : super(key: key);
@@ -23,12 +21,14 @@ class CollapsibleBox extends StatefulWidget {
 }
 
 class _CollapsibleBox extends State<CollapsibleBox> {
+  bool collapsed = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          widget.collapsed = !widget.collapsed;
+          collapsed = !collapsed;
         });
       },
       child: AnimatedContainer (
@@ -36,15 +36,15 @@ class _CollapsibleBox extends State<CollapsibleBox> {
             color: widget.dark ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
             borderRadius: AppDesign.current.boxStyle.borderRadius
         ),
-        padding: widget.collapsed ? const EdgeInsets.all(8) : const EdgeInsets.all(17),
+        padding: collapsed ? const EdgeInsets.all(8) : const EdgeInsets.all(17),
         duration: const Duration(milliseconds: 100),
         child: Row(
           children: [
             Padding(
               padding: const EdgeInsets.only(right: 12),
               child: AnimatedContainer(
-                height: widget.collapsed ? 25 : 35,
-                width: widget.collapsed ? 25 : 35,
+                height: collapsed ? 25 : 35,
+                width: collapsed ? 25 : 35,
                 alignment: Alignment.center,
                 duration: const Duration(milliseconds: 100),
                 child: FittedBox(
@@ -57,7 +57,7 @@ class _CollapsibleBox extends State<CollapsibleBox> {
                 )
               )
             ),
-            if (!widget.collapsed) Flexible(
+            if (!collapsed) Flexible(
               child: Text(
                 widget.text,
                 style: widget.dark ? AppDesign.current.textStyles.collapsibleTextContrast : AppDesign.current.textStyles.collapsibleText

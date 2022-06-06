@@ -38,11 +38,14 @@ class HomePageDay extends StatefulWidget {
     List<SubjectInstance> subjects = TimeTable.getSubjects(day);
     List<Widget> subjectWidgets = [];
     for(SubjectInstance subject in subjects){
+      List<Widget> homework = getHomework(subject);
+
       subjectWidgets.add(
-          PointElement(color: subject.subject.color,primaryText: subject.subject.name,secondaryText: subject.getStartTimeString(), child:
-            Column(
-              children: getHomework(subject),
-            )
+          PointElement(
+              color: subject.subject.color,
+              primaryText: subject.subject.name,
+              secondaryText: subject.getStartTimeString(),
+              child: homework.isEmpty ? null : Column(children: homework)
           )
       );
     }

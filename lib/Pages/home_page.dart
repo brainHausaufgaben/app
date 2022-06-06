@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage>{
   String collabsibleBoxText = "Wird geladen...";
+  IconData collabsibleIcon = Icons.autorenew_rounded;
 
   @override
   void initState() {
@@ -28,10 +29,15 @@ class _HomePage extends State<HomePage>{
   }
 
   _setup() async {
-    // TODO: Modify icon based on category
     parseJokes().then((value) {
       setState(() {
-        collabsibleBoxText = value ?? "Heute keine Schule :)";
+        if (value != null) {
+          collabsibleBoxText = value.key;
+          collabsibleIcon = value.value;
+        } else {
+          collabsibleBoxText = "Keine Schule heute :)";
+          collabsibleIcon = Icons.celebration;
+        }
       });
     });
   }
@@ -50,7 +56,7 @@ class _HomePage extends State<HomePage>{
     return dayIndices;
   }
 
-  Future<String?> parseJokes() async {
+  Future<MapEntry<String, IconData>?> parseJokes() async {
     final rawData = await rootBundle.loadString("data/witze.csv");
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
 
@@ -59,7 +65,26 @@ class _HomePage extends State<HomePage>{
       DateTime now = DateTime.now();
 
       if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
-        return entry[2];
+        IconData icon;
+
+        switch (entry[1]) {
+          case "Fun Fact":
+            icon = Icons.lightbulb;
+            break;
+          case "Witz":
+            icon = Icons.celebration;
+            break;
+          case "Tipp":
+            icon = Icons.verified;
+            break;
+          case "Zitat":
+            icon = Icons.format_quote;
+            break;
+          default:
+            icon = Icons.celebration;
+        }
+
+        return MapEntry(entry[2], icon);
       }
     }
   }
@@ -80,7 +105,7 @@ class _HomePage extends State<HomePage>{
   }
 
   Widget getWarningBox(){
-      List<IconData> icons = [Icons.warning_rounded, Icons.warning_rounded, Icons.check];
+      List<IconData> icons = [Icons.warning_rounded, Icons.warning_rounded, Icons.check_circle_rounded];
       List<Color> iconColors = [Colors.red, Colors.orange, Colors.green];
       int homework = TimeTable.homeworks.length;
       int iconIndex = 0;
@@ -135,7 +160,7 @@ class _HomePage extends State<HomePage>{
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
                 text: collabsibleBoxText,
-                icon: Icons.celebration,
+                icon: collabsibleIcon,
                 dark: true
             ),
           ),
