@@ -179,7 +179,7 @@ class StretchingIndicator extends ScrollBehavior {
   Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     return StretchingOverscrollIndicator(
         child: child,
-        axisDirection: AxisDirection.down
+        axisDirection: details.direction
     );
   }
 }

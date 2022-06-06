@@ -40,7 +40,7 @@ class _PointElementState extends  State<PointElement>{
             ],
           ),
         ),
-        if (widget.secondaryText != null) Text(widget.secondaryText!)
+        if (widget.secondaryText != null) Text(widget.secondaryText!, style: AppDesign.current.textStyles.pointElementSecondary)
       ],
     );
   }
