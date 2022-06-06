@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_interval.dart';
@@ -23,22 +24,27 @@ class TimeTable {
     TimeInterval(const TimeOfDay(hour: 15, minute: 35), const TimeOfDay(hour: 16, minute: 20)),
     TimeInterval(const TimeOfDay(hour: 16, minute: 20), const TimeOfDay(hour: 17, minute: 05)),
   ];
+  static bool saveEnabled = false;
   static Subject emptySubject = Subject.empty();
   static State<MyApp>? app;
 
   static void addLesson(SubjectInstance subject){
     week[subject.day - 1].addSubject(subject);
+    if(saveEnabled) SaveSystem.saveTimeTable();
   }
   static void addSubject(Subject subject){
     subjects.add(subject);
+    if(saveEnabled) SaveSystem.saveSubjects();
   }
   static void addHomework(Homework homework){
     homeworks.add(homework);
     app!.setState(() {});
+    if(saveEnabled) SaveSystem.saveHomework();
   }
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);
     app!.setState(() {});
+    if(saveEnabled) SaveSystem.saveHomework();
   }
 
   static Subject ?getSubject(int id){
@@ -83,12 +89,36 @@ class TimeTable {
     app = appl;
 
   }
-  static List subjectsToJSONEncodeable(){
+  static List subjectsToJSONEncodeble(){
      return subjects.map((item)
        {
          return item.toJSONEncodable();
        }
      ).toList();
+
+  }
+  static List timeTableToJSONEncodable(){
+    List days = [];
+    for(Day day in week){
+      List subjects = [];
+      for(int i = 0; i < day.subjects.length; i++){
+        SubjectInstance? subject = day.subjects[i];
+        if(subject != null) subjects.add(subject.subject.id);
+        else  subjects.add(0);
+
+      }
+      days.add(subjects);
+    }
+    return days;
+
+  }
+
+  static List homeworkToJSONEncodable(){
+    return homeworks.map((item)
+    {
+      return item.toJSONEncodable();
+    }
+    ).toList();
 
   }
 

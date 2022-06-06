@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:brain_app/Backend/day.dart';
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -18,6 +19,11 @@ class Subject{
     TimeTable.addSubject(this);
   }
 
+  Subject.fromID(this.name,this.color,this.id){
+    lastID = id;
+    TimeTable.addSubject(this);
+  }
+
   Subject.empty(){
     name = "Freistunde";
     color = Colors.grey;
@@ -30,6 +36,7 @@ class Subject{
     }
   }
 
+  //TODO: yallah es geht nicht ganz aber hey
   DateTime? getNextDate(){
     int i = DateTime.now().weekday + 1;
     while(i != DateTime.now().weekday){
@@ -54,12 +61,19 @@ class Subject{
   void edit(String? newName,Color? newColor){
     if(newName != null) name = newName;
     if(newColor != null) color = newColor;
+    SaveSystem.saveTimeTable();
   }
 
   Map toJSONEncodable(){
     Map<String,dynamic> map = new Map();
+    List c = [];
+    c.add(color.red);
+    c.add(color.green);
+    c.add(color.blue);
+
     map["name"] = name;
-    map["color"] = color.value;
+    map["color"] = c;
+    map["id"] = id;
 
     return map;
   }

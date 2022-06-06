@@ -2,10 +2,12 @@ import 'dart:math';
 
 
 //import 'package:brain_app/Backend/data_store.dart';
+import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 //import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
@@ -58,6 +60,50 @@ class _MyApp extends State<MyApp> {
     print(await database.allTodoEntries);
 }
    */
+  Future load() async{
+
+
+    if (await SaveSystem.getSubjects() == null){
+      TimeTable.saveEnabled = true;
+      return;
+    }
+    else {
+      TimeTable.saveEnabled = false;
+    }
+      for (Map item in await SaveSystem.getSubjects()) {
+        List color = item["color"];
+        Subject.fromID(
+            item["name"], Color.fromARGB(255, color[0], color[1], color[2]),
+            item["id"]);
+      }
+
+
+    if (await SaveSystem.getTimeTable() == null){
+      TimeTable.saveEnabled = true;
+      return;
+    }
+      for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 10; j++) {
+          int id = await SaveSystem.getTimeTable()[i][j];
+          if (id != 0) new SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
+        }
+      }
+
+
+    if (await SaveSystem.getHomework() == null){
+      TimeTable.saveEnabled = true;
+      return;
+    }
+    for (Map item in await SaveSystem.getHomework()) {
+      List t = item["dueTime"];
+      DateTime time = new DateTime(t[0],t[1],t[2]);
+      new Homework(TimeTable.getSubject(item["SubjectID"])!,time, item["name"]);
+    }
+    TimeTable.saveEnabled = true;
+
+
+
+  }
 
   @override
   void initState() {
@@ -67,6 +113,20 @@ class _MyApp extends State<MyApp> {
       setState((){});
     });
     TimeTable.init(this);
+
+    /*
+    List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport","Physik","Biologie","P Seminar Brain","W Seminar","Religion","Wirtschaft","Geschichte"];
+    for(int sub = 0; sub < subjectsNames.length; sub++){
+      Subject(subjectsNames[sub],Colors.primaries[sub]);
+    }
+    SaveSystem.saveSubjects();
+    */
+
+
+    load();
+
+
+
     //databaseOperations();
 
 
@@ -88,18 +148,17 @@ class _MyApp extends State<MyApp> {
     */
     Random random = Random();
     //List<String> names = ["schwanz", "cock", "amongus", "deutsch", "keine ahnung", "bubatz", "mathematik","hurensohn","er hat ein neues lied", "all meine entchen", "schwimmen auf dir", "kartoffelbrei", "jeremias", "fett", "sylenth1", "übergewichtig", "oh gott", "christian winkler", "bildungschicht","ähhh", "12 punkte schnitt", "nee es reicht glaub ich","birnenkomptt","keeenuuu weeeves", "ist wolkenmeer in diesem fall ein neologismus", "qrxvy (hund)", "batman", "five night freddy", "ich überlege", "gay lesson", "debug", "micheal","jackson","wendler bitter", "how to be GAYY!!", "trans learning", "gay recess", "crossdressing hour", "transgender lunch", "blm period"];
-    List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport","Physik","Biologie","P Seminar Brain","W Seminar","Religion","Wirtschaft","Geschichte"];
-    for(int sub = 0; sub < subjectsNames.length; sub++){
-      Subject(subjectsNames[sub],Colors.primaries[sub]);
-    }
+
+
+/*
     for(int day = 1; day < 6; day++){
       for(int i = 0; i < TimeTable.lessonTimes.length; i++){
         SubjectInstance(TimeTable.subjects[random.nextInt(TimeTable.subjects.length)],day,i);
       }
     }
+*/
 
-  SaveSystem.saveSubjects();
-    print(SaveSystem.getSubjects());
+
 /*
     for( int k = 1; k < 7; k++){
       for(SubjectInstance? subIn in TimeTable.getDay(k).subjects) {
