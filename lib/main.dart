@@ -174,7 +174,6 @@ class _BrainApp extends State<BrainApp> {
     SaveSystem.saveSubjects();
     */
 
-
     load();
 
 

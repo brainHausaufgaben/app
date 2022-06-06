@@ -48,9 +48,7 @@ class TimeTable {
   }
   static void removeEvent(Event event){
     if(events.contains(event))events.remove(event);
-
   }
-
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);
     app!.setState(() {});
@@ -73,6 +71,20 @@ class TimeTable {
     }
     return subjects;
   }
+
+  static List<SubjectInstance> getSubjectInstancesByDate(DateTime date){
+    return getSubjects(date.weekday);
+  }
+
+  static List<Subject> getSubjectsByDate(DateTime date){
+    List<SubjectInstance> subjectInstances = getSubjectInstancesByDate(date);
+    return subjectInstances.map((subjectInstance) {
+      return subjectInstance.subject;
+    }).toList();
+
+  }
+
+
 
   static List<Homework> getHomework(DateTime date,Subject subject){
     List<Homework> homework = [];

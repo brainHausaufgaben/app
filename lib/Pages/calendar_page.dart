@@ -13,7 +13,9 @@ class _CalendarPage extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Kalender",
-      child: Text("Hey"),
+      child: Text("Hallo Manuel was geht ab \n"
+          "ich hab das ding gemacht und du kannst mit getSubjectInstancesByDate() und getSubjectsByDate() bei timetable die fächer und die instances bekommen "
+          "aber das mit instances ist eig relativ unnötig also ja keine ahnung  wenn man will kann man aber muss nicht neh"),
     );
   }
 }
