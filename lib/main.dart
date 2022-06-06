@@ -13,11 +13,11 @@ import 'Backend/subject.dart';
 import 'Backend/theming.dart';
 
 void main() {
-  runApp(BrainApp());
+  runApp(const BrainApp());
 }
 
 class BrainApp extends StatefulWidget {
-  BrainApp({Key? key}) : super(key: key);
+  const BrainApp({Key? key}) : super(key: key);
 
   static String boxText = "Wird geladen...";
   static IconData icon = Icons.autorenew_rounded;
