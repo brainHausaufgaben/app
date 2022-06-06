@@ -98,7 +98,8 @@ class NavigationItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-      child: Container(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
             color: activated ? AppDesign.current.primaryColor : Colors.transparent,
             borderRadius: BorderRadius.circular(10)
@@ -111,7 +112,11 @@ class NavigationItem extends StatelessWidget {
               child: Icon(icon, size: iconSize, color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color),
               padding: const EdgeInsets.only(right: 5),
             ),
-            if (activated) Text(title, style: TextStyle(color: AppDesign.current.textStyles.contrastColor , fontSize: 14, fontWeight: FontWeight.w600))
+            AnimatedSize(
+              alignment: Alignment.centerLeft,
+              duration: const Duration(milliseconds: 200),
+              child: Text(activated ? title : "", style: TextStyle(color: AppDesign.current.textStyles.contrastColor , fontSize: 14, fontWeight: FontWeight.w600)),
+            )
           ],
         ),
       ),

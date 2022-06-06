@@ -67,7 +67,21 @@ class _HomeworkPage extends State<HomeworkPage> {
                   setState((){
                       selectedDate = value;
                   });
-                }
+                },
+                customDateBuilder: (date, style) {
+                  // TODO: die tage an denen man fach hat hervor heben
+                  if (false) {
+                    return Container(
+                      decoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+                      child: Center(
+                        child: Text(
+                          date.day.toString(),
+                          style: style,
+                        ),
+                      ),
+                    );
+                  }
+                },
             ),
             const Spacer(),
             Padding(
@@ -76,21 +90,18 @@ class _HomeworkPage extends State<HomeworkPage> {
                   onPressed: (){
                     if(homeworkController.text.isNotEmpty && selectedSubject != null){
                       if(selectedDate.year != 10) {
-                        TimeInterval? time = selectedSubject?.getTime(
-                            TimeTable.getDayFromDate(selectedDate));
+                        TimeInterval? time = selectedSubject?.getTime(TimeTable.getDayFromDate(selectedDate));
+                        // TODO: Man soll das trotzdem rein machen können. muss dann halt im Kalendar sein
                         if (time == null) return;
                         DateTime date = DateTime(
                             selectedDate.year, selectedDate.month,
                             selectedDate.day, time.startTime.hour,
                             time.startTime.minute);
-                          Homework(selectedSubject!, date,
-                            homeworkController.text);
 
-
+                        Homework(selectedSubject!, date, homeworkController.text);
                       }
                       else {
-                        Homework(selectedSubject!,selectedSubject!
-                            .getNextDate()! ,homeworkController.text);
+                        Homework(selectedSubject!,selectedSubject!.getNextDate()! ,homeworkController.text);
                       }
                       Navigator.pop(context);
                     }

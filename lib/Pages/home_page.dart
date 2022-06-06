@@ -67,7 +67,7 @@ class _HomePage extends State<HomePage>{
       String text = "";
 
       if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
-      if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgaben";
+      if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgabe" + (homework == 1 ? "" : "n");
 
       return CollapsibleBox(text: text, icon: icons[iconIndex], iconColor: iconColors[iconIndex], dark: true);
   }

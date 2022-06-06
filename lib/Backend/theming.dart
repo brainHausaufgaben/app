@@ -181,7 +181,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       textStyles: TextStyles(
         color: textColor,
         contrastColor: contrastColor,
-        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
+        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.9, color: textColor),
         pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
         boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
         pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),

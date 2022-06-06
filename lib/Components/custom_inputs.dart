@@ -13,7 +13,8 @@ class CustomTextField extends TextField {
     autocorrect
   }) : super(
     key: key,
-    maxLines: null,
+    minLines: 1,
+    maxLines: 5,
     autocorrect: autocorrect,
     controller: controller,
     style: AppDesign.current.textStyles.input,
@@ -78,10 +79,12 @@ class CustomDateButton extends StatelessWidget {
     Key? key,
     required this.value,
     required this.onDateSelect,
-    required this.text
+    required this.text,
+    required this.customDateBuilder
   }) : super(key: key);
 
   Function(DateTime) onDateSelect;
+  Function(DateTime, TextStyle) customDateBuilder;
   DateTime value;
   String text;
 
@@ -118,7 +121,29 @@ class CustomDateButton extends StatelessWidget {
               textStyleDayHeader: TextStyle(color: AppDesign.current.textStyles.color),
               colorArrowNext: AppDesign.current.textStyles.color,
               colorArrowPrevious: AppDesign.current.textStyles.color,
-            )
+            ),
+            builderDay: (DateTime dateTime, bool isCurrentDay, bool isSelected, TextStyle defaultTextStyle) {
+              // Default
+              if (isSelected) {
+                return Container(
+                  decoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+                  child: Center(
+                    child: Text(
+                      dateTime.day.toString(),
+                      style: defaultTextStyle,
+                    ),
+                  ),
+                );
+              }
+              customDateBuilder(dateTime, defaultTextStyle);
+              // Default
+              return Center(
+                child: Text(
+                  dateTime.day.toString(),
+                  style: defaultTextStyle,
+                ),
+              );
+            }
         );
         newDateTime.then((_value) => onDateSelect(_value ?? value));
       },

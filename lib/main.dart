@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:csv/csv.dart';
+import 'package:flutter/services.dart';
 
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/save_system.dart';
@@ -13,6 +13,12 @@ import 'Backend/subject.dart';
 import 'Backend/theming.dart';
 
 void main() {
+  // Kein Landscape
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
+  );
+
   runApp(const BrainApp());
 }
 
