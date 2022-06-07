@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
 import 'Backend/theming.dart';
-import 'Pages/settings.dart';
+import 'Pages/settings_page.dart';
 
 void main() {
   // Kein Landscape

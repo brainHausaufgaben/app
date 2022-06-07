@@ -5,8 +5,9 @@ import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 
 class DismissableBox extends StatelessWidget {
-  DismissableBox({Key? key,required this.homework}) : super(key: key);
-  Homework homework;
+  const DismissableBox({Key? key,required this.homework}) : super(key: key);
+
+  final Homework homework;
 
   @override
   Widget build(BuildContext context) {

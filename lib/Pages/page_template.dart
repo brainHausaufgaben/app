@@ -1,4 +1,4 @@
-import 'package:brain_app/Pages/settings.dart';
+import 'package:brain_app/Pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
@@ -10,7 +10,6 @@ class PageTemplate extends StatefulWidget {
   final String? subtitle;
   final bool? backButton;
   final Widget? floatingActionButton;
-  static int navigationBarIndex = 0;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();

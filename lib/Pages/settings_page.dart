@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -27,6 +28,11 @@ class _SettingsPage extends State<SettingsPage> {
   void initState() {
     super.initState();
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
+  }
+
+  void _openLink() async {
+    Uri url = Uri.parse("https://forms.gle/GcfGNa1Lhvnt245Y6");
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) throw 'Could not launch rocket';
   }
 
   @override
@@ -105,6 +111,14 @@ class _SettingsPage extends State<SettingsPage> {
                   TimeTable.app!.setState(() {});
                 },
                 state: SettingsPage.mediaBox,
+              )
+            ],
+          ),
+          SettingsEntry(
+            children: [
+              SettingsNavigatorButton(
+                text: "Bug melden",
+                action: _openLink,
               )
             ],
           )

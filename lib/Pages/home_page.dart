@@ -4,7 +4,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Pages/homework_page.dart';
-import 'package:brain_app/Pages/settings.dart';
+import 'package:brain_app/Pages/settings_page.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';

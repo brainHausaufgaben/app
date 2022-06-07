@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -55,12 +54,14 @@ class AppDesign with ChangeNotifier {
     prefs.setBool("darkMode", darkMode);
   }
 
-  void getDarkmode() {
-    darkMode = Preferences.fetchDarkmode() ?? SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
+  void getDarkmode() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    darkMode = prefs.getBool("darkMode") ?? SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
   }
 
-  void getTheme() {
-    String? theme = Preferences.fetchTheme();
+  void getTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? theme = prefs.getString("theme");
     if (theme != null) {
       toggleTheme(theme);
     }
@@ -180,7 +181,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       textStyles: TextStyles(
         color: textColor,
         contrastColor: contrastColor,
-        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.9, color: textColor),
+        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
         pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
         boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
         pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),

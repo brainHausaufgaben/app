@@ -2,7 +2,7 @@ import 'package:brain_app/Pages/calendar_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:brain_app/Pages/home_page.dart';
-import 'package:brain_app/Pages/settings.dart';
+import 'package:brain_app/Pages/settings_page.dart';
 import 'package:brain_app/Components/custom_navigation_bar.dart';
 
 class NavigationHelper extends StatefulWidget {
