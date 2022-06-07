@@ -43,7 +43,7 @@ class _HomePage extends State<HomePage>{
       String headline = weekDays[dayIndexes[i] - 1];
       if(dayIndexes[i] == DateTime.now().weekday) headline = "Stundenplan Heute";
       if(dayIndexes[i] == DateTime.now().weekday + 1) headline = "Stundenplan Morgen";
-      days.add(HomePageDay(day: dayIndexes[i], headline: headline,));
+      if(TimeTable.getSubjects(dayIndexes[i]).isNotEmpty) days.add(HomePageDay(day: dayIndexes[i], headline: headline,));
 
     }
     return days;

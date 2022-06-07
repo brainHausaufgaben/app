@@ -38,6 +38,27 @@ class TimeTable {
     subjects.add(subject);
     if(saveEnabled) SaveSystem.saveSubjects();
   }
+  static void deleteSubject(Subject subject){
+    subjects.remove(subject);
+    for(Homework homework in getHomeworks(subject)){
+      removeHomework(homework);
+    }
+    deleteSubjectInstances(subject);
+  }
+  static void deleteSubjectInstances(Subject subject){
+    //keine ahnung ob diese geht xD
+    for(int i = 0; i < week.length; i++){
+      for(int j = 0; j < lessonTimes.length; j++){
+        if(week[i].subjects[j] != null){
+          if(week[i].subjects[j]!.subject == subject){
+            week[i].subjects[j] == null;
+          }
+        }
+      }
+    }
+
+  }
+
   static void addHomework(Homework homework){
     homeworks.add(homework);
     app!.setState(() {});
@@ -70,6 +91,14 @@ class TimeTable {
       }
     }
     return subjects;
+  }
+
+  static List<Homework> getHomeworks(Subject subject){
+    List<Homework> hw = [];
+    for(Homework homework in homeworks){
+      if(homework.subject == subject) hw.add(homework);
+    }
+    return hw;
   }
 
   static List<SubjectInstance> getSubjectInstancesByDate(DateTime date){

@@ -137,7 +137,9 @@ class _BrainApp extends State<BrainApp> {
     for (Map item in await SaveSystem.getHomework()) {
       List t = item["dueTime"];
       DateTime time = DateTime(t[0],t[1],t[2]);
-      Homework(TimeTable.getSubject(item["SubjectID"])!,time, item["name"]);
+      int id = item["SubjectID"];
+      if(TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) != null) Homework(TimeTable.getSubject(id)!,time, item["name"]);
+
     }
     TimeTable.saveEnabled = true;
 
