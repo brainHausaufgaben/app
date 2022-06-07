@@ -9,7 +9,6 @@ class Homework {
 
   Homework(this.subject,this.dueTime,this.name){
     TimeTable.addHomework(this);
-
   }
 
   void edit(Subject? newSubject, DateTime? newDueTime, String? newName){

@@ -1,20 +1,31 @@
-import 'package:brain_app/Backend/theming.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// TODO zentralisiertes speichern für einstellungen
 class Preferences {
-  SharedPreferences? prefs;
+  static SharedPreferences? prefs;
+  static bool mediaBox = true;
 
-  void fetchInstance() async {
+  static void fetchInstance() async {
     prefs = await SharedPreferences.getInstance();
   }
 
-  String? fetchTheme() {
+  static String? fetchTheme() {
     fetchInstance();
     return prefs?.getString("theme");
   }
 
-  bool? fetchCollapsed() {
+  static bool? fetchDarkmode() {
+    fetchInstance();
+    return prefs?.getBool("darkMode");
+  }
+
+  static bool? fetchCollapsed() {
     fetchInstance();
     return prefs?.getBool("collapsed");
+  }
+
+  static void fetchMediaBoxState() {
+    fetchInstance();
+    mediaBox = prefs!.getBool("mediaBox")!;
   }
 }

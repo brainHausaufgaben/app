@@ -3,7 +3,8 @@ import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
-import 'package:brain_app/Pages/add_homework.dart';
+import 'package:brain_app/Pages/homework_page.dart';
+import 'package:brain_app/Pages/settings.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -100,7 +101,7 @@ class _HomePage extends State<HomePage>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getWarningBox(),
-          Padding(
+          if (SettingsPage.mediaBox) Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
                 text: BrainApp.boxText,

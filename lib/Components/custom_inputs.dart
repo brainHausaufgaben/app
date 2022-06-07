@@ -84,7 +84,7 @@ class CustomDateButton extends StatelessWidget {
   }) : super(key: key);
 
   Function(DateTime) onDateSelect;
-  Function(DateTime, TextStyle) customDateBuilder;
+  Widget? Function(DateTime, TextStyle) customDateBuilder;
   DateTime value;
   String text;
 
@@ -135,7 +135,8 @@ class CustomDateButton extends StatelessWidget {
                   ),
                 );
               }
-              customDateBuilder(dateTime, defaultTextStyle);
+              Widget? customDateBuilderReturn = customDateBuilder(dateTime, defaultTextStyle);
+              if (customDateBuilderReturn != null) return customDateBuilderReturn;
               // Default
               return Center(
                 child: Text(
@@ -278,11 +279,13 @@ class SettingsSwitchButton extends StatefulWidget {
   SettingsSwitchButton({
     Key? key,
     required this.text,
-    required this.action
+    required this.action,
+    required this.state
   }) : super(key: key);
 
   String text;
   Function() action;
+  bool state;
 
   @override
   State<StatefulWidget> createState() =>  _SettingsSwitchButton();
@@ -314,7 +317,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
                   width: 15,
                   height: 15,
                   decoration: BoxDecoration(
-                    color: AppDesign.darkMode ? AppDesign.current.textStyles.color : Colors.transparent,
+                    color: widget.state ? AppDesign.current.textStyles.color : Colors.transparent,
                     borderRadius: BorderRadius.circular(3)
                   ),
               ),

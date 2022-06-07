@@ -8,9 +8,11 @@ import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Backend/time_table.dart';
 import 'Backend/subject.dart';
 import 'Backend/theming.dart';
+import 'Pages/settings.dart';
 
 void main() {
   // Kein Landscape
@@ -157,6 +159,11 @@ class _BrainApp extends State<BrainApp> {
     });
   }
 
+  void getMediaBoxState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    SettingsPage.mediaBox = prefs.getBool("mediaBox")!;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -166,6 +173,7 @@ class _BrainApp extends State<BrainApp> {
     });
     TimeTable.init(this);
     getBoxText();
+    getMediaBoxState();
     /*
     List<String> subjectsNames = ["Informatik","Mathematik","Deutsch","Englisch","Sport","Physik","Biologie","P Seminar Brain","W Seminar","Religion","Wirtschaft","Geschichte"];
     for(int sub = 0; sub < subjectsNames.length; sub++){

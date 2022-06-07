@@ -9,15 +9,22 @@ import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:flutter/material.dart';
 
 class HomeworkPage extends StatefulWidget {
-  const HomeworkPage({Key? key}) : super(key: key);
+  HomeworkPage({Key? key, this.previousHomework}) : super(key: key) {
+    homeworkController.text = previousHomework != null ? previousHomework!.name : "";
+    selectedSubject = previousHomework != null ? previousHomework!.subject : null;
+    selectedDate = previousHomework != null ? previousHomework!.dueTime : DateTime(10);
+  }
+
+  Homework? previousHomework;
+  final homeworkController = TextEditingController();
+  Subject? selectedSubject;
+  late DateTime selectedDate;
+
   @override
   State<HomeworkPage> createState() => _HomeworkPage();
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
-  final homeworkController = TextEditingController();
-  Subject? selectedSubject;
-  DateTime selectedDate = DateTime(10);
 
   List<DropdownMenuItem<Subject>> getDropdowns(){
     List<DropdownMenuItem<Subject>> subjects = [];
@@ -33,17 +40,39 @@ class _HomeworkPage extends State<HomeworkPage> {
     return subjects;
   }
 
+  void onPressed() {
+    if(widget.homeworkController.text.isNotEmpty && widget.selectedSubject != null){
+      if (widget.previousHomework != null) {
+        widget.previousHomework?.edit(widget.selectedSubject, widget.selectedDate, widget.homeworkController.text);
+        TimeTable.app!.setState(() {});
+      } else if(widget.selectedDate.year != 10) {
+        TimeInterval? time = widget.selectedSubject?.getTime(TimeTable.getDayFromDate(widget.selectedDate));
+        // TODO: Man soll das trotzdem rein machen können. muss dann halt im Kalendar sein
+        if (time == null) return;
+        DateTime date = DateTime(
+            widget.selectedDate.year, widget.selectedDate.month,
+            widget.selectedDate.day, time.startTime.hour,
+            time.startTime.minute);
+
+        Homework(widget.selectedSubject!, date, widget.homeworkController.text);
+      } else {
+        Homework(widget.selectedSubject!,widget.selectedSubject!.getNextDate()! ,widget.homeworkController.text);
+      }
+      Navigator.pop(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
         backButton: true,
-        title: "Neue Hausaufgabe",
+        title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CustomTextField(
-                controller: homeworkController,
+                controller: widget.homeworkController,
                 placeHolder: "Hausaufgabe",
                 autocorrect: true
             ),
@@ -52,27 +81,29 @@ class _HomeworkPage extends State<HomeworkPage> {
                 child: CustomDropdown(
                     defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
                     items: getDropdowns(),
-                    currentValue: selectedSubject,
+                    currentValue: widget.selectedSubject,
                     onChanged: (newValue) {
                       setState(() {
-                        selectedSubject = newValue;
+                        widget.selectedSubject = newValue;
                       });
                     }
                 )
             ),
             CustomDateButton(
-                value: selectedDate,
+                value: widget.selectedDate,
                 text: "Nächste Stunde",
                 onDateSelect: (value) {
                   setState((){
-                      selectedDate = value;
+                     widget.selectedDate = value;
                   });
                 },
                 customDateBuilder: (date, style) {
-                  // TODO: die tage an denen man fach hat hervor heben
-                  if (false) {
+                  if (TimeTable.getSubjectsByDate(date).contains(widget.selectedSubject)) {
                     return Container(
-                      decoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        color: widget.selectedSubject!.color.withOpacity(0.2),
+                        shape: BoxShape.circle,
+                      ),
                       child: Center(
                         child: Text(
                           date.day.toString(),
@@ -87,28 +118,10 @@ class _HomeworkPage extends State<HomeworkPage> {
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: ElevatedButton (
-                  onPressed: (){
-                    if(homeworkController.text.isNotEmpty && selectedSubject != null){
-                      if(selectedDate.year != 10) {
-                        TimeInterval? time = selectedSubject?.getTime(TimeTable.getDayFromDate(selectedDate));
-                        // TODO: Man soll das trotzdem rein machen können. muss dann halt im Kalendar sein
-                        if (time == null) return;
-                        DateTime date = DateTime(
-                            selectedDate.year, selectedDate.month,
-                            selectedDate.day, time.startTime.hour,
-                            time.startTime.minute);
-
-                        Homework(selectedSubject!, date, homeworkController.text);
-                      }
-                      else {
-                        Homework(selectedSubject!,selectedSubject!.getNextDate()! ,homeworkController.text);
-                      }
-                      Navigator.pop(context);
-                    }
-                  },
+                  onPressed: () {onPressed();},
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+                    child: Text(widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
                   )
               ),
             )

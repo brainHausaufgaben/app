@@ -1,7 +1,6 @@
 import 'package:brain_app/Pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({Key? key, required this.title, required this.child, this.backButton, this.subtitle, this.floatingActionButton}) : super(key: key);
@@ -18,16 +17,6 @@ class PageTemplate extends StatefulWidget {
 }
 
 class _PageTemplateState extends State<PageTemplate> {
-  void _onItemTapped(int index) {
-    setState(() {
-      PageTemplate.navigationBarIndex = index;
-
-      if (index == 1) {
-        _settings();
-      }
-    });
-  }
-
   void _settings(){
     Navigator.push(
         context,

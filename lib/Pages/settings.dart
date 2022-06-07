@@ -1,11 +1,15 @@
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
+
+  static bool mediaBox = true;
 
   @override
   State<SettingsPage> createState() => _SettingsPage();
@@ -13,6 +17,11 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPage extends State<SettingsPage> {
   final List<bool> radioList = List.filled(Designs.themeList.length, false);
+
+  void saveState() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("mediaBox", SettingsPage.mediaBox);
+  }
 
   @override
   void initState() {
@@ -46,6 +55,7 @@ class _SettingsPage extends State<SettingsPage> {
                 action: () {
                   currentDesign.toggleDarkMode();
                 },
+                state: AppDesign.darkMode,
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
@@ -73,7 +83,7 @@ class _SettingsPage extends State<SettingsPage> {
                       IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png", tooltip: "Carrot Orange"),
                       IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png", tooltip: "Poison Green"),
                       IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png", tooltip: "Military Green"),
-                      IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png", tooltip: "Pastell Red"),
+                      IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png", tooltip: "Pastel Red"),
                       IconRadio(isSelected: radioList[5], path: "icons/jeremiasThemeIcon.png", tooltip: "Jeremias"),
                       IconRadio(isSelected: radioList[6], path: "icons/helpThemeIcon.png", tooltip: "Help")
                     ]
@@ -81,6 +91,22 @@ class _SettingsPage extends State<SettingsPage> {
                 )
               )
             ]
+          ),
+          SettingsEntry(
+            children: [
+              SettingsSwitchButton(
+                text: "Witze, Funfacts...",
+                action: () {
+                  setState(() {
+                    SettingsPage.mediaBox = !SettingsPage.mediaBox;
+                    saveState();
+                  });
+                  // TODO: Das ist dumm :(
+                  TimeTable.app!.setState(() {});
+                },
+                state: SettingsPage.mediaBox,
+              )
+            ],
           )
         ]
       )

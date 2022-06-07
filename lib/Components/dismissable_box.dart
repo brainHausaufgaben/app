@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 
 class DismissableBox extends StatelessWidget {
@@ -12,8 +13,16 @@ class DismissableBox extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.only(top: 2),
         child: Dismissible(
-          onDismissed: (DismissDirection direction){
-            TimeTable.removeHomework(homework);
+          confirmDismiss: (DismissDirection direction) async {
+            if (direction == DismissDirection.startToEnd) {
+              TimeTable.removeHomework(homework);
+            } else if (direction == DismissDirection.endToStart) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeworkPage(previousHomework: homework))
+              );
+              return false;
+            }
           },
           secondaryBackground: Container(
               decoration: BoxDecoration(
@@ -23,7 +32,7 @@ class DismissableBox extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.only(right: 10),
                 child: Align(
-                    child: Icon(Icons.access_time, color: Colors.black),
+                    child: Icon(Icons.edit, color: Colors.black),
                     alignment: Alignment.centerRight
                 ),
               )

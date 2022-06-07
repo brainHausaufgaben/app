@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -54,14 +55,12 @@ class AppDesign with ChangeNotifier {
     prefs.setBool("darkMode", darkMode);
   }
 
-  void getDarkmode() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    darkMode = prefs.getBool("darkMode") ?? SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
+  void getDarkmode() {
+    darkMode = Preferences.fetchDarkmode() ?? SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
   }
 
-  void getTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? theme = prefs.getString("theme");
+  void getTheme() {
+    String? theme = Preferences.fetchTheme();
     if (theme != null) {
       toggleTheme(theme);
     }
