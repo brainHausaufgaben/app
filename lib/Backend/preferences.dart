@@ -5,6 +5,7 @@ class Preferences {
   static SharedPreferences? prefs;
   static bool mediaBox = true;
 
+
   static void fetchInstance() async {
     prefs = await SharedPreferences.getInstance();
   }

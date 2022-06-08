@@ -14,7 +14,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/notifier.dart';
-
+import 'package:brain_app/Backend/notifications.dart';
 void main() {
   runApp(const BrainApp());
 }
@@ -45,9 +45,13 @@ class _BrainApp extends State<BrainApp> {
     TimeTable.init();
     getBoxText();
     getMediaBoxState();
-
     load();
+    CustomNotifications.init();
+    CustomNotifications.presistentNotification();
+    //CustomNotifications.persistentNotification();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

@@ -88,7 +88,7 @@ class _HomePage extends State<HomePage>{
             labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
             label: "Hausaufgaben",
             child: const Icon(Icons.description_rounded),
-            onTap: () {
+              onTap: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => HomeworkPage())

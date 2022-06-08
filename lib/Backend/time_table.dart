@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -62,6 +63,7 @@ class TimeTable {
     homeworks.add(homework);
     BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
+    CustomNotifications.presistentNotification();
   }
   static void addEvent(Event event){
     events.add(event);
@@ -73,6 +75,7 @@ class TimeTable {
     if(homeworks.contains(homework))homeworks.remove(homework);
     BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
+    CustomNotifications.presistentNotification();
   }
 
   static Subject ?getSubject(int id){

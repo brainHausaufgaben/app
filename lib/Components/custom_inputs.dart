@@ -1,3 +1,4 @@
+import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:flutter/services.dart';
@@ -362,6 +363,10 @@ class CustomMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
+      onPress: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => HomeworkPage())
+      ),
       child: icon,
       children: menuEntries,
       overlayColor: Colors.black,
