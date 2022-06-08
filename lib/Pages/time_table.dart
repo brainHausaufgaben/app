@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
 
+import '../main.dart';
+
 class TimeTablePage extends StatefulWidget {
   const TimeTablePage({Key? key}) : super(key: key);
 
@@ -67,8 +69,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                           TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
                         }
                         SaveSystem.saveTimeTable();
-                        // TODO: Das ist dumm, man sollte die app irgendwie anders neu laden können
-                        TimeTable.app!.setState(() {});
+                        BrainApp.notifier.notifyOfChanges();
                       },
                     ),
                   )

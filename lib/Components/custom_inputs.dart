@@ -108,7 +108,7 @@ class CustomDateButton extends StatelessWidget {
         Future<DateTime?> newDateTime = showRoundedDatePicker(
             context: context,
             initialDate: DateTime.now(),
-            firstDate: DateTime(DateTime.now().year - 1),
+            firstDate: DateTime.now().subtract(const Duration(days: 1)),
             lastDate: DateTime(DateTime.now().year + 1),
             borderRadius: 16,
             theme: AppDesign.current.themeData,

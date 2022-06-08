@@ -6,6 +6,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class HomeworkPage extends StatefulWidget {
@@ -44,7 +45,7 @@ class _HomeworkPage extends State<HomeworkPage> {
     if(widget.homeworkController.text.isNotEmpty && widget.selectedSubject != null){
       if (widget.previousHomework != null) {
         widget.previousHomework?.edit(widget.selectedSubject, widget.selectedDate, widget.homeworkController.text);
-        TimeTable.app!.setState(() {});
+        BrainApp.notifier.notifyOfChanges();
       } else if(widget.selectedDate.year != 10) {
         TimeInterval? time = widget.selectedSubject?.getTime(TimeTable.getDayFromDate(widget.selectedDate));
         // TODO: Man soll das trotzdem rein machen können. muss dann halt im Kalendar sein
@@ -98,19 +99,21 @@ class _HomeworkPage extends State<HomeworkPage> {
                   });
                 },
                 customDateBuilder: (date, style) {
-                  if (TimeTable.getSubjectsByDate(date).contains(widget.selectedSubject)) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: widget.selectedSubject!.color.withOpacity(0.2),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Center(
-                        child: Text(
-                          date.day.toString(),
-                          style: style,
+                  if (date.day >= DateTime.now().day || date.month > DateTime.now().month) {
+                    if (TimeTable.getSubjectsByDate(date).contains(widget.selectedSubject)) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: widget.selectedSubject!.color.withOpacity(0.2),
+                          shape: BoxShape.circle,
                         ),
-                      ),
-                    );
+                        child: Center(
+                          child: Text(
+                            date.day.toString(),
+                            style: style,
+                          ),
+                        ),
+                      );
+                    }
                   }
                 },
             ),

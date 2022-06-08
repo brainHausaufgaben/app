@@ -50,10 +50,8 @@ class _PageTemplateState extends State<PageTemplate> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                //Settings Button / oder back button °o°
                 IconButton(
                   alignment: Alignment.centerLeft,
-                  // Idk
                   constraints: const BoxConstraints(),
                   padding: const EdgeInsets.all(0),
                   onPressed: widget.backButton == null ? _settings : _back,
@@ -62,7 +60,7 @@ class _PageTemplateState extends State<PageTemplate> {
                   splashRadius: 15,
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 0),
+                  padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget> [

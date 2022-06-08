@@ -7,6 +7,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../main.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
@@ -30,9 +32,9 @@ class _SettingsPage extends State<SettingsPage> {
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
   }
 
-  void _openLink() async {
+  void launchLink() async {
     Uri url = Uri.parse("https://forms.gle/GcfGNa1Lhvnt245Y6");
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) throw 'Could not launch rocket';
+    await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
   @override
@@ -59,7 +61,7 @@ class _SettingsPage extends State<SettingsPage> {
               SettingsSwitchButton(
                 text: "Darkmode",
                 action: () {
-                  currentDesign.toggleDarkMode();
+                  BrainApp.design.toggleDarkMode();
                 },
                 state: AppDesign.darkMode,
               ),
@@ -72,7 +74,7 @@ class _SettingsPage extends State<SettingsPage> {
                       setState(() {
                         for (int buttonIndex = 0; buttonIndex < radioList.length; buttonIndex++) {
                           if (buttonIndex == index) {
-                            currentDesign.toggleTheme(Designs.themeList[buttonIndex]);
+                            BrainApp.design.toggleTheme(Designs.themeList[buttonIndex]);
                             radioList[buttonIndex] = true;
                           } else {
                             radioList[buttonIndex] = false;
@@ -106,9 +108,8 @@ class _SettingsPage extends State<SettingsPage> {
                   setState(() {
                     SettingsPage.mediaBox = !SettingsPage.mediaBox;
                     saveState();
+                    BrainApp.notifier.notifyOfChanges();
                   });
-                  // TODO: Das ist dumm :(
-                  TimeTable.app!.setState(() {});
                 },
                 state: SettingsPage.mediaBox,
               )
@@ -118,7 +119,7 @@ class _SettingsPage extends State<SettingsPage> {
             children: [
               SettingsNavigatorButton(
                 text: "Bug melden",
-                action: _openLink,
+                action: launchLink,
               )
             ],
           )

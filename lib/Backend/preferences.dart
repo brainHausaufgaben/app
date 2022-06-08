@@ -1,6 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-// TODO zentralisiertes speichern für einstellungen
+// TODO: zentralisiertes speichern für einstellungen
 class Preferences {
   static SharedPreferences? prefs;
   static bool mediaBox = true;

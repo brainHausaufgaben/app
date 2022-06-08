@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Braucht man für das toggleTheme und den ChangeNotifier
-AppDesign currentDesign = AppDesign();
+import '../main.dart';
 
-class AppDesign with ChangeNotifier {
+class AppDesign {
   static bool darkMode = false;
   static DesignPackage current = Designs.monochrome;
   static String currentThemeName = "Monochrome";
@@ -40,7 +39,8 @@ class AppDesign with ChangeNotifier {
         current = Designs.help;
         break;
     }
-    notifyListeners();
+
+    BrainApp.notifier.notifyOfChanges();
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("theme", theme);
@@ -181,7 +181,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       textStyles: TextStyles(
         color: textColor,
         contrastColor: contrastColor,
-        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 0.6, color: textColor),
+        pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 1, color: textColor),
         pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
         boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
         pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),

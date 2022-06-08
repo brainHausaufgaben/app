@@ -28,7 +28,6 @@ class TimeTable {
   ];
   static bool saveEnabled = false;
   static Subject emptySubject = Subject.empty();
-  static State<BrainApp>? app;
 
   static void addLesson(SubjectInstance subject){
     week[subject.day - 1].addSubject(subject);
@@ -61,7 +60,7 @@ class TimeTable {
 
   static void addHomework(Homework homework){
     homeworks.add(homework);
-    app!.setState(() {});
+    BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
   }
   static void addEvent(Event event){
@@ -72,7 +71,7 @@ class TimeTable {
   }
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);
-    app!.setState(() {});
+    BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
   }
 
@@ -133,12 +132,10 @@ class TimeTable {
     return week[day.weekday - 1];
   }
 
-  static void init(State<BrainApp> appl){
+  static void init(){
     for(int i = 0;  i < 7; i++){
       week.add(Day(lessonTimes.length));
     }
-    app = appl;
-
   }
   static List subjectsToJSONEncodeble(){
      return subjects.map((item)
@@ -154,8 +151,11 @@ class TimeTable {
       List subjects = [];
       for(int i = 0; i < day.subjects.length; i++){
         SubjectInstance? subject = day.subjects[i];
-        if(subject != null) subjects.add(subject.subject.id);
-        else  subjects.add(0);
+        if(subject != null) {
+          subjects.add(subject.subject.id);
+        } else {
+          subjects.add(0);
+        }
 
       }
       days.add(subjects);

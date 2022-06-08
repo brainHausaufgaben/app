@@ -104,7 +104,7 @@ class _HomePage extends State<HomePage>{
           if (SettingsPage.mediaBox) Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
-                text: BrainApp.boxText,
+                text: BrainApp.todaysJoke,
                 icon: BrainApp.icon,
                 dark: true
             ),
