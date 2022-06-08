@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class CustomNotifications{
@@ -25,6 +26,7 @@ class CustomNotifications{
 
     const AndroidNotificationDetails platformChannelSpecifics =
     AndroidNotificationDetails('0', 'your channel name',
+        showWhen: false,
         channelDescription: 'your channel description',
         ongoing: true,
         enableVibration: false,
