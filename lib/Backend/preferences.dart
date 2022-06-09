@@ -1,32 +1,29 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-// TODO: zentralisiertes speichern für einstellungen
 class Preferences {
   static SharedPreferences? prefs;
-  static bool mediaBox = true;
-
 
   static void fetchInstance() async {
     prefs = await SharedPreferences.getInstance();
   }
 
-  static String? fetchTheme() {
+  static void setString(String key, String value) {
     fetchInstance();
-    return prefs?.getString("theme");
+    prefs?.setString(key, value);
   }
 
-  static bool? fetchDarkmode() {
+  static String getString(String key) {
     fetchInstance();
-    return prefs?.getBool("darkMode");
+    return prefs?.getString(key) ?? "";
   }
 
-  static bool? fetchCollapsed() {
+  static void setBool(String key, bool value) {
     fetchInstance();
-    return prefs?.getBool("collapsed");
+    prefs?.setBool(key, value);
   }
 
-  static void fetchMediaBoxState() {
+  static bool getBool(String key) {
     fetchInstance();
-    mediaBox = prefs!.getBool("mediaBox")!;
+    return prefs?.getBool(key) ?? false;
   }
 }

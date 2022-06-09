@@ -1,18 +1,15 @@
-import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../main.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
-
-  static bool mediaBox = true;
 
   @override
   State<SettingsPage> createState() => _SettingsPage();
@@ -21,27 +18,53 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPage extends State<SettingsPage> {
   final List<bool> radioList = List.filled(Designs.themeList.length, false);
 
-  void saveState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("mediaBox", SettingsPage.mediaBox);
-  }
-
   @override
   void initState() {
     super.initState();
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
   }
 
-  void launchLink() async {
-    Uri url = Uri.parse("https://forms.gle/GcfGNa1Lhvnt245Y6");
-    await launchUrl(url, mode: LaunchMode.externalApplication);
+  Widget getThemeChooser() {
+    return Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
+        child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: ToggleButtons(
+                onPressed: (index) {
+                  setState(() {
+                    for (int buttonIndex = 0; buttonIndex < radioList.length; buttonIndex++) {
+                      if (buttonIndex == index) {
+                        BrainApp.design.toggleTheme(Designs.themeList[buttonIndex]);
+                        radioList[buttonIndex] = true;
+                      } else {
+                        radioList[buttonIndex] = false;
+                      }
+                    }
+                  });
+                },
+                splashColor: Colors.transparent,
+                fillColor: Colors.transparent,
+                renderBorder: false,
+                isSelected: radioList,
+                children: [
+                  IconRadio(isSelected: radioList[0], path: "icons/monochromeThemeIcon.png", tooltip: "Monochrome"),
+                  IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png", tooltip: "Carrot Orange"),
+                  IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png", tooltip: "Poison Green"),
+                  IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png", tooltip: "Military Green"),
+                  IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png", tooltip: "Pastel Red"),
+                  IconRadio(isSelected: radioList[5], path: "icons/jeremiasThemeIcon.png", tooltip: "Jeremias"),
+                  IconRadio(isSelected: radioList[6], path: "icons/helpThemeIcon.png", tooltip: "Ocean Blue")
+                ]
+            )
+        )
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Einstellungen",
-      subtitle: "Version xx.xx",
+      subtitle: "Version 0.1",
       backButton: true,
       child: Wrap(
         runSpacing: 10,
@@ -65,39 +88,7 @@ class _SettingsPage extends State<SettingsPage> {
                 },
                 state: AppDesign.darkMode,
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: ToggleButtons(
-                    onPressed: (index) {
-                      setState(() {
-                        for (int buttonIndex = 0; buttonIndex < radioList.length; buttonIndex++) {
-                          if (buttonIndex == index) {
-                            BrainApp.design.toggleTheme(Designs.themeList[buttonIndex]);
-                            radioList[buttonIndex] = true;
-                          } else {
-                            radioList[buttonIndex] = false;
-                          }
-                        }
-                      });
-                    },
-                    splashColor: Colors.transparent,
-                    fillColor: Colors.transparent,
-                    renderBorder: false,
-                    isSelected: radioList,
-                    children: [
-                      IconRadio(isSelected: radioList[0], path: "icons/monochromeThemeIcon.png", tooltip: "Monochrome"),
-                      IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png", tooltip: "Carrot Orange"),
-                      IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png", tooltip: "Poison Green"),
-                      IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png", tooltip: "Military Green"),
-                      IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png", tooltip: "Pastel Red"),
-                      IconRadio(isSelected: radioList[5], path: "icons/jeremiasThemeIcon.png", tooltip: "Jeremias"),
-                      IconRadio(isSelected: radioList[6], path: "icons/helpThemeIcon.png", tooltip: "Help")
-                    ]
-                  )
-                )
-              )
+              getThemeChooser()
             ]
           ),
           SettingsEntry(
@@ -106,23 +97,32 @@ class _SettingsPage extends State<SettingsPage> {
                 text: "Witze, Funfacts...",
                 action: () {
                   setState(() {
-                    SettingsPage.mediaBox = !SettingsPage.mediaBox;
-                    saveState();
+                    Preferences.setBool("showMediaBox", !Preferences.getBool("showMediaBox"));
                     BrainApp.notifier.notifyOfChanges();
                   });
                 },
-                state: SettingsPage.mediaBox,
+                state: Preferences.getBool("showMediaBox"),
+              ),
+              SettingsSwitchButton(
+                text: "Benachrichtigungen",
+                action: () {
+                  // TODO: Keine Ahnung ob das reicht, mach irgendwas
+                  setState(() {
+                    Preferences.setBool("persistentNotification", !Preferences.getBool("persistentNotification"));
+                  });
+                },
+                state: Preferences.getBool("persistentNotification"),
               )
-            ],
+            ]
           ),
           SettingsEntry(
             children: [
-              SettingsNavigatorButton(
+              SettingsLinkButton(
                 text: "Bug melden",
-                action: launchLink,
+                link: "https://forms.gle/GcfGNa1Lhvnt245Y6",
               )
             ],
-          )
+          ),
         ]
       )
     );

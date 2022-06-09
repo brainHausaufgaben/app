@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomTextField extends TextField {
   CustomTextField({
@@ -35,18 +36,18 @@ class CustomTextField extends TextField {
 }
 
 class CustomDropdown<ItemType> extends StatelessWidget {
-  CustomDropdown({
+  const CustomDropdown({
     Key? key,
     required this.defaultText,
     required this.currentValue,
     required this.items,
-    required this.onChanged
+    required this.onChanged,
   }) : super(key: key);
 
-  Widget defaultText;
-  ItemType currentValue;
-  List<DropdownMenuItem<ItemType>> items;
-  void Function(dynamic)? onChanged;
+  final Widget defaultText;
+  final ItemType currentValue;
+  final List<DropdownMenuItem<ItemType>> items;
+  final void Function(dynamic)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -199,14 +200,14 @@ class CustomIconButton extends StatelessWidget {
 }
 
 class CustomColorPicker extends StatelessWidget {
-  CustomColorPicker({
+  const CustomColorPicker({
     Key? key,
     required this.pickerColor,
     required this.onColorSelect
   }) : super(key: key);
 
-  Color pickerColor;
-  Function(Color) onColorSelect;
+  final Color pickerColor;
+  final Function(Color) onColorSelect;
 
   @override
   Widget build(BuildContext context) {
@@ -252,14 +253,14 @@ class CustomColorPicker extends StatelessWidget {
 }
 
 class SettingsNavigatorButton extends StatelessWidget {
-  SettingsNavigatorButton({
+  const SettingsNavigatorButton({
     Key? key,
     required this.text,
     required this.action
   }) : super(key: key);
 
-  String text;
-  Function() action;
+  final String text;
+  final Function() action;
 
   @override
   Widget build(BuildContext context) {
@@ -276,17 +277,45 @@ class SettingsNavigatorButton extends StatelessWidget {
   }
 }
 
+class SettingsLinkButton extends StatelessWidget {
+  const SettingsLinkButton({
+    Key? key,
+    required this.text,
+    required this.link
+  }) : super(key: key);
+
+  final String text;
+  final String link;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        Uri url = Uri.parse(link);
+        launchUrl(url, mode: LaunchMode.externalApplication);
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          Icon(Icons.open_in_browser, color: AppDesign.current.textStyles.color, size: 20)
+        ],
+      ),
+    );
+  }
+}
+
 class SettingsSwitchButton extends StatefulWidget {
-  SettingsSwitchButton({
+  const SettingsSwitchButton({
     Key? key,
     required this.text,
     required this.action,
     required this.state
   }) : super(key: key);
 
-  String text;
-  Function() action;
-  bool state;
+  final String text;
+  final Function() action;
+  final bool state;
 
   @override
   State<StatefulWidget> createState() =>  _SettingsSwitchButton();
@@ -331,12 +360,12 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
 }
 
 class SettingsEntry extends StatelessWidget {
-  SettingsEntry({
+  const SettingsEntry({
     Key? key,
     required this.children
   }) : super(key: key);
 
-  List<Widget> children;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {

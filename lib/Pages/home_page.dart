@@ -1,10 +1,10 @@
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Pages/homework_page.dart';
-import 'package:brain_app/Pages/settings_page.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -70,7 +70,13 @@ class _HomePage extends State<HomePage>{
       if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
       if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgabe" + (homework == 1 ? "" : "n");
 
-      return CollapsibleBox(text: text, icon: icons[iconIndex], iconColor: iconColors[iconIndex], dark: true);
+      return CollapsibleBox(
+        text: text,
+        icon: icons[iconIndex],
+        iconColor: iconColors[iconIndex],
+        dark: true,
+        id: 1,
+      );
   }
 
   @override
@@ -90,8 +96,8 @@ class _HomePage extends State<HomePage>{
             child: const Icon(Icons.description_rounded),
               onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeworkPage())
+                context,
+                MaterialPageRoute(builder: (context) => HomeworkPage())
               );
             }
           )
@@ -101,20 +107,21 @@ class _HomePage extends State<HomePage>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getWarningBox(),
-          if (SettingsPage.mediaBox) Padding(
+          if (Preferences.getBool("showMediaBox")) Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
-                text: BrainApp.todaysJoke,
-                icon: BrainApp.icon,
-                dark: true
+              text: BrainApp.todaysJoke,
+              icon: BrainApp.icon,
+              dark: true,
+              id: 2,
             ),
           ),
           Expanded(
             child: ListView(
-                padding: const EdgeInsets.only(top:25),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: getDays()
+              padding: const EdgeInsets.only(top:25),
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              children: getDays()
             ),
           ),
         ],

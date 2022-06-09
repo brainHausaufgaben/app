@@ -29,21 +29,21 @@ class AppDesign {
       case "Military Green":
         current = Designs.militaryGreen;
         break;
-      case "Pastell Red":
-        current = Designs.pastellRed;
+      case "Pastel Red":
+        current = Designs.pastelRed;
         break;
       case "Jeremias":
         current = Designs.jeremiasTheme;
         break;
-      case "Help":
-        current = Designs.help;
+      case "Ocean Blue":
+        current = Designs.oceanBlue;
         break;
     }
 
-    BrainApp.notifier.notifyOfChanges();
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("theme", theme);
+
+    BrainApp.notifier.notifyOfChanges();
   }
 
   void toggleDarkMode() async {
@@ -69,7 +69,7 @@ class AppDesign {
 }
 
 class Designs {
-  static List<String> themeList = ["Monochrome", "Carrot Orange", "Poison Green", "Military Green", "Pastell Red", "Jeremias", "Help"];
+  static List<String> themeList = ["Monochrome", "Carrot Orange", "Poison Green", "Military Green", "Pastel Red", "Jeremias", "Ocean Blue"];
 
   // generateDesign(primaryColor, backgroundColor, boxBackground, textColor, contrastColor, overrideIconColor)
   static DesignPackage get monochrome => AppDesign.darkMode ?
@@ -88,13 +88,13 @@ class Designs {
     generateDesign(const Color(0xFFA3BDA6), const Color(0xFF445346), const Color(0xFF637265), const Color(0xFFFFFFFF), const Color(0xFF212229), true) :
     generateDesign(const Color(0xFF455147), const Color(0xFFAABCAC), const Color(0xFFC9D4CA), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
-  static DesignPackage get pastellRed => AppDesign.darkMode ?
+  static DesignPackage get pastelRed => AppDesign.darkMode ?
     generateDesign(const Color(0xFFEF6363), const Color(0xFF4B2B2B), const Color(0xFF5F3A3A), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :
     generateDesign(const Color(0xFFEF6363), const Color(0xFFFCE8E8), const Color(0xFFF9DFDF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
-  static DesignPackage get help => AppDesign.darkMode ?
-    generateDesign(const Color(0xFFFF0000), const Color(0xFF000000), const Color(0xFF6B1919), const Color(0xFFFF0000), const Color(0xFF000000), true) :
-    generateDesign(const Color(0xFFFAE100), const Color(0xFFD34DE9), const Color(0xFF61C200), const Color(0xFF0050FF), const Color(0xFFFFFFFF), true);
+  static DesignPackage get oceanBlue => AppDesign.darkMode ?
+    generateDesign(const Color(0xFF3F4AA7), const Color(0xFF23295C), const Color(0xFF313873), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), false) :
+    generateDesign(const Color(0xFF3F4AA7), const Color(0xFF929CF9), const Color(0xFFA4ADFF), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
 
   static DesignPackage get jeremiasTheme => AppDesign.darkMode ?
     generateDesign(const Color(0xFF6249AB), const Color(0xFF2D2648), const Color(0xFF382F59), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :

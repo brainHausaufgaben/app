@@ -1,19 +1,21 @@
+import 'package:brain_app/Backend/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CollapsibleBox extends StatefulWidget {
   String text = "empty";
   IconData icon;
   Color? iconColor;
   bool dark;
+  int? id;
 
   CollapsibleBox({
     Key? key,
     required this.text,
     required this.icon,
     this.dark = false,
-    this.iconColor
+    this.iconColor,
+    this.id
   }) : super(key: key);
 
   @override
@@ -22,6 +24,22 @@ class CollapsibleBox extends StatefulWidget {
 
 class _CollapsibleBox extends State<CollapsibleBox> {
   bool collapsed = false;
+
+  @override
+  void initState() {
+    if (widget.id != null) {
+      collapsed = Preferences.getBool("collabsibleBox" + widget.id.toString());
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    if (widget.id != null) {
+      Preferences.setBool("collabsibleBox" + widget.id.toString(), collapsed);
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

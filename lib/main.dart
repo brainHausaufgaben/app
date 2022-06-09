@@ -44,7 +44,6 @@ class _BrainApp extends State<BrainApp> {
 
     TimeTable.init();
     getBoxText();
-    getMediaBoxState();
     load();
     CustomNotifications.init();
     CustomNotifications.presistentNotification();
@@ -165,11 +164,6 @@ class _BrainApp extends State<BrainApp> {
         }
       });
     });
-  }
-
-  void getMediaBoxState() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    SettingsPage.mediaBox = prefs.getBool("mediaBox")!;
   }
 }
 

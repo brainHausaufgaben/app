@@ -1,11 +1,10 @@
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
-  CalendarPage({Key? key}): super(key: key);
+  const CalendarPage({Key? key}): super(key: key);
 
   @override
   _CalendarPage createState() => _CalendarPage();
@@ -16,9 +15,10 @@ class _CalendarPage extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Kalender",
+      subtitle: "Work in Progress",
       child: TableCalendar(
-        firstDay: DateTime.utc(2010, 10, 16),
-        lastDay: DateTime.utc(2030, 3, 14),
+        firstDay: DateTime.utc(2018, 10, 16),
+        lastDay: DateTime.utc(2026, 3, 14),
         startingDayOfWeek: StartingDayOfWeek.monday,
         focusedDay: DateTime.now(),
         calendarStyle: CalendarStyle(

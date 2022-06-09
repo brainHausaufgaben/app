@@ -2,7 +2,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/add_subject.dart';
+import 'package:brain_app/Pages/subject_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
 

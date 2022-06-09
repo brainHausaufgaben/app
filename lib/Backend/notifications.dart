@@ -10,7 +10,7 @@ class CustomNotifications{
     await notificationsPlugin.initialize(initializationSettingsAndroid);
   }
 
-  static void presistentNotification() async{
+  static void presistentNotification() async {
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
     const StyleInformation styleInformation = BigTextStyleInformation("<b> bigText </b>",htmlFormatBigText: true,htmlFormatContentTitle: true);
     String title = "";
