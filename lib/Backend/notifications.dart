@@ -1,16 +1,34 @@
+
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
+import 'dart:io'show Platform;
+import 'package:flutter/foundation.dart';
 
 class CustomNotifications{
   static final AndroidFlutterLocalNotificationsPlugin notificationsPlugin = AndroidFlutterLocalNotificationsPlugin();
+  static bool notificationsEnabled = true;
+  static bool notificationsPossible = true;
 
   static void init() async{
+
+    if(kIsWeb){
+      notificationsPossible = false;
+      return;
+    }
+    if(!Platform.isAndroid){
+      notificationsPossible = false;
+      return;
+    }
+
     AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
     await notificationsPlugin.initialize(initializationSettingsAndroid);
   }
 
-  static void presistentNotification() async {
+  static void presistentNotification() async{
+    if(!notificationsEnabled || !notificationsPossible) return;
+
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
     const StyleInformation styleInformation = BigTextStyleInformation("<b> bigText </b>",htmlFormatBigText: true,htmlFormatContentTitle: true);
     String title = "";
@@ -25,7 +43,7 @@ class CustomNotifications{
     }
 
     const AndroidNotificationDetails platformChannelSpecifics =
-    AndroidNotificationDetails('0', 'your channel name',
+    AndroidNotificationDetails('0', "Dauer Benachtichtigung",
         showWhen: false,
         channelDescription: 'your channel description',
         ongoing: true,
