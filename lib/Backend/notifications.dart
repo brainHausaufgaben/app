@@ -1,3 +1,4 @@
+
 import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:flutter/foundation.dart';
 
 class CustomNotifications{
   static final AndroidFlutterLocalNotificationsPlugin notificationsPlugin = AndroidFlutterLocalNotificationsPlugin();
+  static bool notificationsEnabled = true;
   static bool notificationsPossible = true;
 
   static void init() async{
@@ -23,13 +25,30 @@ class CustomNotifications{
 
     AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
     await notificationsPlugin.initialize(initializationSettingsAndroid);
+    print(Preferences.getBool("persistentNotifications"));
+    if(Preferences.getBool("persistentNotifications")){
+      CustomNotifications.enableNotifications();
+    }
+    else{
+      CustomNotifications.disableNotifications();
+    }
+  }
+
+  static void enableNotifications() async{
+    notificationsEnabled = true;
+    persistentNotification();
+  }
+
+  static void disableNotifications() async{
+    notificationsEnabled = false;
+    notificationsPlugin.cancel(0);
+
   }
 
   static void persistentNotification() async{
-    if(!Preferences.getBool("persistentNotifications") || !notificationsPossible) return;
+    if(!notificationsEnabled || !notificationsPossible) return;
 
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
-    const StyleInformation styleInformation = BigTextStyleInformation("<b> bigText </b>",htmlFormatBigText: true,htmlFormatContentTitle: true);
     String title = "";
     String body = "";
     if(TimeTable.homeworks.isNotEmpty){
@@ -53,6 +72,8 @@ class CustomNotifications{
         ticker: 'ticker');
     await notificationsPlugin.show(
         0, title , body,notificationDetails: platformChannelSpecifics,);
+
+
   }
 
 }

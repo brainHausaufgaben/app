@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Pages/time_table.dart';
@@ -17,12 +18,13 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPage extends State<SettingsPage> {
   final List<bool> radioList = List.filled(Designs.themeList.length, false);
-  String version = "laden...";
+  String version = "...";
 
   @override
   void initState() {
     super.initState();
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
+    getVersion();
   }
 
   void getVersion() {
@@ -116,6 +118,12 @@ class _SettingsPage extends State<SettingsPage> {
                 action: () {
                   setState(() {
                     Preferences.setBool("persistentNotifications", !Preferences.getBool("persistentNotifications"));
+                    if(Preferences.getBool("persistentNotifications")){
+                      CustomNotifications.enableNotifications();
+                    }
+                    else{
+                      CustomNotifications.disableNotifications();
+                    }
                   });
                 },
                 state: Preferences.getBool("persistentNotifications"),

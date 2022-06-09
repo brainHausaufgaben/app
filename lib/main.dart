@@ -46,7 +46,6 @@ class _BrainApp extends State<BrainApp> {
     getBoxText();
     load();
     CustomNotifications.init();
-    CustomNotifications.persistentNotification();
     //CustomNotifications.persistentNotification();
   }
 
