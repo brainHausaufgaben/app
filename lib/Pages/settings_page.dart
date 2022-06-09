@@ -6,6 +6,7 @@ import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../main.dart';
 
@@ -20,6 +21,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPage extends State<SettingsPage> {
   final List<bool> radioList = List.filled(Designs.themeList.length, false);
+  String version = "laden...";
 
   void saveState() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -30,6 +32,7 @@ class _SettingsPage extends State<SettingsPage> {
   void initState() {
     super.initState();
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
+    getVersion();
   }
 
   void launchLink() async {
@@ -37,11 +40,18 @@ class _SettingsPage extends State<SettingsPage> {
     await launchUrl(url, mode: LaunchMode.externalApplication);
   }
 
+  void getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      version = packageInfo.version;
+      BrainApp.notifier.notifyOfChanges();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Einstellungen",
-      subtitle: "Version xx.xx",
+      subtitle: "Version " + version,
       backButton: true,
       child: Wrap(
         runSpacing: 10,
