@@ -1,4 +1,4 @@
-
+import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 
 class CustomNotifications{
   static final AndroidFlutterLocalNotificationsPlugin notificationsPlugin = AndroidFlutterLocalNotificationsPlugin();
-  static bool notificationsEnabled = true;
   static bool notificationsPossible = true;
 
   static void init() async{
@@ -26,8 +25,8 @@ class CustomNotifications{
     await notificationsPlugin.initialize(initializationSettingsAndroid);
   }
 
-  static void presistentNotification() async{
-    if(!notificationsEnabled || !notificationsPossible) return;
+  static void persistentNotification() async{
+    if(!Preferences.getBool("persistentNotifications") || !notificationsPossible) return;
 
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
     const StyleInformation styleInformation = BigTextStyleInformation("<b> bigText </b>",htmlFormatBigText: true,htmlFormatContentTitle: true);
@@ -54,8 +53,6 @@ class CustomNotifications{
         ticker: 'ticker');
     await notificationsPlugin.show(
         0, title , body,notificationDetails: platformChannelSpecifics,);
-
-
   }
 
 }

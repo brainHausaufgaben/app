@@ -63,7 +63,7 @@ class TimeTable {
     homeworks.add(homework);
     BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
-    CustomNotifications.presistentNotification();
+    CustomNotifications.persistentNotification();
   }
   static void addEvent(Event event){
     events.add(event);
@@ -75,7 +75,7 @@ class TimeTable {
     if(homeworks.contains(homework))homeworks.remove(homework);
     BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
-    CustomNotifications.presistentNotification();
+    CustomNotifications.persistentNotification();
   }
 
   static Subject ?getSubject(int id){

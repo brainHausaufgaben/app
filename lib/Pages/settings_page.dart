@@ -4,7 +4,7 @@ import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 import '../main.dart';
 
@@ -17,11 +17,19 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPage extends State<SettingsPage> {
   final List<bool> radioList = List.filled(Designs.themeList.length, false);
+  String version = "laden...";
 
   @override
   void initState() {
     super.initState();
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
+  }
+
+  void getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      version = packageInfo.version;
+      BrainApp.notifier.notifyOfChanges();
+    });
   }
 
   Widget getThemeChooser() {
@@ -64,7 +72,7 @@ class _SettingsPage extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Einstellungen",
-      subtitle: "Version 0.1",
+      subtitle: "Version " + version,
       backButton: true,
       child: Wrap(
         runSpacing: 10,
@@ -106,12 +114,11 @@ class _SettingsPage extends State<SettingsPage> {
               SettingsSwitchButton(
                 text: "Benachrichtigungen",
                 action: () {
-                  // TODO: Keine Ahnung ob das reicht, mach irgendwas
                   setState(() {
-                    Preferences.setBool("persistentNotification", !Preferences.getBool("persistentNotification"));
+                    Preferences.setBool("persistentNotifications", !Preferences.getBool("persistentNotifications"));
                   });
                 },
-                state: Preferences.getBool("persistentNotification"),
+                state: Preferences.getBool("persistentNotifications"),
               )
             ]
           ),
