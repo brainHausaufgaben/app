@@ -51,7 +51,7 @@ class AppDesign {
     toggleTheme(currentThemeName);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("darkmode", darkMode);
+    prefs.setBool("darkMode", darkMode);
   }
 
   static void getDarkmode() async {
