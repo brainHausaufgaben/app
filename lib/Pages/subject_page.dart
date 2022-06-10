@@ -5,17 +5,18 @@ import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 
 class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key, this.previous}) : super(key: key) {
-    subjectController.text = previous != null ? previous!.name : "";
-    pickerColor = previous != null ? previous!.color : Colors.red;
+  SubjectPage({Key? key, this.previousSubject}) : super(key: key) {
+    subjectController.text = previousSubject != null ? previousSubject!.name : "";
+    pickerColor = previousSubject != null ? previousSubject!.color : Colors.red;
   }
 
-  Subject? previous;
+  Subject? previousSubject;
   final subjectController = TextEditingController();
   Color pickerColor = Colors.red;
 
@@ -28,7 +29,7 @@ class _SubjectPage extends State<SubjectPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       backButton: true,
-      title: widget.previous != null ? "Fach Bearbeiten" : "Neues Fach",
+      title: widget.previousSubject != null ? "Fach Bearbeiten" : "Neues Fach",
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -53,24 +54,44 @@ class _SubjectPage extends State<SubjectPage> {
           const Spacer(),
           Padding(
             padding: const EdgeInsets.only(bottom: 15),
-            child: ElevatedButton (
-              onPressed: () {
-                if (widget.subjectController.text.isNotEmpty) {
-                  if (widget.previous != null) {
-                    TimeTable.getSubject(widget.previous!.id)!.edit(widget.subjectController.text, widget.pickerColor);
-                  } else {
-                    Subject(widget.subjectController.text, widget.pickerColor);
-                  }
-                  Navigator.pop(context);
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
-              )
-            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton (
+                      onPressed: () {
+                        if (widget.subjectController.text.isNotEmpty) {
+                          if (widget.previousSubject != null) {
+                            TimeTable.getSubject(widget.previousSubject!.id)!.edit(widget.subjectController.text, widget.pickerColor);
+                          } else {
+                            Subject(widget.subjectController.text, widget.pickerColor);
+                          }
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+                      )
+                  ),
+                ),
+                if (widget.previousSubject != null) Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: ElevatedButton (
+                    onPressed: () {
+                      TimeTable.deleteSubject(widget.previousSubject!);
+                      BrainApp.notifier.notifyOfChanges();
+                      Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      child: Icon(Icons.delete_forever),
+                    )
+                  )
+                )
+              ]
+            )
           )
-        ],
+        ]
       )
     );
   }

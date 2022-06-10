@@ -27,7 +27,7 @@ class _SubjectOverview extends State<SubjectOverview> {
         action: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SubjectPage(previous: subject))
+              MaterialPageRoute(builder: (context) => SubjectPage(previousSubject: subject))
           ).then((value) {
             setState(() {});
           });

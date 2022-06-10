@@ -51,12 +51,11 @@ class TimeTable {
       for(int j = 0; j < lessonTimes.length; j++){
         if(week[i].subjects[j] != null){
           if(week[i].subjects[j]!.subject == subject){
-            week[i].subjects[j] == null;
+            week[i].subjects[j] = null;
           }
         }
       }
     }
-
   }
 
   static void addHomework(Homework homework){

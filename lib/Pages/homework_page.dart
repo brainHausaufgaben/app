@@ -66,70 +66,72 @@ class _HomeworkPage extends State<HomeworkPage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-        backButton: true,
-        title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CustomTextField(
-                controller: widget.homeworkController,
-                placeHolder: "Hausaufgabe",
-                autocorrect: true
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: CustomDropdown(
-                    defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
-                    items: getDropdowns(),
-                    currentValue: widget.selectedSubject,
-                    onChanged: (newValue) {
-                      setState(() {
-                        widget.selectedSubject = newValue;
-                      });
-                    }
-                )
-            ),
-            CustomDateButton(
-                value: widget.selectedDate,
-                text: "Nächste Stunde",
-                onDateSelect: (value) {
-                  setState((){
-                     widget.selectedDate = value;
-                  });
-                },
-                customDateBuilder: (date, style) {
-                  if (date.day >= DateTime.now().day || date.month > DateTime.now().month) {
-                    if (TimeTable.getSubjectsByDate(date).contains(widget.selectedSubject)) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: widget.selectedSubject!.color.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                          child: Text(
-                            date.day.toString(),
-                            style: style,
-                          ),
-                        ),
-                      );
-                    }
-                  }
-                },
-            ),
-            const Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15),
-              child: ElevatedButton (
-                  onPressed: () {onPressed();},
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text(widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
-                  )
-              ),
+      backButton: true,
+      title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          CustomTextField(
+            controller: widget.homeworkController,
+            placeHolder: "Hausaufgabe",
+            autocorrect: true
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: CustomDropdown(
+              defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
+              items: getDropdowns(),
+              currentValue: widget.selectedSubject,
+              onChanged: (newValue) {
+                setState(() {
+                  widget.selectedSubject = newValue;
+                });
+              }
             )
-          ],
-        )
+          ),
+          CustomDateButton(
+            value: widget.selectedDate,
+            text: "Nächste Stunde",
+            onDateSelect: (value) {
+              setState((){
+                 widget.selectedDate = value;
+              });
+            },
+            customDateBuilder: (date, style) {
+              if (date.day >= DateTime.now().day || date.month > DateTime.now().month) {
+                if (TimeTable.getSubjectsByDate(date).contains(widget.selectedSubject)) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: widget.selectedSubject!.color.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Center(
+                      child: Text(
+                        date.day.toString(),
+                        style: style,
+                      ),
+                    ),
+                  );
+                }
+              }
+            },
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 15),
+            child: ElevatedButton (
+                onPressed: () {
+                  onPressed();
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
+                )
+            )
+          )
+        ]
+      )
     );
   }
 }
