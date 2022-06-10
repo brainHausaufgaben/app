@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/notifications.dart';
-import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +22,7 @@ class _SettingsPage extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
+
     radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
     getVersion();
   }
@@ -44,7 +44,7 @@ class _SettingsPage extends State<SettingsPage> {
                   setState(() {
                     for (int buttonIndex = 0; buttonIndex < radioList.length; buttonIndex++) {
                       if (buttonIndex == index) {
-                        BrainApp.design.toggleTheme(Designs.themeList[buttonIndex]);
+                        AppDesign.toggleTheme(Designs.themeList[buttonIndex]);
                         radioList[buttonIndex] = true;
                       } else {
                         radioList[buttonIndex] = false;
@@ -94,7 +94,7 @@ class _SettingsPage extends State<SettingsPage> {
               SettingsSwitchButton(
                 text: "Darkmode",
                 action: () {
-                  BrainApp.design.toggleDarkMode();
+                  AppDesign.toggleDarkMode();
                 },
                 state: AppDesign.darkMode,
               ),
@@ -107,26 +107,26 @@ class _SettingsPage extends State<SettingsPage> {
                 text: "Witze, Funfacts...",
                 action: () {
                   setState(() {
-                    Preferences.setBool("showMediaBox", !Preferences.getBool("showMediaBox"));
+                    BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);
                     BrainApp.notifier.notifyOfChanges();
                   });
                 },
-                state: Preferences.getBool("showMediaBox"),
+                state: BrainApp.preferences["showMediaBox"],
               ),
               SettingsSwitchButton(
                 text: "Benachrichtigungen",
                 action: () {
                   setState(() {
-                    Preferences.setBool("persistentNotifications", !Preferences.getBool("persistentNotifications"));
-                    if(Preferences.getBool("persistentNotifications")){
+                    BrainApp.updatePreference("persistentNotifications", !BrainApp.preferences["persistentNotifications"]);
+
+                    if(BrainApp.preferences["persistentNotifications"]){
                       CustomNotifications.enableNotifications();
-                    }
-                    else{
+                    } else{
                       CustomNotifications.disableNotifications();
                     }
                   });
                 },
-                state: Preferences.getBool("persistentNotifications"),
+                state: BrainApp.preferences["persistentNotifications"],
               )
             ]
           ),

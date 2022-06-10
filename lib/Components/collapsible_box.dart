@@ -1,57 +1,31 @@
-import 'package:brain_app/Backend/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
-class CollapsibleBox extends StatefulWidget {
+class CollapsibleBox extends StatelessWidget {
   String text = "empty";
   IconData icon;
   Color? iconColor;
   bool dark;
-  int? id;
+  bool collapsed;
+  Function() onTap;
 
   CollapsibleBox({
     Key? key,
     required this.text,
     required this.icon,
+    required this.collapsed,
+    required this.onTap,
     this.dark = false,
     this.iconColor,
-    this.id
   }) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() =>  _CollapsibleBox();
-}
-
-class _CollapsibleBox extends State<CollapsibleBox> {
-  bool collapsed = false;
-
-  @override
-  void initState() {
-    if (widget.id != null) {
-      collapsed = Preferences.getBool("collabsibleBox" + widget.id.toString());
-    }
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    if (widget.id != null) {
-      Preferences.setBool("collabsibleBox" + widget.id.toString(), collapsed);
-    }
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          collapsed = !collapsed;
-        });
-      },
+      onTap: onTap,
       child: AnimatedContainer (
         decoration: BoxDecoration(
-            color: widget.dark ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
+            color: AppDesign.current.primaryColor,
             borderRadius: AppDesign.current.boxStyle.borderRadius
         ),
         padding: collapsed ? const EdgeInsets.all(8) : const EdgeInsets.all(17),
@@ -68,17 +42,17 @@ class _CollapsibleBox extends State<CollapsibleBox> {
                 child: FittedBox(
                   fit: BoxFit.fill,
                   child: Icon(
-                      widget.icon,
-                      color: widget.iconColor == null || AppDesign.current.overrideIconColor ? (widget.dark ? AppDesign.current.textStyles.contrastColor : AppDesign.current.primaryColor) : widget.iconColor,
-                      size: 35
+                    icon,
+                    color: iconColor == null || AppDesign.current.overrideIconColor ? AppDesign.current.textStyles.contrastColor : iconColor,
+                    size: 35
                   ),
                 )
               )
             ),
             if (!collapsed) Flexible(
               child: Text(
-                widget.text,
-                style: widget.dark ? AppDesign.current.textStyles.collapsibleTextContrast : AppDesign.current.textStyles.collapsibleText
+                text,
+                style: AppDesign.current.textStyles.collapsibleTextContrast
               )
             )
           ]

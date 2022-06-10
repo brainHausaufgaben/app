@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/homework.dart';
-import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
@@ -13,7 +12,7 @@ import 'package:brain_app/Components/collapsible_box.dart';
 
 
 class HomePage extends StatefulWidget {
-  HomePage({Key? key}): super(key: key);
+  const HomePage({Key? key}): super(key: key);
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -74,8 +73,12 @@ class _HomePage extends State<HomePage>{
         text: text,
         icon: icons[iconIndex],
         iconColor: iconColors[iconIndex],
-        dark: true,
-        id: 1,
+        collapsed: BrainApp.preferences["warningBoxCollapsed"],
+        onTap: () {
+          setState(() {
+            BrainApp.updatePreference("warningBoxCollapsed", !BrainApp.preferences["warningBoxCollapsed"]);
+          });
+        },
       );
   }
 
@@ -107,13 +110,17 @@ class _HomePage extends State<HomePage>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           getWarningBox(),
-          if (Preferences.getBool("showMediaBox")) Padding(
+          if (BrainApp.preferences["showMediaBox"]) Padding(
             padding: const EdgeInsets.only(top: 7),
             child: CollapsibleBox(
               text: BrainApp.todaysJoke,
               icon: BrainApp.icon,
-              dark: true,
-              id: 2,
+              collapsed: BrainApp.preferences["mediaBoxCollapsed"],
+              onTap: () {
+                setState(() {
+                  BrainApp.updatePreference("mediaBoxCollapsed", !BrainApp.preferences["mediaBoxCollapsed"]);
+                });
+              },
             ),
           ),
           Expanded(

@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:csv/csv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:brain_app/Pages/settings_page.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/save_system.dart';
@@ -15,6 +12,8 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/notifier.dart';
 import 'package:brain_app/Backend/notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 void main() {
   runApp(const BrainApp());
 }
@@ -22,12 +21,31 @@ void main() {
 class BrainApp extends StatefulWidget {
   const BrainApp({Key? key}) : super(key: key);
 
-  static AppDesign design = AppDesign();
+  static Notifier notifier = Notifier();
 
   static String todaysJoke = "Wird geladen...";
   static IconData icon = Icons.autorenew_rounded;
 
-  static Notifier notifier = Notifier();
+  static Map<String, dynamic> preferences = {
+    "warningBoxCollapsed" : false,
+    "mediaBoxCollapsed": false,
+    "showMediaBox": true,
+    "persistentNotifications": false,
+  };
+
+  static void updatePreference(String key, dynamic value) async {
+    preferences[key] = value;
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    switch (value.runtimeType) {
+      case String:
+        prefs.setString(key, value);
+        break;
+      case bool:
+        prefs.setBool(key, value);
+        break;
+    }
+  }
 
   @override
   _BrainApp createState() => _BrainApp();
@@ -42,14 +60,14 @@ class _BrainApp extends State<BrainApp> {
       setState(() {});
     });
 
+    getPreferences();
+    AppDesign.init();
     TimeTable.init();
+    CustomNotifications.init();
     getBoxText();
     load();
-    CustomNotifications.init();
     //CustomNotifications.persistentNotification();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +93,15 @@ class _BrainApp extends State<BrainApp> {
         );
       },
     );
+  }
+
+  void getPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      BrainApp.preferences.forEach((key, value) {
+        BrainApp.preferences[key] = prefs.get(key) ?? BrainApp.preferences[key];
+      });
+    });
   }
 
   Future<MapEntry<String, IconData>?> parseJokes() async {

@@ -1,11 +1,10 @@
-
-import 'package:brain_app/Backend/preferences.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
 import 'dart:io'show Platform;
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomNotifications{
   static final AndroidFlutterLocalNotificationsPlugin notificationsPlugin = AndroidFlutterLocalNotificationsPlugin();
@@ -25,21 +24,23 @@ class CustomNotifications{
 
     AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
     await notificationsPlugin.initialize(initializationSettingsAndroid);
-    print(Preferences.getBool("persistentNotifications"));
-    if(Preferences.getBool("persistentNotifications")){
-      CustomNotifications.enableNotifications();
-    }
-    else{
-      CustomNotifications.disableNotifications();
-    }
+
+    SharedPreferences.getInstance().then((preferences) {
+      if(preferences.getBool("persistentNotifications") ?? false){
+        CustomNotifications.enableNotifications();
+      }
+      else{
+        CustomNotifications.disableNotifications();
+      }
+    });
   }
 
-  static void enableNotifications() async{
+  static void enableNotifications() async {
     notificationsEnabled = true;
     persistentNotification();
   }
 
-  static void disableNotifications() async{
+  static void disableNotifications() async {
     notificationsEnabled = false;
     notificationsPlugin.cancel(0);
 

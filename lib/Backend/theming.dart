@@ -9,12 +9,12 @@ class AppDesign {
   static DesignPackage current = Designs.monochrome;
   static String currentThemeName = "Monochrome";
 
-  AppDesign() {
+  static void init() {
     getDarkmode();
     getTheme();
   }
 
-  void toggleTheme(String theme) async {
+  static void toggleTheme(String theme) async {
     currentThemeName = theme;
     switch (theme) {
       case "Monochrome":
@@ -38,7 +38,7 @@ class AppDesign {
       case "Ocean Blue":
         current = Designs.oceanBlue;
         break;
-    }
+   }
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString("theme", theme);
@@ -46,25 +46,22 @@ class AppDesign {
     BrainApp.notifier.notifyOfChanges();
   }
 
-  void toggleDarkMode() async {
+  static void toggleDarkMode() async {
     darkMode = !darkMode;
     toggleTheme(currentThemeName);
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("darkMode", darkMode);
+    prefs.setBool("darkmode", darkMode);
   }
 
-  void getDarkmode() async {
+  static void getDarkmode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     darkMode = prefs.getBool("darkMode") ?? SchedulerBinding.instance!.window.platformBrightness == Brightness.dark;
   }
 
-  void getTheme() async {
+  static void getTheme() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? theme = prefs.getString("theme");
-    if (theme != null) {
-      toggleTheme(theme);
-    }
+    toggleTheme(prefs.getString("theme") ?? "Monochrome");
   }
 }
 
