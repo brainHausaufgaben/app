@@ -102,6 +102,7 @@ class TimeTable {
     return hw;
   }
 
+
   static List<SubjectInstance> getSubjectInstancesByDate(DateTime date){
     return getSubjects(date.weekday);
   }
@@ -112,6 +113,16 @@ class TimeTable {
       return subjectInstance.subject;
     }).toList();
 
+  }
+
+  static List<Event> getEvents(DateTime date){
+    List<Event> event = [];
+    for(Event ev in events){
+      if(ev.isDue(date) ){
+        event.add(ev);
+      }
+    }
+    return event;
   }
 
 
