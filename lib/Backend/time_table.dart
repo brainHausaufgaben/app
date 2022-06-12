@@ -44,6 +44,7 @@ class TimeTable {
       removeHomework(homework);
     }
     deleteSubjectInstances(subject);
+    if(saveEnabled) SaveSystem.saveSubjects();
   }
   static void deleteSubjectInstances(Subject subject){
     //keine ahnung ob diese geht xD
@@ -82,7 +83,6 @@ class TimeTable {
       if(subject.id == id) return subject;
     }
   }
-
 
   static List<SubjectInstance> getSubjects(int day){
     List<SubjectInstance> subjects = [];

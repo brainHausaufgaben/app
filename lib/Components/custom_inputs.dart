@@ -1,3 +1,4 @@
+import 'package:brain_app/Pages/event_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
@@ -12,11 +13,13 @@ class CustomTextField extends TextField {
     Key? key,
     required controller,
     required placeHolder,
-    autocorrect
+    required autocorrect,
+    minLines,
+    maxLines
   }) : super(
     key: key,
-    minLines: 1,
-    maxLines: 5,
+    minLines: minLines ?? 1,
+    maxLines: maxLines ?? 5,
     autocorrect: autocorrect,
     controller: controller,
     style: AppDesign.current.textStyles.input,
@@ -82,11 +85,11 @@ class CustomDateButton extends StatelessWidget {
     required this.value,
     required this.onDateSelect,
     required this.text,
-    required this.customDateBuilder
+    this.customDateBuilder
   }) : super(key: key);
 
   Function(DateTime) onDateSelect;
-  Widget? Function(DateTime, TextStyle) customDateBuilder;
+  Widget? Function(DateTime, TextStyle)? customDateBuilder;
   DateTime value;
   String text;
 
@@ -137,8 +140,10 @@ class CustomDateButton extends StatelessWidget {
                   ),
                 );
               }
-              Widget? customDateBuilderReturn = customDateBuilder(dateTime, defaultTextStyle);
-              if (customDateBuilderReturn != null) return customDateBuilderReturn;
+              if (customDateBuilder != null) {
+                Widget? customDateBuilderReturn = customDateBuilder!(dateTime, defaultTextStyle);
+                if (customDateBuilderReturn != null) return customDateBuilderReturn;
+              }
               // Default
               return Center(
                 child: Text(
@@ -384,23 +389,57 @@ class SettingsEntry extends StatelessWidget {
 }
 
 class CustomMenuButton extends StatelessWidget {
-  const CustomMenuButton({Key? key, required this.menuEntries, required this.icon}) : super(key: key);
+  const CustomMenuButton({Key? key, required this.menuEntries, required this.icon, required this.defaultAction}) : super(key: key);
 
   final List<SpeedDialChild> menuEntries;
+  final Function() defaultAction;
   final Icon icon;
 
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
-      onPress: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => HomeworkPage())
-      ),
+      onPress: defaultAction,
       child: icon,
       children: menuEntries,
       overlayColor: Colors.black,
       overlayOpacity: 0.6,
       spacing: 5,
+      childrenButtonSize: const Size(50, 50),
+      childPadding: const EdgeInsets.only(right: 6),
+    );
+  }
+
+  static SpeedDialChild getHomeworkMenu(BuildContext context) {
+    return SpeedDialChild(
+        backgroundColor: AppDesign.current.primaryColor,
+        foregroundColor: AppDesign.current.textStyles.contrastColor,
+        labelBackgroundColor: AppDesign.current.primaryColor,
+        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        label: "Neue Hausaufgabe",
+        child: const Icon(Icons.description_rounded),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeworkPage())
+          );
+        }
+    );
+  }
+
+  static SpeedDialChild getEventMenu(BuildContext context) {
+    return SpeedDialChild(
+        backgroundColor: AppDesign.current.primaryColor,
+        foregroundColor: AppDesign.current.textStyles.contrastColor,
+        labelBackgroundColor: AppDesign.current.primaryColor,
+        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        label: "Neues Event",
+        child: const Icon(Icons.schedule_rounded),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => EventPage())
+          );
+        }
     );
   }
 }

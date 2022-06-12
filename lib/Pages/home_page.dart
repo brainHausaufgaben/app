@@ -1,15 +1,12 @@
 import 'package:brain_app/Backend/homework.dart';
-import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'page_template.dart';
 import 'package:brain_app/Components/collapsible_box.dart';
-
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
@@ -89,21 +86,13 @@ class _HomePage extends State<HomePage>{
       title: 'Übersicht',
       floatingActionButton: CustomMenuButton(
         icon: const Icon(Icons.add),
+        defaultAction: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeworkPage())
+        ),
         menuEntries: [
-          SpeedDialChild(
-            backgroundColor: AppDesign.current.primaryColor,
-            foregroundColor: AppDesign.current.textStyles.contrastColor,
-            labelBackgroundColor: AppDesign.current.primaryColor,
-            labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-            label: "Hausaufgaben",
-            child: const Icon(Icons.description_rounded),
-              onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => HomeworkPage())
-              );
-            }
-          )
+          CustomMenuButton.getHomeworkMenu(context),
+          CustomMenuButton.getEventMenu(context)
         ],
       ),
       child: Column(

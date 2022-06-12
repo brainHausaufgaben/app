@@ -61,7 +61,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           )),
         ),
       ),
-      value: TimeTable.emptySubject,
+      value: Subject.empty(),
     ));
     return subjects;
   }
@@ -86,7 +86,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                   child: CustomDropdown(
                     defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
                     // TODO: ich weine (wahrscheinlich get das instance weg mache nicht)
-                    currentValue: TimeTable.week[day].subjects[i]?.subject ?? TimeTable.emptySubject,
+                    currentValue: TimeTable.week[day].subjects[i]?.subject,
                     items: getDropdowns(),
                     onChanged: (value) {
                       if(value == TimeTable.emptySubject) {
