@@ -155,17 +155,19 @@ class _CalendarPage extends State<CalendarPage> {
                 calendarBuilders: CalendarBuilders(
                   singleMarkerBuilder: (context, date, event) {
                     Color color = Colors.deepOrange;
-                    print(event.toString());
-                    switch (event.toString()) {
-                      case "Instance of 'Event'":
-                        color = Colors.deepOrange;
+                    BoxShape shape = BoxShape.circle;
+                    switch (event.runtimeType) {
+                      case Event:
+                        shape = BoxShape.rectangle;
+                        color = AppDesign.current.primaryColor;
                         break;
-                      case "Instance of 'Homework'":
-                        color = Colors.deepPurple;
+                      case Homework:
+                        Homework hm = event as Homework;
+                        color =  hm.subject.color;
                         break;
                     }
                     return Container(
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+                      decoration: BoxDecoration(shape: shape, color: color),
                       width: 7.0,
                       height: 7.0,
                       margin: const EdgeInsets.symmetric(horizontal: 1.5),
