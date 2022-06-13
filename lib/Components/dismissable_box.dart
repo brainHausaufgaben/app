@@ -59,7 +59,7 @@ class DismissableBox extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: AppDesign.current.boxStyle.backgroundColor,
+                    color: AppDesign.current.themeData.scaffoldBackgroundColor,
                     boxShadow: [
                       AppDesign.current.boxStyle.boxShadow
                     ]

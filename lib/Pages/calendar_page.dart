@@ -1,8 +1,12 @@
 import 'package:brain_app/Backend/event.dart';
+import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/dismissable_box.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/event_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -24,12 +28,11 @@ class _CalendarPage extends State<CalendarPage> {
     List<Event> events = TimeTable.getEvents(selectedDay);
     for (int i=0; i<events.length; i++) {
       String? headline;
-      EdgeInsets padding = const EdgeInsets.only(bottom: 10);
       if (i == 0) headline = "Events";
 
       boxes.add(
         Padding(
-          padding: padding,
+          padding: headline != null ? const EdgeInsets.only(bottom: 10, top: 30) : const EdgeInsets.only(bottom: 10),
           child: Box(
             headline: headline,
             child: PointElement(
@@ -43,6 +46,54 @@ class _CalendarPage extends State<CalendarPage> {
     }
 
     return boxes;
+  }
+
+  List<Padding> getSelectedHomework() {
+    List<Padding> boxes = [];
+    String? headline;
+
+    for (Subject subject in TimeTable.getSubjectsByDate(selectedDay)) {
+      List<Homework> homework = TimeTable.getHomework(selectedDay, subject);
+      List<DismissableBox> dismissableBoxes = [];
+
+      for (Homework _homework in homework) {
+        dismissableBoxes.add(
+          DismissableBox(homework: _homework)
+        );
+      }
+
+      if (dismissableBoxes.isNotEmpty) {
+        if (boxes.isEmpty) headline = "Hausaufgaben";
+
+        boxes.add(
+          Padding(
+            padding: headline != null ? const EdgeInsets.only(top: 20) : const EdgeInsets.only(top: 10),
+            child: Box(
+              headline: headline,
+              child: PointElement(
+                  color: subject.color,
+                  primaryText: subject.name,
+                  child: Column(
+                    children: dismissableBoxes,
+                  )
+              ),
+            ),
+          )
+        );
+      }
+    }
+
+    return boxes;
+  }
+
+  List<Homework> getHomeworkByDay(DateTime day) {
+    List<Homework> homework = [];
+
+    for (Subject subject in TimeTable.getSubjectsByDate(day)) {
+      homework.addAll(TimeTable.getHomework(day, subject));
+    }
+
+    return homework;
   }
   
   @override
@@ -62,10 +113,9 @@ class _CalendarPage extends State<CalendarPage> {
           ]
       ),
       child: ListView(
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.only(bottom: 20),
         children: [
-          Padding(
-            padding: const EdgeInsets.only(bottom: 30),
+          Box(
             child: TableCalendar(
                 firstDay: DateTime.utc(2018, 10, 16),
                 lastDay: DateTime.utc(2026, 3, 14),
@@ -85,11 +135,32 @@ class _CalendarPage extends State<CalendarPage> {
                     weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
                 ),
                 headerStyle: HeaderStyle(
+                  headerPadding: const EdgeInsets.only(bottom: 10),
                   titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
                   titleCentered: true,
                   formatButtonVisible: false,
                   leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
                   rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
+                ),
+                calendarBuilders: CalendarBuilders(
+                  singleMarkerBuilder: (context, date, event) {
+                    Color color = Colors.deepOrange;
+                    print(event.toString());
+                    switch (event.toString()) {
+                      case "Instance of 'Event'":
+                        color = Colors.deepOrange;
+                        break;
+                      case "Instance of 'Homework'":
+                        color = Colors.deepPurple;
+                        break;
+                    }
+                    return Container(
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+                      width: 7.0,
+                      height: 7.0,
+                      margin: const EdgeInsets.symmetric(horizontal: 1.5),
+                    );
+                  },
                 ),
                 onDaySelected: (_selectedDay, _focusedDay) {
                   setState(() {
@@ -100,11 +171,16 @@ class _CalendarPage extends State<CalendarPage> {
                   return isSameDay(selectedDay, day);
                 },
                 eventLoader: (date) {
-                  return TimeTable.getEvents(date);
+                  List<dynamic> events = [
+                    ...TimeTable.getEvents(date),
+                    ...getHomeworkByDay(date)
+                  ];
+                  return events;
                 }
-            ),
+            )
           ),
-          ...getSelectedEvents()
+          ...getSelectedEvents(),
+          ...getSelectedHomework()
         ]
       )
     );

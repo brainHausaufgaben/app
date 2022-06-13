@@ -58,47 +58,45 @@ class _EventPage extends State<EventPage> {
                   )
                 ],
               ),
-              const Spacer(),
-              Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: Row(
-                      children: [
-                        Expanded(
-                          child: ElevatedButton (
-                              onPressed: () {
-                                if (widget.titleController.text.isNotEmpty && widget.descriptionController.text.isNotEmpty) {
-                                  TimeTable.addEvent(
-                                      Event(widget.selectedDate, widget.titleController.text, widget.descriptionController.text)
-                                  );
-                                  BrainApp.notifier.notifyOfChanges();
-                                  Navigator.pop(context);
-                                }
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 15),
-                                child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
-                              )
-                          ),
-                        ),
-                        if (widget.previousEvent != null) Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: ElevatedButton (
-                                onPressed: () {
-                                  TimeTable.removeEvent(widget.previousEvent!);
-                                  BrainApp.notifier.notifyOfChanges();
-                                  Navigator.pop(context);
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 15),
-                                  child: Icon(Icons.delete_forever),
-                                )
-                            )
-                        )
-                      ]
-                  )
-              )
             ]
-        )
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton (
+                        onPressed: () {
+                          if (widget.titleController.text.isNotEmpty && widget.descriptionController.text.isNotEmpty) {
+                            Event(widget.selectedDate, widget.titleController.text, widget.descriptionController.text);
+                            BrainApp.notifier.notifyOfChanges();
+                            Navigator.pop(context);
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+                        )
+                    ),
+                  ),
+                  if (widget.previousEvent != null) Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: ElevatedButton (
+                          onPressed: () {
+                            TimeTable.removeEvent(widget.previousEvent!);
+                            BrainApp.notifier.notifyOfChanges();
+                            Navigator.pop(context);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            child: Icon(Icons.delete_forever),
+                          )
+                      )
+                  )
+                ]
+            )
+        ),
     );
   }
 }

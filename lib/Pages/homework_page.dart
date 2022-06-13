@@ -110,28 +110,34 @@ class _HomeworkPage extends State<HomeworkPage> {
                       child: Text(
                         date.day.toString(),
                         style: style,
-                      ),
-                    ),
+                      )
+                    )
                   );
                 }
               }
-            },
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: ElevatedButton (
-                onPressed: () {
-                  onPressed();
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
-                )
-            )
+            }
           )
         ]
-      )
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            children: [
+              Expanded(
+                child: ElevatedButton (
+                    onPressed: () {
+                      onPressed();
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15),
+                      child: Text(widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
+                    )
+                ),
+              )
+            ],
+          )
+      ),
     );
   }
 }

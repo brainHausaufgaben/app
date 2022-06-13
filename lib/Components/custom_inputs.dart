@@ -247,8 +247,12 @@ class CustomColorPicker extends StatelessWidget {
             context: context,
             builder: (BuildContext _test) {
               return AlertDialog(
-                title: const Text("Farbe auswählen"),
-                content: MaterialPicker(pickerColor: pickerColor, onColorChanged: onColorSelect),
+                title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
+                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                content: MaterialPicker(
+                  pickerColor: pickerColor,
+                  onColorChanged: onColorSelect
+                ),
               );
             }
         );

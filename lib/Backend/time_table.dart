@@ -65,12 +65,15 @@ class TimeTable {
     if(saveEnabled) SaveSystem.saveHomework();
     CustomNotifications.persistentNotification();
   }
+
   static void addEvent(Event event){
     events.add(event);
   }
+
   static void removeEvent(Event event){
     if(events.contains(event))events.remove(event);
   }
+
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);
     BrainApp.notifier.notifyOfChanges();
@@ -150,6 +153,7 @@ class TimeTable {
       week.add(Day(lessonTimes.length));
     }
   }
+
   static List subjectsToJSONEncodeble(){
      return subjects.map((item)
        {

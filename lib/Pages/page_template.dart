@@ -3,13 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 
 class PageTemplate extends StatefulWidget {
-  const PageTemplate({Key? key, required this.title, required this.child, this.backButton, this.subtitle, this.floatingActionButton}) : super(key: key);
+  const PageTemplate({
+    Key? key,
+    required this.title,
+    required this.child,
+    this.backButton, this.subtitle,
+    this.floatingActionButton,
+    this.floatingActionButtonLocation
+  }) : super(key: key);
 
   final Widget child;
   final String title;
   final String? subtitle;
   final bool? backButton;
   final Widget? floatingActionButton;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -83,6 +91,7 @@ class _PageTemplateState extends State<PageTemplate> {
           ],
         )
       ),
+      floatingActionButtonLocation: widget.floatingActionButtonLocation,
       floatingActionButton: widget.floatingActionButton
     );
   }

@@ -44,13 +44,15 @@ class _SubjectPage extends State<SubjectPage> {
                   widget.pickerColor = color;
                 });
                 Navigator.pop(context);
-              },
-            ),
-          ),
-          const Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 15),
-            child: Row(
+              }
+            )
+          )
+        ]
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
               children: [
                 Expanded(
                   child: ElevatedButton (
@@ -58,6 +60,7 @@ class _SubjectPage extends State<SubjectPage> {
                         if (widget.subjectController.text.isNotEmpty) {
                           if (widget.previousSubject != null) {
                             TimeTable.getSubject(widget.previousSubject!.id)!.edit(widget.subjectController.text, widget.pickerColor);
+                            BrainApp.notifier.notifyOfChanges();
                           } else {
                             Subject(widget.subjectController.text, widget.pickerColor);
                           }
@@ -66,28 +69,26 @@ class _SubjectPage extends State<SubjectPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+                        child: Text(widget.previousSubject == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
                       )
                   ),
                 ),
                 if (widget.previousSubject != null) Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: ElevatedButton (
-                    onPressed: () {
-                      TimeTable.deleteSubject(widget.previousSubject!);
-                      BrainApp.notifier.notifyOfChanges();
-                      Navigator.pop(context);
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 15),
-                      child: Icon(Icons.delete_forever),
+                    padding: const EdgeInsets.only(left: 10),
+                    child: ElevatedButton (
+                        onPressed: () {
+                          TimeTable.deleteSubject(widget.previousSubject!);
+                          BrainApp.notifier.notifyOfChanges();
+                          Navigator.pop(context);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 15),
+                          child: Icon(Icons.delete_forever),
+                        )
                     )
-                  )
                 )
               ]
-            )
           )
-        ]
       )
     );
   }

@@ -61,9 +61,9 @@ class _SettingsPage extends State<SettingsPage> {
                   IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png", tooltip: "Carrot Orange"),
                   IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png", tooltip: "Poison Green"),
                   IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png", tooltip: "Military Green"),
-                  IconRadio(isSelected: radioList[4], path: "icons/pastellRedThemeIcon.png", tooltip: "Pastel Red"),
+                  IconRadio(isSelected: radioList[4], path: "icons/pastelRedThemeIcon.png", tooltip: "Pastel Red"),
                   IconRadio(isSelected: radioList[5], path: "icons/jeremiasThemeIcon.png", tooltip: "Jeremias"),
-                  IconRadio(isSelected: radioList[6], path: "icons/helpThemeIcon.png", tooltip: "Ocean Blue")
+                  IconRadio(isSelected: radioList[6], path: "icons/oceanBlueThemeIcon.png", tooltip: "Ocean Blue")
                 ]
             )
         )

@@ -91,7 +91,7 @@ class Designs {
 
   static DesignPackage get oceanBlue => AppDesign.darkMode ?
     generateDesign(const Color(0xFF3F4AA7), const Color(0xFF23295C), const Color(0xFF313873), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), false) :
-    generateDesign(const Color(0xFF3F4AA7), const Color(0xFF929CF9), const Color(0xFFA4ADFF), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
+    generateDesign(const Color(0xFF3F4AA7), const Color(0xFFCDCFF6), const Color(0xFFD9DBF8), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
 
   static DesignPackage get jeremiasTheme => AppDesign.darkMode ?
     generateDesign(const Color(0xFF6249AB), const Color(0xFF2D2648), const Color(0xFF382F59), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true) :
@@ -169,6 +169,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       primaryColor: primaryColor,
       themeData: ThemeData(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        cardColor: boxBackground,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         primarySwatch: createMaterialColor(primaryColor),
         primaryColor: primaryColor,
@@ -195,7 +196,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       boxStyle: BoxStyle(
           backgroundColor: boxBackground,
           boxShadow: BoxShadow(
-              color: boxBackground.computeLuminance() > 0.5 ? const Color(0xFF303540).withOpacity(0.2) : Colors.white.withOpacity(0.2),
+              color: const Color(0xFF303540).withOpacity(0.2),
               spreadRadius: 0,
               blurRadius: 2,
               offset: const Offset(0, 1)
