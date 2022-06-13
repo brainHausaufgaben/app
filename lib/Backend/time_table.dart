@@ -6,6 +6,7 @@ import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
+import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class TimeTable {
   static List<Subject> subjects = [];
   static List<Homework> homeworks = [];
   static List<Event> events = [];
+  static List<Test> tests = [];
   static List<TimeInterval> lessonTimes = [
     TimeInterval(const TimeOfDay(hour: 8, minute: 00), const TimeOfDay(hour: 8, minute: 45)),
     TimeInterval(const TimeOfDay(hour: 8, minute: 45), const TimeOfDay(hour: 9, minute: 30)),
@@ -68,11 +70,24 @@ class TimeTable {
 
   static void addEvent(Event event){
     events.add(event);
+    SaveSystem.saveEvents();
   }
 
   static void removeEvent(Event event){
     if(events.contains(event))events.remove(event);
+    SaveSystem.saveEvents();
   }
+
+  static void addTest(Test test){
+    tests.add(test);
+    SaveSystem.saveEvents();
+  }
+
+  static void removeTest(Test test){
+    if(tests.contains(test))tests.remove(test);
+    SaveSystem.saveEvents();
+  }
+
 
   static void removeHomework(Homework homework){
     if(homeworks.contains(homework))homeworks.remove(homework);
@@ -183,6 +198,22 @@ class TimeTable {
 
   static List homeworkToJSONEncodable(){
     return homeworks.map((item)
+    {
+      return item.toJSONEncodable();
+    }
+    ).toList();
+
+  }
+  static List eventsToJSONEncodable(){
+    return events.map((item)
+    {
+      return item.toJSONEncodable();
+    }
+    ).toList();
+
+  }
+  static List testsToJSONEncodable(){
+    return tests.map((item)
     {
       return item.toJSONEncodable();
     }

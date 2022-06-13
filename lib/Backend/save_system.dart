@@ -31,6 +31,23 @@ class SaveSystem{
      return storage.getItem("homework");
    }
 
+   static void saveEvents(){
+    storage.setItem("events", TimeTable.eventsToJSONEncodable());
+
+   }
+   static  getEvents(){
+     return storage.getItem("events");
+   }
+
+   static void saveTests(){
+     storage.setItem("tests", TimeTable.eventsToJSONEncodable());
+
+   }
+   static  getTests(){
+     return storage.getItem("tests");
+   }
+
+
 
 
 

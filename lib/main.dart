@@ -14,6 +14,9 @@ import 'package:brain_app/Backend/notifier.dart';
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Backend/event.dart';
+import 'Backend/test.dart';
+
 void main() {
   runApp(const BrainApp());
 }
@@ -138,43 +141,54 @@ class _BrainApp extends State<BrainApp> {
   }
 
   Future load() async{
-    if (await SaveSystem.getSubjects() == null){
-      TimeTable.saveEnabled = true;
-      return;
-    } else {
-      TimeTable.saveEnabled = false;
+    TimeTable.saveEnabled = false;
+
+    if (await SaveSystem.getSubjects() != null) {
+      for (Map item in await SaveSystem.getSubjects()) {
+        List color = item["color"];
+        Subject.fromID(
+            item["name"], Color.fromARGB(255, color[0], color[1], color[2]),
+            item["id"]);
+      }
     }
 
-    for (Map item in await SaveSystem.getSubjects()) {
-      List color = item["color"];
-      Subject.fromID(
-          item["name"], Color.fromARGB(255, color[0], color[1], color[2]),
-          item["id"]);
+    if (await SaveSystem.getTimeTable() != null) {
+      for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < 10; j++) {
+          int id = await SaveSystem.getTimeTable()[i][j];
+          if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
+        }
+      }
     }
 
-    if (await SaveSystem.getTimeTable() == null){
-      TimeTable.saveEnabled = true;
-      return;
+    if(await SaveSystem.getHomework() != null) {
+      for (Map item in await SaveSystem.getHomework()) {
+        List t = item["dueTime"];
+        DateTime time = DateTime(t[0], t[1], t[2]);
+        int id = item["SubjectID"];
+        if (TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) !=
+            null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
+      }
     }
-    for (int i = 0; i < 7; i++) {
-      for (int j = 0; j < 10; j++) {
-        int id = await SaveSystem.getTimeTable()[i][j];
-        if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
+
+    if(await SaveSystem.getEvents() != null) {
+      for (Map item in await SaveSystem.getEvents()) {
+        List t = item["dueTime"];
+        DateTime time = DateTime(t[0], t[1], t[2]);
+        Event(time, item["name"], item["description"]);
+      }
+    }
+
+    if(await SaveSystem.getTests() != null) {
+      for (Map item in await SaveSystem.getTests()) {
+        List t = item["dueTime"];
+        DateTime time = DateTime(t[0], t[1], t[2]);
+        int id = item["SubjectID"];
+        Test(TimeTable.getSubject(id)!, time, item["description"]);
       }
     }
 
 
-    if (await SaveSystem.getHomework() == null){
-      TimeTable.saveEnabled = true;
-      return;
-    }
-    for (Map item in await SaveSystem.getHomework()) {
-      List t = item["dueTime"];
-      DateTime time = DateTime(t[0],t[1],t[2]);
-      int id = item["SubjectID"];
-      if(TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) != null) Homework(TimeTable.getSubject(id)!,time, item["name"]);
-
-    }
     TimeTable.saveEnabled = true;
   }
 

@@ -50,9 +50,13 @@ class _CalendarPage extends State<CalendarPage> {
 
   List<Padding> getSelectedHomework() {
     List<Padding> boxes = [];
+    List<Subject> subjects = [];
     String? headline;
-
     for (Subject subject in TimeTable.getSubjectsByDate(selectedDay)) {
+      if(!subjects.contains(subject))subjects.add(subject);
+
+    }
+    for (Subject subject in subjects) {
       List<Homework> homework = TimeTable.getHomework(selectedDay, subject);
       List<DismissableBox> dismissableBoxes = [];
 
@@ -88,8 +92,14 @@ class _CalendarPage extends State<CalendarPage> {
 
   List<Homework> getHomeworkByDay(DateTime day) {
     List<Homework> homework = [];
+    List<Subject> subjects = [];
 
     for (Subject subject in TimeTable.getSubjectsByDate(day)) {
+      if(!subjects.contains(subject))subjects.add(subject);
+
+    }
+    for (Subject subject in subjects) {
+
       homework.addAll(TimeTable.getHomework(day, subject));
     }
 

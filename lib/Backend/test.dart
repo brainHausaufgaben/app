@@ -1,24 +1,21 @@
-
-
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
-class Event{
+class Test {
+  Subject subject;
   DateTime dueTime;
-  String name;
   String description;
 
-  Event(this.dueTime,this.name,this.description){
-    TimeTable.addEvent(this);
-
+  Test(this.subject,this.dueTime,this.description){
+    TimeTable.addTest(this);
   }
 
-  void edit(DateTime? newDueTime, String? newName,String? newDescription){
-    if(newDescription != null) description = newDescription;
+  void edit(Subject? newSubject, DateTime? newDueTime, String? newDescription){
+    if(newSubject != null) subject = newSubject;
     if(newDueTime != null) dueTime = newDueTime;
-    if(newName != null) name = newName;
-    SaveSystem.saveEvents();
+    if(newDescription != null) description = newDescription;
+    SaveSystem.saveTests();
   }
 
   bool isDue(DateTime date){
@@ -37,9 +34,9 @@ class Event{
     due.add(dueTime.day);
 
 
-    map["name"] = name;
-    map["dueTime"] = due;
     map["description"] = description;
+    map["dueTime"] = due;
+    map["SubjectID"] = subject.id;
     return map;
   }
 
