@@ -67,7 +67,11 @@ class _CalendarPage extends State<CalendarPage> {
       }
 
       if (dismissableBoxes.isNotEmpty) {
-        if (boxes.isEmpty) headline = "Hausaufgaben";
+        if (boxes.isEmpty) {
+          headline = "Hausaufgaben";
+        } else {
+          headline = null;
+        }
 
         boxes.add(
           Padding(
