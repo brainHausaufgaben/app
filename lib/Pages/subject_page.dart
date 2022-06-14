@@ -31,9 +31,10 @@ class _SubjectPage extends State<SubjectPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CustomTextField(
-              controller: widget.subjectController,
-              placeHolder: "Fach Name",
-              autocorrect: true
+            controller: widget.subjectController,
+            placeHolder: "Fach Name",
+            autocorrect: true,
+            maxLines: 1
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),

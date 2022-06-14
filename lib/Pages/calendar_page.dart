@@ -1,7 +1,6 @@
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
@@ -36,7 +35,7 @@ class _CalendarPage extends State<CalendarPage> {
           child: Box(
             headline: headline,
             child: PointElement(
-              color: Colors.deepOrange,
+              color: AppDesign.current.primaryColor,
               primaryText: events[i].name,
               child: Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
             ),
@@ -46,6 +45,9 @@ class _CalendarPage extends State<CalendarPage> {
     }
 
     return boxes;
+  }
+
+  void getSelectedTests() {
   }
 
   List<Padding> getSelectedHomework() {
@@ -75,7 +77,7 @@ class _CalendarPage extends State<CalendarPage> {
 
         boxes.add(
           Padding(
-            padding: headline != null ? const EdgeInsets.only(top: 20) : const EdgeInsets.only(top: 10),
+            padding: headline != null ? const EdgeInsets.only(bottom: 10, top: 30) : const EdgeInsets.only(bottom: 10),
             child: Box(
               headline: headline,
               child: PointElement(
@@ -103,7 +105,6 @@ class _CalendarPage extends State<CalendarPage> {
 
     }
     for (Subject subject in subjects) {
-
       homework.addAll(TimeTable.getHomework(day, subject));
     }
 
@@ -123,7 +124,8 @@ class _CalendarPage extends State<CalendarPage> {
           ),
           menuEntries: [
             CustomMenuButton.getHomeworkMenu(context),
-            CustomMenuButton.getEventMenu(context)
+            CustomMenuButton.getEventMenu(context),
+            CustomMenuButton.getTestMenu(context)
           ]
       ),
       child: ListView(
@@ -134,7 +136,7 @@ class _CalendarPage extends State<CalendarPage> {
                 firstDay: DateTime.utc(2018, 10, 16),
                 lastDay: DateTime.utc(2026, 3, 14),
                 startingDayOfWeek: StartingDayOfWeek.monday,
-                focusedDay: DateTime.now(),
+                focusedDay: selectedDay,
                 calendarStyle: CalendarStyle(
                   defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
                   weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),

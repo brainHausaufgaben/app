@@ -188,7 +188,7 @@ class _BrainApp extends State<BrainApp> {
       }
     }
 
-
+    setState(() {});
     TimeTable.saveEnabled = true;
   }
 

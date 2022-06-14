@@ -1,5 +1,6 @@
 import 'package:brain_app/Pages/event_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
+import 'package:brain_app/Pages/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:flutter/services.dart';
@@ -122,6 +123,7 @@ class CustomDateButton extends StatelessWidget {
               paddingMonthHeader: const EdgeInsets.all(11),
               backgroundPicker: AppDesign.current.boxStyle.backgroundColor,
               textStyleDayOnCalendar: TextStyle(color: AppDesign.current.textStyles.color),
+              textStyleDayOnCalendarDisabled: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
               textStyleMonthYearHeader: TextStyle(color: AppDesign.current.textStyles.color),
               textStyleDayHeader: TextStyle(color: AppDesign.current.textStyles.color),
               colorArrowNext: AppDesign.current.textStyles.color,
@@ -425,6 +427,23 @@ class CustomMenuButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => HomeworkPage())
+          );
+        }
+    );
+  }
+
+  static SpeedDialChild getTestMenu(BuildContext context) {
+    return SpeedDialChild(
+        backgroundColor: AppDesign.current.primaryColor,
+        foregroundColor: AppDesign.current.textStyles.contrastColor,
+        labelBackgroundColor: AppDesign.current.primaryColor,
+        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        label: "Neuer Test",
+        child: const Icon(Icons.bookmark),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TestPage())
           );
         }
     );

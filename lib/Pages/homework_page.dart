@@ -26,7 +26,6 @@ class HomeworkPage extends StatefulWidget {
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
-
   List<DropdownMenuItem<Subject>> getDropdowns(){
     List<DropdownMenuItem<Subject>> subjects = [];
     for(Subject subject in TimeTable.subjects){
