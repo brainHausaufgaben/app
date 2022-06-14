@@ -45,7 +45,7 @@ class _EventPage extends State<EventPage> {
                     controller: widget.descriptionController,
                     placeHolder: "Event Beschreibung",
                     autocorrect: true,
-                    minLines: 5,
+                    maxLines: 5,
                   ),
                   CustomDateButton(
                       value: widget.selectedDate,

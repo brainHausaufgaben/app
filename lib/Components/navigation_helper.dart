@@ -19,10 +19,8 @@ class _NavigationHelper extends State<NavigationHelper> {
     switch(index) {
       case 1:
         return HomePage();
-        break;
       case 2:
         return CalendarPage();
-        break;
     }
     return HomePage();
   }

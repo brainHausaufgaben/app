@@ -78,6 +78,18 @@ class TimeTable {
     SaveSystem.saveEvents();
   }
 
+  static List<Test> getTests(DateTime day) {
+    List<Test> _tests = [];
+
+    for (Test test in tests) {
+      if (test.isDue(day)) {
+        _tests.add(test);
+      }
+    }
+
+    return _tests;
+  }
+
   static void addTest(Test test){
     tests.add(test);
     SaveSystem.saveEvents();

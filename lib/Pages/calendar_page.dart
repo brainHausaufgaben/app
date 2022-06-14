@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
@@ -47,7 +48,32 @@ class _CalendarPage extends State<CalendarPage> {
     return boxes;
   }
 
-  void getSelectedTests() {
+  List<Padding> getSelectedTests() {
+    List<Padding> boxes = [];
+    List<Test> tests = TimeTable.getTests(selectedDay);
+
+    for (int i=0; i<tests.length; i++) {
+      String? headline;
+      if (i == 0) headline = "Tests";
+
+      boxes.add(
+          Padding(
+            padding: headline != null ? const EdgeInsets.only(
+                bottom: 10, top: 30) : const EdgeInsets.only(bottom: 10),
+            child: Box(
+              headline: headline,
+              child: PointElement(
+                color: tests[i].subject.color,
+                primaryText: tests[i].subject.name,
+                child: Text(tests[i].description,
+                    style: AppDesign.current.textStyles.pointElementSecondary),
+              ),
+            ),
+          )
+      );
+    }
+
+    return boxes;
   }
 
   List<Padding> getSelectedHomework() {
@@ -171,12 +197,26 @@ class _CalendarPage extends State<CalendarPage> {
                         Homework hm = event as Homework;
                         color =  hm.subject.color;
                         break;
+                      case Test:
+                        Test test = event as Test;
+                        return Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(
+                              width: 2,
+                              color: test.subject.color
+                            )
+                          ),
+                          width: 9.0,
+                          height: 9.0,
+                          margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                        );
                     }
                     return Container(
                       decoration: BoxDecoration(shape: shape, color: color),
                       width: 7.0,
                       height: 7.0,
-                      margin: const EdgeInsets.symmetric(horizontal: 1.5),
+                      margin: const EdgeInsets.symmetric(horizontal: 1.5)
                     );
                   },
                 ),
@@ -191,14 +231,16 @@ class _CalendarPage extends State<CalendarPage> {
                 eventLoader: (date) {
                   List<dynamic> events = [
                     ...TimeTable.getEvents(date),
-                    ...getHomeworkByDay(date)
+                    ...getHomeworkByDay(date),
+                    ...TimeTable.getTests(date)
                   ];
                   return events;
                 }
             )
           ),
           ...getSelectedEvents(),
-          ...getSelectedHomework()
+          ...getSelectedHomework(),
+          ...getSelectedTests()
         ]
       )
     );
