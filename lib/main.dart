@@ -110,7 +110,6 @@ class _BrainApp extends State<BrainApp> {
   Future<MapEntry<String, IconData>?> parseJokes() async {
     final rawData = await rootBundle.loadString("data/witze.csv");
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
-
     for (List<dynamic> entry in listData) {
       DateTime parsedTime = DateTime.parse(entry[0]);
       DateTime now = DateTime.now();

@@ -40,7 +40,7 @@ class SaveSystem{
    }
 
    static void saveTests(){
-     storage.setItem("tests", TimeTable.eventsToJSONEncodable());
+     storage.setItem("tests", TimeTable.testsToJSONEncodable());
 
    }
    static  getTests(){

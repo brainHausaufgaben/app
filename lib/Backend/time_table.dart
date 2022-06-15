@@ -92,12 +92,12 @@ class TimeTable {
 
   static void addTest(Test test){
     tests.add(test);
-    SaveSystem.saveEvents();
+    SaveSystem.saveTests();
   }
 
   static void removeTest(Test test){
     if(tests.contains(test))tests.remove(test);
-    SaveSystem.saveEvents();
+    SaveSystem.saveTests();
   }
 
 
