@@ -53,6 +53,7 @@ class _SubjectOverview extends State<SubjectOverview> {
         }
       ),
       child: SingleChildScrollView(
+        padding: const EdgeInsets.only(bottom: 20),
         child: Wrap(
           runSpacing: 5,
           children: initSubjectButtons(),

@@ -25,8 +25,15 @@ class CollapsibleBox extends StatelessWidget {
       onTap: onTap,
       child: AnimatedContainer (
         decoration: BoxDecoration(
-            color: AppDesign.current.primaryColor,
-            borderRadius: AppDesign.current.boxStyle.borderRadius
+          gradient: LinearGradient(
+            begin: Alignment(0, 5),
+            colors: [
+              AppDesign.current.primaryColor,
+              darken(AppDesign.current.primaryColor)
+            ]
+          ),
+          color: AppDesign.current.primaryColor,
+          borderRadius: AppDesign.current.boxStyle.borderRadius
         ),
         padding: collapsed ? const EdgeInsets.all(8) : const EdgeInsets.all(17),
         duration: const Duration(milliseconds: 100),
@@ -59,5 +66,11 @@ class CollapsibleBox extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color darken(Color color) {
+    HSLColor _color = HSLColor.fromColor(color);
+    HSLColor darkenedColor = _color.withLightness((_color.lightness - 0.1).clamp(0.0, 1.0));
+    return darkenedColor.toColor();
   }
 }
