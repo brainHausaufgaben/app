@@ -85,7 +85,6 @@ class _HomePage extends State<HomePage>{
     return PageTemplate(
       title: 'Übersicht',
       floatingActionButton: CustomMenuButton(
-        icon: const Icon(Icons.add),
         defaultAction: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomeworkPage())

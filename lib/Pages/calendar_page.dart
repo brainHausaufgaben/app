@@ -10,6 +10,7 @@ import 'package:brain_app/Components/dismissable_box.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/event_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:brain_app/Pages/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -23,8 +24,8 @@ class CalendarPage extends StatefulWidget {
 class _CalendarPage extends State<CalendarPage> {
   DateTime selectedDay = DateTime.now();
 
-  List<Padding> getSelectedEvents() {
-    List<Padding> boxes = [];
+  List<Widget> getSelectedEvents() {
+    List<Widget> boxes = [];
     List<Event> events = TimeTable.getEvents(selectedDay);
     for (int i=0; i<events.length; i++) {
       String? headline;
@@ -32,15 +33,25 @@ class _CalendarPage extends State<CalendarPage> {
 
       boxes.add(
         Padding(
-          padding: headline != null ? const EdgeInsets.only(bottom: 10, top: 30) : const EdgeInsets.only(bottom: 10),
-          child: Box(
-            headline: headline,
-            child: PointElement(
-              color: AppDesign.current.primaryColor,
-              primaryText: events[i].name,
-              child: Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
+          padding: headline != null ?
+              const EdgeInsets.only(bottom: 10, top: 30)
+              : const EdgeInsets.only(bottom: 10),
+          child: GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EventPage(
+                  previousEvent: events[i],
+                ))
             ),
-          ),
+            child: Box(
+              headline: headline,
+              child: PointElement(
+                color: AppDesign.current.primaryColor,
+                primaryText: events[i].name,
+                child: Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
+              )
+            )
+          )
         )
       );
     }
@@ -48,8 +59,8 @@ class _CalendarPage extends State<CalendarPage> {
     return boxes;
   }
 
-  List<Padding> getSelectedTests() {
-    List<Padding> boxes = [];
+  List<Widget> getSelectedTests() {
+    List<Widget> boxes = [];
     List<Test> tests = TimeTable.getTests(selectedDay);
 
     for (int i=0; i<tests.length; i++) {
@@ -57,19 +68,28 @@ class _CalendarPage extends State<CalendarPage> {
       if (i == 0) headline = "Tests";
 
       boxes.add(
-          Padding(
-            padding: headline != null ? const EdgeInsets.only(
-                bottom: 10, top: 30) : const EdgeInsets.only(bottom: 10),
+        Padding(
+          padding: headline != null ?
+              const EdgeInsets.only(bottom: 10, top: 30)
+              : const EdgeInsets.only(bottom: 10),
+          child: GestureDetector(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TestPage(
+                  previousTest: tests[i],
+                ))
+            ),
             child: Box(
               headline: headline,
               child: PointElement(
                 color: tests[i].subject.color,
                 primaryText: tests[i].subject.name,
                 child: Text(tests[i].description,
-                    style: AppDesign.current.textStyles.pointElementSecondary),
-              ),
-            ),
+                  style: AppDesign.current.textStyles.pointElementSecondary),
+              )
+            )
           )
+        )
       );
     }
 
@@ -141,9 +161,7 @@ class _CalendarPage extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Kalender",
-      subtitle: "Work in Progress",
       floatingActionButton: CustomMenuButton(
-          icon: const Icon(Icons.add),
           defaultAction: () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => EventPage())

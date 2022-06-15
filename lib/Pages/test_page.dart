@@ -115,10 +115,12 @@ class _TestPage extends State<TestPage> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        if (widget.descriptionController.text.isNotEmpty &&
-                            widget.selectedSubject != null) {
-                          Test(widget.selectedSubject!, widget.selectedDate,
-                              widget.descriptionController.text);
+                        if (widget.descriptionController.text.isNotEmpty && widget.selectedSubject != null) {
+                          if (widget.previousTest == null) {
+                            Test(widget.selectedSubject!, widget.selectedDate, widget.descriptionController.text);
+                          } else {
+                            widget.previousTest!.edit(widget.selectedSubject!, widget.selectedDate, widget.descriptionController.text);
+                          }
                           BrainApp.notifier.notifyOfChanges();
                           Navigator.pop(context);
                         }

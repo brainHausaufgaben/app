@@ -69,14 +69,18 @@ class _EventPage extends State<EventPage> {
                     child: ElevatedButton (
                         onPressed: () {
                           if (widget.titleController.text.isNotEmpty && widget.descriptionController.text.isNotEmpty) {
-                            Event(widget.selectedDate, widget.titleController.text, widget.descriptionController.text);
+                            if (widget.previousEvent == null) {
+                              Event(widget.selectedDate, widget.titleController.text, widget.descriptionController.text);
+                            } else {
+                              widget.previousEvent!.edit(widget.selectedDate, widget.titleController.text, widget.descriptionController.text);
+                            }
                             BrainApp.notifier.notifyOfChanges();
                             Navigator.pop(context);
                           }
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+                          child: Text(widget.previousEvent == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
                         )
                     ),
                   ),

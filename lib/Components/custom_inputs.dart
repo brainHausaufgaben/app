@@ -395,23 +395,24 @@ class SettingsEntry extends StatelessWidget {
 }
 
 class CustomMenuButton extends StatelessWidget {
-  const CustomMenuButton({Key? key, required this.menuEntries, required this.icon, required this.defaultAction}) : super(key: key);
+  const CustomMenuButton({Key? key, required this.menuEntries, required this.defaultAction}) : super(key: key);
 
   final List<SpeedDialChild> menuEntries;
   final Function() defaultAction;
-  final Icon icon;
 
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
       onPress: defaultAction,
-      child: icon,
+      icon: Icons.add,
+      activeIcon: Icons.close,
       children: menuEntries,
       overlayColor: Colors.black,
       overlayOpacity: 0.6,
       spacing: 5,
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),
+      animationDuration: const Duration(milliseconds: 200),
     );
   }
 
