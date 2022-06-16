@@ -23,7 +23,7 @@ class CustomNotifications{
     }
 
     AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
-    await notificationsPlugin.initialize(initializationSettingsAndroid);
+    await notificationsPlugin.initialize(initializationSettingsAndroid,onSelectNotification:selectNotification );
 
     SharedPreferences.getInstance().then((preferences) {
       if(preferences.getBool("persistentNotifications") ?? false){
@@ -46,9 +46,12 @@ class CustomNotifications{
 
   }
 
+  static Future selectNotification(String? payload) async {
+    //nichts ;)
+  }
+
   static void persistentNotification() async{
     if(!notificationsEnabled || !notificationsPossible) return;
-
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
     String title = "";
     String body = "";
@@ -66,15 +69,15 @@ class CustomNotifications{
         showWhen: false,
         channelDescription: 'your channel description',
         ongoing: true,
+        autoCancel: false,
         enableVibration: false,
         enableLights: false,
         playSound: false,
         styleInformation: defStyleInformation,
         ticker: 'ticker');
     await notificationsPlugin.show(
-        0, title , body,notificationDetails: platformChannelSpecifics,);
-
-
+        0, title , body,notificationDetails: platformChannelSpecifics,payload: "perm");
   }
+
 
 }
