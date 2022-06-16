@@ -177,16 +177,17 @@ class _CalendarPage extends State<CalendarPage> {
         children: [
           Box(
             child: TableCalendar(
+                locale: "de_DE",
                 firstDay: DateTime.utc(2018, 10, 16),
-                lastDay: DateTime.utc(2026, 3, 14),
+                lastDay: DateTime.now().add(const Duration(days:730)),
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 focusedDay: selectedDay,
                 calendarStyle: CalendarStyle(
                   defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
                   weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
                   outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-                  todayDecoration: BoxDecoration(color: AppDesign.current.primaryColor.withAlpha(0), shape: BoxShape.circle),
-                  todayTextStyle: TextStyle(color: AppDesign.current.primaryColor),
+                  todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
+                  todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
                   selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
                   selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
                 ),
