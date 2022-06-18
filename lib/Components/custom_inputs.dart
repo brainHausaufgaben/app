@@ -1,9 +1,7 @@
-import 'package:brain_app/Pages/event_page.dart';
+import 'package:brain_app/Pages/events_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
-import 'package:brain_app/Pages/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -433,23 +431,6 @@ class CustomMenuButton extends StatelessWidget {
     );
   }
 
-  static SpeedDialChild getTestMenu(BuildContext context) {
-    return SpeedDialChild(
-        backgroundColor: AppDesign.current.primaryColor,
-        foregroundColor: AppDesign.current.textStyles.contrastColor,
-        labelBackgroundColor: AppDesign.current.primaryColor,
-        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-        label: "Neuer Test",
-        child: const Icon(Icons.bookmark),
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TestPage())
-          );
-        }
-    );
-  }
-
   static SpeedDialChild getEventMenu(BuildContext context) {
     return SpeedDialChild(
         backgroundColor: AppDesign.current.primaryColor,
@@ -461,7 +442,7 @@ class CustomMenuButton extends StatelessWidget {
         onTap: () {
           Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EventPage())
+              MaterialPageRoute(builder: (context) => EventsPage())
           );
         }
     );

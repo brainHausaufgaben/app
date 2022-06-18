@@ -8,9 +8,10 @@ import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/dismissable_box.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/event_page.dart';
+import 'package:brain_app/Pages/edit_event_page.dart';
+import 'package:brain_app/Pages/edit_test_page.dart';
+import 'package:brain_app/Pages/events_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/Pages/test_page.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -34,12 +35,12 @@ class _CalendarPage extends State<CalendarPage> {
       boxes.add(
         Padding(
           padding: headline != null ?
-              const EdgeInsets.only(bottom: 10, top: 30)
+              const EdgeInsets.only(bottom: 10, top: 20)
               : const EdgeInsets.only(bottom: 10),
           child: GestureDetector(
             onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => EventPage(
+                MaterialPageRoute(builder: (context) => EditEventPage(
                   previousEvent: events[i],
                 ))
             ),
@@ -70,12 +71,12 @@ class _CalendarPage extends State<CalendarPage> {
       boxes.add(
         Padding(
           padding: headline != null ?
-              const EdgeInsets.only(bottom: 10, top: 30)
+              const EdgeInsets.only(bottom: 10, top: 20)
               : const EdgeInsets.only(bottom: 10),
           child: GestureDetector(
             onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TestPage(
+                MaterialPageRoute(builder: (context) => EditTestPage(
                   previousTest: tests[i],
                 ))
             ),
@@ -123,7 +124,7 @@ class _CalendarPage extends State<CalendarPage> {
 
         boxes.add(
           Padding(
-            padding: headline != null ? const EdgeInsets.only(bottom: 10, top: 30) : const EdgeInsets.only(bottom: 10),
+            padding: headline != null ? const EdgeInsets.only(bottom: 10, top: 20) : const EdgeInsets.only(bottom: 10),
             child: Box(
               headline: headline,
               child: PointElement(
@@ -164,98 +165,100 @@ class _CalendarPage extends State<CalendarPage> {
       floatingActionButton: CustomMenuButton(
           defaultAction: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => EventPage())
+              MaterialPageRoute(builder: (context) => EventsPage())
           ),
           menuEntries: [
             CustomMenuButton.getHomeworkMenu(context),
             CustomMenuButton.getEventMenu(context),
-            CustomMenuButton.getTestMenu(context)
           ]
       ),
       child: ListView(
         padding: const EdgeInsets.only(bottom: 20),
         children: [
-          Box(
-            child: TableCalendar(
-                locale: "de_DE",
-                firstDay: DateTime.utc(2018, 10, 16),
-                lastDay: DateTime.now().add(const Duration(days:730)),
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                focusedDay: selectedDay,
-                calendarStyle: CalendarStyle(
-                  defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                  weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                  outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-                  todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
-                  todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                  selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
-                  selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-                ),
-                daysOfWeekStyle: DaysOfWeekStyle(
-                    weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                    weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
-                ),
-                headerStyle: HeaderStyle(
-                  headerPadding: const EdgeInsets.only(bottom: 10),
-                  titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
-                  titleCentered: true,
-                  formatButtonVisible: false,
-                  leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
-                  rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
-                ),
-                calendarBuilders: CalendarBuilders(
-                  singleMarkerBuilder: (context, date, event) {
-                    Color color = Colors.deepOrange;
-                    BoxShape shape = BoxShape.circle;
-                    switch (event.runtimeType) {
-                      case Event:
-                        shape = BoxShape.rectangle;
-                        color = AppDesign.current.primaryColor;
-                        break;
-                      case Homework:
-                        Homework hm = event as Homework;
-                        color =  hm.subject.color;
-                        break;
-                      case Test:
-                        Test test = event as Test;
+          Padding(
+            padding: const EdgeInsets.only(bottom: 10),
+            child: Box(
+                child: TableCalendar(
+                    locale: "de_DE",
+                    firstDay: DateTime.utc(2018, 10, 16),
+                    lastDay: DateTime.now().add(const Duration(days:730)),
+                    startingDayOfWeek: StartingDayOfWeek.monday,
+                    focusedDay: selectedDay,
+                    calendarStyle: CalendarStyle(
+                      defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                      weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                      outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
+                      todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
+                      todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                      selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+                      selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+                    ),
+                    daysOfWeekStyle: DaysOfWeekStyle(
+                        weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                        weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
+                    ),
+                    headerStyle: HeaderStyle(
+                      headerPadding: const EdgeInsets.only(bottom: 10),
+                      titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
+                      titleCentered: true,
+                      formatButtonVisible: false,
+                      leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
+                      rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
+                    ),
+                    calendarBuilders: CalendarBuilders(
+                      singleMarkerBuilder: (context, date, event) {
+                        Color color = Colors.deepOrange;
+                        BoxShape shape = BoxShape.circle;
+                        switch (event.runtimeType) {
+                          case Event:
+                            shape = BoxShape.rectangle;
+                            color = AppDesign.current.primaryColor;
+                            break;
+                          case Homework:
+                            Homework hm = event as Homework;
+                            color =  hm.subject.color;
+                            break;
+                          case Test:
+                            Test test = event as Test;
+                            return Container(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        width: 2,
+                                        color: test.subject.color
+                                    )
+                                ),
+                                width: 9.0,
+                                height: 9.0,
+                                margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                            );
+                        }
                         return Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              width: 2,
-                              color: test.subject.color
-                            )
-                          ),
-                          width: 9.0,
-                          height: 9.0,
-                          margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                            decoration: BoxDecoration(shape: shape, color: color),
+                            width: 7.0,
+                            height: 7.0,
+                            margin: const EdgeInsets.symmetric(horizontal: 1.5)
                         );
+                      },
+                    ),
+                    onDaySelected: (_selectedDay, _focusedDay) {
+                      setState(() {
+                        selectedDay = _selectedDay;
+                      });
+                    },
+                    selectedDayPredicate: (day) {
+                      return isSameDay(selectedDay, day);
+                    },
+                    eventLoader: (date) {
+                      List<dynamic> events = [
+                        ...TimeTable.getEvents(date),
+                        ...getHomeworkByDay(date),
+                        ...TimeTable.getTests(date)
+                      ];
+                      return events;
                     }
-                    return Container(
-                      decoration: BoxDecoration(shape: shape, color: color),
-                      width: 7.0,
-                      height: 7.0,
-                      margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                    );
-                  },
-                ),
-                onDaySelected: (_selectedDay, _focusedDay) {
-                  setState(() {
-                    selectedDay = _selectedDay;
-                  });
-                },
-                selectedDayPredicate: (day) {
-                  return isSameDay(selectedDay, day);
-                },
-                eventLoader: (date) {
-                  List<dynamic> events = [
-                    ...TimeTable.getEvents(date),
-                    ...getHomeworkByDay(date),
-                    ...TimeTable.getTests(date)
-                  ];
-                  return events;
-                }
-            )
+                )
+            ),
           ),
           ...getSelectedEvents(),
           ...getSelectedHomework(),

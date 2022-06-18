@@ -92,7 +92,6 @@ class _HomePage extends State<HomePage>{
         menuEntries: [
           CustomMenuButton.getHomeworkMenu(context),
           CustomMenuButton.getEventMenu(context),
-          CustomMenuButton.getTestMenu(context)
         ],
       ),
       child: Column(
