@@ -2,6 +2,8 @@
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:localstorage/localstorage.dart';
 
+import 'grading_system.dart';
+
 class SaveSystem{
    static LocalStorage storage = LocalStorage("brain_app");
 
@@ -45,6 +47,14 @@ class SaveSystem{
    }
    static  getTests(){
      return storage.getItem("tests");
+   }
+
+   static void saveGrades(){
+     storage.setItem("grades", GradingSystem.gradesToJSONEncodable());
+
+   }
+   static  getGrades(){
+     return storage.getItem("grades");
    }
 
 

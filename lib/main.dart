@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/grade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -190,6 +191,20 @@ class _BrainApp extends State<BrainApp> {
         Test(TimeTable.getSubject(id)!, time, item["description"]);
       }
     }
+    if(await SaveSystem.getGrades() != null) {
+      for (Map item in await SaveSystem.getGrades()) {
+        int value = item["value"];
+        int id = item["SubjectID"];
+        if(item["isBig"]) {
+          BigGrade(value,TimeTable.getSubject(id)!);
+        } else {
+          SmallGrade(value,TimeTable.getSubject(id)!);
+        }
+
+      }
+    }
+
+
 
     setState(() {});
     TimeTable.saveEnabled = true;
