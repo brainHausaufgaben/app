@@ -15,6 +15,7 @@ class TimeTable {
   static List<Day> week = [];
   static List<Subject> subjects = [];
   static List<Homework> homeworks = [];
+  static List<Homework> deletedHomeworks = [];
   static List<Event> events = [];
   static List<Test> tests = [];
   static List<TimeInterval> lessonTimes = [
@@ -102,11 +103,24 @@ class TimeTable {
 
 
   static void removeHomework(Homework homework){
-    if(homeworks.contains(homework))homeworks.remove(homework);
-    BrainApp.notifier.notifyOfChanges();
-    if(saveEnabled) SaveSystem.saveHomework();
-    CustomNotifications.persistentNotification();
+    if(homeworks.contains(homework)){
+      homeworks.remove(homework);
+      deletedHomeworks.insert(0,homework);
+    }
+      BrainApp.notifier.notifyOfChanges();
+      if(saveEnabled) SaveSystem.saveHomework();
+      CustomNotifications.persistentNotification();
   }
+
+  static void reinstateHomework(Homework homework){
+    if(deletedHomeworks.contains(homework))deletedHomeworks.remove(homework);
+    addHomework(homework);
+  }
+
+  static void reinstateLastHomework(){
+    if(deletedHomeworks.isNotEmpty)reinstateHomework(deletedHomeworks[0]);
+  }
+
 
   static Subject ?getSubject(int id){
     for(Subject subject in subjects){
