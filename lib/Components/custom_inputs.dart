@@ -1,4 +1,5 @@
 import 'package:brain_app/Pages/events_page.dart';
+import 'package:brain_app/Pages/grades_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
@@ -393,9 +394,8 @@ class SettingsEntry extends StatelessWidget {
 }
 
 class CustomMenuButton extends StatelessWidget {
-  const CustomMenuButton({Key? key, required this.menuEntries, required this.defaultAction}) : super(key: key);
+  const CustomMenuButton({Key? key, required this.defaultAction}) : super(key: key);
 
-  final List<SpeedDialChild> menuEntries;
   final Function() defaultAction;
 
   @override
@@ -404,7 +404,11 @@ class CustomMenuButton extends StatelessWidget {
       onPress: defaultAction,
       icon: Icons.add,
       activeIcon: Icons.close,
-      children: menuEntries,
+      children: [
+        getHomeworkMenu(context),
+        getEventMenu(context),
+        getGradesMenu(context)
+      ],
       overlayColor: Colors.black,
       overlayOpacity: 0.6,
       spacing: 5,
@@ -443,6 +447,23 @@ class CustomMenuButton extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => EventsPage())
+          );
+        }
+    );
+  }
+
+  static SpeedDialChild getGradesMenu(BuildContext context) {
+    return SpeedDialChild(
+        backgroundColor: AppDesign.current.primaryColor,
+        foregroundColor: AppDesign.current.textStyles.contrastColor,
+        labelBackgroundColor: AppDesign.current.primaryColor,
+        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        label: "Neue Note",
+        child: const Icon(Icons.grading),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GradesPage())
           );
         }
     );

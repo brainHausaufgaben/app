@@ -88,11 +88,7 @@ class _HomePage extends State<HomePage>{
         defaultAction: () => Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => HomeworkPage())
-        ),
-        menuEntries: [
-          CustomMenuButton.getHomeworkMenu(context),
-          CustomMenuButton.getEventMenu(context),
-        ],
+        )
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

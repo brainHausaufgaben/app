@@ -16,15 +16,26 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPage extends State<SettingsPage> {
-  final List<bool> radioList = List.filled(Designs.themeList.length, false);
+  final List<bool> radioList = List.filled(Design.allDesigns.length, false);
   String version = "...";
 
   @override
   void initState() {
     super.initState();
 
-    radioList[Designs.themeList.indexOf(AppDesign.currentThemeName)] = true;
     getVersion();
+  }
+
+  List<IconRadio> getRadios() {
+    List<IconRadio> radios = [];
+    int index = 0;
+
+    Design.allDesigns.forEach((key, value) {
+      radios.add(IconRadio(isSelected: radioList[index], path: value.iconPath, tooltip: key));
+      index++;
+    });
+
+    return radios;
   }
 
   void getVersion() {
@@ -44,7 +55,7 @@ class _SettingsPage extends State<SettingsPage> {
                   setState(() {
                     for (int buttonIndex = 0; buttonIndex < radioList.length; buttonIndex++) {
                       if (buttonIndex == index) {
-                        AppDesign.toggleTheme(Designs.themeList[buttonIndex]);
+                        AppDesign.toggleTheme(Design.allDesigns.keys.elementAt(buttonIndex));
                         radioList[buttonIndex] = true;
                       } else {
                         radioList[buttonIndex] = false;
@@ -56,15 +67,7 @@ class _SettingsPage extends State<SettingsPage> {
                 fillColor: Colors.transparent,
                 renderBorder: false,
                 isSelected: radioList,
-                children: [
-                  IconRadio(isSelected: radioList[0], path: "icons/monochromeThemeIcon.png", tooltip: "Monochrome"),
-                  IconRadio(isSelected: radioList[1], path: "icons/orangeThemeIcon.png", tooltip: "Carrot Orange"),
-                  IconRadio(isSelected: radioList[2], path: "icons/poisonGreenThemeIcon.png", tooltip: "Poison Green"),
-                  IconRadio(isSelected: radioList[3], path: "icons/militaryGreenThemeIcon.png", tooltip: "Military Green"),
-                  IconRadio(isSelected: radioList[4], path: "icons/pastelRedThemeIcon.png", tooltip: "Pastel Red"),
-                  IconRadio(isSelected: radioList[5], path: "icons/jeremiasThemeIcon.png", tooltip: "Jeremias"),
-                  IconRadio(isSelected: radioList[6], path: "icons/oceanBlueThemeIcon.png", tooltip: "Ocean Blue")
-                ]
+                children: getRadios()
             )
         )
     );
@@ -96,7 +99,7 @@ class _SettingsPage extends State<SettingsPage> {
                 action: () {
                   AppDesign.toggleDarkMode();
                 },
-                state: AppDesign.darkMode,
+                state: BrainApp.preferences["darkMode"],
               ),
               getThemeChooser()
             ]

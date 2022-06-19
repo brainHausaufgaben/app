@@ -1,10 +1,12 @@
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/subject_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 class SubjectOverview extends StatefulWidget {
   const SubjectOverview({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class SubjectOverview extends StatefulWidget {
 }
 
 class _SubjectOverview extends State<SubjectOverview> {
-  List<CustomIconButton> initSubjectButtons() {
+  List<CustomIconButton> getSubjectButtons() {
     List<CustomIconButton> buttons = [];
     for (Subject subject in TimeTable.subjects) {
       buttons.add(CustomIconButton(
@@ -28,9 +30,7 @@ class _SubjectOverview extends State<SubjectOverview> {
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SubjectPage(previousSubject: subject))
-          ).then((value) {
-            setState(() {});
-          });
+          );
         },
       ));
     }
@@ -43,20 +43,20 @@ class _SubjectOverview extends State<SubjectOverview> {
       title: "Alle Fächer",
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SubjectPage())
-          ).then((value) {
-            setState(() {});
-          });
-        }
+        onPressed: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SubjectPage())
+        )
       ),
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: Wrap(
-          runSpacing: 5,
-          children: initSubjectButtons(),
+      child: ScrollShadow(
+        color: AppDesign.current.boxStyle.boxShadow.color,
+        size: 15,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Wrap(
+            runSpacing: 5,
+            children: getSubjectButtons(),
+          ),
         ),
       ),
       backButton: true,
