@@ -4,12 +4,13 @@ import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Pages/calendar_page.dart';
 import 'package:flutter/material.dart';
 
 class TestSubpage extends StatefulWidget {
   TestSubpage({Key? key, this.previousTest}) : super(key: key) {
     descriptionController.text = previousTest?.description ?? "";
-    selectedDate = previousTest?.dueTime ?? DateTime.now();
+    selectedDate = previousTest?.dueTime ?? CalendarPage.selectedDay;
     selectedSubject = previousTest?.subject;
   }
 

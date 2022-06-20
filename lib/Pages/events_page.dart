@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/event_subpage.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/test_subpage.dart';
@@ -11,7 +12,7 @@ import 'package:flutter/material.dart';
 class EventsPage extends StatefulWidget {
   EventsPage({Key? key}) : super(key: key);
 
-  List<Widget> subpages = [EventSubpage(), TestSubpage()];
+  final List<Widget> subpages = [EventSubpage(), TestSubpage()];
 
   @override
   State<EventsPage> createState() => _EventsPage();

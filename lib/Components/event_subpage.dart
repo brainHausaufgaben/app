@@ -1,16 +1,13 @@
 import 'package:brain_app/Backend/event.dart';
-import 'package:brain_app/Backend/theming.dart';
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
-import 'package:brain_app/main.dart';
+import 'package:brain_app/Pages/calendar_page.dart';
 import 'package:flutter/material.dart';
 
 class EventSubpage extends StatefulWidget {
   EventSubpage({Key? key, this.previousEvent}) : super(key: key) {
     titleController.text = previousEvent?.name ?? "";
     descriptionController.text = previousEvent?.description ?? "";
-    selectedDate = previousEvent?.dueTime ?? DateTime.now();
+    selectedDate = previousEvent?.dueTime ?? CalendarPage.selectedDay;
   }
 
   Event? previousEvent;

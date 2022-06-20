@@ -21,14 +21,15 @@ class CalendarPage extends StatefulWidget {
 
   @override
   _CalendarPage createState() => _CalendarPage();
+
+  static DateTime selectedDay = DateTime.now();
 }
 
 class _CalendarPage extends State<CalendarPage> {
-  DateTime selectedDay = DateTime.now();
 
   List<Widget> getSelectedEvents() {
     List<Widget> boxes = [];
-    List<Event> events = TimeTable.getEvents(selectedDay);
+    List<Event> events = TimeTable.getEvents(CalendarPage.selectedDay);
     for (int i=0; i<events.length; i++) {
       String? headline;
       if (i == 0) headline = "Events";
@@ -63,7 +64,7 @@ class _CalendarPage extends State<CalendarPage> {
 
   List<Widget> getSelectedTests() {
     List<Widget> boxes = [];
-    List<Test> tests = TimeTable.getTests(selectedDay);
+    List<Test> tests = TimeTable.getTests(CalendarPage.selectedDay);
 
     for (int i=0; i<tests.length; i++) {
       String? headline;
@@ -102,12 +103,12 @@ class _CalendarPage extends State<CalendarPage> {
     List<Padding> boxes = [];
     List<Subject> subjects = [];
     String? headline;
-    for (Subject subject in TimeTable.getSubjectsByDate(selectedDay)) {
+    for (Subject subject in TimeTable.getSubjectsByDate(CalendarPage.selectedDay)) {
       if(!subjects.contains(subject))subjects.add(subject);
 
     }
     for (Subject subject in subjects) {
-      List<Homework> homework = TimeTable.getHomework(selectedDay, subject);
+      List<Homework> homework = TimeTable.getHomework(CalendarPage.selectedDay, subject);
       List<DismissableBox> dismissableBoxes = [];
 
       for (Homework _homework in homework) {
@@ -171,7 +172,7 @@ class _CalendarPage extends State<CalendarPage> {
       ),
       child: ScrollShadow(
         color: AppDesign.current.boxStyle.boxShadow.color,
-        size: 15,
+        size: 0,
         child: ListView(
             padding: const EdgeInsets.only(bottom: 20),
             children: [
@@ -183,7 +184,7 @@ class _CalendarPage extends State<CalendarPage> {
                         firstDay: DateTime.utc(2018, 10, 16),
                         lastDay: DateTime.now().add(const Duration(days:730)),
                         startingDayOfWeek: StartingDayOfWeek.monday,
-                        focusedDay: selectedDay,
+                        focusedDay: CalendarPage.selectedDay,
                         calendarStyle: CalendarStyle(
                           defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
                           weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
@@ -243,11 +244,11 @@ class _CalendarPage extends State<CalendarPage> {
                         ),
                         onDaySelected: (_selectedDay, _focusedDay) {
                           setState(() {
-                            selectedDay = _selectedDay;
+                            CalendarPage.selectedDay = _selectedDay;
                           });
                         },
                         selectedDayPredicate: (day) {
-                          return isSameDay(selectedDay, day);
+                          return isSameDay(CalendarPage.selectedDay, day);
                         },
                         eventLoader: (date) {
                           List<dynamic> events = [
