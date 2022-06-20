@@ -1,3 +1,5 @@
+import 'package:dynamic_color/dynamic_color.dart';
+import 'package:dynamic_color/samples.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/main.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
@@ -124,3 +126,4 @@ class MilitaryGreenDesign extends Design {
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFFA3BDA6), const Color(0xFF445346), const Color(0xFF637265), const Color(0xFFFFFFFF), const Color(0xFF212229), true);
 }
+

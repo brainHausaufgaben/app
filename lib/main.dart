@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/grade.dart';
+import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -35,6 +36,8 @@ class BrainApp extends StatefulWidget {
     "mediaBoxCollapsed": false,
     "showMediaBox": true,
     "persistentNotifications": false,
+    "design" : "Monochrome",
+    "darkMode" : false
   };
 
   static void updatePreference(String key, dynamic value) async {
@@ -64,16 +67,13 @@ class _BrainApp extends State<BrainApp> {
   void initState() {
     super.initState();
 
-    BrainApp.notifier.addListener(() {
-      setState(() {});
-    });
-
-    getPreferences();
-    AppDesign.init();
+    BrainApp.notifier.addListener(() => setState(() {}));
+    getPreferences().then((value) => AppDesign.toggleTheme(BrainApp.preferences["design"]));
     TimeTable.init();
     CustomNotifications.init();
     getBoxText();
     load();
+    setState(() {});
     //CustomNotifications.persistentNotification();
   }
 
@@ -85,7 +85,7 @@ class _BrainApp extends State<BrainApp> {
 
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      home: NavigationHelper(),
+      home: CustomQuickActions(child: NavigationHelper())  ,
       theme: AppDesign.current.themeData,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -103,11 +103,11 @@ class _BrainApp extends State<BrainApp> {
     );
   }
 
-  void getPreferences() async {
+  Future getPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       BrainApp.preferences.forEach((key, value) {
-        BrainApp.preferences[key] = prefs.get(key) ?? BrainApp.preferences[key];
+        BrainApp.preferences[key] = prefs.get(key) ?? value;
       });
     });
   }
@@ -147,8 +147,9 @@ class _BrainApp extends State<BrainApp> {
   Future load() async{
     TimeTable.saveEnabled = false;
 
-    if (await SaveSystem.getSubjects() != null) {
-      for (Map item in await SaveSystem.getSubjects()) {
+    dynamic subjects = await SaveSystem.getSubjects();
+    if (subjects != null) {
+      for (Map item in subjects) {
         List color = item["color"];
         Subject.fromID(
             item["name"], Color.fromARGB(255, color[0], color[1], color[2]),
@@ -156,17 +157,20 @@ class _BrainApp extends State<BrainApp> {
       }
     }
 
-    if (await SaveSystem.getTimeTable() != null) {
+    dynamic timetable = await SaveSystem.getTimeTable();
+    if (timetable != null) {
       for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 10; j++) {
-          int id = await SaveSystem.getTimeTable()[i][j];
+          int id = timetable[i][j];
           if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
         }
       }
     }
 
-    if(await SaveSystem.getHomework() != null) {
-      for (Map item in await SaveSystem.getHomework()) {
+
+    dynamic homework = await SaveSystem.getHomework();
+    if(homework != null) {
+      for (Map item in homework) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
@@ -175,23 +179,27 @@ class _BrainApp extends State<BrainApp> {
       }
     }
 
-    if(await SaveSystem.getEvents() != null) {
-      for (Map item in await SaveSystem.getEvents()) {
+    dynamic events = await SaveSystem.getEvents();
+    if(events != null) {
+      for (Map item in events) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         Event(time, item["name"], item["description"]);
       }
     }
 
-    if(await SaveSystem.getTests() != null) {
-      for (Map item in await SaveSystem.getTests()) {
+    dynamic tests = await SaveSystem.getTests();
+    if(tests != null) {
+      for (Map item in tests) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
         Test(TimeTable.getSubject(id)!, time, item["description"]);
       }
     }
-    if(await SaveSystem.getGrades() != null) {
+
+    dynamic grades = await SaveSystem.getGrades();
+    if(grades != null) {
       for (Map item in await SaveSystem.getGrades()) {
         int value = item["value"];
         int id = item["SubjectID"];
@@ -204,9 +212,6 @@ class _BrainApp extends State<BrainApp> {
       }
     }
 
-
-
-    setState(() {});
     TimeTable.saveEnabled = true;
   }
 

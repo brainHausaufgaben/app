@@ -22,7 +22,7 @@ class CustomNotifications{
       return;
     }
 
-    AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/launcher_icon');
+    AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/launcher_icon');
     await notificationsPlugin.initialize(initializationSettingsAndroid,onSelectNotification:selectNotification );
 
     SharedPreferences.getInstance().then((preferences) {
