@@ -1,20 +1,20 @@
-#Brain App
-##Coder
+# Brain App
+## Coder
     Manuel Murmann
     Sebastian Merk
 
-##Designer
+## Designer
     Manuel Murmann
 
-##Project Manager
+## Project Manager
     David Will
 
-##Contact 
+## Contact 
     kontakt@murmannmanuel.de > Manuel Murmann
     sesemerk@gmail.com > Sebastian Merk
     instagram/thisisdavidwill > David Will
 
-##Recompile Instructions
+## Recompile Instructions
     flutter sdk: ">=2.15.0 <3.0.0"
     dart: so ziemlich das gleiche
 ![](images/compiled html asset.png)
