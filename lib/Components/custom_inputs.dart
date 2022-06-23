@@ -1,3 +1,5 @@
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Pages/events_page.dart';
 import 'package:brain_app/Pages/grades_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
@@ -85,11 +87,11 @@ class CustomDateButton extends StatelessWidget {
     required this.value,
     required this.onDateSelect,
     required this.text,
-    this.customDateBuilder
+    this.selectedSubject,
   }) : super(key: key);
 
   Function(DateTime) onDateSelect;
-  Widget? Function(DateTime, TextStyle)? customDateBuilder;
+  Subject? selectedSubject;
   DateTime value;
   String text;
 
@@ -141,9 +143,23 @@ class CustomDateButton extends StatelessWidget {
                   ),
                 );
               }
-              if (customDateBuilder != null) {
-                Widget? customDateBuilderReturn = customDateBuilder!(dateTime, defaultTextStyle);
-                if (customDateBuilderReturn != null) return customDateBuilderReturn;
+
+              if (selectedSubject != null) {
+                DateTime now = DateTime.now();
+
+                if (dateTime.day >= now.day || dateTime.month > now.month) {
+                  if (TimeTable.getSubjectsByDate(dateTime).contains(selectedSubject)) {
+                    return Container(
+                        decoration: BoxDecoration(
+                          color: selectedSubject!.color.withOpacity(0.2),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                            child: Text(dateTime.day.toString(), style: defaultTextStyle)
+                        )
+                    );
+                  }
+                }
               }
               // Default
               return Center(

@@ -1,6 +1,6 @@
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
-import 'package:brain_app/Pages/time_table.dart';
+import 'package:brain_app/Pages/time_table_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Pages/page_template.dart';

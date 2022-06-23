@@ -66,7 +66,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
     return subjects;
   }
 
-  List<Widget> generateTimetableTabs() {
+  List<Widget> getTimetableTabs() {
     List<Widget> tabs = [];
 
     for (int day=0; day<5; day++) {
@@ -176,7 +176,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           body: Padding(
             padding: const EdgeInsets.only(top: 15),
             child: TabBarView(
-              children: generateTimetableTabs(),
+              children: getTimetableTabs(),
             ),
           )
         )

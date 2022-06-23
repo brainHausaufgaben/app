@@ -92,28 +92,11 @@ class _HomeworkPage extends State<HomeworkPage> {
           CustomDateButton(
             value: widget.selectedDate,
             text: "Nächste Stunde",
+            selectedSubject: widget.selectedSubject,
             onDateSelect: (value) {
               setState((){
                  widget.selectedDate = value;
               });
-            },
-            customDateBuilder: (date, style) {
-              if (date.day >= DateTime.now().day || date.month > DateTime.now().month) {
-                if (TimeTable.getSubjectsByDate(date).contains(widget.selectedSubject)) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: widget.selectedSubject!.color.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        date.day.toString(),
-                        style: style,
-                      )
-                    )
-                  );
-                }
-              }
             }
           )
         ]

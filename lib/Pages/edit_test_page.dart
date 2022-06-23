@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/theming.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Components/test_subpage.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -42,7 +43,44 @@ class _EditTestPage extends State<EditTestPage> {
     return PageTemplate(
       backButton: true,
       title: widget.previousTest != null ? "Test Bearbeiten" : "Neuer Test",
-      child: widget.testSubpage,
+      child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Wrap(
+                runSpacing: 10,
+                children: [
+                  CustomTextField(
+                    controller: widget.testSubpage.descriptionController,
+                    placeHolder: "Test Inhalte",
+                    autocorrect: true,
+                    maxLines: 10,
+                  ),
+                  CustomDropdown(
+                      defaultText: Text(
+                          "Fach", style: AppDesign.current.textStyles.input),
+                      items: getDropdowns(),
+                      currentValue: widget.testSubpage.selectedSubject,
+                      onChanged: (newValue) {
+                        setState(() {
+                          widget.testSubpage.selectedSubject = newValue;
+                        });
+                      }
+                  ),
+                  CustomDateButton(
+                      value: widget.testSubpage.selectedDate,
+                      text: "Nächste Stunde",
+                      selectedSubject: widget.testSubpage.selectedSubject,
+                      onDateSelect: (value) {
+                        setState(() {
+                          widget.testSubpage.selectedDate = value;
+                        });
+                      }
+                  )
+                ]
+            )
+          ]
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
