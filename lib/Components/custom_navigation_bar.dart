@@ -1,5 +1,4 @@
-import 'package:brain_app/Backend/theming.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/material.dart';
 
 class CustomNavigationBar extends StatefulWidget {

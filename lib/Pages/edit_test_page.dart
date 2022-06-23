@@ -1,6 +1,6 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/point_element.dart';

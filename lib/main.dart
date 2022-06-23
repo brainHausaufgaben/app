@@ -11,13 +11,14 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/notifier.dart';
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Backend/event.dart';
 import 'Backend/test.dart';
+import 'Pages/home_page.dart';
 
 void main() {
   runApp(const BrainApp());
@@ -30,6 +31,7 @@ class BrainApp extends StatefulWidget {
 
   static String todaysJoke = "Wird geladen...";
   static IconData icon = Icons.autorenew_rounded;
+  static int selectedPageIndex = 1;
 
   static Map<String, dynamic> preferences = {
     "warningBoxCollapsed" : false,
@@ -53,8 +55,6 @@ class BrainApp extends StatefulWidget {
         break;
     }
   }
-
-
 
   @override
   _BrainApp createState() => _BrainApp();
@@ -85,7 +85,7 @@ class _BrainApp extends State<BrainApp> {
 
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      home: CustomQuickActions(child: NavigationHelper())  ,
+      home: CustomQuickActions(child: HomePage()),
       theme: AppDesign.current.themeData,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

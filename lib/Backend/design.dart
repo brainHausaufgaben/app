@@ -1,11 +1,10 @@
-import 'package:dynamic_color/dynamic_color.dart';
-import 'package:dynamic_color/samples.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/main.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 
 class AppDesign {
   static DesignPackage current = MonochromeDesign().lightVariant;
+  static double breakPointWidth = 900;
 
   static void toggleTheme(String theme) {
     current = BrainApp.preferences["darkMode"]

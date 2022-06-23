@@ -4,7 +4,7 @@ import 'package:brain_app/Pages/events_page.dart';
 import 'package:brain_app/Pages/grades_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';

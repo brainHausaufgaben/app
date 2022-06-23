@@ -1,5 +1,5 @@
 import 'package:brain_app/Backend/homework.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 
 class CollapsibleBox extends StatelessWidget {
   String text = "empty";

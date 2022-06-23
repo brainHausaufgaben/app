@@ -1,6 +1,8 @@
+import 'package:brain_app/Components/custom_navigation_bar.dart';
+import 'package:brain_app/Components/sidebar.dart';
 import 'package:brain_app/Pages/settings_page.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({
@@ -9,15 +11,19 @@ class PageTemplate extends StatefulWidget {
     required this.child,
     this.backButton, this.subtitle,
     this.floatingActionButton,
-    this.floatingActionButtonLocation
+    this.floatingActionButtonLocation,
+    this.isPrimary,
   }) : super(key: key);
 
   final Widget child;
   final String title;
+  final bool? isPrimary;
   final String? subtitle;
   final bool? backButton;
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
+
+  static int pageIndex = 0;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -50,49 +56,72 @@ class _PageTemplateState extends State<PageTemplate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold (
-      body: Padding(
-        padding: EdgeInsets.only(left: 15, top: MediaQuery.of(context).viewPadding.top + 10, right: 15),
-        child: Column (
-          crossAxisAlignment: CrossAxisAlignment.start,
+      body: Container(
+        padding: const EdgeInsets.all(20),
+        constraints: const BoxConstraints(maxWidth: 1000),
+        child: Flex(
+          direction: Axis.horizontal,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                IconButton(
-                  alignment: Alignment.centerLeft,
-                  constraints: const BoxConstraints(),
-                  padding: const EdgeInsets.all(0),
-                  onPressed: widget.backButton == null ? _settings : _back,
-                  icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
-                  iconSize: 26,
-                  splashRadius: 15,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
-                  child: Column(
+            if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) CustomSidebar(),
+            Expanded(
+              child: Padding(
+                  padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? 25 : 15,
+                      top: MediaQuery.of(context).viewPadding.top + 10,
+                      right: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? 25 : 15),
+                  child: Column (
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget> [
-                      Text(
-                        widget.title,
-                        style: AppDesign.current.textStyles.pageHeadline,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          IconButton(
+                            alignment: Alignment.centerLeft,
+                            constraints: const BoxConstraints(),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: widget.backButton == null ? _settings : _back,
+                            icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
+                            iconSize: 26,
+                            splashRadius: 15,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget> [
+                                Text(
+                                  widget.title,
+                                  style: AppDesign.current.textStyles.pageHeadline,
+                                ),
+                                Text(
+                                  widget.subtitle ?? getDateString(DateTime.now()),
+                                  style: AppDesign.current.textStyles.pageSubtitle,
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                      Text(
-                        widget.subtitle ?? getDateString(DateTime.now()),
-                        style: AppDesign.current.textStyles.pageSubtitle,
+                      Flexible(
+                          child: widget.child
                       )
                     ],
-                  ),
-                ),
-              ],
-            ),
-            Flexible(
-              child: widget.child
+                  )
+              ),
             )
           ],
-        )
+        ),
       ),
       floatingActionButtonLocation: widget.floatingActionButtonLocation,
-      floatingActionButton: widget.floatingActionButton
+      floatingActionButton: widget.floatingActionButton,
+      bottomNavigationBar: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? null : CustomNavigationBar(
+        onTap: (index) {
+          setState(() {
+            PageTemplate.pageIndex = index;
+          });
+        }
+      )
     );
   }
 }

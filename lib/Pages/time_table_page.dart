@@ -7,7 +7,7 @@ import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/subject_page.dart';
 import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/theming.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
 
 import '../main.dart';
