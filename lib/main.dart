@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/eltern_portal_connection.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:flutter/material.dart';
@@ -74,6 +75,7 @@ class _BrainApp extends State<BrainApp> {
     getBoxText();
     load();
     setState(() {});
+    ElternPortalConnection.getHtml();
     //CustomNotifications.persistentNotification();
   }
 
@@ -203,10 +205,12 @@ class _BrainApp extends State<BrainApp> {
       for (Map item in await SaveSystem.getGrades()) {
         int value = item["value"];
         int id = item["SubjectID"];
+        GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
+
         if(item["isBig"]) {
-          BigGrade(value,TimeTable.getSubject(id)!);
+          BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
         } else {
-          SmallGrade(value,TimeTable.getSubject(id)!);
+          SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,item["type"],time);
         }
 
       }

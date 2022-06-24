@@ -4,6 +4,7 @@ import 'package:brain_app/Backend/subject.dart';
 
 class GradingSystem{
   static bool isAdvancedLevel = true;
+  static int currentYear = 11; //TODO: momentanes Jahr Festlegen
   static List<SmallGrade> smallGrades = [];
   static List<BigGrade> bigGrades = [];
 
@@ -16,17 +17,29 @@ class GradingSystem{
     SaveSystem.saveGrades();
   }
 
-  static List<SmallGrade> getSmallGradesBySubject(Subject subject){
+  static List<SmallGrade> getSmallGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<SmallGrade> output = [];
-    smallGrades.map((e) => {if(e.subject == subject)output.add(e)});
+    smallGrades.map((e) => {
+      if(e.subject == subject)
+        if(onlyCurrentYear = true && e.time.year != currentYear){}
+        else{
+          if(onlyPartsOfYear.contains(e.time.partOfYear))output.add(e)
+        }
+    });
     return output;
   }
 
-  static List<BigGrade> getBigGradesBySubject(Subject subject){
+  static List<BigGrade> getBigGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<BigGrade> output = [];
-    bigGrades.map((e) => {if(e.subject == subject)output.add(e)});
+    bigGrades.map((e) => {if(e.subject == subject)
+      if(onlyCurrentYear = true && e.time.year != currentYear){}
+      else{
+        if(onlyPartsOfYear.contains(e.time.partOfYear))output.add(e)
+      }
+    });
     return output;
   }
+
   static List gradesToJSONEncodable(){
     List<Grade> grades = List.from(smallGrades)..addAll(bigGrades);
     return grades.map((item)
@@ -36,9 +49,9 @@ class GradingSystem{
     ).toList();
   }
 
-  static double getAverage(Subject subject){
-    List<BigGrade> bigGradesSubject = getBigGradesBySubject(subject);
-    List<SmallGrade> smallGradesSubject = getSmallGradesBySubject(subject);
+  static double getAverage(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]}){
+    List<BigGrade> bigGradesSubject = getBigGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
+    List<SmallGrade> smallGradesSubject = getSmallGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
     if(isAdvancedLevel){
       double bigGradeAverage = 0;
       double smallGradeAverage = 0;

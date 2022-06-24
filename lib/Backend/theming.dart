@@ -1,5 +1,3 @@
-import 'package:dynamic_color/dynamic_color.dart';
-import 'package:dynamic_color/samples.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/main.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
