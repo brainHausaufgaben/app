@@ -22,7 +22,6 @@ class _SettingsPage extends State<SettingsPage> {
   @override
   void initState() {
     super.initState();
-
     getVersion();
   }
 
@@ -87,7 +86,7 @@ class _SettingsPage extends State<SettingsPage> {
               SettingsNavigatorButton(
                 text: "Stundenplan",
                 action: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => TimeTablePage()));
+                  Navigator.of(context).pushNamed("/settings/timetable");
                 },
               )
             ]

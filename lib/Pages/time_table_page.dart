@@ -3,6 +3,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/subject_page.dart';
 import 'package:brain_app/Pages/subject_overview.dart';
@@ -50,10 +51,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           onPressed: () {
             // Dropdown popup zu machen
             Navigator.pop(context);
-            Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SubjectPage())
-            );
+            Navigator.of(context).pushNamed("/settings/timetable/editSubject");
           },
           child: Text("Fach hinzufügen", style: TextStyle(
             color: AppDesign.current.textStyles.contrastColor,
@@ -122,12 +120,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit),
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SubjectOverview())
-          ).then((value) {
-            setState(() {});
-          });
+          Navigator.of(context).pushNamed("/settings/timetable/subjectOverview");
         }
       ),
       child: DefaultTabController(

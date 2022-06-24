@@ -85,7 +85,9 @@ class _BrainApp extends State<BrainApp> {
 
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
-      home: CustomQuickActions(child: HomePage()),
+      home: CustomQuickActions(
+          child: NavigationHelper()
+      ),
       theme: AppDesign.current.themeData,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

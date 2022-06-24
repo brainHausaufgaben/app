@@ -1,17 +1,19 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Pages/calendar_page.dart';
+import 'package:brain_app/Pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-class CustomNavigationBar extends StatefulWidget {
-  const CustomNavigationBar({Key? key, required this.onTap}) : super(key: key);
+import 'navigation_helper.dart';
 
-  final Function(int) onTap;
+class CustomNavigationBar extends StatefulWidget {
+  const CustomNavigationBar({Key? key}) : super(key: key);
 
   @override
   _CustomNavigationBar createState() => _CustomNavigationBar();
 }
 
 class _CustomNavigationBar extends State<CustomNavigationBar> {
-  int selectedItemIndex = 1;
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -34,48 +36,48 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
           Flexible(
             child: GestureDetector(
                 onTap: () {
+                  Navigator.of(NavigationHelper.context).pushNamed("/");
                   setState(() {
-                    selectedItemIndex = 0;
-                    widget.onTap(selectedItemIndex);
+                    selectedIndex = 0;
                   });
                 },
                 child: NavigationItem(
                   title: "Noten",
                   icon: Icons.grading,
                   iconSize: 22,
-                  activated: selectedItemIndex == 0,
+                  activated: selectedIndex == 0,
                 )
             ),
           ),
           Flexible(
             child: GestureDetector(
                 onTap: () {
+                  Navigator.of(NavigationHelper.context).pushNamed("/");
                   setState(() {
-                    selectedItemIndex = 1;
-                    widget.onTap(selectedItemIndex);
+                    selectedIndex = 1;
                   });
                 },
                 child: NavigationItem(
                   title: "Home",
                   icon: Icons.home_rounded,
                   iconSize: 25,
-                  activated: selectedItemIndex == 1,
+                  activated: selectedIndex == 1,
                 )
             ),
           ),
           Flexible(
             child: GestureDetector(
                 onTap: () {
+                  Navigator.of(NavigationHelper.context).pushNamed("/");
                   setState(() {
-                    selectedItemIndex = 2;
-                    widget.onTap(selectedItemIndex);
+                    selectedIndex = 2;
                   });
                 },
                 child: NavigationItem(
                   title: "Kalender",
                   icon: Icons.calendar_today,
                   iconSize: 20,
-                  activated: selectedItemIndex == 2,
+                  activated: selectedIndex == 2,
                 )
             ),
           )

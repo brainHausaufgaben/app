@@ -1,5 +1,6 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/events_page.dart';
 import 'package:brain_app/Pages/grades_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
@@ -262,7 +263,7 @@ class CustomColorPicker extends StatelessWidget {
         ),
         onPressed: () {showDialog(
             context: context,
-            builder: (BuildContext _test) {
+            builder: (_) {
               return AlertDialog(
                 title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
                 backgroundColor: AppDesign.current.boxStyle.backgroundColor,
