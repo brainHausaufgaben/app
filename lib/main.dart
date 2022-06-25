@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/eltern_portal_connection.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/navigator_routes.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
@@ -76,7 +75,7 @@ class _BrainApp extends State<BrainApp> {
     getBoxText();
     load();
     setState(() {});
-    ElternPortalConnection.getHtml();
+    // ElternPortalConnection.getHtml();
     //CustomNotifications.persistentNotification();
   }
 
