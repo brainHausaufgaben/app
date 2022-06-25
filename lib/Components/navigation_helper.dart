@@ -56,16 +56,19 @@ class _NavigationHelper extends State<NavigationHelper> {
   Widget build(BuildContext context) {
     Map<String, WidgetBuilder> routes = NavigatorRoutes.get();
 
-    Widget navigator = KeyedSubtree(
-      child: Navigator(
-          key: NavigationHelper.navigatorKey,
-          initialRoute: "/home",
-          onGenerateRoute: (routeSettings) {
+    Widget navigator = Navigator(
+        key: NavigationHelper.navigatorKey,
+        initialRoute: "/home",
+        onGenerateRoute: (routeSettings) {
+          if (routeSettings.name == "/") {
             return MaterialPageRoute(
-              builder: (context) => routes[routeSettings.name]!(context),
+              builder: (context) => routes["/home"]!(context),
             );
           }
-      ),
+          return MaterialPageRoute(
+            builder: (context) => routes[routeSettings.name]!(context),
+          );
+        }
     );
 
     return Scaffold(

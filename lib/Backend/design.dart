@@ -37,15 +37,11 @@ abstract class Design {
     "Military Green" : MilitaryGreenDesign()
   };
 
-  String get iconPath;
   DesignPackage get lightVariant;
   DesignPackage get darkVariant;
 }
 
 class MonochromeDesign extends Design {
-  @override
-  String get iconPath => "icons/monochromeThemeIcon.png";
-
   @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFF303540), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), false);
@@ -56,9 +52,6 @@ class MonochromeDesign extends Design {
 
 class PoisonGreenDesign extends Design {
   @override
-  String get iconPath => "icons/poisonGreenThemeIcon.png";
-
-  @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFF82A914), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
@@ -67,9 +60,6 @@ class PoisonGreenDesign extends Design {
 }
 
 class CarrotOrangeDesign extends Design {
-  @override
-  String get iconPath => "icons/carrotOrangeThemeIcon.png";
-
   @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFFE06E04), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
@@ -80,9 +70,6 @@ class CarrotOrangeDesign extends Design {
 
 class PastelRedDesign extends Design {
   @override
-  String get iconPath => "icons/pastelRedThemeIcon.png";
-
-  @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFFEF6363), const Color(0xFFF6D2D2), const Color(0xFFF6E5E5), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
@@ -91,9 +78,6 @@ class PastelRedDesign extends Design {
 }
 
 class OceanBlueDesign extends Design {
-  @override
-  String get iconPath => "icons/oceanBlueThemeIcon.png";
-
   @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFF3F4AA7), const Color(0xFFCDCFF6), const Color(0xFFDFE0F5), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
@@ -104,9 +88,6 @@ class OceanBlueDesign extends Design {
 
 class JeremiasPurpleDesign extends Design {
   @override
-  String get iconPath => "icons/jeremiasPurpleThemeIcon.png";
-
-  @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFF6249AB), const Color(0xFFD7CBFB), const Color(0xFFE9E1FF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
@@ -115,9 +96,6 @@ class JeremiasPurpleDesign extends Design {
 }
 
 class MilitaryGreenDesign extends Design {
-  @override
-  String get iconPath => "icons/militaryGreenThemeIcon.png";
-
   @override
   DesignPackage get lightVariant =>
       generateDesign(const Color(0xFF455147), const Color(0xFFAABCAC), const Color(0xFFC9D4CA), const Color(0xFF303540), const Color(0xFFFFFFFF), true);

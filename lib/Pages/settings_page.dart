@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/notifications.dart';
+import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
-import 'package:brain_app/Pages/time_table_page.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -30,7 +31,7 @@ class _SettingsPage extends State<SettingsPage> {
     int index = 0;
 
     Design.allDesigns.forEach((key, value) {
-      radios.add(IconRadio(isSelected: radioList[index], path: value.iconPath, tooltip: key));
+      radios.add(IconRadio(isSelected: radioList[index], design: value, tooltip: key));
       index++;
     });
 
@@ -147,16 +148,40 @@ class _SettingsPage extends State<SettingsPage> {
 }
 
 class IconRadio extends StatelessWidget {
-  IconRadio({
+  const IconRadio({
     Key? key,
     required this.isSelected,
-    required this.path,
+    required this.design,
     required this.tooltip
   }) : super(key: key);
 
-  bool isSelected;
-  String tooltip;
-  String path;
+  final bool isSelected;
+  final String tooltip;
+  final Design design;
+
+  String colorToString(Color color) {
+    return "#" + color.value.toRadixString(16).substring(2);
+  }
+
+  Widget getSvgIcon() {
+    DesignPackage designPackage;
+    if (BrainApp.preferences["darkMode"]) {
+      designPackage = design.darkVariant;
+    } else {
+      designPackage = design.lightVariant;
+    }
+
+    // Replace text color
+    String themeIcon = themeIconSvg.replaceAll("#303540", colorToString(designPackage.textStyles.color));
+    // Replace primaryColor
+    themeIcon = themeIcon.replaceAll("#9B9B9B", colorToString(designPackage.primaryColor));
+    // Replace backgroundColor
+    themeIcon = themeIcon.replaceAll("#F1F1F1", colorToString(designPackage.themeData.scaffoldBackgroundColor));
+    // Replace boxBackground
+    themeIcon = themeIcon.replaceAll("white", colorToString(designPackage.boxStyle.backgroundColor));
+
+    return SvgPicture.string(themeIcon, width: 45, height: 55);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,7 +195,7 @@ class IconRadio extends StatelessWidget {
             borderRadius: BorderRadius.circular(5)
         ),
         child: Center(
-          child: Image(image: AssetImage(path), width: 45, height: 55),
+          child: getSvgIcon(),
         ),
       ),
     );

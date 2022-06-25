@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.15.0 <3.0.0"
 
 dependencies:
+  flutter_svg: ^1.0.0
   table_calendar: ^3.0.6
   flutter_rounded_date_picker: 2.0.2
   flutter_scroll_shadow: ^1.0.2
