@@ -1,11 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/navigator_routes.dart';
 import 'package:brain_app/Components/sidebar.dart';
-import 'package:brain_app/Pages/calendar_page.dart';
-import 'package:brain_app/Pages/home_page.dart';
-import 'package:brain_app/Pages/settings_page.dart';
-import 'package:brain_app/Pages/subject_overview.dart';
-import 'package:brain_app/Pages/subject_page.dart';
-import 'package:brain_app/Pages/time_table_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:brain_app/Components/custom_navigation_bar.dart';
@@ -14,14 +9,22 @@ class NavigationHelper extends StatefulWidget {
   const NavigationHelper({Key? key}) : super(key: key);
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
-
   static BuildContext get context => navigatorKey.currentContext!;
+
+  static void pushNamed(String routeName) {
+    if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
+      Navigator.of(context).pushNamed(routeName);
+    } else {
+      Navigator.of(context, rootNavigator: true).pushNamed(routeName);
+    }
+  }
 
   @override
   _NavigationHelper createState() => _NavigationHelper();
 }
 
 class _NavigationHelper extends State<NavigationHelper> {
+  bool showNavigationBar = true;
 
   Widget wrapInSidebar(Widget child) {
     return Center(
@@ -34,7 +37,10 @@ class _NavigationHelper extends State<NavigationHelper> {
               children: [
                 CustomSidebar(),
                 Expanded(
-                  child: child,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: child,
+                  ),
                 )
               ]
           )
@@ -46,36 +52,27 @@ class _NavigationHelper extends State<NavigationHelper> {
     return const Text("hey");
   }
 
-  Map<String, WidgetBuilder> routeBuilders(BuildContext context) {
-    return {
-      "/": (context) => HomePage(),
-      "/calendar": (context) => CalendarPage(),
-      "/settings": (context) => SettingsPage(),
-      "/settings/timetable": (context) => TimeTablePage(),
-      "/settings/timetable/subjectOverview" : (context) => SubjectOverview(),
-      "/settings/timetable/edit" : (context) => SubjectPage()
-    };
-  }
-
   @override
   Widget build(BuildContext context) {
-    Map<String, WidgetBuilder> routes = routeBuilders(context);
+    Map<String, WidgetBuilder> routes = NavigatorRoutes.get();
 
-    Widget navigator = Navigator(
-        key: NavigationHelper.navigatorKey,
-        initialRoute: "/",
-        onGenerateRoute: (routeSettings) {
-          return MaterialPageRoute(
-            builder: (context) => routes[routeSettings.name]!(context),
-          );
-        }
+    Widget navigator = KeyedSubtree(
+      child: Navigator(
+          key: NavigationHelper.navigatorKey,
+          initialRoute: "/home",
+          onGenerateRoute: (routeSettings) {
+            return MaterialPageRoute(
+              builder: (context) => routes[routeSettings.name]!(context),
+            );
+          }
+      ),
     );
 
     return Scaffold(
       body: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
           ? wrapInSidebar(navigator)
           : navigator,
-      bottomNavigationBar: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? null : CustomNavigationBar(),
+      bottomNavigationBar: MediaQuery.of(context).size.width > AppDesign.breakPointWidth || !showNavigationBar ? null : CustomNavigationBar(),
     );
   }
 }

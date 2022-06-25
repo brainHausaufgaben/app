@@ -51,7 +51,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           onPressed: () {
             // Dropdown popup zu machen
             Navigator.pop(context);
-            Navigator.of(context).pushNamed("/settings/timetable/editSubject");
+            Navigator.of(context).pushNamed("/settings/timetable/subjectPage");
           },
           child: Text("Fach hinzufügen", style: TextStyle(
             color: AppDesign.current.textStyles.contrastColor,
@@ -120,7 +120,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.edit),
         onPressed: () {
-          Navigator.of(context).pushNamed("/settings/timetable/subjectOverview");
+          NavigationHelper.pushNamed("/settings/timetable/subjectOverview");
         }
       ),
       child: DefaultTabController(

@@ -1,5 +1,7 @@
 import 'package:brain_app/Backend/grade.dart';
+import 'package:brain_app/Backend/navigator_routes.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
+import 'package:brain_app/Pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,7 +20,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Backend/event.dart';
 import 'Backend/test.dart';
-import 'Pages/home_page.dart';
 
 void main() {
   runApp(const BrainApp());
@@ -96,6 +97,7 @@ class _BrainApp extends State<BrainApp> {
       supportedLocales: const [
         Locale('de', 'DE')
       ],
+      routes: NavigatorRoutes.get(),
       builder: (context, child) {
         return ScrollConfiguration(
           behavior: StretchingIndicator(),

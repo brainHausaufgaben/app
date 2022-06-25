@@ -44,7 +44,7 @@ class _SubjectPage extends State<SubjectPage> {
                 setState(() {
                   widget.pickerColor = color;
                 });
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               }
             )
           )

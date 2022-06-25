@@ -84,7 +84,7 @@ class PastelRedDesign extends Design {
 
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFFEF6363), const Color(0xFFFCE8E8), const Color(0xFFF9DFDF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFFEF6363), const Color(0xFFF6D2D2), const Color(0xFFF6E5E5), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFFEF6363), const Color(0xFF4B2B2B), const Color(0xFF5F3A3A), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
@@ -96,7 +96,7 @@ class OceanBlueDesign extends Design {
 
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFF3F4AA7), const Color(0xFFCDCFF6), const Color(0xFFD9DBF8), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFF3F4AA7), const Color(0xFFCDCFF6), const Color(0xFFDFE0F5), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFF3F4AA7), const Color(0xFF23295C), const Color(0xFF313873), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), false);

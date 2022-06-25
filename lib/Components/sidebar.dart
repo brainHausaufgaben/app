@@ -13,7 +13,7 @@ class CustomSidebar extends StatefulWidget {
 }
 
 class _CustomSidebar extends State<CustomSidebar> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +23,10 @@ class _CustomSidebar extends State<CustomSidebar> {
       decoration: BoxDecoration(
           color: AppDesign.current.boxStyle.backgroundColor,
           borderRadius: AppDesign.current.boxStyle.borderRadius,
-          boxShadow: const [
+          boxShadow: [
             BoxShadow(
-                color: Colors.black12,
-                blurRadius: 20
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10
             )
           ]
       ),
@@ -53,9 +53,9 @@ class _CustomSidebar extends State<CustomSidebar> {
             activated: selectedIndex == 0,
             onTap: () {
               if (selectedIndex != 0) {
-                Navigator.of(NavigationHelper.context).pushNamed("/");
+                Navigator.of(NavigationHelper.context).pushNamed("/home");
                 setState(() {
-                  selectedIndex = 2;
+                  selectedIndex = 0;
                 });
               }
             }
@@ -67,7 +67,7 @@ class _CustomSidebar extends State<CustomSidebar> {
             activated: selectedIndex == 1,
             onTap: () {
               if (selectedIndex != 1) {
-                Navigator.of(NavigationHelper.context).pushNamed("/");
+                Navigator.of(NavigationHelper.context).pushNamed("/home");
                 setState(() {
                   selectedIndex = 1;
                 });

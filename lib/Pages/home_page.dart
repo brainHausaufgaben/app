@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
@@ -85,10 +86,9 @@ class _HomePage extends State<HomePage>{
     return PageTemplate(
       title: 'Übersicht',
       floatingActionButton: CustomMenuButton(
-        defaultAction: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => HomeworkPage())
-        )
+        defaultAction: () {
+          NavigationHelper.pushNamed("/homeworkPage");
+        }
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

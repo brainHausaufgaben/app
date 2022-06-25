@@ -13,7 +13,7 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBar extends State<CustomNavigationBar> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +36,12 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
           Flexible(
             child: GestureDetector(
                 onTap: () {
-                  Navigator.of(NavigationHelper.context).pushNamed("/");
-                  setState(() {
-                    selectedIndex = 0;
-                  });
+                  if (selectedIndex != 0) {
+                    Navigator.of(NavigationHelper.context).pushNamed("/home");
+                    setState(() {
+                      selectedIndex = 0;
+                    });
+                  }
                 },
                 child: NavigationItem(
                   title: "Noten",
@@ -52,10 +54,12 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
           Flexible(
             child: GestureDetector(
                 onTap: () {
-                  Navigator.of(NavigationHelper.context).pushNamed("/");
-                  setState(() {
-                    selectedIndex = 1;
-                  });
+                  if (selectedIndex != 1) {
+                    Navigator.of(NavigationHelper.context).pushNamed("/home");
+                    setState(() {
+                      selectedIndex = 1;
+                    });
+                  }
                 },
                 child: NavigationItem(
                   title: "Home",
@@ -68,10 +72,12 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
           Flexible(
             child: GestureDetector(
                 onTap: () {
-                  Navigator.of(NavigationHelper.context).pushNamed("/");
-                  setState(() {
-                    selectedIndex = 2;
-                  });
+                  if (selectedIndex != 2) {
+                    Navigator.of(NavigationHelper.context).pushNamed("/calendar");
+                    setState(() {
+                      selectedIndex = 2;
+                    });
+                  }
                 },
                 child: NavigationItem(
                   title: "Kalender",

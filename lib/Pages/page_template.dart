@@ -27,7 +27,7 @@ class PageTemplate extends StatefulWidget {
 
 class _PageTemplateState extends State<PageTemplate> {
   void _settings(){
-    Navigator.of(context).pushNamed("/settings");
+    NavigationHelper.pushNamed("/settings");
   }
 
   void _back() {
@@ -51,9 +51,10 @@ class _PageTemplateState extends State<PageTemplate> {
     return Scaffold (
       body: Padding(
           padding: EdgeInsets.only(
-              left: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? 25 : 15,
+              left: 15,
               top: MediaQuery.of(context).viewPadding.top + 10,
-              right: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? 25 : 15),
+              right: 15
+          ),
           child: Column (
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

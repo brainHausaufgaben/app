@@ -7,6 +7,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/dismissable_box.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/edit_event_page.dart';
 import 'package:brain_app/Pages/edit_test_page.dart';
@@ -165,10 +166,9 @@ class _CalendarPage extends State<CalendarPage> {
     return PageTemplate(
       title: "Kalender",
       floatingActionButton: CustomMenuButton(
-          defaultAction: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => EventsPage())
-          )
+          defaultAction: () {
+            NavigationHelper.pushNamed("/eventsPage");
+          }
       ),
       child: ScrollShadow(
         color: AppDesign.current.boxStyle.boxShadow.color,

@@ -118,9 +118,9 @@ class CustomDateButton extends StatelessWidget {
             initialDate: DateTime.now(),
             firstDate: DateTime.now().subtract(const Duration(days: 1)),
             lastDate: DateTime(DateTime.now().year + 1),
-            borderRadius: 16,
+            borderRadius: 14,
             theme: AppDesign.current.themeData,
-            height: 300,
+            height: 400,
             styleDatePicker: MaterialRoundedDatePickerStyle(
               paddingMonthHeader: const EdgeInsets.all(11),
               backgroundPicker: AppDesign.current.boxStyle.backgroundColor,
@@ -444,10 +444,7 @@ class CustomMenuButton extends StatelessWidget {
         label: "Neue Hausaufgabe",
         child: const Icon(Icons.description_rounded),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeworkPage())
-          );
+          NavigationHelper.pushNamed("/homeworkPage");
         }
     );
   }
@@ -461,10 +458,7 @@ class CustomMenuButton extends StatelessWidget {
         label: "Neues Event",
         child: const Icon(Icons.schedule_rounded),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => EventsPage())
-          );
+          NavigationHelper.pushNamed("/eventsPage");
         }
     );
   }
@@ -478,10 +472,7 @@ class CustomMenuButton extends StatelessWidget {
         label: "Neue Note",
         child: const Icon(Icons.grading),
         onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => GradesPage())
-          );
+          NavigationHelper.pushNamed("/gradesPage");
         }
     );
   }
