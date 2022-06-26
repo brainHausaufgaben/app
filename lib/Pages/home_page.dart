@@ -86,9 +86,7 @@ class _HomePage extends State<HomePage>{
     return PageTemplate(
       title: 'Übersicht',
       floatingActionButton: CustomMenuButton(
-        defaultAction: () {
-          NavigationHelper.pushNamed("/homeworkPage");
-        }
+        defaultAction: () => NavigationHelper.pushNamed("/homeworkPage")
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +110,7 @@ class _HomePage extends State<HomePage>{
               padding: const EdgeInsets.only(top:25),
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              children: getDays()
+              children: getDays(),
             ),
           ),
         ],

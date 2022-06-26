@@ -72,15 +72,14 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       for (int i=0; i<10; i++) {
         entries.add(
           Padding(
-            padding: const EdgeInsets.only(bottom: 5, left: 15),
+            padding: const EdgeInsets.only(bottom: 5, left: 0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
                 ),
-                Flexible(
-                  flex: 5,
+                Expanded(
                   child: CustomDropdown(
                     defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
                     currentValue: TimeTable.week[day].subjects[i]?.subject,

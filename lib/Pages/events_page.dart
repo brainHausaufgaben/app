@@ -33,7 +33,7 @@ class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin 
     String description = eventSubpage.descriptionController.text;
     DateTime date = eventSubpage.selectedDate;
 
-    if (title.isNotEmpty && description.isNotEmpty) {
+    if (title.isNotEmpty) {
       Event(date, title, description);
 
       BrainApp.notifier.notifyOfChanges();

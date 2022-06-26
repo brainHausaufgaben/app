@@ -37,7 +37,7 @@ class _TestPage extends State<EditEventPage> {
                   String description = widget.eventSubpage.descriptionController.text;
                   DateTime date = widget.eventSubpage.selectedDate;
 
-                  if (title.isNotEmpty && description.isNotEmpty) {
+                  if (title.isNotEmpty) {
                     widget.previousEvent.edit(date, title, description);
                     BrainApp.notifier.notifyOfChanges();
                     Navigator.pop(context);

@@ -120,7 +120,7 @@ class CustomDateButton extends StatelessWidget {
             lastDate: DateTime(DateTime.now().year + 1),
             borderRadius: 14,
             theme: AppDesign.current.themeData,
-            height: 400,
+            height: 300,
             styleDatePicker: MaterialRoundedDatePickerStyle(
               paddingMonthHeader: const EdgeInsets.all(11),
               backgroundPicker: AppDesign.current.boxStyle.backgroundColor,

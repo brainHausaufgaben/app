@@ -48,54 +48,57 @@ class _PageTemplateState extends State<PageTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold (
-      body: Padding(
-          padding: EdgeInsets.only(
-              left: 15,
-              top: MediaQuery.of(context).viewPadding.top + 10,
-              right: 15
-          ),
-          child: Column (
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  IconButton(
-                    alignment: Alignment.centerLeft,
-                    constraints: const BoxConstraints(),
-                    padding: const EdgeInsets.all(0),
-                    onPressed: widget.backButton == null ? _settings : _back,
-                    icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
-                    iconSize: 26,
-                    splashRadius: 15,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget> [
-                        Text(
-                          widget.title,
-                          style: AppDesign.current.textStyles.pageHeadline,
-                        ),
-                        Text(
-                          widget.subtitle ?? getDateString(DateTime.now()),
-                          style: AppDesign.current.textStyles.pageSubtitle,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold (
+          body: Padding(
+              padding: EdgeInsets.only(
+                  left: 15,
+                  top: MediaQuery.of(context).viewPadding.top + 10,
+                  right: 15
               ),
-              Flexible(
-                  child: widget.child
+              child: Column (
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          IconButton(
+                            alignment: Alignment.centerLeft,
+                            constraints: const BoxConstraints(),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: widget.backButton == null ? _settings : _back,
+                            icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
+                            iconSize: 26,
+                            splashRadius: 15,
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget> [
+                                    Text(
+                                      widget.title,
+                                      style: AppDesign.current.textStyles.pageHeadline,
+                                    ),
+                                    Text(
+                                      widget.subtitle ?? getDateString(DateTime.now()),
+                                      style: AppDesign.current.textStyles.pageSubtitle,
+                                    )
+                                  ]
+                              )
+                          )
+                        ]
+                    ),
+                    Flexible(
+                        child: widget.child
+                    )
+                  ]
               )
-            ],
-          )
-      ),
-      floatingActionButtonLocation: widget.floatingActionButtonLocation,
-      floatingActionButton: widget.floatingActionButton
+          ),
+          floatingActionButtonLocation: widget.floatingActionButtonLocation,
+          floatingActionButton: widget.floatingActionButton
+      )
     );
   }
 }

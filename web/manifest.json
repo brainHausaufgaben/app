@@ -1,11 +1,11 @@
 {
-    "name": "brain_app",
-    "short_name": "brain_app",
+    "name": "Brain App",
+    "short_name": "Brain App",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Brain Hausaufgaben Heft App",
+    "description": "Die Brain (Web-)App ist eine in Flutter von 2 Schülern des Gymnasium Lindenberg's entwickelte Hausaufgabenheft App",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

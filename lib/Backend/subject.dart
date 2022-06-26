@@ -36,9 +36,12 @@ class Subject{
     }
   }
 
-  //TODO: yallah es geht nicht ganz aber hey
+  //TODO: yallah es geht glaub ich jetzt
   DateTime? getNextDate(){
     int i = DateTime.now().weekday + 1;
+
+    if (i > 7) i = 1;
+
     while(i != DateTime.now().weekday){
       for(SubjectInstance? subject in TimeTable.getDay(i).subjects){
         if(subject != null){
@@ -46,14 +49,14 @@ class Subject{
         }
       }
       i++;
-      if(i > 7) i = 1;
+      if(i >= 7) i = 1;
     }
+
     for(SubjectInstance? subject in TimeTable.getDay(DateTime.now().weekday).subjects){
       if(subject != null){
         if(subject.subject == this) return subject.getDateFromDate(DateTime.now().add(const Duration(days:7)));
       }
     }
-
 
     return null;
   }

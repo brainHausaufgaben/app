@@ -40,7 +40,7 @@ class BrainApp extends StatefulWidget {
     "showMediaBox": true,
     "persistentNotifications": false,
     "design" : "Monochrome",
-    "darkMode" : false
+    "darkMode" : false,
   };
 
   static void updatePreference(String key, dynamic value) async {

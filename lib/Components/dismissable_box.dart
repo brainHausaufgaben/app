@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,9 +18,9 @@ class DismissableBox extends StatelessWidget {
           confirmDismiss: (DismissDirection direction) async {
             if (direction == DismissDirection.startToEnd) {
               TimeTable.removeHomework(homework);
+              return true;
             } else if (direction == DismissDirection.endToStart) {
-              Navigator.push(
-                  context,
+              NavigationHelper.navigator.push(
                   MaterialPageRoute(builder: (context) => HomeworkPage(previousHomework: homework))
               );
               return false;

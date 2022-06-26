@@ -41,18 +41,18 @@ class _CalendarPage extends State<CalendarPage> {
               const EdgeInsets.only(bottom: 10, top: 20)
               : const EdgeInsets.only(bottom: 10),
           child: GestureDetector(
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditEventPage(
-                  previousEvent: events[i],
-                ))
-            ),
+              onTap: () => NavigationHelper.navigator.push(
+                  MaterialPageRoute(builder: (context) => EditEventPage(
+                    previousEvent: events[i],
+                  )
+                )
+              ),
             child: Box(
               headline: headline,
               child: PointElement(
                 color: AppDesign.current.primaryColor,
                 primaryText: events[i].name,
-                child: Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
+                child: events[i].description.isEmpty ? null : Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
               )
             )
           )
@@ -77,11 +77,11 @@ class _CalendarPage extends State<CalendarPage> {
               const EdgeInsets.only(bottom: 10, top: 20)
               : const EdgeInsets.only(bottom: 10),
           child: GestureDetector(
-            onTap: () => Navigator.push(
-                context,
+            onTap: () => NavigationHelper.navigator.push(
                 MaterialPageRoute(builder: (context) => EditTestPage(
                   previousTest: tests[i],
-                ))
+                )
+              )
             ),
             child: Box(
               headline: headline,

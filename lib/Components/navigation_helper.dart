@@ -9,14 +9,19 @@ class NavigationHelper extends StatefulWidget {
   const NavigationHelper({Key? key}) : super(key: key);
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+
   static BuildContext get context => navigatorKey.currentContext!;
 
-  static void pushNamed(String routeName) {
+  static NavigatorState get navigator {
     if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
-      Navigator.of(context).pushNamed(routeName);
+      return Navigator.of(context);
     } else {
-      Navigator.of(context, rootNavigator: true).pushNamed(routeName);
+      return Navigator.of(context, rootNavigator: true);
     }
+  }
+
+  static void pushNamed(String routeName) {
+    navigator.pushNamed(routeName);
   }
 
   @override
@@ -30,7 +35,7 @@ class _NavigationHelper extends State<NavigationHelper> {
     return Center(
       child: Container(
           padding: const EdgeInsets.all(20),
-          constraints: const BoxConstraints(maxWidth: 1200),
+          constraints: const BoxConstraints(maxWidth: 1300),
           child: Flex(
               direction: Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.stretch,
