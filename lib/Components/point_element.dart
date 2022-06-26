@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 
 class PointElement extends StatefulWidget {
-  PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child}) : super(key: key);
-  Color color;
-  String primaryText;
-  String? secondaryText;
-  Widget? child;
+  const PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child}) : super(key: key);
+
+  final Color color;
+  final String primaryText;
+  final String? secondaryText;
+  final Widget? child;
 
   @override
   State<StatefulWidget> createState() =>  _PointElementState();

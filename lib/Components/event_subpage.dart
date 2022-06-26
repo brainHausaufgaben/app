@@ -10,7 +10,7 @@ class EventSubpage extends StatefulWidget {
     selectedDate = previousEvent?.dueTime ?? CalendarPage.selectedDay;
   }
 
-  Event? previousEvent;
+  final Event? previousEvent;
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
   late DateTime selectedDate;

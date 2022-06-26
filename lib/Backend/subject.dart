@@ -68,7 +68,7 @@ class Subject{
   }
 
   Map toJSONEncodable(){
-    Map<String,dynamic> map = new Map();
+    Map<String,dynamic> map = {};
     List c = [];
     c.add(color.red);
     c.add(color.green);

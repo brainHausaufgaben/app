@@ -1,8 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Pages/calendar_page.dart';
-import 'package:brain_app/Pages/home_page.dart';
 import 'package:flutter/material.dart';
-
 import 'navigation_helper.dart';
 
 class CustomNavigationBar extends StatefulWidget {

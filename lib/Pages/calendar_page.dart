@@ -11,7 +11,6 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/edit_event_page.dart';
 import 'package:brain_app/Pages/edit_test_page.dart';
-import 'package:brain_app/Pages/events_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';

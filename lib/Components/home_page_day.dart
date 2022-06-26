@@ -14,10 +14,11 @@ class HomePageDay extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>  _HomePageDay();
-  List<Subject> subjectsOccurred = [];
 
-  int day;
-  String headline;
+  List<Subject> subjectsOccurred = [];
+  final int day;
+  final String headline;
+
   List<Widget> getHomework(SubjectInstance subject){
     List<Widget> homeworkWidgets = [];
     if(subjectsOccurred.contains(subject.subject)) {

@@ -5,8 +5,6 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/subject_page.dart';
-import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';

@@ -1,7 +1,5 @@
 import 'dart:core';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
-import 'package:flutter/material.dart';
 
 class Day{
   List<SubjectInstance?> subjects = [];

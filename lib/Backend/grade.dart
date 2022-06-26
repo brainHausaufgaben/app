@@ -36,7 +36,7 @@ class SmallGrade extends Grade{
 
    @override
   Map toJSONEncodable(){
-    Map<String,dynamic> map = Map();
+    Map<String,dynamic> map = {};
     map["value"] = value;
     map["SubjectID"] = subject.id;
     map["isBig"] = false;
@@ -54,7 +54,7 @@ class BigGrade extends Grade{
   BigGrade.createWithTime(int value, Subject subject, GradeTime time) : super.createWithTime(value,subject,GradeType.bigTest,time);
   @override
   Map toJSONEncodable(){
-    Map<String,dynamic> map = Map();
+    Map<String,dynamic> map = {};
     map["value"] = value;
     map["SubjectID"] = subject.id;
     map["isBig"] = true;

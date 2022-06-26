@@ -27,7 +27,7 @@ class Homework {
   }
 
   Map toJSONEncodable(){
-    Map<String,dynamic> map = new Map();
+    Map<String,dynamic> map = {};
     List due = [];
     due.add(dueTime.year);
     due.add(dueTime.month);

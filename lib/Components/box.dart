@@ -2,9 +2,10 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/material.dart';
 
 class Box extends StatefulWidget {
-   Box({Key? key, required this.child, this.headline}) : super(key: key);
-   Widget child;
-   String? headline;
+   const Box({Key? key, required this.child, this.headline}) : super(key: key);
+
+   final Widget child;
+   final String? headline;
 
   @override
   State<StatefulWidget> createState() =>  _BoxState();

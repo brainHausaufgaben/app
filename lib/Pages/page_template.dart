@@ -1,6 +1,4 @@
-import 'package:brain_app/Components/custom_navigation_bar.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/settings_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 

@@ -1,9 +1,6 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/events_page.dart';
-import 'package:brain_app/Pages/grades_page.dart';
-import 'package:brain_app/Pages/homework_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -83,7 +80,7 @@ class CustomDropdown<ItemType> extends StatelessWidget {
 }
 
 class CustomDateButton extends StatelessWidget {
-  CustomDateButton({
+  const CustomDateButton({
     Key? key,
     required this.value,
     required this.onDateSelect,
@@ -91,10 +88,10 @@ class CustomDateButton extends StatelessWidget {
     this.selectedSubject,
   }) : super(key: key);
 
-  Function(DateTime) onDateSelect;
-  Subject? selectedSubject;
-  DateTime value;
-  String text;
+  final Function(DateTime) onDateSelect;
+  final Subject? selectedSubject;
+  final DateTime value;
+  final String text;
 
   String getDateString(DateTime date){
     List weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
@@ -188,7 +185,7 @@ class CustomDateButton extends StatelessWidget {
 }
 
 class CustomIconButton extends StatelessWidget {
-  CustomIconButton({
+  const CustomIconButton({
     Key? key,
     required this.action,
     required this.child,
@@ -196,10 +193,10 @@ class CustomIconButton extends StatelessWidget {
     this.dense = false
   }) : super(key: key);
 
-  Function() action;
-  Widget child;
-  IconData icon;
-  bool dense;
+  final Function() action;
+  final Widget child;
+  final IconData icon;
+  final bool dense;
 
   @override
   Widget build(BuildContext context) {

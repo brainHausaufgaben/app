@@ -1,7 +1,5 @@
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_device_type/flutter_device_type.dart';
 import 'dart:io'show Platform;
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';

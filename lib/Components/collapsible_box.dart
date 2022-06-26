@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 
 class CollapsibleBox extends StatelessWidget {
-  String text = "empty";
-  IconData icon;
-  Color? iconColor;
-  bool dark;
-  bool collapsed;
-  Function() onTap;
+  final String text;
+  final IconData icon;
+  final Color? iconColor;
+  final bool dark;
+  final bool collapsed;
+  final Function() onTap;
 
-  CollapsibleBox({
+  const CollapsibleBox({
     Key? key,
     required this.text,
     required this.icon,

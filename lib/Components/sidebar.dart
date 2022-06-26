@@ -1,8 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/calendar_page.dart';
-import 'package:brain_app/Pages/home_page.dart';
-import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class CustomSidebar extends StatefulWidget {
