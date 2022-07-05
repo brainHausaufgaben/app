@@ -1,5 +1,6 @@
 import 'package:brain_app/Pages/calendar_page.dart';
 import 'package:brain_app/Pages/events_page.dart';
+import 'package:brain_app/Pages/grade_overview_page.dart';
 import 'package:brain_app/Pages/grades_page.dart';
 import 'package:brain_app/Pages/home_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
@@ -20,7 +21,8 @@ class NavigatorRoutes {
       "/settings/timetable/subjectPage" : (context) => SubjectPage(),
       "/homeworkPage" : (context) => HomeworkPage(),
       "/eventsPage" : (context) => EventsPage(),
-      "/gradesPage" : (context) => GradesPage()
+      "/gradesPage" : (context) => GradesPage(),
+      "/gradeOverview" : (context) => GradeOverview()
     };
   }
 }

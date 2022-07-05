@@ -50,7 +50,7 @@ class _CustomSidebar extends State<CustomSidebar> {
             activated: selectedIndex == 0,
             onTap: () {
               if (selectedIndex != 0) {
-                Navigator.of(NavigationHelper.context).pushNamed("/home");
+                Navigator.of(NavigationHelper.context).pushNamed("/gradeOverview");
                 setState(() {
                   selectedIndex = 0;
                 });

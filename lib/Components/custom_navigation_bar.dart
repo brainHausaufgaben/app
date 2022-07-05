@@ -34,7 +34,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             child: GestureDetector(
                 onTap: () {
                   if (selectedIndex != 0) {
-                    Navigator.of(NavigationHelper.context).pushNamed("/home");
+                    Navigator.of(NavigationHelper.context).pushNamed("/gradeOverview");
                     setState(() {
                       selectedIndex = 0;
                     });
