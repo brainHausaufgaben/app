@@ -1,41 +1,87 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class CustomTextField extends TextField {
-  CustomTextField({
+class BrainTextField extends StatefulWidget {
+  BrainTextField({
     Key? key,
-    required controller,
-    required placeHolder,
-    required autocorrect,
-    minLines,
-    maxLines
-  }) : super(
-    key: key,
-    minLines: minLines ?? 1,
-    maxLines: maxLines ?? 5,
-    autocorrect: autocorrect,
-    controller: controller,
-    style: AppDesign.current.textStyles.input,
-    decoration: InputDecoration (
-      filled: true,
-      enabledBorder: UnderlineInputBorder(
-        borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
-        borderSide: BorderSide(
-          width: 4,
-          color: AppDesign.current.textStyles.color
-        )
+    required this.controller,
+    required this.placeholder,
+    this.minLines,
+    this.maxLines,
+    this.maxLength
+  }) : super(key: key);
+
+  TextEditingController controller;
+  String placeholder;
+  final int? minLines;
+  final int? maxLines;
+  final int? maxLength;
+
+  @override
+  State<StatefulWidget> createState() => _BrainTextField();
+}
+
+class _BrainTextField extends State<BrainTextField> {
+  bool showCounter = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: AppDesign.current.boxStyle.inputBorderRadius
       ),
-      fillColor: AppDesign.current.boxStyle.backgroundColor,
-      label: Text(placeHolder, style: AppDesign.current.textStyles.input),
-    ),
-  );
+      clipBehavior: Clip.antiAlias,
+      child: Stack(
+        children: [
+          TextField(
+            minLines: widget.minLines ?? 1,
+            maxLines: widget.maxLines ?? 5,
+            autocorrect: true,
+            controller: widget.controller,
+            style: AppDesign.current.textStyles.input,
+            decoration: InputDecoration (
+              filled: true,
+              enabledBorder: UnderlineInputBorder(
+                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+                  borderSide: BorderSide(
+                      width: 4,
+                      color: AppDesign.current.textStyles.color
+                  )
+              ),
+              fillColor: AppDesign.current.boxStyle.backgroundColor,
+              label: Text(widget.placeholder, style: AppDesign.current.textStyles.input),
+            ),
+            inputFormatters: widget.maxLength != null ? [
+              LengthLimitingTextInputFormatter(widget.maxLength),
+            ] : null,
+            onChanged: (_) => setState(() {}),
+            onTap: () => setState(() => showCounter = true),
+            onSubmitted: (_) => setState(() => showCounter = false),
+          ),
+          if (widget.maxLength != null) Positioned(
+            right: 10,
+            top: 9,
+            child: Text(
+                "${widget.controller.text.length.toString()}/${widget.maxLength}",
+                style: TextStyle(
+                    color: AppDesign.current.textStyles.color,
+                    fontSize: 10
+                )
+            ),
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class CustomDropdown<ItemType> extends StatelessWidget {
@@ -77,6 +123,20 @@ class CustomDropdown<ItemType> extends StatelessWidget {
         )
     );
   }
+
+  static List<DropdownMenuItem<Subject>> getSubjectDropdowns(){
+    List<DropdownMenuItem<Subject>> subjects = [];
+    for(Subject subject in TimeTable.subjects){
+      subjects.add(
+          DropdownMenuItem<Subject>(
+            alignment: Alignment.bottomCenter,
+            child: PointElement(primaryText: subject.name, color: subject.color),
+            value: subject,
+          )
+      );
+    }
+    return subjects;
+  }
 }
 
 class CustomDateButton extends StatelessWidget {
@@ -104,18 +164,16 @@ class CustomDateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-          padding: EdgeInsets.zero,
-          backgroundColor: AppDesign.current.boxStyle.backgroundColor
-      ),
-      onPressed: () {
+    return CustomIconButton(
+      child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.current.textStyles.input),
+      icon: Icons.date_range,
+      action: () {
         Future<DateTime?> newDateTime = showRoundedDatePicker(
             context: context,
             initialDate: DateTime.now(),
             firstDate: DateTime.now().subtract(const Duration(days: 1)),
             lastDate: DateTime(DateTime.now().year + 1),
-            borderRadius: 14,
+            borderRadius: 10,
             theme: AppDesign.current.themeData,
             height: 300,
             styleDatePicker: MaterialRoundedDatePickerStyle(
@@ -137,8 +195,8 @@ class CustomDateButton extends StatelessWidget {
                     child: Text(
                       dateTime.day.toString(),
                       style: defaultTextStyle,
-                    ),
-                  ),
+                    )
+                  )
                 );
               }
 
@@ -164,22 +222,12 @@ class CustomDateButton extends StatelessWidget {
                 child: Text(
                   dateTime.day.toString(),
                   style: defaultTextStyle,
-                ),
+                )
               );
             }
         );
         newDateTime.then((_value) => onDateSelect(_value ?? value));
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 12),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(value.year == 10 ? text : getDateString(value), style: AppDesign.current.textStyles.input),
-            Icon(Icons.date_range, color: AppDesign.current.textStyles.color),
-          ],
-        ),
-      ),
+      }
     );
   }
 }
@@ -200,20 +248,26 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: action,
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: dense ? 10 : 14, horizontal: 12),
-        backgroundColor: AppDesign.current.boxStyle.backgroundColor
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: AppDesign.current.boxStyle.inputBorderRadius
       ),
-      child: Flex(
-        direction: Axis.horizontal,
-        children: [
-          Flexible(
-            child: child,
-          ),
-          Icon(icon, color: AppDesign.current.textStyles.color),
-        ],
+      clipBehavior: Clip.antiAlias,
+      child: TextButton(
+        onPressed: action,
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
+            backgroundColor: AppDesign.current.boxStyle.backgroundColor
+        ),
+        child: Flex(
+          direction: Axis.horizontal,
+          children: [
+            Expanded(
+              child: child,
+            ),
+            Icon(icon, color: AppDesign.current.textStyles.color, size: dense ? 20 : 25),
+          ],
+        ),
       ),
     );
   }
@@ -432,7 +486,7 @@ class CustomMenuButton extends StatelessWidget {
     );
   }
 
-  static SpeedDialChild getHomeworkMenu(BuildContext context) {
+  SpeedDialChild getHomeworkMenu(BuildContext context) {
     return SpeedDialChild(
         backgroundColor: AppDesign.current.primaryColor,
         foregroundColor: AppDesign.current.textStyles.contrastColor,
@@ -446,7 +500,7 @@ class CustomMenuButton extends StatelessWidget {
     );
   }
 
-  static SpeedDialChild getEventMenu(BuildContext context) {
+  SpeedDialChild getEventMenu(BuildContext context) {
     return SpeedDialChild(
         backgroundColor: AppDesign.current.primaryColor,
         foregroundColor: AppDesign.current.textStyles.contrastColor,
@@ -460,7 +514,7 @@ class CustomMenuButton extends StatelessWidget {
     );
   }
 
-  static SpeedDialChild getGradesMenu(BuildContext context) {
+  SpeedDialChild getGradesMenu(BuildContext context) {
     return SpeedDialChild(
         backgroundColor: AppDesign.current.primaryColor,
         foregroundColor: AppDesign.current.textStyles.contrastColor,

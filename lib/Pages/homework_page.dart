@@ -3,7 +3,6 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/main.dart';
@@ -16,7 +15,7 @@ class HomeworkPage extends StatefulWidget {
     selectedDate = previousHomework != null ? previousHomework!.dueTime : DateTime(10);
   }
 
-  Homework? previousHomework;
+  final Homework? previousHomework;
   final homeworkController = TextEditingController();
   Subject? selectedSubject;
   late DateTime selectedDate;
@@ -26,20 +25,6 @@ class HomeworkPage extends StatefulWidget {
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
-  List<DropdownMenuItem<Subject>> getDropdowns(){
-    List<DropdownMenuItem<Subject>> subjects = [];
-    for(Subject subject in TimeTable.subjects){
-      subjects.add(
-        DropdownMenuItem<Subject>(
-          alignment: Alignment.bottomCenter,
-          child: PointElement(primaryText: subject.name, color: subject.color),
-          value: subject,
-        )
-      );
-    }
-    return subjects;
-  }
-
   void onPressed() {
     if(widget.homeworkController.text.isNotEmpty && widget.selectedSubject != null){
       if (widget.previousHomework != null) {
@@ -67,27 +52,22 @@ class _HomeworkPage extends State<HomeworkPage> {
     return PageTemplate(
       backButton: true,
       title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Wrap(
+        runSpacing: 10,
         children: [
-          CustomTextField(
+          BrainTextField(
             controller: widget.homeworkController,
-            placeHolder: "Hausaufgabe",
-            autocorrect: true
+            placeholder: "Hausaufgabe"
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            child: CustomDropdown(
+          CustomDropdown(
               defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
-              items: getDropdowns(),
+              items: CustomDropdown.getSubjectDropdowns(),
               currentValue: widget.selectedSubject,
               onChanged: (newValue) {
                 setState(() {
                   widget.selectedSubject = newValue;
                 });
               }
-            )
           ),
           CustomDateButton(
             value: widget.selectedDate,

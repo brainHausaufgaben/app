@@ -53,10 +53,6 @@ class _NavigationHelper extends State<NavigationHelper> {
     );
   }
 
-  Widget test(BuildContext context) {
-    return const Text("hey");
-  }
-
   @override
   Widget build(BuildContext context) {
     Map<String, WidgetBuilder> routes = NavigatorRoutes.get();

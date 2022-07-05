@@ -160,7 +160,7 @@ class IconRadio extends StatelessWidget {
   final Design design;
 
   String colorToString(Color color) {
-    return "#" + color.value.toRadixString(16).substring(2);
+    return "#" + color.value.toRadixString(16);
   }
 
   Widget getSvgIcon() {

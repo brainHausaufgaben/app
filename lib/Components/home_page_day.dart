@@ -46,7 +46,10 @@ class HomePageDay extends StatefulWidget {
               color: subject.subject.color,
               primaryText: subject.subject.name,
               secondaryText: subject.getStartTimeString(),
-              child: homework.isEmpty ? null : Column(children: homework)
+              child: homework.isEmpty ? null : Wrap(
+                runSpacing: 3,
+                children: homework
+              )
           )
       );
     }

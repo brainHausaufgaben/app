@@ -30,11 +30,11 @@ class _SubjectPage extends State<SubjectPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          CustomTextField(
+          BrainTextField(
             controller: widget.subjectController,
-            placeHolder: "Fach Name",
-            autocorrect: true,
-            maxLines: 1
+            placeholder: "Fach Name",
+            maxLines: 1,
+            maxLength: 20,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 10),

@@ -13,7 +13,7 @@ class DesignPackage {
     required this.textStyles,
     required this.themeData,
     required this.boxStyle,
-    required this.overrideIconColor
+    required this.overrideIconColor,
   });
 }
 

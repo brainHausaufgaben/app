@@ -90,10 +90,7 @@ class _BrainApp extends State<BrainApp> {
           child: NavigationHelper()
       ),
       theme: AppDesign.current.themeData,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        ],
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
         Locale('de', 'DE')
       ],
@@ -166,9 +163,7 @@ class _BrainApp extends State<BrainApp> {
       for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 10; j++) {
           int id = timetable[i][j];
-          if(TimeTable.getSubject(id) != null) {
-            if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
-          }
+          if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
         }
       }
     }
@@ -180,11 +175,8 @@ class _BrainApp extends State<BrainApp> {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
-        if(TimeTable.getSubject(id) != null) {
-          if (TimeTable.getSubject(id)!.getTime(
-              TimeTable.getDayFromDate(time)) !=
-              null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
-        }
+        if (TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) !=
+            null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
       }
     }
 
@@ -203,9 +195,7 @@ class _BrainApp extends State<BrainApp> {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
-        if(TimeTable.getSubject(id) != null) {
-          Test(TimeTable.getSubject(id)!, time, item["description"]);
-        }
+        Test(TimeTable.getSubject(id)!, time, item["description"]);
       }
     }
 
@@ -215,13 +205,11 @@ class _BrainApp extends State<BrainApp> {
         int value = item["value"];
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
-        if(TimeTable.getSubject(id) != null) {
-          if (item["isBig"]) {
-            BigGrade.createWithTime(value, TimeTable.getSubject(id)!, time);
-          } else {
-            SmallGrade.createWithTime(
-                value, TimeTable.getSubject(id)!, item["type"], time);
-          }
+
+        if(item["isBig"]) {
+          BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
+        } else {
+          SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,item["type"],time);
         }
 
       }

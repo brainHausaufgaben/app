@@ -29,16 +29,14 @@ class _EventSubpage extends State<EventSubpage> {
           Wrap(
             runSpacing: 10,
             children: [
-              CustomTextField(
+              BrainTextField(
                 controller: widget.titleController,
-                placeHolder: "Event Titel",
-                autocorrect: true,
+                placeholder: "Event Titel",
                 maxLines: 1,
               ),
-              CustomTextField(
+              BrainTextField(
                 controller: widget.descriptionController,
-                placeHolder: "Event Beschreibung",
-                autocorrect: true,
+                placeholder: "Event Beschreibung",
                 maxLines: 5,
               ),
               CustomDateButton(

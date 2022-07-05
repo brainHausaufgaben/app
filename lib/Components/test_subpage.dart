@@ -49,10 +49,9 @@ class _TestSubpage extends State<TestSubpage> {
           Wrap(
               runSpacing: 10,
               children: [
-                CustomTextField(
+                BrainTextField(
                   controller: widget.descriptionController,
-                  placeHolder: "Test Inhalte",
-                  autocorrect: true,
+                  placeholder: "Test Inhalte",
                   maxLines: 10,
                 ),
                 CustomDropdown(

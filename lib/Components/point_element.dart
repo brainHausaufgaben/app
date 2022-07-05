@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 
 class PointElement extends StatefulWidget {
-  const PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child}) : super(key: key);
+  const PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child, this.secondaryIcon}) : super(key: key);
 
   final Color color;
   final String primaryText;
   final String? secondaryText;
+  final IconData? secondaryIcon;
   final Widget? child;
 
   @override
@@ -41,7 +42,10 @@ class _PointElementState extends  State<PointElement>{
             ],
           ),
         ),
-        if (widget.secondaryText != null) Text(widget.secondaryText!, style: AppDesign.current.textStyles.pointElementSecondary)
+        if (widget.secondaryText != null)
+          Text(widget.secondaryText!, style: AppDesign.current.textStyles.pointElementSecondary)
+        else if (widget.secondaryIcon != null)
+          Icon(widget.secondaryIcon!, size: 20, color: AppDesign.current.textStyles.pointElementSecondary.color)
       ],
     );
   }

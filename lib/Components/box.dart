@@ -9,10 +9,10 @@ class Box extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() =>  _BoxState();
+}
 
-  }
+
 class _BoxState extends  State<Box>{
-
   @override
   Widget build(BuildContext context) {
     return Column(

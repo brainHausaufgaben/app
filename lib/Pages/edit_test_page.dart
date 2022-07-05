@@ -50,10 +50,9 @@ class _EditTestPage extends State<EditTestPage> {
             Wrap(
                 runSpacing: 10,
                 children: [
-                  CustomTextField(
+                  BrainTextField(
                     controller: widget.testSubpage.descriptionController,
-                    placeHolder: "Test Inhalte",
-                    autocorrect: true,
+                    placeholder: "Test Inhalte",
                     maxLines: 10,
                   ),
                   CustomDropdown(

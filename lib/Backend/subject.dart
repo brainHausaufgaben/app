@@ -36,7 +36,6 @@ class Subject{
     }
   }
 
-  //TODO: yallah es geht glaub ich jetzt
   DateTime? getNextDate(){
     int i = DateTime.now().weekday + 1;
 
