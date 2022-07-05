@@ -29,6 +29,7 @@ class TextStyles {
   TextStyle collapsibleTextContrast;
   TextStyle buttonText;
   TextStyle input;
+  TextStyle inputError;
   TextStyle tab;
   TextStyle alertDialogHeader;
   TextStyle alertDialogDescription;
@@ -46,6 +47,7 @@ class TextStyles {
     required this.collapsibleTextContrast,
     required this.buttonText,
     required this.input,
+    required this.inputError,
     required this.tab,
     required this.alertDialogHeader,
     required this.alertDialogDescription,
@@ -90,6 +92,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
           collapsibleTextContrast: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor),
           buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: contrastColor),
           input: TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: textColor.withAlpha(210)),
+          inputError: const TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: Colors.red),
           tab: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: textColor),
           alertDialogHeader: TextStyle(fontWeight: FontWeight.w600, fontSize:22, color: textColor),
           alertDialogDescription: TextStyle(fontWeight: FontWeight.w500, fontSize:17, color: textColor),

@@ -9,6 +9,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Components/brain_toast.dart';
+
 class EditTestPage extends StatefulWidget {
   EditTestPage({Key? key, this.previousTest}) : super(key: key) {
     testSubpage = TestSubpage(previousTest: previousTest);
@@ -92,7 +94,15 @@ class _EditTestPage extends State<EditTestPage> {
                         Subject? subject = widget.testSubpage.selectedSubject;
                         DateTime date = widget.testSubpage.selectedDate;
 
-                        if (description.isNotEmpty && subject != null) {
+                        if (description.isEmpty) {
+                          BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
+                          toast.show(context);
+                          return;
+                        } else if (subject == null) {
+                          BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
+                          toast.show(context);
+                          return;
+                        } else {
                           widget.previousTest!.edit(subject, date, description);
                           BrainApp.notifier.notifyOfChanges();
                           Navigator.pop(context);

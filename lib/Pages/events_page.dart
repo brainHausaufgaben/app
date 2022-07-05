@@ -8,6 +8,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Components/brain_toast.dart';
+
 class EventsPage extends StatefulWidget {
   EventsPage({Key? key}) : super(key: key);
 
@@ -33,7 +35,11 @@ class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin 
     String description = eventSubpage.descriptionController.text;
     DateTime date = eventSubpage.selectedDate;
 
-    if (title.isNotEmpty) {
+    if (title.isEmpty) {
+      BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
+      toast.show(context);
+      return;
+    } else {
       Event(date, title, description);
 
       BrainApp.notifier.notifyOfChanges();
@@ -48,7 +54,15 @@ class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin 
     Subject? subject = testSubpage.selectedSubject;
     DateTime date = testSubpage.selectedDate;
 
-    if (description.isNotEmpty && subject != null) {
+    if (description.isEmpty) {
+      BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
+      toast.show(context);
+      return;
+    } else if (subject == null) {
+      BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
+      toast.show(context);
+      return;
+    } else {
       Test(subject, date, description);
 
       BrainApp.notifier.notifyOfChanges();

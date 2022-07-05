@@ -6,6 +6,8 @@ import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Components/brain_toast.dart';
+
 class SubjectPage extends StatefulWidget {
   SubjectPage({Key? key, this.previousSubject}) : super(key: key) {
     subjectController.text = previousSubject != null ? previousSubject!.name : "";
@@ -58,7 +60,11 @@ class _SubjectPage extends State<SubjectPage> {
                 Expanded(
                   child: ElevatedButton (
                       onPressed: () {
-                        if (widget.subjectController.text.isNotEmpty) {
+                        if (widget.subjectController.text.isEmpty) {
+                          BrainToast toast = BrainToast(text: "Du hast keinen Namen angegeben!");
+                          toast.show(context);
+                          return;
+                        } else {
                           if (widget.previousSubject != null) {
                             TimeTable.getSubject(widget.previousSubject!.id)!.edit(widget.subjectController.text, widget.pickerColor);
                             BrainApp.notifier.notifyOfChanges();

@@ -3,6 +3,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/main.dart';
@@ -26,7 +27,15 @@ class HomeworkPage extends StatefulWidget {
 
 class _HomeworkPage extends State<HomeworkPage> {
   void onPressed() {
-    if(widget.homeworkController.text.isNotEmpty && widget.selectedSubject != null){
+    if (widget.homeworkController.text.isEmpty) {
+      BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
+      toast.show(context);
+      return;
+    } else if (widget.selectedSubject == null) {
+      BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
+      toast.show(context);
+      return;
+    } else {
       if (widget.previousHomework != null) {
         widget.previousHomework?.edit(widget.selectedSubject, widget.selectedDate, widget.homeworkController.text);
         BrainApp.notifier.notifyOfChanges();
@@ -57,7 +66,7 @@ class _HomeworkPage extends State<HomeworkPage> {
         children: [
           BrainTextField(
             controller: widget.homeworkController,
-            placeholder: "Hausaufgabe"
+            placeholder: "Hausaufgabe",
           ),
           CustomDropdown(
               defaultText: Text("Fach", style: AppDesign.current.textStyles.input),

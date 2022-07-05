@@ -6,6 +6,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Components/brain_toast.dart';
+
 class EditEventPage extends StatefulWidget {
   EditEventPage({Key? key, required this.previousEvent}) : super(key: key) {
     eventSubpage = EventSubpage(previousEvent: previousEvent);
@@ -37,7 +39,11 @@ class _TestPage extends State<EditEventPage> {
                   String description = widget.eventSubpage.descriptionController.text;
                   DateTime date = widget.eventSubpage.selectedDate;
 
-                  if (title.isNotEmpty) {
+                  if (title.isEmpty) {
+                    BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
+                    toast.show(context);
+                    return;
+                  } else {
                     widget.previousEvent.edit(date, title, description);
                     BrainApp.notifier.notifyOfChanges();
                     Navigator.pop(context);

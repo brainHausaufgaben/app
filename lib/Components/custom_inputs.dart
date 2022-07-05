@@ -31,8 +31,6 @@ class BrainTextField extends StatefulWidget {
 }
 
 class _BrainTextField extends State<BrainTextField> {
-  bool showCounter = false;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,14 +56,15 @@ class _BrainTextField extends State<BrainTextField> {
                   )
               ),
               fillColor: AppDesign.current.boxStyle.backgroundColor,
-              label: Text(widget.placeholder, style: AppDesign.current.textStyles.input),
+              label: Text(
+                  widget.placeholder,
+                  style: AppDesign.current.textStyles.input
+              ),
             ),
             inputFormatters: widget.maxLength != null ? [
               LengthLimitingTextInputFormatter(widget.maxLength),
             ] : null,
             onChanged: (_) => setState(() {}),
-            onTap: () => setState(() => showCounter = true),
-            onSubmitted: (_) => setState(() => showCounter = false),
           ),
           if (widget.maxLength != null) Positioned(
             right: 10,

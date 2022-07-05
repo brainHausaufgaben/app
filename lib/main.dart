@@ -163,7 +163,8 @@ class _BrainApp extends State<BrainApp> {
       for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 10; j++) {
           int id = timetable[i][j];
-          if (id != 0) SubjectInstance(TimeTable.getSubject(id)!, i + 1, j);
+          Subject? subject = TimeTable.getSubject(id);
+          if (id != 0 && subject != null) SubjectInstance(subject, i + 1, j);
         }
       }
     }
