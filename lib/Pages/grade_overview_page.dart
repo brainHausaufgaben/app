@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
@@ -29,7 +30,7 @@ class _GradeOverview extends State<GradeOverview>{
           child: PointElement(
             color: subject.color,
             primaryText: subject.name,
-            child: Text("14 Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
+            child: Text("${GradingSystem.getAverage(subject)} Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
           ),
           icon: Icons.edit,
           action: () {},

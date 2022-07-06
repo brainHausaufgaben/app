@@ -42,7 +42,11 @@ class _HomeworkPage extends State<HomeworkPage> {
       } else if(widget.selectedDate.year != 10) {
         TimeInterval? time = widget.selectedSubject?.getTime(TimeTable.getDayFromDate(widget.selectedDate));
         // TODO: Man soll das trotzdem rein machen können. muss dann halt im Kalendar sein
-        if (time == null) return;
+        if (time == null) {
+          BrainToast toast = BrainToast(text: "An diesem Tag hast du das ausgewählte Fach nicht!");
+          toast.show(context);
+          return;
+        };
         DateTime date = DateTime(
             widget.selectedDate.year, widget.selectedDate.month,
             widget.selectedDate.day, time.startTime.hour,

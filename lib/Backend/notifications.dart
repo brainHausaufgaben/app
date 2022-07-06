@@ -48,14 +48,15 @@ class CustomNotifications{
     //nichts ;)
   }
 
-  static void persistentNotification() async{
+  static void persistentNotification() async {
     if(!notificationsEnabled || !notificationsPossible) return;
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
     String title = "";
     String body = "";
     if(TimeTable.homeworks.isNotEmpty){
       title = "<b> Achtung! </b>";
-      body = "Du hast noch " + TimeTable.homeworks.length.toString() + " unerledigte Hausaufgaben";
+      body = "Du hast noch " + TimeTable.homeworks.length.toString() + " unerledigte Hausaufgabe";
+      if (TimeTable.homeworks.length > 1) body += "n";
     }
     else{
       title = "<b> Gut Gemacht! </b>";

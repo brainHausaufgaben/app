@@ -16,7 +16,7 @@ class CollapsibleGradesBox extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: AnimatedContainer(
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
         decoration: BoxDecoration(
             color: AppDesign.current.primaryColor,
             borderRadius: AppDesign.current.boxStyle.borderRadius
@@ -76,6 +76,9 @@ class GradeWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             decoration: BoxDecoration(
                 borderRadius: AppDesign.current.boxStyle.borderRadius,
+                boxShadow: [
+                  AppDesign.current.boxStyle.boxShadow
+                ],
                 gradient: const LinearGradient(
                     colors: [
                       Color(0xFF22A66E),

@@ -180,133 +180,85 @@ class _CalendarPage extends State<CalendarPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Box(
-                  child: Column(
-                    children: [
-                      TableCalendar(
-                          locale: "de_DE",
-                          firstDay: DateTime.utc(2018, 10, 16),
-                          lastDay: DateTime.now().add(const Duration(days:730)),
-                          startingDayOfWeek: StartingDayOfWeek.monday,
-                          focusedDay: CalendarPage.selectedDay,
-                          calendarStyle: CalendarStyle(
-                            defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                            weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                            outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-                            todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
-                            todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                            selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
-                            selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-                          ),
-                          daysOfWeekStyle: DaysOfWeekStyle(
-                              weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                              weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
-                          ),
-                          headerStyle: HeaderStyle(
-                            headerPadding: const EdgeInsets.only(bottom: 10),
-                            titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
-                            titleCentered: true,
-                            formatButtonVisible: false,
-                            leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
-                            rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
-                          ),
-                          calendarBuilders: CalendarBuilders(
-                            singleMarkerBuilder: (context, date, event) {
-                              Color color = Colors.deepOrange;
-                              BoxShape shape = BoxShape.circle;
-                              switch (event.runtimeType) {
-                                case Event:
-                                  shape = BoxShape.rectangle;
-                                  color = AppDesign.current.primaryColor;
-                                  break;
-                                case Homework:
-                                  Homework hm = event as Homework;
-                                  color =  hm.subject.color;
-                                  break;
-                                case Test:
-                                  Test test = event as Test;
-                                  return Container(
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              width: 2,
-                                              color: test.subject.color
-                                          )
-                                      ),
-                                      width: 9.0,
-                                      height: 9.0,
-                                      margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                                  );
-                              }
-                              return Container(
-                                  decoration: BoxDecoration(shape: shape, color: color),
-                                  width: 7.0,
-                                  height: 7.0,
-                                  margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                              );
-                            },
-                          ),
-                          onDaySelected: (_selectedDay, _focusedDay) {
-                            setState(() {
-                              CalendarPage.selectedDay = _selectedDay;
-                            });
-                          },
-                          selectedDayPredicate: (day) {
-                            return isSameDay(CalendarPage.selectedDay, day);
-                          },
-                          eventLoader: (date) {
-                            List<dynamic> events = [
-                              ...TimeTable.getEvents(date),
-                              ...getHomeworkByDay(date),
-                              ...TimeTable.getTests(date)
-                            ];
-                            return events;
-                          }
+                  child: TableCalendar(
+                      locale: "de_DE",
+                      firstDay: DateTime.utc(2018, 10, 16),
+                      lastDay: DateTime.now().add(const Duration(days:730)),
+                      startingDayOfWeek: StartingDayOfWeek.monday,
+                      focusedDay: CalendarPage.selectedDay,
+                      calendarStyle: CalendarStyle(
+                        defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                        weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                        outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
+                        todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
+                        todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                        selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+                        selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
                       ),
-                      // TODO: Ich weiß nicht ob das cool wäre
-                      /* Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
+                      daysOfWeekStyle: DaysOfWeekStyle(
+                          weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                          weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
+                      ),
+                      headerStyle: HeaderStyle(
+                        headerPadding: const EdgeInsets.only(bottom: 10),
+                        titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
+                        titleCentered: true,
+                        formatButtonVisible: false,
+                        leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
+                        rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
+                      ),
+                      calendarBuilders: CalendarBuilders(
+                        singleMarkerBuilder: (context, date, event) {
+                          Color color = Colors.deepOrange;
+                          BoxShape shape = BoxShape.circle;
+                          switch (event.runtimeType) {
+                            case Event:
+                              shape = BoxShape.rectangle;
+                              color = AppDesign.current.primaryColor;
+                              break;
+                            case Homework:
+                              Homework hm = event as Homework;
+                              color =  hm.subject.color;
+                              break;
+                            case Test:
+                              Test test = event as Test;
+                              return Container(
                                   decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      width: 2,
-                                      color: AppDesign.current.primaryColor
-                                    )
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          width: 2,
+                                          color: test.subject.color
+                                      )
                                   ),
                                   width: 9.0,
                                   height: 9.0,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 5),
-                                  child: Text("Tests")
-                                )
-                              ]
-                            ),
-                            Row(
-                              children: [
-                                Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: AppDesign.current.primaryColor
-                                    ),
-                                    width: 7.0,
-                                    height: 7.0,
-                                    margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                                ),
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 5),
-                                    child: Text("Hausaufgaben")
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ) */
-                    ]
+                                  margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                              );
+                          }
+                          return Container(
+                              decoration: BoxDecoration(shape: shape, color: color),
+                              width: 7.0,
+                              height: 7.0,
+                              margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                          );
+                        },
+                      ),
+                      onDaySelected: (_selectedDay, _focusedDay) {
+                        setState(() {
+                          CalendarPage.selectedDay = _selectedDay;
+                        });
+                      },
+                      selectedDayPredicate: (day) {
+                        return isSameDay(CalendarPage.selectedDay, day);
+                      },
+                      eventLoader: (date) {
+                        List<dynamic> events = [
+                          ...TimeTable.getEvents(date),
+                          ...getHomeworkByDay(date),
+                          ...TimeTable.getTests(date)
+                        ];
+                        return events;
+                      }
                   )
                 )
               ),

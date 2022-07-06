@@ -72,11 +72,13 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
       overrideIconColor: overrideIconColor,
       primaryColor: primaryColor,
       themeData: ThemeData(
+        brightness: backgroundColor.computeLuminance() < 0.5 ? Brightness.dark : Brightness.light,
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         cardColor: boxBackground,
         visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
         primarySwatch: createMaterialColor(primaryColor),
         primaryColor: primaryColor,
+        accentColor: primaryColor,
         scaffoldBackgroundColor: backgroundColor,
         fontFamily: "Nunito",
       ),

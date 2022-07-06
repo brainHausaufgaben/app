@@ -23,17 +23,23 @@ class BrainToast {
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: buttonText == null ? 15 : 10),
-        content: Row(
+        content: Flex(
+            direction: Axis.horizontal,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 4),
-                child: Text(text, style: TextStyle(
-                    color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15
-                )),
+              Flexible(
+                child: Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text(
+                        text,
+                        style: TextStyle(
+                            color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15
+                        )
+                    )
+                ),
               ),
               if (buttonText != null) TextButton(
                 onPressed: action,
