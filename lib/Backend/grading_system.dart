@@ -40,24 +40,27 @@ class GradingSystem{
 
   static List<SmallGrade> getSmallGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<SmallGrade> output = [];
-    smallGrades.map((e) => {
-      if(e.subject == subject)
+    for(SmallGrade e in smallGrades){
+      if(e.subject == subject) {
         if(onlyCurrentYear = true && e.time.year != currentYear){}
         else{
-          if(onlyPartsOfYear.contains(e.time.partOfYear))output.add(e)
+          if(onlyPartsOfYear.contains(e.time.partOfYear))output.add(e);
         }
-    });
+      }
+    }
     return output;
   }
 
   static List<BigGrade> getBigGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<BigGrade> output = [];
-    bigGrades.map((e) => {if(e.subject == subject)
-      if(onlyCurrentYear = true && e.time.year != currentYear){}
-      else{
-        if(onlyPartsOfYear.contains(e.time.partOfYear))output.add(e)
+    for(BigGrade e in bigGrades){
+      if(e.subject == subject) {
+        if(onlyCurrentYear = true && e.time.year != currentYear){}
+        else{
+          if(onlyPartsOfYear.contains(e.time.partOfYear))output.add(e);
+        }
       }
-    });
+    }
     return output;
   }
 
@@ -91,20 +94,27 @@ class GradingSystem{
     }
   }
 
+
   static double getAverage(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]}){
     List<BigGrade> bigGradesSubject = getBigGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
+    print(bigGradesSubject);
     List<SmallGrade> smallGradesSubject = getSmallGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
+    print(smallGradesSubject);
     if(isAdvancedLevel){
       double bigGradeAverage = 0;
       double smallGradeAverage = 0;
       double a = 0;
       if(bigGradesSubject.isNotEmpty){
-        bigGradesSubject.map((e) => bigGradeAverage + e.value);
+        for(BigGrade e in bigGradesSubject){
+          bigGradeAverage += e.value;
+        }
         bigGradeAverage /= bigGradesSubject.length.toDouble();
         a++;
       }
       if(smallGradesSubject.isNotEmpty){
-        smallGradesSubject.map((e) => smallGradeAverage + e.value);
+        for(SmallGrade e in smallGradesSubject){
+          smallGradeAverage += e.value;
+        }
         smallGradeAverage /= smallGradesSubject.length.toDouble();
         a++;
       }
@@ -115,9 +125,13 @@ class GradingSystem{
     }
     else{
       double average = 0;
-      bigGradesSubject.map((e) => average += e.value*2.0);
-      smallGradesSubject.map((e) => average += e.value.toDouble());
+      for(BigGrade e in bigGradesSubject){
+        average += e.value*2.0;
+      }
 
+      for(SmallGrade e in smallGradesSubject){
+        average += e.value.toDouble();
+      }
       if(smallGradesSubject.length + bigGradesSubject.length == 0) return -1;
       return average / (smallGradesSubject.length + bigGradesSubject.length);
     }
