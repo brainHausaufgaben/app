@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
@@ -5,6 +6,8 @@ import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
+import '../../Components/box.dart';
 import '../page_template.dart';
 import 'package:brain_app/Components/collapsible_box.dart';
 
@@ -42,6 +45,37 @@ class _HomePage extends State<HomePage>{
       if(TimeTable.getSubjects(dayIndexes[i]).isNotEmpty) days.add(HomePageDay(day: dayIndexes[i], headline: headline,));
 
     }
+
+    if (days.isEmpty) {
+      return [
+        Box(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 20, bottom: 25),
+                child: Text(
+                  "Dein Stundenplan ist noch leer",
+                  style: AppDesign.current.textStyles.boxHeadline,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              TextButton(
+                style: TextButton.styleFrom(
+                  backgroundColor: AppDesign.current.primaryColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13)
+                ),
+                onPressed: () {
+                  NavigationHelper.pushNamed("/settings/timetable");
+                },
+                child: Text("Füge Fächer hinzu", style: AppDesign.current.textStyles.buttonText),
+              )
+            ]
+          )
+        )
+      ];
+    }
+
     return days;
   }
 
@@ -105,11 +139,16 @@ class _HomePage extends State<HomePage>{
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.only(top:25),
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              children: getDays(),
+            child: ScrollShadow(
+              color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+              curve: Curves.ease,
+              size: 15,
+              child: ListView(
+                padding: const EdgeInsets.only(top:25),
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: getDays(),
+              ),
             ),
           ),
         ],

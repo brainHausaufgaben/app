@@ -97,9 +97,7 @@ class GradingSystem{
 
   static double getAverage(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]}){
     List<BigGrade> bigGradesSubject = getBigGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
-    print(bigGradesSubject);
     List<SmallGrade> smallGradesSubject = getSmallGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
-    print(smallGradesSubject);
     if(isAdvancedLevel){
       double bigGradeAverage = 0;
       double smallGradeAverage = 0;

@@ -172,8 +172,9 @@ class _CalendarPage extends State<CalendarPage> {
           }
       ),
       child: ScrollShadow(
-        color: AppDesign.current.boxStyle.boxShadow.color,
-        size: 0,
+        color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+        curve: Curves.ease,
+        size: 15,
         child: ListView(
             padding: const EdgeInsets.only(bottom: 20),
             children: [

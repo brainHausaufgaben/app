@@ -6,8 +6,9 @@ import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import '../../Backend/subject.dart';
-import '../../Components/collapsible_grades_box.dart';
+import '../../Components/grades_box.dart';
 import '../../main.dart';
 import '../page_template.dart';
 
@@ -50,23 +51,21 @@ class _GradeOverview extends State<GradeOverview>{
         ),
         child: Column(
           children: [
-            CollapsibleGradesBox(
-              collapsed: BrainApp.preferences["gradesBoxCollapsed"],
-              onTap: () {
-                setState(() {
-                  BrainApp.updatePreference("gradesBoxCollapsed", !BrainApp.preferences["gradesBoxCollapsed"]);
-                });
-              },
-            ),
+            CollapsibleGradesBox(),
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.only(bottom: 30, top: 30),
-                children: [
-                  HeadlineWrap(
-                    headline: "Alle Noten",
-                    children: getGradeButtons(),
-                  )
-                ],
+              child: ScrollShadow(
+                color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+                curve: Curves.ease,
+                size: 15,
+                child: ListView(
+                  padding: const EdgeInsets.only(bottom: 30, top: 30),
+                  children: [
+                    HeadlineWrap(
+                      headline: "Alle Noten",
+                      children: getGradeButtons(),
+                    )
+                  ],
+                ),
               ),
             )
           ],

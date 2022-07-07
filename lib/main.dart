@@ -37,7 +37,6 @@ class BrainApp extends StatefulWidget {
   static Map<String, dynamic> preferences = {
     "warningBoxCollapsed": false,
     "mediaBoxCollapsed": false,
-    "gradesBoxCollapsed": false,
     "showMediaBox": true,
     "persistentNotifications": false,
     "design": "Monochrome",

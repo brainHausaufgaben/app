@@ -2,62 +2,33 @@ import 'package:brain_app/Backend/grading_system.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 
-import '../Backend/time_table.dart';
-
 class CollapsibleGradesBox extends StatelessWidget {
-  final bool collapsed;
-  final Function() onTap;
-
-  const CollapsibleGradesBox({
-    Key? key,
-    required this.collapsed,
-    required this.onTap,
-  }) : super(key: key);
+  const CollapsibleGradesBox({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(seconds: 1),
+    return Container(
         decoration: BoxDecoration(
             color: AppDesign.current.primaryColor,
             borderRadius: AppDesign.current.boxStyle.borderRadius
         ),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Column(
-          children: [
-            AnimatedSize(
-              alignment: Alignment.center,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: collapsed ? 0 : 15),
-                child: Text(
-                  collapsed ? "" : "Die Noten von allen ${TimeTable.subjects.length} Fächern zusammengerechnet ergeben einen Schnitt von:",
-                  style: AppDesign.current.textStyles.collapsibleTextContrast.copyWith(height: collapsed ? 0 : null),
-                  textAlign: TextAlign.center,
-                ),
+        child: Flex(
+            direction: Axis.horizontal,
+            children: [
+              GradeWidget(
+                name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
+                value: GradingSystem.getYearAverage().round().toString(),
+                reversed: false,
               ),
-              duration: const Duration(milliseconds: 200),
-            ),
-            Flex(
-              direction: Axis.horizontal,
-              children: [
-                GradeWidget(
-                  name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
-                  value: GradingSystem.getYearAverage().round().toString(),
-                  reversed: false,
-                ),
-                const Spacer(flex: 1),
-                GradeWidget(
-                  name: "Note",
-                  value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
-                  reversed: true,
-                )
-              ]
-            )
-          ]
+              const Spacer(flex: 1),
+              GradeWidget(
+                name: "Note",
+                value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
+                reversed: true,
+              )
+            ]
         )
-      )
     );
   }
 }

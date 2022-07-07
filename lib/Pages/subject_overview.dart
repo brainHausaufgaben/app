@@ -49,7 +49,8 @@ class _SubjectOverview extends State<SubjectOverview> {
         )
       ),
       child: ScrollShadow(
-        color: AppDesign.current.boxStyle.boxShadow.color,
+        color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+        curve: Curves.ease,
         size: 15,
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 20),
