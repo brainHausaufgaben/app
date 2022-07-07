@@ -1,5 +1,8 @@
+import 'package:brain_app/Backend/grading_system.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
+
+import '../Backend/time_table.dart';
 
 class CollapsibleGradesBox extends StatelessWidget {
   final bool collapsed;
@@ -22,29 +25,32 @@ class CollapsibleGradesBox extends StatelessWidget {
             borderRadius: AppDesign.current.boxStyle.borderRadius
         ),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Wrap(
-          runSpacing: 15,
+        child: Column(
           children: [
-            AnimatedContainer(
-              child: Text(
-                collapsed ? "" : "Die Noten von allen 13 Fächern zusammengerechnet ergeben einen Schnitt von:",
-                style: AppDesign.current.textStyles.collapsibleTextContrast,
-                textAlign: TextAlign.center,
+            AnimatedSize(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: collapsed ? 0 : 15),
+                child: Text(
+                  collapsed ? "" : "Die Noten von allen ${TimeTable.subjects.length} Fächern zusammengerechnet ergeben einen Schnitt von:",
+                  style: AppDesign.current.textStyles.collapsibleTextContrast.copyWith(height: collapsed ? 0 : null),
+                  textAlign: TextAlign.center,
+                ),
               ),
-              duration: const Duration(seconds: 1),
+              duration: const Duration(milliseconds: 200),
             ),
             Flex(
               direction: Axis.horizontal,
               children: [
                 GradeWidget(
-                  name: "Punkte",
-                  number: 12,
+                  name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
+                  value: GradingSystem.getYearAverage().round().toString(),
                   reversed: false,
                 ),
                 const Spacer(flex: 1),
                 GradeWidget(
                   name: "Note",
-                  number: 2,
+                  value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
                   reversed: true,
                 )
               ]
@@ -60,12 +66,12 @@ class GradeWidget extends StatelessWidget {
   GradeWidget({
     Key? key,
     required this.name,
-    required this.number,
+    required this.value,
     required this.reversed
   }) : super(key: key);
 
   final String name;
-  final int number;
+  final String value;
   final bool reversed;
 
   @override
@@ -79,35 +85,34 @@ class GradeWidget extends StatelessWidget {
                 boxShadow: [
                   AppDesign.current.boxStyle.boxShadow
                 ],
-                gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF22A66E),
-                      Color(0xFF1C6B4A)
-                    ]
-                )
+                color: AppDesign.current.themeData.scaffoldBackgroundColor
             ),
             child: Center(
                 child: Wrap(
                     textDirection: reversed ? TextDirection.rtl : TextDirection.ltr,
                     direction: Axis.horizontal,
                     crossAxisAlignment: WrapCrossAlignment.center,
+                    alignment: WrapAlignment.center,
+                    runAlignment: WrapAlignment.center,
                     spacing: 5,
                     children: [
                       Text(
-                          number.toString(),
-                          style: TextStyle(
-                              color: AppDesign.current.textStyles.contrastColor,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700
-                          )
+                        value,
+                        style: TextStyle(
+                            color: AppDesign.current.textStyles.color,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                       Text(
-                          name,
-                          style: TextStyle(
-                              color: AppDesign.current.textStyles.contrastColor,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700
-                          )
+                        name,
+                        style: TextStyle(
+                            color: AppDesign.current.textStyles.color,
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700
+                        ),
+                        textAlign: TextAlign.center
                       )
                     ]
                 )

@@ -35,12 +35,13 @@ class BrainApp extends StatefulWidget {
   static int selectedPageIndex = 1;
 
   static Map<String, dynamic> preferences = {
-    "warningBoxCollapsed" : false,
+    "warningBoxCollapsed": false,
     "mediaBoxCollapsed": false,
+    "gradesBoxCollapsed": false,
     "showMediaBox": true,
     "persistentNotifications": false,
-    "design" : "Monochrome",
-    "darkMode" : false,
+    "design": "Monochrome",
+    "darkMode": false,
   };
 
   static void updatePreference(String key, dynamic value) async {

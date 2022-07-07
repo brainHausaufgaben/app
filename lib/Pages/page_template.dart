@@ -1,4 +1,5 @@
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 
@@ -48,6 +49,9 @@ class _PageTemplateState extends State<PageTemplate> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      onHorizontalDragEnd: (details) {
+        // TODO: es soll page switchen wenn man auf den drei hauptseiten ist
+      },
       child: Scaffold (
           body: Padding(
               padding: EdgeInsets.only(

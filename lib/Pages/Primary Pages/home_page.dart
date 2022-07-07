@@ -5,7 +5,7 @@ import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'page_template.dart';
+import '../page_template.dart';
 import 'package:brain_app/Components/collapsible_box.dart';
 
 class HomePage extends StatefulWidget {

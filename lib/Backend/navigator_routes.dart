@@ -1,8 +1,8 @@
-import 'package:brain_app/Pages/calendar_page.dart';
+import 'package:brain_app/Pages/Primary%20Pages/calendar_page.dart';
 import 'package:brain_app/Pages/events_page.dart';
-import 'package:brain_app/Pages/grade_overview_page.dart';
+import 'package:brain_app/Pages/Primary%20Pages/grades_page.dart';
 import 'package:brain_app/Pages/grades_page.dart';
-import 'package:brain_app/Pages/home_page.dart';
+import 'package:brain_app/Pages/Primary%20Pages/home_page.dart';
 import 'package:brain_app/Pages/homework_page.dart';
 import 'package:brain_app/Pages/settings_page.dart';
 import 'package:brain_app/Pages/subject_overview.dart';

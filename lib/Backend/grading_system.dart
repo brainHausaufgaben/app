@@ -98,25 +98,25 @@ class GradingSystem{
       double bigGradeAverage = 0;
       double smallGradeAverage = 0;
       double a = 0;
-      if(bigGrades.isNotEmpty){
+      if(bigGradesSubject.isNotEmpty){
         bigGradesSubject.map((e) => bigGradeAverage + e.value);
-        bigGradeAverage /= bigGradesSubject.length as double;
+        bigGradeAverage /= bigGradesSubject.length.toDouble();
         a++;
       }
-      if(smallGrades.isNotEmpty){
+      if(smallGradesSubject.isNotEmpty){
         smallGradesSubject.map((e) => smallGradeAverage + e.value);
-        smallGradeAverage /= smallGradesSubject.length as double;
+        smallGradeAverage /= smallGradesSubject.length.toDouble();
         a++;
       }
 
-      if(a == 0)return -1;
+      if(a == 0)return -1.0;
       return (smallGradeAverage + bigGradeAverage) / a;
 
     }
     else{
       double average = 0;
       bigGradesSubject.map((e) => average += e.value*2.0);
-      smallGradesSubject.map((e) => average += e.value as double);
+      smallGradesSubject.map((e) => average += e.value.toDouble());
 
       if(smallGradesSubject.length + bigGradesSubject.length == 0) return -1;
       return average / (smallGradesSubject.length + bigGradesSubject.length);

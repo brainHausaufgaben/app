@@ -7,7 +7,7 @@ abstract class Grade{
   GradeType type;
   late GradeTime time;
 
-  Grade(this.value, this.subject,this.type, int partOfYear){
+  Grade(this.value, this.subject, this.type, int partOfYear){
     time = GradeTime(GradingSystem.currentYear, partOfYear);
     GradingSystem.addGrade(this);
   }
@@ -63,7 +63,6 @@ class BigGrade extends Grade{
     map["partOfYear"] = time.partOfYear;
     return map;
   }
-
 }
 
 enum GradeType{

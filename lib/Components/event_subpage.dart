@@ -1,6 +1,6 @@
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
-import 'package:brain_app/Pages/calendar_page.dart';
+import 'package:brain_app/Pages/Primary%20Pages/calendar_page.dart';
 import 'package:flutter/material.dart';
 
 class EventSubpage extends StatefulWidget {
