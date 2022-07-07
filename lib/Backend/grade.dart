@@ -28,6 +28,21 @@ abstract class Grade{
         return "Schulaufgabe";
     }
   }
+
+  static GradeType stringToGradeType(String type){
+    switch(type){
+      case "Mündlich":
+        return GradeType.oralGrade;
+      case "Ex":
+        return GradeType.smallTest;
+      case "Schulaufgabe":
+        return GradeType.bigTest;
+      default:
+        return GradeType.smallTest;
+    }
+
+  }
+
 }
 
 class SmallGrade extends Grade{

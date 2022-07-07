@@ -208,11 +208,12 @@ class _BrainApp extends State<BrainApp> {
         int value = item["value"];
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
-
+        print(item["isBig"]);
         if(item["isBig"]) {
           BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
         } else {
-          SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,item["type"],time);
+          GradeType type = Grade.stringToGradeType(item["type"]);
+          SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time);
         }
 
       }
