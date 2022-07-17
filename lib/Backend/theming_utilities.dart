@@ -87,7 +87,7 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
           contrastColor: contrastColor,
           pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36, height: 1, color: textColor),
           pageSubtitle: TextStyle(fontWeight: FontWeight.w400, fontSize:19, color: textColor),
-          boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 0.6, color: textColor),
+          boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:20, height: 1, color: textColor),
           pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:16 ,height: 1, color: textColor.withAlpha(210)),
           pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14, color: textColor.withAlpha(190)),
           collapsibleText: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: textColor),

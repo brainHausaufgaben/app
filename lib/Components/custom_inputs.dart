@@ -262,9 +262,9 @@ class CustomIconButton extends StatelessWidget {
           direction: Axis.horizontal,
           children: [
             Expanded(
-              child: child,
+              child: child
             ),
-            Icon(icon, color: AppDesign.current.textStyles.color, size: dense ? 20 : 25),
+            Icon(icon, color: AppDesign.current.textStyles.color, size: dense ? 20 : 24),
           ],
         ),
       ),

@@ -7,6 +7,7 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 import '../../Components/box.dart';
 import '../page_template.dart';
 import 'package:brain_app/Components/collapsible_box.dart';
@@ -122,36 +123,23 @@ class _HomePage extends State<HomePage>{
         defaultAction: () => NavigationHelper.pushNamed("/homeworkPage")
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        children: getDays(),
+      ),
+      floatingHeader: Wrap(
+        runSpacing: 5,
         children: [
           getWarningBox(),
-          if (BrainApp.preferences["showMediaBox"]) Padding(
-            padding: const EdgeInsets.only(top: 7),
-            child: CollapsibleBox(
-              text: BrainApp.todaysJoke,
-              icon: BrainApp.icon,
-              collapsed: BrainApp.preferences["mediaBoxCollapsed"],
-              onTap: () {
-                setState(() {
-                  BrainApp.updatePreference("mediaBoxCollapsed", !BrainApp.preferences["mediaBoxCollapsed"]);
-                });
-              },
-            ),
-          ),
-          Expanded(
-            child: ScrollShadow(
-              color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
-              curve: Curves.ease,
-              size: 15,
-              child: ListView(
-                padding: const EdgeInsets.only(top:25),
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                children: getDays(),
-              ),
-            ),
-          ),
-        ],
+          if (BrainApp.preferences["showMediaBox"]) CollapsibleBox(
+            text: BrainApp.todaysJoke,
+            icon: BrainApp.icon,
+            collapsed: BrainApp.preferences["mediaBoxCollapsed"],
+            onTap: () {
+              setState(() {
+                BrainApp.updatePreference("mediaBoxCollapsed", !BrainApp.preferences["mediaBoxCollapsed"]);
+              });
+            }
+          )
+        ]
       )
     );
   }

@@ -5,12 +5,10 @@ import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/Pages/grades_per_subject_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import '../../Backend/subject.dart';
-import '../../Components/grades_box.dart';
-import '../../main.dart';
-import '../page_template.dart';
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Pages/page_template.dart';
 
 class GradeOverview extends StatefulWidget {
   const GradeOverview({Key? key}): super(key: key);
@@ -34,7 +32,9 @@ class _GradeOverview extends State<GradeOverview>{
             child: Text(average == -1.0 ? "Noch keine Noten" : "${average.toInt()} Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
           ),
           icon: Icons.edit,
-          action: () {},
+          action: () => NavigationHelper.navigator.push(
+            MaterialPageRoute(builder: (context) => GradesPerSubjectPage(subject: subject))
+          ),
         )
       );
     }
@@ -45,30 +45,95 @@ class _GradeOverview extends State<GradeOverview>{
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-        title: 'Noten',
-        floatingActionButton: CustomMenuButton(
-            defaultAction: () => NavigationHelper.pushNamed("/gradesPage")
+      title: 'Noten',
+      floatingActionButton: CustomMenuButton(
+          defaultAction: () => NavigationHelper.pushNamed("/gradesPage")
+      ),
+      floatingHeader: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 15,
+          vertical: 15
         ),
-        child: Column(
-          children: [
-            CollapsibleGradesBox(),
-            Expanded(
-              child: ScrollShadow(
-                color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
-                curve: Curves.ease,
-                size: 15,
-                child: ListView(
-                  padding: const EdgeInsets.only(bottom: 30, top: 30),
-                  children: [
-                    HeadlineWrap(
-                      headline: "Alle Noten",
-                      children: getGradeButtons(),
-                    )
-                  ],
-                ),
+        decoration: BoxDecoration(
+            color: AppDesign.current.primaryColor,
+            borderRadius: AppDesign.current.boxStyle.borderRadius
+        ),
+        child: Flex(
+            direction: Axis.horizontal,
+            children: [
+              GradeWidget(
+                name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
+                value: GradingSystem.getYearAverage().round().toString(),
+                reversed: false,
               ),
+              const Spacer(flex: 1),
+              GradeWidget(
+                name: "Note",
+                value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
+                reversed: true,
+              )
+            ]
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: HeadlineWrap(
+            headline: "Alle Noten",
+            children: getGradeButtons()
+        ),
+      )
+    );
+  }
+}
+
+class GradeWidget extends StatelessWidget {
+  GradeWidget({
+    Key? key,
+    required this.name,
+    required this.value,
+    required this.reversed
+  }) : super(key: key);
+
+  final String name;
+  final String value;
+  final bool reversed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+        flex: 8,
+        child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+            decoration: BoxDecoration(
+                borderRadius: AppDesign.current.boxStyle.borderRadius,
+                color: AppDesign.current.themeData.scaffoldBackgroundColor
+            ),
+            child: Center(
+                child: Wrap(
+                    textDirection: reversed ? TextDirection.rtl : TextDirection.ltr,
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    spacing: 5,
+                    children: [
+                      Text(
+                          value,
+                          style: TextStyle(
+                              color: AppDesign.current.textStyles.color,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w700
+                          )
+                      ),
+                      Text(
+                          name,
+                          style: TextStyle(
+                              color: AppDesign.current.textStyles.color,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700
+                          )
+                      )
+                    ]
+                )
             )
-          ],
         )
     );
   }

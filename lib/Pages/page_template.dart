@@ -1,20 +1,23 @@
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({
     Key? key,
     required this.title,
     required this.child,
+    this.floatingHeader,
     this.backButton, this.subtitle,
     this.floatingActionButton,
     this.floatingActionButtonLocation
   }) : super(key: key);
 
-  final Widget child;
   final String title;
+  final Widget child;
+  final Widget? floatingHeader;
   final String? subtitle;
   final bool? backButton;
   final Widget? floatingActionButton;
@@ -56,46 +59,65 @@ class _PageTemplateState extends State<PageTemplate> {
           body: Padding(
               padding: EdgeInsets.only(
                   left: 15,
-                  top: MediaQuery.of(context).viewPadding.top + 10,
+                  top: MediaQuery.of(context).viewPadding.top,
                   right: 15
               ),
-              child: Column (
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          IconButton(
-                            alignment: Alignment.centerLeft,
-                            constraints: const BoxConstraints(),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: widget.backButton == null ? _settings : _back,
-                            icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
-                            iconSize: 26,
-                            splashRadius: 15,
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 0),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget> [
-                                    Text(
-                                      widget.title,
-                                      style: AppDesign.current.textStyles.pageHeadline,
-                                    ),
-                                    Text(
-                                      widget.subtitle ?? getDateString(DateTime.now()),
-                                      style: AppDesign.current.textStyles.pageSubtitle,
-                                    )
-                                  ]
-                              )
+              child: ScrollShadow(
+                color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+                curve: Curves.ease,
+                size: 15,
+                child: ListView (
+                    padding: const EdgeInsets.only(top: 10),
+                    children: [
+                      IconButton(
+                        alignment: Alignment.centerLeft,
+                        constraints: const BoxConstraints(),
+                        padding: const EdgeInsets.all(0),
+                        onPressed: widget.backButton == null ? _settings : _back,
+                        icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
+                        iconSize: 26,
+                        splashRadius: 15,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget> [
+                                Text(
+                                  widget.title,
+                                  style: AppDesign.current.textStyles.pageHeadline,
+                                ),
+                                Text(
+                                  widget.subtitle ?? getDateString(DateTime.now()),
+                                  style: AppDesign.current.textStyles.pageSubtitle,
+                                )
+                              ]
                           )
-                        ]
-                    ),
-                    Flexible(
-                        child: widget.child
-                    )
-                  ]
+                      ),
+                      if (widget.floatingHeader != null)
+                        StickyHeader(
+                          content: Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: widget.child,
+                          ),
+                          header: Container(
+                            margin: const EdgeInsets.only(top: 10),
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppDesign.current.themeData.scaffoldBackgroundColor,
+                                  blurRadius: 10,
+                                  spreadRadius: 8
+                                )
+                              ]
+                            ),
+                            child: widget.floatingHeader!,
+                          )
+                        )
+                      else
+                        widget.child
+                    ]
+                ),
               )
           ),
           floatingActionButtonLocation: widget.floatingActionButtonLocation,

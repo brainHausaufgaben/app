@@ -1,7 +1,6 @@
 import 'package:brain_app/Backend/grade.dart';
+import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
@@ -127,6 +126,7 @@ class _GradesPage extends State<GradesPage> {
                         toast.show(context);
                         return;
                       } else {
+                        // TODO: Bearbeiten
                         switch(widget.type) {
                           // TODO: man muss noch auswählen können welches halb/drittel jahr
                           case GradeType.bigTest:
@@ -150,6 +150,20 @@ class _GradesPage extends State<GradesPage> {
                       child: Text(widget.previousGrade == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
                     )
                 ),
+              ),
+              if (widget.previousGrade != null) Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: ElevatedButton (
+                      onPressed: () {
+                        // TODO: löschen
+                        BrainApp.notifier.notifyOfChanges();
+                        Navigator.pop(context);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(vertical: 15),
+                        child: Icon(Icons.delete_forever),
+                      )
+                  )
               )
             ],
           )

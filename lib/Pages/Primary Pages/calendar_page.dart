@@ -7,56 +7,45 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/dismissable_box.dart';
+import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/edit_event_page.dart';
 import 'package:brain_app/Pages/edit_test_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}): super(key: key);
 
+  static DateTime selectedDay = DateTime.now();
+
   @override
   _CalendarPage createState() => _CalendarPage();
-
-  static DateTime selectedDay = DateTime.now();
 }
 
 class _CalendarPage extends State<CalendarPage> {
-
   List<Widget> getSelectedEvents() {
     List<Widget> boxes = [];
     List<Event> events = TimeTable.getEvents(CalendarPage.selectedDay);
     for (int i=0; i<events.length; i++) {
-      String? headline;
-      if (i == 0) headline = "Events";
-
       boxes.add(
-        Padding(
-          padding: headline != null ?
-              const EdgeInsets.only(bottom: 10, top: 20)
-              : const EdgeInsets.only(bottom: 10),
-          child: GestureDetector(
-              onTap: () => NavigationHelper.navigator.push(
-                  MaterialPageRoute(builder: (context) => EditEventPage(
-                    previousEvent: events[i],
-                  )
+          CustomIconButton(
+            dense: true,
+            action: () => NavigationHelper.navigator.push(
+                MaterialPageRoute(builder: (context) => EditEventPage(
+                  previousEvent: events[i],
                 )
-              ),
-            child: Box(
-              headline: headline,
-              child: PointElement(
-                color: AppDesign.current.primaryColor,
-                primaryText: events[i].name,
-                secondaryIcon: Icons.edit,
-                child: events[i].description.isEmpty ? null : Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
               )
+            ),
+            icon: Icons.edit,
+            child: PointElement(
+              color: AppDesign.current.primaryColor,
+              primaryText: events[i].name,
+              child: events[i].description.isEmpty ? null : Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
             )
           )
-        )
       );
     }
 
@@ -68,31 +57,20 @@ class _CalendarPage extends State<CalendarPage> {
     List<Test> tests = TimeTable.getTests(CalendarPage.selectedDay);
 
     for (int i=0; i<tests.length; i++) {
-      String? headline;
-      if (i == 0) headline = "Tests";
-
       boxes.add(
-        Padding(
-          padding: headline != null ?
-              const EdgeInsets.only(bottom: 10, top: 20)
-              : const EdgeInsets.only(bottom: 10),
-          child: GestureDetector(
-            onTap: () => NavigationHelper.navigator.push(
-                MaterialPageRoute(builder: (context) => EditTestPage(
-                  previousTest: tests[i],
-                )
-              )
-            ),
-            child: Box(
-              headline: headline,
-              child: PointElement(
-                color: tests[i].subject.color,
-                primaryText: tests[i].subject.name,
-                secondaryIcon: Icons.edit,
-                child: Text(tests[i].description,
-                  style: AppDesign.current.textStyles.pointElementSecondary),
+        CustomIconButton(
+          action: () => NavigationHelper.navigator.push(
+              MaterialPageRoute(builder: (context) => EditTestPage(
+                previousTest: tests[i],
               )
             )
+          ),
+          icon: Icons.edit,
+          child: PointElement(
+            color: tests[i].subject.color,
+            primaryText: tests[i].subject.name,
+            child: Text(tests[i].description,
+              style: AppDesign.current.textStyles.pointElementSecondary),
           )
         )
       );
@@ -101,14 +79,13 @@ class _CalendarPage extends State<CalendarPage> {
     return boxes;
   }
 
-  List<Padding> getSelectedHomework() {
-    List<Padding> boxes = [];
+  List<Widget> getSelectedHomework() {
+    List<Widget> boxes = [];
     List<Subject> subjects = [];
-    String? headline;
     for (Subject subject in TimeTable.getSubjectsByDate(CalendarPage.selectedDay)) {
       if(!subjects.contains(subject))subjects.add(subject);
-
     }
+
     for (Subject subject in subjects) {
       List<Homework> homework = TimeTable.getHomework(CalendarPage.selectedDay, subject);
       List<DismissableBox> dismissableBoxes = [];
@@ -120,17 +97,8 @@ class _CalendarPage extends State<CalendarPage> {
       }
 
       if (dismissableBoxes.isNotEmpty) {
-        if (boxes.isEmpty) {
-          headline = "Hausaufgaben";
-        } else {
-          headline = null;
-        }
-
         boxes.add(
-          Padding(
-            padding: headline != null ? const EdgeInsets.only(bottom: 10, top: 20) : const EdgeInsets.only(bottom: 10),
-            child: Box(
-              headline: headline,
+            Box(
               child: PointElement(
                   color: subject.color,
                   primaryText: subject.name,
@@ -138,8 +106,7 @@ class _CalendarPage extends State<CalendarPage> {
                     children: dismissableBoxes,
                   )
               ),
-            ),
-          )
+            )
         );
       }
     }
@@ -171,103 +138,106 @@ class _CalendarPage extends State<CalendarPage> {
             NavigationHelper.pushNamed("/eventsPage");
           }
       ),
-      child: ScrollShadow(
-        color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
-        curve: Curves.ease,
-        size: 15,
-        child: ListView(
-            padding: const EdgeInsets.only(bottom: 20),
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 10),
+      child: Column(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Box(
-                  child: TableCalendar(
-                      locale: "de_DE",
-                      firstDay: DateTime.utc(2018, 10, 16),
-                      lastDay: DateTime.now().add(const Duration(days:730)),
-                      startingDayOfWeek: StartingDayOfWeek.monday,
-                      focusedDay: CalendarPage.selectedDay,
-                      calendarStyle: CalendarStyle(
-                        defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                        weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                        outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-                        todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
-                        todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                        selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
-                        selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-                      ),
-                      daysOfWeekStyle: DaysOfWeekStyle(
-                          weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                          weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
-                      ),
-                      headerStyle: HeaderStyle(
-                        headerPadding: const EdgeInsets.only(bottom: 10),
-                        titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
-                        titleCentered: true,
-                        formatButtonVisible: false,
-                        leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
-                        rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
-                      ),
-                      calendarBuilders: CalendarBuilders(
-                        singleMarkerBuilder: (context, date, event) {
-                          Color color = Colors.deepOrange;
-                          BoxShape shape = BoxShape.circle;
-                          switch (event.runtimeType) {
-                            case Event:
-                              shape = BoxShape.rectangle;
-                              color = AppDesign.current.primaryColor;
-                              break;
-                            case Homework:
-                              Homework hm = event as Homework;
-                              color =  hm.subject.color;
-                              break;
-                            case Test:
-                              Test test = event as Test;
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                          width: 2,
-                                          color: test.subject.color
-                                      )
-                                  ),
-                                  width: 9.0,
-                                  height: 9.0,
-                                  margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                              );
-                          }
-                          return Container(
-                              decoration: BoxDecoration(shape: shape, color: color),
-                              width: 7.0,
-                              height: 7.0,
-                              margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                          );
+                    child: TableCalendar(
+                        locale: "de_DE",
+                        firstDay: DateTime.utc(2018, 10, 16),
+                        lastDay: DateTime.now().add(const Duration(days:730)),
+                        startingDayOfWeek: StartingDayOfWeek.monday,
+                        focusedDay: CalendarPage.selectedDay,
+                        calendarStyle: CalendarStyle(
+                          defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                          weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                          outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
+                          todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
+                          todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                          selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+                          selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+                        ),
+                        daysOfWeekStyle: DaysOfWeekStyle(
+                            weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
+                            weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
+                        ),
+                        headerStyle: HeaderStyle(
+                          headerPadding: const EdgeInsets.only(bottom: 10),
+                          titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
+                          titleCentered: true,
+                          formatButtonVisible: false,
+                          leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
+                          rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
+                        ),
+                        calendarBuilders: CalendarBuilders(
+                          singleMarkerBuilder: (context, date, event) {
+                            Color color = Colors.deepOrange;
+                            BoxShape shape = BoxShape.circle;
+                            switch (event.runtimeType) {
+                              case Event:
+                                shape = BoxShape.rectangle;
+                                color = AppDesign.current.primaryColor;
+                                break;
+                              case Homework:
+                                Homework hm = event as Homework;
+                                color =  hm.subject.color;
+                                break;
+                              case Test:
+                                Test test = event as Test;
+                                return Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            width: 2,
+                                            color: test.subject.color
+                                        )
+                                    ),
+                                    width: 9.0,
+                                    height: 9.0,
+                                    margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                                );
+                            }
+                            return Container(
+                                decoration: BoxDecoration(shape: shape, color: color),
+                                width: 7.0,
+                                height: 7.0,
+                                margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                            );
+                          },
+                        ),
+                        onDaySelected: (_selectedDay, _focusedDay) {
+                          setState(() {
+                            CalendarPage.selectedDay = _selectedDay;
+                          });
                         },
-                      ),
-                      onDaySelected: (_selectedDay, _focusedDay) {
-                        setState(() {
-                          CalendarPage.selectedDay = _selectedDay;
-                        });
-                      },
-                      selectedDayPredicate: (day) {
-                        return isSameDay(CalendarPage.selectedDay, day);
-                      },
-                      eventLoader: (date) {
-                        List<dynamic> events = [
-                          ...TimeTable.getEvents(date),
-                          ...getHomeworkByDay(date),
-                          ...TimeTable.getTests(date)
-                        ];
-                        return events;
-                      }
-                  )
+                        selectedDayPredicate: (day) {
+                          return isSameDay(CalendarPage.selectedDay, day);
+                        },
+                        eventLoader: (date) {
+                          List<dynamic> events = [
+                            ...TimeTable.getEvents(date),
+                            ...getHomeworkByDay(date),
+                            ...TimeTable.getTests(date)
+                          ];
+                          return events;
+                        }
+                    )
                 )
-              ),
-              ...getSelectedTests(),
-              ...getSelectedHomework(),
-              ...getSelectedEvents()
-            ]
-        ),
+            ),
+            if (TimeTable.getTests(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
+              headline: "Tests",
+              children: getSelectedTests(),
+            ),
+            if (getHomeworkByDay(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
+              headline: "Hausaufgaben",
+              children: getSelectedHomework(),
+            ),
+            if (TimeTable.getEvents(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
+              headline: "Events",
+              children: getSelectedEvents(),
+            )
+          ]
       )
     );
   }
