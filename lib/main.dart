@@ -70,14 +70,21 @@ class _BrainApp extends State<BrainApp> {
     super.initState();
 
     BrainApp.notifier.addListener(() => setState(() {}));
-    getPreferences().then((value) => AppDesign.toggleTheme(BrainApp.preferences["design"]));
-    TimeTable.init();
-    CustomNotifications.init();
-    getBoxText();
-    load();
-    setState(() {});
+
+    init().then((value) {
+      AppDesign.toggleTheme(BrainApp.preferences["design"]);
+    });
     // ElternPortalConnection.getHtml();
     //CustomNotifications.persistentNotification();
+  }
+
+  Future init() async {
+    TimeTable.init();
+
+    await getPreferences();
+    await CustomNotifications.init();
+    await getBoxText();
+    await load();
   }
 
   @override
@@ -208,7 +215,7 @@ class _BrainApp extends State<BrainApp> {
         int value = item["value"];
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
-        print(item["isBig"]);
+
         if(item["isBig"]) {
           BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
         } else {
@@ -222,7 +229,7 @@ class _BrainApp extends State<BrainApp> {
     TimeTable.saveEnabled = true;
   }
 
-  void getBoxText() async {
+  Future getBoxText() async {
     parseJokes().then((value) {
       setState(() {
         if (value != null) {

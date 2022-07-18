@@ -24,6 +24,12 @@ class NavigationHelper extends StatefulWidget {
     navigator.pushNamed(routeName);
   }
 
+  static void push(Widget route) {
+    navigator.push(
+        MaterialPageRoute(builder: (context) => route)
+    );
+  }
+
   @override
   _NavigationHelper createState() => _NavigationHelper();
 }

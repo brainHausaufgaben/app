@@ -35,9 +35,7 @@ class DismissableBox extends StatelessWidget {
 
               return true;
             } else if (direction == DismissDirection.endToStart) {
-              NavigationHelper.navigator.push(
-                  MaterialPageRoute(builder: (context) => HomeworkPage(previousHomework: homework))
-              );
+              NavigationHelper.push(HomeworkPage(previousHomework: homework));
               return false;
             }
 

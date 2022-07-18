@@ -75,12 +75,9 @@ class _GradeOverview extends State<GradeOverview>{
             ]
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: HeadlineWrap(
-            headline: "Alle Noten",
-            children: getGradeButtons()
-        ),
+      child: HeadlineWrap(
+        headline: "Alle Noten",
+        children: getGradeButtons()
       )
     );
   }

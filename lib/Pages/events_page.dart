@@ -72,58 +72,38 @@ class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin 
   
   @override
   Widget build(BuildContext context) {
-    return PageTemplate(
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
+      child: PageTemplate(
         backButton: true,
         title: "Neues Event",
-        child: DefaultTabController(
-            initialIndex: 0,
-            length: 2,
-            child: NestedScrollView(
-                headerSliverBuilder: (context, value) {
-                  return [
-                    SliverAppBar(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: AppDesign.current.boxStyle.borderRadius
-                        ),
-                        expandedHeight: 0,
-                        titleSpacing: 0,
-                        primary: false,
-                        backgroundColor: Colors.transparent,
-                        elevation: 2,
-                        shadowColor: Colors.grey.shade50,
-                        automaticallyImplyLeading: false,
-                        pinned: true,
-                        title: Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              color:  AppDesign.current.boxStyle.backgroundColor,
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          child: TabBar(
-                            controller: tabController,
-                            labelStyle: AppDesign.current.textStyles.tab,
-                            labelColor: AppDesign.current.textStyles.contrastColor,
-                            unselectedLabelColor: AppDesign.current.textStyles.color,
-                            indicator: BoxDecoration(
-                                color: AppDesign.current.primaryColor
-                            ),
-                            tabs: const [
-                              Tab(text: "Event", height: 55),
-                              Tab(text: "Test", height: 55)
-                            ],
-                          ),
-                        )
-                    ),
-                  ];
-                },
-                body: Padding(
-                  padding: const EdgeInsets.only(top: 15),
-                  child: TabBarView(
-                    controller: tabController,
-                    children: widget.subpages,
-                  ),
-                )
-            )
+        floatingHeader: Container(
+          decoration: BoxDecoration(
+              color: AppDesign.current.boxStyle.backgroundColor,
+              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: TabBar(
+            controller: tabController,
+            labelStyle: AppDesign.current.textStyles.tab,
+            labelColor: AppDesign.current.textStyles.contrastColor,
+            unselectedLabelColor: AppDesign.current.textStyles.color,
+            indicator: BoxDecoration(
+                color: AppDesign.current.primaryColor
+            ),
+            tabs: const [
+              Tab(text: "Event", height: 55),
+              Tab(text: "Test", height: 55)
+            ],
+          ),
+        ),
+        child: SizedBox(
+          height: 600,
+          child: TabBarView(
+            controller: tabController,
+            children: widget.subpages,
+          ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
@@ -151,6 +131,7 @@ class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin 
                 ]
             )
         )
+      )
     );
   }
 }

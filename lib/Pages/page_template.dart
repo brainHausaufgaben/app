@@ -52,9 +52,6 @@ class _PageTemplateState extends State<PageTemplate> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      onHorizontalDragEnd: (details) {
-        // TODO: es soll page switchen wenn man auf den drei hauptseiten ist
-      },
       child: Scaffold (
           body: Padding(
               padding: EdgeInsets.only(
@@ -67,7 +64,7 @@ class _PageTemplateState extends State<PageTemplate> {
                 curve: Curves.ease,
                 size: 15,
                 child: ListView (
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 10, bottom: 25),
                     children: [
                       IconButton(
                         alignment: Alignment.centerLeft,

@@ -9,7 +9,7 @@ class CustomNotifications{
   static bool notificationsEnabled = true;
   static bool notificationsPossible = true;
 
-  static void init() async{
+  static Future init() async{
 
     if(kIsWeb){
       notificationsPossible = false;

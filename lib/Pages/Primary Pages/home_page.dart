@@ -44,7 +44,6 @@ class _HomePage extends State<HomePage>{
       if(dayIndexes[i] == DateTime.now().weekday) headline = "Stundenplan Heute";
       if(dayIndexes[i] == DateTime.now().weekday + 1) headline = "Stundenplan Morgen";
       if(TimeTable.getSubjects(dayIndexes[i]).isNotEmpty) days.add(HomePageDay(day: dayIndexes[i], headline: headline,));
-
     }
 
     if (days.isEmpty) {
@@ -122,7 +121,8 @@ class _HomePage extends State<HomePage>{
       floatingActionButton: CustomMenuButton(
         defaultAction: () => NavigationHelper.pushNamed("/homeworkPage")
       ),
-      child: Column(
+      child: Wrap(
+        runSpacing: 20,
         children: getDays(),
       ),
       floatingHeader: Wrap(

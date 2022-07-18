@@ -33,9 +33,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.navigator.push(
-                MaterialPageRoute(builder: (context) => GradesPage(previousGrade: grade))
-            ),
+            action: () => NavigationHelper.push(GradesPage(previousGrade: grade)),
           )
       );
     }
@@ -56,9 +54,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.navigator.push(
-                MaterialPageRoute(builder: (context) => GradesPage(previousGrade: grade))
-            ),
+            action: () => NavigationHelper.push(GradesPage(previousGrade: grade)),
           )
       );
     }
@@ -72,7 +68,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
         title: widget.subject.name,
         backButton: true,
         floatingActionButton: CustomMenuButton(
-            defaultAction: () => NavigationHelper.pushNamed("/gradesPage")
+            defaultAction: () => NavigationHelper.push(GradesPage())
         ),
         floatingHeader: Container(
           padding: const EdgeInsets.symmetric(
@@ -103,7 +99,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: Wrap(
-            runSpacing: 15,
+            runSpacing: 20,
             children: [
               if (GradingSystem.getSmallGradesBySubject(widget.subject).isNotEmpty) HeadlineWrap(
                   headline: "Exen",

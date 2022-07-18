@@ -98,9 +98,9 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           )
         );
       }
+
       tabs.add(
-        ListView(
-          padding: EdgeInsets.zero,
+        Column(
           children: entries,
         )
       );
@@ -111,6 +111,49 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     int weekDay = DateTime.now().weekday;
+    return DefaultTabController(
+      initialIndex: weekDay > 5 ? 0 : weekDay - 1,
+      length: 5,
+      child: PageTemplate(
+        title: "Stundenplan",
+        backButton: true,
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.edit),
+            onPressed: () {
+              NavigationHelper.pushNamed("/settings/timetable/subjectOverview");
+            }
+        ),
+        floatingHeader: Container(
+          decoration: BoxDecoration(
+            color: AppDesign.current.boxStyle.backgroundColor,
+            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: TabBar(
+            labelStyle: AppDesign.current.textStyles.tab,
+            labelColor: AppDesign.current.textStyles.contrastColor,
+            unselectedLabelColor: AppDesign.current.textStyles.color,
+            indicator: BoxDecoration(
+                color: AppDesign.current.primaryColor
+            ),
+            tabs: const [
+              Tab(text: "Mo", height: 55),
+              Tab(text: "Di", height: 55),
+              Tab(text: "Mi", height: 55),
+              Tab(text: "Do", height: 55),
+              Tab(text: "Fr", height: 55)
+            ],
+          ),
+        ),
+        // TODO: Very dumm aber es geht im moment
+        child: SizedBox(
+          height: 600,
+          child: TabBarView(
+            children: getTimetableTabs(),
+          )
+        )
+      )
+    );
     return PageTemplate(
       title: "Stundenplan",
       backButton: true,

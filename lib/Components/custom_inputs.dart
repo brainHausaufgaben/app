@@ -176,6 +176,7 @@ class CustomDateButton extends StatelessWidget {
             theme: AppDesign.current.themeData,
             height: 300,
             styleDatePicker: MaterialRoundedDatePickerStyle(
+              backgroundHeader: AppDesign.current.primaryColor,
               paddingMonthHeader: const EdgeInsets.all(11),
               backgroundPicker: AppDesign.current.boxStyle.backgroundColor,
               textStyleDayOnCalendar: TextStyle(color: AppDesign.current.textStyles.color),

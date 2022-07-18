@@ -1,12 +1,11 @@
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/subject_page.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 class SubjectOverview extends StatefulWidget {
   const SubjectOverview({Key? key}) : super(key: key);
@@ -26,12 +25,7 @@ class _SubjectOverview extends State<SubjectOverview> {
         ),
         icon: Icons.edit,
         dense: true,
-        action: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SubjectPage(previousSubject: subject))
-          );
-        },
+        action: () => NavigationHelper.push(SubjectPage(previousSubject: subject))
       ));
     }
     return buttons;
@@ -43,22 +37,11 @@ class _SubjectOverview extends State<SubjectOverview> {
       title: "Alle Fächer",
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SubjectPage())
-        )
+        onPressed: () => NavigationHelper.pushNamed("/settings/timetable/subjectPage")
       ),
-      child: ScrollShadow(
-        color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
-        curve: Curves.ease,
-        size: 15,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: Wrap(
-            runSpacing: 5,
-            children: getSubjectButtons(),
-          ),
-        ),
+      child: Wrap(
+        runSpacing: 5,
+        children: getSubjectButtons(),
       ),
       backButton: true,
     );
