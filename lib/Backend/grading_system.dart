@@ -87,8 +87,10 @@ class GradingSystem{
     int s = 0;
     for(Subject subject in TimeTable.subjects){
       double grade = getAverage(subject);
-      if(grade != -1)s++;
-      d += grade;
+      if(grade != -1.0) {
+        s++;
+        d += grade;
+      }
     }
     if(s == 0) return 0;
     return d / s;
