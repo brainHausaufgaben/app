@@ -66,14 +66,16 @@ class _PageTemplateState extends State<PageTemplate> {
                 child: ListView (
                     padding: const EdgeInsets.only(top: 10, bottom: 25),
                     children: [
-                      IconButton(
-                        alignment: Alignment.centerLeft,
-                        constraints: const BoxConstraints(),
-                        padding: const EdgeInsets.all(0),
-                        onPressed: widget.backButton == null ? _settings : _back,
-                        icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
-                        iconSize: 26,
-                        splashRadius: 15,
+                      Align(
+                        child: IconButton(
+                          constraints: const BoxConstraints(),
+                          padding: const EdgeInsets.all(0),
+                          onPressed: widget.backButton == null ? _settings : _back,
+                          icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
+                          iconSize: 26,
+                          splashRadius: 15,
+                        ),
+                        alignment: Alignment.topLeft,
                       ),
                       Padding(
                           padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
