@@ -70,18 +70,15 @@ class _BrainApp extends State<BrainApp> {
     super.initState();
 
     BrainApp.notifier.addListener(() => setState(() {}));
+    getPreferences().then((value) => AppDesign.toggleTheme(BrainApp.preferences["design"]));
 
-    init().then((value) {
-      AppDesign.toggleTheme(BrainApp.preferences["design"]);
-    });
+    init().then((value) => setState((){}));
     // ElternPortalConnection.getHtml();
     //CustomNotifications.persistentNotification();
   }
 
   Future init() async {
     TimeTable.init();
-
-    await getPreferences();
     await CustomNotifications.init();
     await getBoxText();
     await load();
