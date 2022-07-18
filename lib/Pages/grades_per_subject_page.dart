@@ -84,7 +84,13 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               children: [
                 GradeWidget(
                   name: GradingSystem.getAverage(widget.subject).round() == 1 ? "Punkt" : "Punkte",
-                  value: GradingSystem.getAverage(widget.subject).round().toString(),
+                  value:((){
+                    if(GradingSystem.getAverage(widget.subject) == -1) {
+                      return "-";
+                    } else {
+                      return GradingSystem.getAverage(widget.subject).round().toString();
+                    }
+                  }()) ,
                   reversed: false,
                 ),
                 const Spacer(flex: 1),

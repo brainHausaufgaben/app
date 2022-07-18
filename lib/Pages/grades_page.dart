@@ -126,21 +126,7 @@ class _GradesPage extends State<GradesPage> {
                         toast.show(context);
                         return;
                       } else {
-                        // TODO: Bearbeiten
-                        switch(widget.type) {
-                          // TODO: man muss noch auswählen können welches halb/drittel jahr
-                          case GradeType.bigTest:
-                            BigGrade(widget.grade, widget.selectedSubject!, 1);
-                            break;
-                          case GradeType.smallTest:
-                          case GradeType.oralGrade:
-                            SmallGrade(widget.grade, widget.selectedSubject!, widget.type!, 1);
-                            break;
-
-                          default:
-                            return;
-                        }
-
+                        widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type,null);
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);
                       }
@@ -155,7 +141,7 @@ class _GradesPage extends State<GradesPage> {
                   padding: const EdgeInsets.only(left: 10),
                   child: ElevatedButton (
                       onPressed: () {
-                        // TODO: löschen
+                        GradingSystem.removeGrade(widget.previousGrade!);
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);
                       },

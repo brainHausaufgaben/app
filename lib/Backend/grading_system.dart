@@ -37,6 +37,15 @@ class GradingSystem{
     }
     SaveSystem.saveGrades();
   }
+  static void removeGrade(Grade grade){
+    if(grade.runtimeType == BigGrade) {
+      if(bigGrades.contains(grade)) bigGrades.remove(grade as BigGrade);
+    } else if(grade.runtimeType == SmallGrade) {
+      if(smallGrades.contains(grade)) smallGrades.remove(grade as SmallGrade);
+    }
+    SaveSystem.saveGrades();
+  }
+
 
   static List<SmallGrade> getSmallGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<SmallGrade> output = [];
@@ -90,7 +99,7 @@ class GradingSystem{
     if(grade != null) {
       return grade;
     } else {
-      return "Schwanz";
+      return "-";
     }
   }
 

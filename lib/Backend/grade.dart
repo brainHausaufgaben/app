@@ -1,5 +1,7 @@
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/time_table.dart';
 
 abstract class Grade{
   int value;
@@ -14,6 +16,18 @@ abstract class Grade{
 
   Grade.createWithTime(this.value,this.subject,this.type,this.time){
     GradingSystem.addGrade(this);
+  }
+
+  void edit(int? value,Subject? subject, GradeType? type,GradeTime? time ){
+    if(value != null){
+      this.value = value;
+    }
+    if(subject != null){
+      this.subject = subject;
+    }
+    if(time != null){
+      this.time = time;
+    }
   }
 
   Map toJSONEncodable();
@@ -61,6 +75,17 @@ class SmallGrade extends Grade{
     map["partOfYear"] = time.partOfYear;
     return map;
   }
+   @override
+  void edit(int? value, Subject? subject, GradeType? type, GradeTime? time) {
+    super.edit(value, subject, type, time);
+    if(type != null){
+      if(type == GradeType.bigTest){
+        GradingSystem.removeGrade(this);
+        BigGrade(this.value,this.subject,this.time.partOfYear);
+      }
+    }
+    SaveSystem.saveGrades();
+  }
 
 }
 
@@ -78,6 +103,19 @@ class BigGrade extends Grade{
     map["partOfYear"] = time.partOfYear;
     return map;
   }
+
+  @override
+  void edit(int? value, Subject? subject, GradeType? type, GradeTime? time) {
+    super.edit(value, subject, type, time);
+    if(type != null){
+      if(type == GradeType.bigTest){
+        GradingSystem.removeGrade(this);
+        SmallGrade(this.value,this.subject,type ,this.time.partOfYear);
+      }
+    }
+    SaveSystem.saveGrades();
+  }
+
 }
 
 enum GradeType{
