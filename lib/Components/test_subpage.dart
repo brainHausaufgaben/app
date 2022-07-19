@@ -54,7 +54,7 @@ class _TestSubpage extends State<TestSubpage> {
                   placeholder: "Test Inhalte",
                   maxLines: 10,
                 ),
-                CustomDropdown(
+                BrainDropdown(
                     defaultText: Text(
                         "Fach", style: AppDesign.current.textStyles.input),
                     items: getDropdowns(),
@@ -65,7 +65,7 @@ class _TestSubpage extends State<TestSubpage> {
                       });
                     }
                 ),
-                CustomDateButton(
+                BrainDateButton(
                     value: widget.selectedDate,
                     text: "Nächste Stunde",
                     selectedSubject: widget.selectedSubject,

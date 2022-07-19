@@ -57,7 +57,7 @@ class _EditTestPage extends State<EditTestPage> {
                     placeholder: "Test Inhalte",
                     maxLines: 10,
                   ),
-                  CustomDropdown(
+                  BrainDropdown(
                       defaultText: Text(
                           "Fach", style: AppDesign.current.textStyles.input),
                       items: getDropdowns(),
@@ -68,7 +68,7 @@ class _EditTestPage extends State<EditTestPage> {
                         });
                       }
                   ),
-                  CustomDateButton(
+                  BrainDateButton(
                       value: widget.testSubpage.selectedDate,
                       text: "Nächste Stunde",
                       selectedSubject: widget.testSubpage.selectedSubject,

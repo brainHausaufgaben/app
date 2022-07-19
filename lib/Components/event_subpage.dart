@@ -39,7 +39,7 @@ class _EventSubpage extends State<EventSubpage> {
                 placeholder: "Event Beschreibung",
                 maxLines: 5,
               ),
-              CustomDateButton(
+              BrainDateButton(
                   value: widget.selectedDate,
                   text: "Nächste Stunde",
                   onDateSelect: (value) {

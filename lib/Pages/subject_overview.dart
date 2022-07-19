@@ -15,10 +15,10 @@ class SubjectOverview extends StatefulWidget {
 }
 
 class _SubjectOverview extends State<SubjectOverview> {
-  List<CustomIconButton> getSubjectButtons() {
-    List<CustomIconButton> buttons = [];
+  List<BrainIconButton> getSubjectButtons() {
+    List<BrainIconButton> buttons = [];
     for (Subject subject in TimeTable.subjects) {
-      buttons.add(CustomIconButton(
+      buttons.add(BrainIconButton(
         child: PointElement(
           primaryText: subject.name,
           color: subject.color,

@@ -72,9 +72,9 @@ class _HomeworkPage extends State<HomeworkPage> {
             controller: widget.homeworkController,
             placeholder: "Hausaufgabe",
           ),
-          CustomDropdown(
+          BrainDropdown(
               defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
-              items: CustomDropdown.getSubjectDropdowns(),
+              items: BrainDropdown.getSubjectDropdowns(),
               currentValue: widget.selectedSubject,
               onChanged: (newValue) {
                 setState(() {
@@ -82,7 +82,7 @@ class _HomeworkPage extends State<HomeworkPage> {
                 });
               }
           ),
-          CustomDateButton(
+          BrainDateButton(
             value: widget.selectedDate,
             text: "Nächste Stunde",
             selectedSubject: widget.selectedSubject,

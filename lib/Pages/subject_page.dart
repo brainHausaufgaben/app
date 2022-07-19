@@ -28,26 +28,27 @@ class _SubjectPage extends State<SubjectPage> {
     return PageTemplate(
       backButton: true,
       title: widget.previousSubject != null ? "Fach Bearbeiten" : "Neues Fach",
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.start,
+      child: Flex(
+        direction: Axis.horizontal,
         children: [
-          BrainTextField(
-            controller: widget.subjectController,
-            placeholder: "Fach Name",
-            maxLines: 1,
-            maxLength: 20,
-          ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: CustomColorPicker(
-              pickerColor: widget.pickerColor,
-              onColorSelect: (color) {
-                setState(() {
-                  widget.pickerColor = color;
-                });
-                Navigator.of(context, rootNavigator: true).pop();
-              }
+            padding: const EdgeInsets.only(right: 15),
+            child: BrainColorPicker(
+                pickerColor: widget.pickerColor,
+                onColorSelect: (color) {
+                  setState(() {
+                    widget.pickerColor = color;
+                  });
+                  Navigator.of(context, rootNavigator: true).pop();
+                }
+            )
+          ),
+          Flexible(
+            child: BrainTextField(
+              controller: widget.subjectController,
+              placeholder: "Fach Name",
+              maxLines: 1,
+              maxLength: 20,
             )
           )
         ]

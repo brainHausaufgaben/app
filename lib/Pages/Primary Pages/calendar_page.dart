@@ -31,7 +31,7 @@ class _CalendarPage extends State<CalendarPage> {
     List<Event> events = TimeTable.getEvents(CalendarPage.selectedDay);
     for (int i=0; i<events.length; i++) {
       boxes.add(
-          CustomIconButton(
+          BrainIconButton(
             dense: true,
             action: () => NavigationHelper.push(EditEventPage(previousEvent: events[i])),
             icon: Icons.edit,
@@ -53,7 +53,7 @@ class _CalendarPage extends State<CalendarPage> {
 
     for (int i=0; i<tests.length; i++) {
       boxes.add(
-        CustomIconButton(
+        BrainIconButton(
           action: () => NavigationHelper.push(EditTestPage(previousTest: tests[i])),
           icon: Icons.edit,
           child: PointElement(

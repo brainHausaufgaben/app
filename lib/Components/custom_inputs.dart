@@ -83,8 +83,8 @@ class _BrainTextField extends State<BrainTextField> {
   }
 }
 
-class CustomDropdown<ItemType> extends StatelessWidget {
-  const CustomDropdown({
+class BrainDropdown<ItemType> extends StatelessWidget {
+  const BrainDropdown({
     Key? key,
     required this.defaultText,
     required this.currentValue,
@@ -138,8 +138,8 @@ class CustomDropdown<ItemType> extends StatelessWidget {
   }
 }
 
-class CustomDateButton extends StatelessWidget {
-  const CustomDateButton({
+class BrainDateButton extends StatelessWidget {
+  const BrainDateButton({
     Key? key,
     required this.value,
     required this.onDateSelect,
@@ -163,7 +163,7 @@ class CustomDateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomIconButton(
+    return BrainIconButton(
       child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.current.textStyles.input),
       icon: Icons.date_range,
       action: () {
@@ -232,8 +232,8 @@ class CustomDateButton extends StatelessWidget {
   }
 }
 
-class CustomIconButton extends StatelessWidget {
-  const CustomIconButton({
+class BrainIconButton extends StatelessWidget {
+  const BrainIconButton({
     Key? key,
     required this.action,
     required this.child,
@@ -273,59 +273,90 @@ class CustomIconButton extends StatelessWidget {
   }
 }
 
-class CustomColorPicker extends StatelessWidget {
-  const CustomColorPicker({
+class BrainColorPicker extends StatelessWidget {
+  const BrainColorPicker({
     Key? key,
     required this.pickerColor,
-    required this.onColorSelect
+    required this.onColorSelect,
+    this.asIconButton = true
   }) : super(key: key);
 
   final Color pickerColor;
+  final bool asIconButton;
   final Function(Color) onColorSelect;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
-            color: AppDesign.current.boxStyle.backgroundColor
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
-          child: Row(
-            children: [
-              Container(
-                height: 25.0,
-                width: 25.0,
-                decoration: BoxDecoration(
-                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
-                  color: pickerColor
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: Text("Farbe", style: AppDesign.current.textStyles.input),
-              )
-            ],
-          ),
+    return asIconButton ? Container(
+      width: 55,
+      height: 55,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100)
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: pickerColor,
+          padding: EdgeInsets.zero,
         ),
-        style: TextButton.styleFrom(
-            padding: EdgeInsets.zero,
+        child: Icon(
+            Icons.color_lens_outlined,
+            color: pickerColor.computeLuminance() < 0.5 ? Colors.white : Colors.black
         ),
-        onPressed: () {showDialog(
-            context: context,
-            builder: (_) {
-              return AlertDialog(
-                title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
-                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
-                content: MaterialPicker(
+        onPressed: () => showDialog(
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
+              backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+              content: MaterialPicker(
                   pickerColor: pickerColor,
                   onColorChanged: onColorSelect
-                ),
-              );
-            }
-        );
+              ),
+            );
+          }
+        )
+      ),
+    ) : TextButton(
+      style: TextButton.styleFrom(
+        primary: AppDesign.current.primaryColor,
+      ),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: asIconButton ? BorderRadius.circular(100) : AppDesign.current.boxStyle.inputBorderRadius,
+          color: AppDesign.current.boxStyle.backgroundColor
+        ),
+        padding: EdgeInsets.symmetric(vertical: 14, horizontal: asIconButton ? 14 : 12),
+        child: asIconButton ? const Icon(Icons.color_lens_outlined) : Row(
+          children: [
+            Container(
+              height: 25.0,
+              width: 25.0,
+              decoration: BoxDecoration(
+                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+                  color: pickerColor
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text("Farbe", style: AppDesign.current.textStyles.input),
+            )
+          ],
+        ),
+      ),
+      onPressed: () => showDialog(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
+            backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+            content: MaterialPicker(
+              pickerColor: pickerColor,
+              onColorChanged: onColorSelect
+            ),
+          );
         }
+      )
     );
   }
 }

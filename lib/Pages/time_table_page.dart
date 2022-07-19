@@ -78,7 +78,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                   child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
                 ),
                 Expanded(
-                  child: CustomDropdown(
+                  child: BrainDropdown(
                     defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
                     currentValue: TimeTable.week[day].subjects[i]?.subject,
                     items: getDropdowns(),

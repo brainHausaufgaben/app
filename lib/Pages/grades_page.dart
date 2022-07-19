@@ -73,20 +73,20 @@ class _GradesPage extends State<GradesPage> {
       child: Wrap(
           runSpacing: 10,
           children: [
-            CustomIconButton(
+            BrainIconButton(
               child: Text(widget.grade.toString(), style: AppDesign.current.textStyles.input),
               icon: Icons.numbers,
               action: numberPickerDialog
             ),
-            CustomDropdown(
+            BrainDropdown(
               defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
               currentValue: widget.selectedSubject,
-              items: CustomDropdown.getSubjectDropdowns(),
+              items: BrainDropdown.getSubjectDropdowns(),
               onChanged: (subject) {
                 setState(() => widget.selectedSubject = subject);
               },
             ),
-            CustomDropdown(
+            BrainDropdown(
               defaultText: Text("Art der Note", style: AppDesign.current.textStyles.input),
               currentValue: widget.type,
               items: [

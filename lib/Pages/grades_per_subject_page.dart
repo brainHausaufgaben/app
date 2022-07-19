@@ -25,7 +25,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
 
     for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
       buttons.add(
-          CustomIconButton(
+          BrainIconButton(
             dense: true,
             child: PointElement(
               color: widget.subject.color,
@@ -46,7 +46,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
 
     for (BigGrade grade in GradingSystem.getBigGradesBySubject(widget.subject)) {
       buttons.add(
-          CustomIconButton(
+          BrainIconButton(
             dense: true,
             child: PointElement(
               color: widget.subject.color,

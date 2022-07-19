@@ -24,7 +24,7 @@ class _GradeOverview extends State<GradeOverview>{
     for (Subject subject in TimeTable.subjects) {
       double average = GradingSystem.getAverage(subject);
       buttons.add(
-        CustomIconButton(
+        BrainIconButton(
           dense: true,
           child: PointElement(
             color: subject.color,
