@@ -78,28 +78,30 @@ class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin 
       child: PageTemplate(
         backButton: true,
         title: "Neues Event",
-        floatingHeader: Container(
-          decoration: BoxDecoration(
-              color: AppDesign.current.boxStyle.backgroundColor,
-              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
-          ),
-          clipBehavior: Clip.hardEdge,
-          child: TabBar(
-            controller: tabController,
-            labelStyle: AppDesign.current.textStyles.tab,
-            labelColor: AppDesign.current.textStyles.contrastColor,
-            unselectedLabelColor: AppDesign.current.textStyles.color,
-            indicator: BoxDecoration(
-                color: AppDesign.current.primaryColor
+        floatingHeader: Center(
+          child: Container(
+            decoration: BoxDecoration(
+                color: AppDesign.current.boxStyle.backgroundColor,
+                borderRadius: AppDesign.current.boxStyle.inputBorderRadius
             ),
-            tabs: const [
-              Tab(text: "Event", height: 55),
-              Tab(text: "Test", height: 55)
-            ],
+            clipBehavior: Clip.hardEdge,
+            child: TabBar(
+              controller: tabController,
+              labelStyle: AppDesign.current.textStyles.tab,
+              labelColor: AppDesign.current.textStyles.contrastColor,
+              unselectedLabelColor: AppDesign.current.textStyles.color,
+              indicator: BoxDecoration(
+                  color: AppDesign.current.primaryColor
+              ),
+              tabs: const [
+                Tab(text: "Event", height: 55),
+                Tab(text: "Test", height: 55)
+              ],
+            ),
           ),
         ),
         child: SizedBox(
-          height: 600,
+          height: 400,
           child: TabBarView(
             controller: tabController,
             children: widget.subpages,

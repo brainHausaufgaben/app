@@ -56,6 +56,7 @@ class _CalendarPage extends State<CalendarPage> {
         BrainIconButton(
           action: () => NavigationHelper.push(EditTestPage(previousTest: tests[i])),
           icon: Icons.edit,
+          dense: true,
           child: PointElement(
             color: tests[i].subject.color,
             primaryText: tests[i].subject.name,
@@ -123,10 +124,9 @@ class _CalendarPage extends State<CalendarPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Kalender",
-      floatingActionButton: CustomMenuButton(
-          defaultAction: () {
-            NavigationHelper.pushNamed("/eventsPage");
-          }
+      floatingActionButton: BrainMenuButton(
+        defaultAction: () => NavigationHelper.pushNamed("/eventsPage"),
+        defaultLabel: "Neu",
       ),
       child: Wrap(
           runSpacing: 20,

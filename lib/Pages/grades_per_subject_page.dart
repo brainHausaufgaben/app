@@ -67,9 +67,11 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     return PageTemplate(
         title: widget.subject.name,
         backButton: true,
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () => NavigationHelper.push(GradesPage())
+        floatingActionButton: BrainMenuButton(
+          defaultAction: () => NavigationHelper.pushNamed("/gradesPage"),
+          defaultLabel: "Neue Note",
+          icon: Icons.add,
+          withEntries: false,
         ),
         floatingHeader: Container(
           padding: const EdgeInsets.symmetric(

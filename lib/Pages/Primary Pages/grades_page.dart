@@ -46,8 +46,9 @@ class _GradeOverview extends State<GradeOverview>{
   Widget build(BuildContext context) {
     return PageTemplate(
       title: 'Noten',
-      floatingActionButton: CustomMenuButton(
-          defaultAction: () => NavigationHelper.pushNamed("/gradesPage")
+      floatingActionButton: BrainMenuButton(
+        defaultAction: () => NavigationHelper.pushNamed("/gradesPage"),
+        defaultLabel: "Neu",
       ),
       floatingHeader: Container(
         padding: const EdgeInsets.symmetric(
@@ -75,10 +76,10 @@ class _GradeOverview extends State<GradeOverview>{
             ]
         ),
       ),
-      child: HeadlineWrap(
+      child: TimeTable.subjects.isNotEmpty ? HeadlineWrap(
         headline: "Alle Noten",
         children: getGradeButtons()
-      )
+      ) : Container()
     );
   }
 }

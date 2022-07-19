@@ -37,7 +37,6 @@ class BrainApp extends StatefulWidget {
   static Map<String, dynamic> preferences = {
     "warningBoxCollapsed": false,
     "mediaBoxCollapsed": false,
-    "gradesBoxCollapsed": false,
     "showMediaBox": true,
     "persistentNotifications": false,
     "design": "Monochrome",
@@ -149,6 +148,7 @@ class _BrainApp extends State<BrainApp> {
         return MapEntry(entry[2], icon);
       }
     }
+    return null;
   }
 
   Future load() async{

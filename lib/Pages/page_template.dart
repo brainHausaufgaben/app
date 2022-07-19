@@ -64,6 +64,7 @@ class _PageTemplateState extends State<PageTemplate> {
                 curve: Curves.ease,
                 size: 15,
                 child: ListView (
+                   shrinkWrap: true,
                     padding: const EdgeInsets.only(top: 10, bottom: 25),
                     children: [
                       Align(
@@ -78,7 +79,7 @@ class _PageTemplateState extends State<PageTemplate> {
                         alignment: Alignment.topLeft,
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
+                          padding: EdgeInsets.only(top: 30, bottom: widget.floatingHeader != null ? 20 : 30),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget> [

@@ -6,8 +6,6 @@ import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 import '../../Components/box.dart';
 import '../page_template.dart';
 import 'package:brain_app/Components/collapsible_box.dart';
@@ -118,8 +116,9 @@ class _HomePage extends State<HomePage>{
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return PageTemplate(
       title: 'Übersicht',
-      floatingActionButton: CustomMenuButton(
-        defaultAction: () => NavigationHelper.pushNamed("/homeworkPage")
+      floatingActionButton: BrainMenuButton(
+        defaultAction: () => NavigationHelper.pushNamed("/homeworkPage"),
+        defaultLabel: "Neu",
       ),
       child: Wrap(
         runSpacing: 20,

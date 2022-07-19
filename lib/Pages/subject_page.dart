@@ -68,10 +68,10 @@ class _SubjectPage extends State<SubjectPage> {
                         } else {
                           if (widget.previousSubject != null) {
                             TimeTable.getSubject(widget.previousSubject!.id)!.edit(widget.subjectController.text, widget.pickerColor);
-                            BrainApp.notifier.notifyOfChanges();
                           } else {
                             Subject(widget.subjectController.text, widget.pickerColor);
                           }
+                          BrainApp.notifier.notifyOfChanges();
                           Navigator.pop(context);
                         }
                       },

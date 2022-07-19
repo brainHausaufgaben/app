@@ -117,11 +117,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       child: PageTemplate(
         title: "Stundenplan",
         backButton: true,
-        floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.edit),
-            onPressed: () {
-              NavigationHelper.pushNamed("/settings/timetable/subjectOverview");
-            }
+        floatingActionButton: BrainMenuButton(
+          defaultAction: () => NavigationHelper.pushNamed("/settings/timetable/subjectOverview"),
+          defaultLabel: "Fächer Bearbeiten",
+          icon: Icons.edit,
+          withEntries: false,
         ),
         floatingHeader: Container(
           decoration: BoxDecoration(

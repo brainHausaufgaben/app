@@ -492,28 +492,38 @@ class SettingsEntry extends StatelessWidget {
   }
 }
 
-class CustomMenuButton extends StatelessWidget {
-  const CustomMenuButton({Key? key, required this.defaultAction}) : super(key: key);
+class BrainMenuButton extends StatelessWidget {
+  const BrainMenuButton({
+    Key? key,
+    required this.defaultAction,
+    required this.defaultLabel,
+    this.withEntries = true,
+    this.icon = Icons.add,
+  }) : super(key: key);
 
   final Function() defaultAction;
+  final bool withEntries;
+  final IconData icon;
+  final String defaultLabel;
 
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
       onPress: defaultAction,
-      icon: Icons.add,
+      icon: icon,
       activeIcon: Icons.close,
-      children: [
+      children: withEntries ? [
         getHomeworkMenu(context),
         getEventMenu(context),
         getGradesMenu(context)
-      ],
+      ] : [],
       overlayColor: Colors.black,
       overlayOpacity: 0.6,
       spacing: 5,
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),
       animationDuration: const Duration(milliseconds: 200),
+      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(defaultLabel, style: const TextStyle(letterSpacing: 0.5)) : null,
     );
   }
 

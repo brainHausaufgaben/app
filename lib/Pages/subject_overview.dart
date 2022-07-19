@@ -35,9 +35,11 @@ class _SubjectOverview extends State<SubjectOverview> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Alle Fächer",
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => NavigationHelper.pushNamed("/settings/timetable/subjectPage")
+      floatingActionButton: BrainMenuButton(
+        defaultAction: () => NavigationHelper.pushNamed("/settings/timetable/subjectPage"),
+        defaultLabel: "Neues Fach",
+        icon: Icons.add,
+        withEntries: false,
       ),
       child: Wrap(
         runSpacing: 5,
