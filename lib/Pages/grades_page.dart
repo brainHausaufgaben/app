@@ -11,9 +11,9 @@ import '../Components/brain_toast.dart';
 import '../Components/custom_inputs.dart';
 
 class GradesPage extends StatefulWidget {
-  GradesPage({Key? key, this.previousGrade}) : super(key: key) {
+  GradesPage({Key? key, this.previousGrade, Subject? subject}) : super(key: key) {
     grade = previousGrade?.value ?? 0;
-    selectedSubject = previousGrade?.subject;
+    selectedSubject = previousGrade?.subject ?? subject;
     type = previousGrade?.type;
   }
 
@@ -161,9 +161,9 @@ class _GradesPage extends State<GradesPage> {
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);
                       },
-                      child: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 15),
-                        child: Icon(Icons.delete_forever),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        child: Icon(Icons.delete_forever, color: AppDesign.current.textStyles.contrastColor),
                       )
                   )
               )

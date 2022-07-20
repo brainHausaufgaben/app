@@ -50,23 +50,56 @@ class _HomePage extends State<HomePage>{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.add_box_outlined, size: 40),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: Icon(Icons.add_box_rounded, size: 40)
+                  ),
+                  Icon(Icons.add_box_outlined, size: 40)
+                ],
+              ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 25),
+                padding: const EdgeInsets.only(top: 10, bottom: 25),
                 child: Text(
                   "Dein Stundenplan ist noch leer",
-                  style: AppDesign.current.textStyles.boxHeadline,
+                  style: AppDesign.current.textStyles.boxHeadline.copyWith(fontSize: 22),
                   textAlign: TextAlign.center,
                 ),
               ),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: AppDesign.current.primaryColor,
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 13)
-                ),
-                onPressed: () {
-                  NavigationHelper.pushNamed("/settings/timetable");
-                },
-                child: Text("Füge Fächer hinzu", style: AppDesign.current.textStyles.buttonText),
+              Flex(
+                direction: Axis.horizontal,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: AppDesign.current.primaryColor,
+                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
+                      ),
+                      onPressed: () {
+                        NavigationHelper.pushNamed("/settings/timetable");
+                      },
+                      child: Text("Stundenplan", style: AppDesign.current.textStyles.buttonText),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            primary: AppDesign.current.primaryColor,
+                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
+                        ),
+                        onPressed: () {
+                          NavigationHelper.pushNamed("/settings/timetable/subjectPage");
+                        },
+                        child: Text("Neues Fach", style: AppDesign.current.textStyles.buttonText),
+                      ),
+                    ),
+                  )
+                ],
               )
             ]
           )

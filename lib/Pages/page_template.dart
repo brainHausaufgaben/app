@@ -72,7 +72,7 @@ class _PageTemplateState extends State<PageTemplate> {
                           constraints: const BoxConstraints(),
                           padding: const EdgeInsets.all(0),
                           onPressed: widget.backButton == null ? _settings : _back,
-                          icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_return, color: AppDesign.current.textStyles.color),
+                          icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_backspace, color: AppDesign.current.textStyles.color),
                           iconSize: 26,
                           splashRadius: 15,
                         ),

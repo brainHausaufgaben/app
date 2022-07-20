@@ -510,8 +510,8 @@ class BrainMenuButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SpeedDial(
       onPress: defaultAction,
-      icon: icon,
-      activeIcon: Icons.close,
+      child: Icon(icon, color: AppDesign.current.textStyles.contrastColor),
+      activeChild: Icon(Icons.close, color: AppDesign.current.textStyles.contrastColor),
       children: withEntries ? [
         getHomeworkMenu(context),
         getEventMenu(context),

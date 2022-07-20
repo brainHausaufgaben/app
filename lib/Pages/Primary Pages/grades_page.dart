@@ -104,7 +104,7 @@ class GradeWidget extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             decoration: BoxDecoration(
                 borderRadius: AppDesign.current.boxStyle.borderRadius,
-                color: AppDesign.current.themeData.scaffoldBackgroundColor
+                color: AppDesign.current.boxStyle.backgroundColor
             ),
             child: Center(
                 child: Wrap(

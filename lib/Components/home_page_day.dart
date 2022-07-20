@@ -63,7 +63,6 @@ class _HomePageDay extends  State<HomePageDay>{
     widget.subjectsOccurred = [];
     return Box(
         headline: widget.headline,
-        // Mit wrap kann man besser spacing zwischen den kindern machen
         child: Wrap(
           runSpacing: 10,
           children: widget.getWidgets(),

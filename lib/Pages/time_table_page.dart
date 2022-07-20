@@ -41,9 +41,9 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
     ));
     subjects.add(DropdownMenuItem<Subject>(
       child: Center(
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: AppDesign.current.primaryColor,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppDesign.current.primaryColor,
             minimumSize: Size.infinite
           ),
           onPressed: () {
@@ -71,13 +71,16 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         entries.add(
           Padding(
             padding: const EdgeInsets.only(bottom: 5, left: 0),
-            child: Row(
+            child: Flex(
+              direction: Axis.horizontal,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
+                Flexible(
+                  child: Center(
+                    child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
+                  )
                 ),
                 Expanded(
+                  flex: 4,
                   child: BrainDropdown(
                     defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
                     currentValue: TimeTable.week[day].subjects[i]?.subject,
@@ -126,7 +129,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         floatingHeader: Container(
           decoration: BoxDecoration(
             color: AppDesign.current.boxStyle.backgroundColor,
-            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+            borderRadius: BorderRadius.circular(100)
           ),
           clipBehavior: Clip.hardEdge,
           child: TabBar(
@@ -134,7 +137,8 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             labelColor: AppDesign.current.textStyles.contrastColor,
             unselectedLabelColor: AppDesign.current.textStyles.color,
             indicator: BoxDecoration(
-                color: AppDesign.current.primaryColor
+              color: AppDesign.current.primaryColor,
+              borderRadius: BorderRadius.circular(100)
             ),
             tabs: const [
               Tab(text: "Mo", height: 55),
@@ -150,67 +154,6 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           height: 600,
           child: TabBarView(
             children: getTimetableTabs(),
-          )
-        )
-      )
-    );
-    return PageTemplate(
-      title: "Stundenplan",
-      backButton: true,
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.edit),
-        onPressed: () {
-          NavigationHelper.pushNamed("/settings/timetable/subjectOverview");
-        }
-      ),
-      child: DefaultTabController(
-        initialIndex: weekDay > 5 ? 0 : weekDay - 1,
-        length: 5,
-        child: NestedScrollView(
-          headerSliverBuilder: (context, value) {
-            return [
-              SliverAppBar(
-                  shape:  RoundedRectangleBorder(
-                  borderRadius: AppDesign.current.boxStyle.borderRadius
-                ),
-                expandedHeight: 0,
-                titleSpacing: 0,
-                primary: false,
-                backgroundColor: Colors.transparent,
-                elevation: 2,
-                shadowColor: Colors.grey.shade50,
-                automaticallyImplyLeading: false,
-                pinned: true,
-                title: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                      color:  AppDesign.current.boxStyle.backgroundColor,
-                      borderRadius: BorderRadius.circular(10)
-                  ),
-                  child: TabBar(
-                    labelStyle: AppDesign.current.textStyles.tab,
-                    labelColor: AppDesign.current.textStyles.contrastColor,
-                    unselectedLabelColor: AppDesign.current.textStyles.color,
-                    indicator: BoxDecoration(
-                        color: AppDesign.current.primaryColor
-                    ),
-                    tabs: const [
-                      Tab(text: "Mo", height: 55),
-                      Tab(text: "Di", height: 55),
-                      Tab(text: "Mi", height: 55),
-                      Tab(text: "Do", height: 55),
-                      Tab(text: "Fr", height: 55)
-                    ],
-                  ),
-                )
-              ),
-            ];
-          },
-          body: Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: TabBarView(
-              children: getTimetableTabs(),
-            ),
           )
         )
       )

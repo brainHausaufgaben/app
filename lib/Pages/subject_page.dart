@@ -89,9 +89,9 @@ class _SubjectPage extends State<SubjectPage> {
                           BrainApp.notifier.notifyOfChanges();
                           Navigator.pop(context);
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          child: Icon(Icons.delete_forever),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Icon(Icons.delete_forever, color: AppDesign.current.textStyles.contrastColor),
                         )
                     )
                 )

@@ -29,9 +29,9 @@ class AppDesign {
 abstract class Design {
   static Map<String, Design> allDesigns = {
     "Monochrome" : MonochromeDesign(),
-    "Forest Green" : ForestGreenDesign(),
     "Carrot Orange" : CarrotOrangeDesign(),
     "Pastel Red" : PastelRedDesign(),
+    "Forest Green" : ForestGreenDesign(),
     "Ocean Blue" : OceanBlueDesign(),
     "Jeremias Purple" : JeremiasPurpleDesign(),
     "Just Golden" : JustGoldenDesign(),
@@ -54,34 +54,35 @@ class MonochromeDesign extends Design {
 class ForestGreenDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFF82B063), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFF1A7343), const Color(0xFFEBF5EF), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFF82B063), const Color(0xFF0D0E0F), const Color(0xFF1A1A1D), const Color(0xFFFFFFFF), const Color(0xFF212229), true);
+      generateDesign(const Color(0xFF1A7343), const Color(0xFF0E1A12), const Color(
+          0xFF15261B), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
 }
 
 class CarrotOrangeDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFFE06E04), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFFE86918), const Color(0xFFFAF0EE), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFFE06E04), const Color(0xFF0D0E0F), const Color(0xFF1A1A1D), const Color(0xFFFFFFFF), const Color(0xFF212229), true);
+      generateDesign(const Color(0xFFE86918), const Color(0xFF1C110B), const Color(0xFF2F1E14), const Color(0xFFFFFFFF), const Color(0xFF212229), true);
 }
 
 class PastelRedDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFFEF6363), const Color(0xFFFFE8E8), const Color(0xFFFFF8F8), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFFC73053), const Color(0xFFFFEEE7), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFFEF6363), const Color(0xFF331D1D), const Color(0xFF4B2D2D), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFFC73053), const Color(0xFF26151A), const Color(0xFF3B2026), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
 }
 
 class OceanBlueDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFF4B56B7), const Color(0xFFE7E7FF), const Color(0xFFF8F8FF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFF2A5AC5), const Color(0xFFF2F7FF), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFF5661C7), const Color(0xFF191B3A), const Color(0xFF262D5D), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), false);

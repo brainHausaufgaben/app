@@ -62,8 +62,6 @@ class BrainApp extends StatefulWidget {
 }
 
 class _BrainApp extends State<BrainApp> {
-
-
   @override
   void initState() {
     super.initState();
@@ -85,10 +83,6 @@ class _BrainApp extends State<BrainApp> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations(
-        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]
-    );
-
     return MaterialApp(
       title: 'Brain Hausaufgabenheft',
       home: CustomQuickActions(

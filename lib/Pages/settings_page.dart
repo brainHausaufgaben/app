@@ -136,11 +136,15 @@ class _SettingsPage extends State<SettingsPage> {
           SettingsEntry(
             children: [
               SettingsLinkButton(
+                text: "Mebis",
+                link: "https://lernplattform.mebis.bayern.de/my/",
+              ),
+              SettingsLinkButton(
                 text: "Bug melden",
                 link: "https://forms.gle/GcfGNa1Lhvnt245Y6",
               )
-            ],
-          ),
+            ]
+          )
         ]
       )
     );
