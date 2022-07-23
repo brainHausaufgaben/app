@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,20 +8,21 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import '../main.dart';
 
-class SettingsPage extends StatefulWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+class DesignSettingsPage extends StatefulWidget {
+  const DesignSettingsPage({Key? key}) : super(key: key);
 
   @override
-  State<SettingsPage> createState() => _SettingsPage();
+  State<DesignSettingsPage> createState() => _DesignSettingsPage();
 }
 
-class _SettingsPage extends State<SettingsPage> {
+class _DesignSettingsPage extends State<DesignSettingsPage> {
   final List<bool> radioList = List.filled(Design.allDesigns.length, false);
   String version = "...";
 
   @override
   void initState() {
     super.initState();
+    radioList[Design.allDesigns.keys.toList().indexOf(BrainApp.preferences["design"])] = true;
     getVersion();
   }
 
@@ -76,77 +76,19 @@ class _SettingsPage extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-      title: "Einstellungen",
-      subtitle: "Version " + version,
-      backButton: true,
-      child: Wrap(
-        runSpacing: 10,
-        children: [
-          SettingsEntry(
-            children: [
-              SettingsNavigatorButton(
-                text: "Stundenplan",
-                action: () {
-                  Navigator.of(context).pushNamed("/settings/timetable");
-                },
-              )
-            ]
-          ),
-          SettingsEntry(
+        title: "Design Einstellungen",
+        subtitle: "Version " + version,
+        backButton: true,
+        child: SettingsEntry(
             children: [
               SettingsSwitchButton(
                 text: "Darkmode",
-                action: () {
-                  AppDesign.toggleDarkMode();
-                },
+                action: () => AppDesign.toggleDarkMode(),
                 state: BrainApp.preferences["darkMode"],
               ),
               getThemeChooser()
             ]
-          ),
-          SettingsEntry(
-            children: [
-              SettingsSwitchButton(
-                text: "Witze, Funfacts...",
-                action: () {
-                  setState(() {
-                    BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);
-                    BrainApp.notifier.notifyOfChanges();
-                  });
-                },
-                state: BrainApp.preferences["showMediaBox"],
-              ),
-              SettingsSwitchButton(
-                text: "Benachrichtigungen",
-                action: () {
-                  setState(() {
-                    BrainApp.updatePreference("persistentNotifications", !BrainApp.preferences["persistentNotifications"]);
-
-                    if(BrainApp.preferences["persistentNotifications"]){
-                      CustomNotifications.enableNotifications();
-                    } else{
-                      CustomNotifications.disableNotifications();
-                    }
-                  });
-                },
-                state: BrainApp.preferences["persistentNotifications"],
-              )
-            ]
-          ),
-          SettingsEntry(
-            children: [
-              SettingsLinkButton(
-                text: "Mebis",
-                link: "https://lernplattform.mebis.bayern.de/my/",
-              ),
-              SettingsLinkButton(
-                text: "Bug melden",
-                link: "https://forms.gle/GcfGNa1Lhvnt245Y6",
-              )
-            ]
-          )
-        ]
-      )
+        )
     );
   }
 }

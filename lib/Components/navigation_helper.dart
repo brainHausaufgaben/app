@@ -1,34 +1,51 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/navigator_routes.dart';
 import 'package:brain_app/Components/sidebar.dart';
+import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
+import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
+import 'package:brain_app/Pages/Primary%20Pages/home.dart';
+import 'package:brain_app/Pages/add_edit_grades.dart';
+import 'package:brain_app/Pages/add_edit_subjects.dart';
+import 'package:brain_app/Pages/design_settings.dart';
+import 'package:brain_app/Pages/settings.dart';
+import 'package:brain_app/Pages/subject_overview.dart';
+import 'package:brain_app/Pages/time_table.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
 import 'package:brain_app/Components/custom_navigation_bar.dart';
-import 'package:flutter/services.dart';
+
+import '../Backend/quick_actions.dart';
+
 
 class NavigationHelper extends StatefulWidget {
   const NavigationHelper({Key? key}) : super(key: key);
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
+  static GlobalKey<NavigatorState> rootKey = GlobalKey();
 
   static BuildContext get context => navigatorKey.currentContext!;
 
-  static NavigatorState get navigator {
-    if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
+  static NavigatorState getNavigator([bool forceNested = false]) {
+    if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth || forceNested) {
       return Navigator.of(context);
     } else {
       return Navigator.of(context, rootNavigator: true);
     }
   }
 
-  static void pushNamed(String routeName) {
-    navigator.pushNamed(routeName);
+  static void pop() {
+    getNavigator().pop();
   }
 
   static void push(Widget route) {
-    navigator.push(
-        getRouteBuilder(null, route: route)
-    );
+
+  }
+
+  static void pushNamed(String route, {dynamic payload}) {
+    getNavigator().pushNamed(route, arguments: payload);
+  }
+
+  static void replaceCurrent(Widget route, [forceNested = false]) {
+    // getNavigator(forceNested).pushReplacement(getRouteBuilder(route));
   }
 
   static FadeTransition transitionBuilder(context, animation, secondaryAnimation, child) {
@@ -43,17 +60,17 @@ class NavigationHelper extends StatefulWidget {
     );
   }
 
-  static PageRoute getRouteBuilder(RouteSettings? routeSettings, {String? routeName, Widget? route}) {
-    Map<String, WidgetBuilder> routes = NavigatorRoutes.get();
+  static PageRoute getRouteBuilder(String route) {
+    Map<String, WidgetBuilder> routes = NavigationRoutes.get();
 
     if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
       return PageRouteBuilder(
-        pageBuilder: (context, a1, a2) => route ?? routes[routeName ?? routeSettings?.name]!(context),
+        pageBuilder: (context, a1, a2) => routes[route]!(context),
         transitionsBuilder: transitionBuilder,
       );
     } else {
       return MaterialPageRoute(
-          builder: (context) => route ?? routes[routeName ?? routeSettings?.name]!(context)
+          builder: routes[route]!
       );
     }
   }
@@ -90,22 +107,46 @@ class _NavigationHelper extends State<NavigationHelper> {
   @override
   Widget build(BuildContext context) {
     Widget navigator = Navigator(
-        key: NavigationHelper.navigatorKey,
-        initialRoute: "/home",
-        onGenerateRoute: (routeSettings) {
-          if (routeSettings.name == "/") {
-            return NavigationHelper.getRouteBuilder(routeSettings, routeName: "/home");
-          } else {
-            return NavigationHelper.getRouteBuilder(routeSettings);
-          }
-        }
+      key: NavigationHelper.navigatorKey,
+      initialRoute: "home",
+      onGenerateRoute: (settings) {
+          return NavigationHelper.getRouteBuilder(settings.name!);
+      },
+
     );
 
-    return Scaffold(
-      body: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
-          ? wrapInSidebar(navigator)
-          : navigator,
-      bottomNavigationBar: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? null : CustomNavigationBar(),
+    return WillPopScope(
+      onWillPop: () async {
+        NavigationHelper.pop();
+        return false;
+      },
+      child: Scaffold(
+        body: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
+            ? wrapInSidebar(navigator)
+            : navigator,
+        bottomNavigationBar: MediaQuery.of(context).size.width < AppDesign.breakPointWidth
+            ? CustomNavigationBar()
+            : null,
+      ),
     );
+  }
+}
+
+class NavigationRoutes {
+  static Map<String, WidgetBuilder> get() {
+    return {
+      "/": (context) => kIsWeb
+          ? NavigationHelper()
+          : CustomQuickActions(child: NavigationHelper()),
+      "home": (context) => HomePage(),
+      "calendar": (context) => CalendarPage(),
+      "gradesOverview": (context) => GradeOverview(),
+      "gradesPage": (context) => GradesPage(),
+      "subjectOverview": (context) => SubjectOverview(),
+      "subjectPage": (context) => SubjectPage(),
+      "timeTable": (context) => TimeTablePage(),
+      "settings": (context) => SettingsPage(),
+      "designSettings": (context) => DesignSettingsPage()
+    };
   }
 }

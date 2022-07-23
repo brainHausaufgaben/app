@@ -9,13 +9,10 @@ import 'package:numberpicker/numberpicker.dart';
 import '../Backend/design.dart';
 import '../Components/brain_toast.dart';
 import '../Components/custom_inputs.dart';
+import '../Components/navigation_helper.dart';
 
 class GradesPage extends StatefulWidget {
-  GradesPage({Key? key, this.previousGrade, Subject? subject}) : super(key: key) {
-    grade = previousGrade?.value ?? 0;
-    selectedSubject = previousGrade?.subject ?? subject;
-    type = previousGrade?.type;
-  }
+  GradesPage({Key? key}) : super(key: key);
 
   Grade? previousGrade;
   int grade = 0;
@@ -65,8 +62,27 @@ class _GradesPage extends State<GradesPage> {
     );
   }
 
+  void getData() {
+    Grade? args = ModalRoute.of(NavigationHelper.rootKey.currentContext!)!.settings.arguments as Grade?;
+    if (args == null) return;
+
+    switch(args.runtimeType) {
+      case BigGrade:
+      case SmallGrade:
+      case Grade:
+        widget.grade = args.value;
+        widget.selectedSubject = args.subject;
+        widget.type = args.type;
+        break;
+      case Subject:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    getData();
+
     return PageTemplate(
       backButton: true,
       title: widget.previousGrade == null ? "Neue Note" : "Note Bearbeiten",
@@ -159,7 +175,7 @@ class _GradesPage extends State<GradesPage> {
                       onPressed: () {
                         GradingSystem.removeGrade(widget.previousGrade!);
                         BrainApp.notifier.notifyOfChanges();
-                        Navigator.pop(context);
+                        NavigationHelper.pop();
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),

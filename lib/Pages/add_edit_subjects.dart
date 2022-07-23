@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/main.dart';
@@ -72,7 +73,7 @@ class _SubjectPage extends State<SubjectPage> {
                             Subject(widget.subjectController.text, widget.pickerColor);
                           }
                           BrainApp.notifier.notifyOfChanges();
-                          Navigator.pop(context);
+                          NavigationHelper.pop();
                         }
                       },
                       child: Padding(
@@ -87,7 +88,7 @@ class _SubjectPage extends State<SubjectPage> {
                         onPressed: () {
                           TimeTable.deleteSubject(widget.previousSubject!);
                           BrainApp.notifier.notifyOfChanges();
-                          Navigator.pop(context);
+                          NavigationHelper.pop();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),

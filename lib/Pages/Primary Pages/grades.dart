@@ -5,7 +5,8 @@ import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/grades_per_subject_page.dart';
+import 'package:brain_app/Pages/add_edit_grades.dart';
+import 'package:brain_app/Pages/grades_per_subject.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -32,7 +33,7 @@ class _GradeOverview extends State<GradeOverview>{
             child: Text(average == -1.0 ? "Noch keine Noten" : "${average.toInt()} Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
           ),
           icon: Icons.edit,
-          action: () => NavigationHelper.navigator.push(
+          action: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => GradesPerSubjectPage(subject: subject))
           ),
         )
@@ -47,7 +48,7 @@ class _GradeOverview extends State<GradeOverview>{
     return PageTemplate(
       title: 'Noten',
       floatingActionButton: BrainMenuButton(
-        defaultAction: () => NavigationHelper.pushNamed("/gradesPage"),
+        defaultAction: () => NavigationHelper.pushNamed("gradesPage"),
         defaultLabel: "Neu",
       ),
       floatingHeader: Container(

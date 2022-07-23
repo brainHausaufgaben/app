@@ -4,6 +4,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_toast.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/main.dart';
@@ -26,6 +27,12 @@ class HomeworkPage extends StatefulWidget {
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
+  @override
+  void dispose() {
+    widget.homeworkController.dispose();
+    super.dispose();
+  }
+
   void onPressed() {
     if (widget.homeworkController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
@@ -56,7 +63,7 @@ class _HomeworkPage extends State<HomeworkPage> {
       } else {
         Homework(widget.selectedSubject!,widget.selectedSubject!.getNextDate()! ,widget.homeworkController.text);
       }
-      Navigator.pop(context);
+      NavigationHelper.pop();
     }
   }
 

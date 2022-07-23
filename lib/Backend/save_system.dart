@@ -21,9 +21,8 @@ class SaveSystem{
      storage.setItem("time_table", TimeTable.timeTableToJSONEncodable());
    }
 
-   static  getTimeTable(){
+   static getTimeTable(){
      return storage.getItem("time_table");
-
    }
 
    static void saveHomework(){

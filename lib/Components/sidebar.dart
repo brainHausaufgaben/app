@@ -1,5 +1,8 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
+import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
+import 'package:brain_app/Pages/Primary%20Pages/home.dart';
 import 'package:flutter/material.dart';
 
 class CustomSidebar extends StatefulWidget {
@@ -50,7 +53,7 @@ class _CustomSidebar extends State<CustomSidebar> {
             activated: selectedIndex == 0,
             onTap: () {
               if (selectedIndex != 0) {
-                Navigator.of(NavigationHelper.context).pushNamed("/gradeOverview");
+                NavigationHelper.pushNamed("gradesOverview");
                 setState(() {
                   selectedIndex = 0;
                 });
@@ -64,7 +67,7 @@ class _CustomSidebar extends State<CustomSidebar> {
             activated: selectedIndex == 1,
             onTap: () {
               if (selectedIndex != 1) {
-                Navigator.of(NavigationHelper.context).pushNamed("/home");
+                NavigationHelper.push(HomePage());
                 setState(() {
                   selectedIndex = 1;
                 });
@@ -78,7 +81,7 @@ class _CustomSidebar extends State<CustomSidebar> {
             activated: selectedIndex == 2,
             onTap: () {
               if (selectedIndex != 2) {
-                Navigator.of(NavigationHelper.context).pushNamed("/calendar");
+                NavigationHelper.push(CalendarPage());
                 setState(() {
                   selectedIndex = 2;
                 });

@@ -1,5 +1,8 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
+import 'package:brain_app/Pages/Primary%20Pages/home.dart';
 import 'package:flutter/material.dart';
+import '../Pages/Primary Pages/calendar.dart';
 import 'navigation_helper.dart';
 
 class CustomNavigationBar extends StatefulWidget {
@@ -34,7 +37,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             child: GestureDetector(
                 onTap: () {
                   if (selectedIndex != 0) {
-                    Navigator.of(NavigationHelper.context).pushNamed("/gradeOverview");
+                    NavigationHelper.replaceCurrent(GradeOverview(), true);
                     setState(() {
                       selectedIndex = 0;
                     });
@@ -52,7 +55,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             child: GestureDetector(
                 onTap: () {
                   if (selectedIndex != 1) {
-                    Navigator.of(NavigationHelper.context).pushNamed("/home");
+                    NavigationHelper.replaceCurrent(HomePage(), true);
                     setState(() {
                       selectedIndex = 1;
                     });
@@ -70,7 +73,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
             child: GestureDetector(
                 onTap: () {
                   if (selectedIndex != 2) {
-                    Navigator.of(NavigationHelper.context).pushNamed("/calendar");
+                    NavigationHelper.replaceCurrent(CalendarPage(), true);
                     setState(() {
                       selectedIndex = 2;
                     });

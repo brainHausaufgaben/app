@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/grade.dart';
-import 'package:brain_app/Backend/navigator_routes.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,16 +83,15 @@ class _BrainApp extends State<BrainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      key: NavigationHelper.rootKey,
       title: 'Brain Hausaufgabenheft',
-      home: CustomQuickActions(
-          child: NavigationHelper()
-      ),
+      initialRoute: "/",
+      routes: NavigationRoutes.get(),
       theme: AppDesign.current.themeData,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
         Locale('de', 'DE')
       ],
-      routes: NavigatorRoutes.get(),
       builder: (context, child) {
         return ScrollConfiguration(
           behavior: StretchingIndicator(),

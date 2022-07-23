@@ -1,6 +1,6 @@
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/grades_page.dart';
-import 'package:brain_app/Pages/homework_page.dart';
+import 'package:brain_app/Pages/add_edit_grades.dart';
+import 'package:brain_app/Pages/add_homework.dart';
 import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
 
@@ -44,9 +44,9 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
   void _handleQuickActions() {
     quickActions.initialize((shortcutType) {
       if (shortcutType == 'add_homework') {
-        NavigationHelper.pushNamed("/homeworkPage");
+        NavigationHelper.push(HomeworkPage());
       } else if(shortcutType == 'action_help') {
-        NavigationHelper.pushNamed("/gradesPage");
+        NavigationHelper.push(GradesPage());
       }
     });
   }

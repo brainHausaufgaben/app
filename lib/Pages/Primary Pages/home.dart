@@ -4,9 +4,14 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
+import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
+import 'package:brain_app/Pages/add_homework.dart';
+import 'package:brain_app/Pages/time_table.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../Components/box.dart';
+import '../add_edit_subjects.dart';
 import '../page_template.dart';
 import 'package:brain_app/Components/collapsible_box.dart';
 
@@ -78,9 +83,7 @@ class _HomePage extends State<HomePage>{
                           primary: AppDesign.current.primaryColor,
                           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
                       ),
-                      onPressed: () {
-                        NavigationHelper.pushNamed("/settings/timetable");
-                      },
+                      onPressed: () => NavigationHelper.push(TimeTablePage()),
                       child: Text("Stundenplan", style: AppDesign.current.textStyles.buttonText),
                     ),
                   ),
@@ -92,9 +95,7 @@ class _HomePage extends State<HomePage>{
                             primary: AppDesign.current.primaryColor,
                             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
                         ),
-                        onPressed: () {
-                          NavigationHelper.pushNamed("/settings/timetable/subjectPage");
-                        },
+                        onPressed: () => NavigationHelper.push(SubjectPage()),
                         child: Text("Neues Fach", style: AppDesign.current.textStyles.buttonText),
                       ),
                     ),
@@ -147,32 +148,41 @@ class _HomePage extends State<HomePage>{
   @override
   Widget build(BuildContext context) {
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
-    return PageTemplate(
-      title: 'Übersicht',
-      floatingActionButton: BrainMenuButton(
-        defaultAction: () => NavigationHelper.pushNamed("/homeworkPage"),
-        defaultLabel: "Neu",
-      ),
-      child: Wrap(
-        runSpacing: 20,
-        children: getDays(),
-      ),
-      floatingHeader: Wrap(
-        runSpacing: 5,
-        children: [
-          getWarningBox(),
-          if (BrainApp.preferences["showMediaBox"]) CollapsibleBox(
-            text: BrainApp.todaysJoke,
-            icon: BrainApp.icon,
-            collapsed: BrainApp.preferences["mediaBoxCollapsed"],
-            onTap: () {
-              setState(() {
-                BrainApp.updatePreference("mediaBoxCollapsed", !BrainApp.preferences["mediaBoxCollapsed"]);
-              });
-            }
+    return GestureDetector(
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity! > 0.0) {
+          NavigationHelper.replaceCurrent(GradeOverview(), true);
+        } else {
+          NavigationHelper.replaceCurrent(CalendarPage(), true);
+        }
+      },
+      child: PageTemplate(
+          title: 'Übersicht',
+          floatingActionButton: BrainMenuButton(
+            defaultAction: () => NavigationHelper.push(HomeworkPage()),
+            defaultLabel: "Neu",
+          ),
+          child: Wrap(
+            runSpacing: 20,
+            children: getDays(),
+          ),
+          floatingHeader: Wrap(
+              runSpacing: 5,
+              children: [
+                getWarningBox(),
+                if (BrainApp.preferences["showMediaBox"]) CollapsibleBox(
+                    text: BrainApp.todaysJoke,
+                    icon: BrainApp.icon,
+                    collapsed: BrainApp.preferences["mediaBoxCollapsed"],
+                    onTap: () {
+                      setState(() {
+                        BrainApp.updatePreference("mediaBoxCollapsed", !BrainApp.preferences["mediaBoxCollapsed"]);
+                      });
+                    }
+                )
+              ]
           )
-        ]
-      )
+      ),
     );
   }
 }

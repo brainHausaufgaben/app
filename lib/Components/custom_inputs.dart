@@ -2,6 +2,9 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/Pages/add_edit_grades.dart';
+import 'package:brain_app/Pages/add_events.dart';
+import 'package:brain_app/Pages/add_homework.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/services.dart';
@@ -535,9 +538,7 @@ class BrainMenuButton extends StatelessWidget {
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
         label: "Neue Hausaufgabe",
         child: const Icon(Icons.description_rounded),
-        onTap: () {
-          NavigationHelper.pushNamed("/homeworkPage");
-        }
+        onTap: () => NavigationHelper.push(HomeworkPage())
     );
   }
 
@@ -549,9 +550,8 @@ class BrainMenuButton extends StatelessWidget {
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
         label: "Neues Event",
         child: const Icon(Icons.schedule_rounded),
-        onTap: () {
-          NavigationHelper.pushNamed("/eventsPage");
-        }
+        onTap: () => NavigationHelper.push(AddEventsPage())
+
     );
   }
 
@@ -563,9 +563,7 @@ class BrainMenuButton extends StatelessWidget {
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
         label: "Neue Note",
         child: const Icon(Icons.grading),
-        onTap: () {
-          NavigationHelper.pushNamed("/gradesPage");
-        }
+        onTap: () => NavigationHelper.push(GradesPage())
     );
   }
 }

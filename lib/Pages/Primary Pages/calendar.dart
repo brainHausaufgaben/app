@@ -10,8 +10,9 @@ import 'package:brain_app/Components/dismissable_box.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/edit_event_page.dart';
-import 'package:brain_app/Pages/edit_test_page.dart';
+import 'package:brain_app/Pages/add_events.dart';
+import 'package:brain_app/Pages/edit_events.dart';
+import 'package:brain_app/Pages/edit_tests.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -125,7 +126,7 @@ class _CalendarPage extends State<CalendarPage> {
     return PageTemplate(
       title: "Kalender",
       floatingActionButton: BrainMenuButton(
-        defaultAction: () => NavigationHelper.pushNamed("/eventsPage"),
+        defaultAction: () => NavigationHelper.push(AddEventsPage()),
         defaultLabel: "Neu",
       ),
       child: Wrap(

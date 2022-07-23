@@ -10,17 +10,23 @@ import 'package:flutter/material.dart';
 
 import '../Components/brain_toast.dart';
 
-class EventsPage extends StatefulWidget {
-  EventsPage({Key? key}) : super(key: key);
+class AddEventsPage extends StatefulWidget {
+  AddEventsPage({Key? key}) : super(key: key);
 
   final List<Widget> subpages = [EventSubpage(), TestSubpage()];
 
   @override
-  State<EventsPage> createState() => _EventsPage();
+  State<AddEventsPage> createState() => _EventsPage();
 }
 
-class _EventsPage extends State<EventsPage> with SingleTickerProviderStateMixin {
+class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMixin {
   late TabController tabController;
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {

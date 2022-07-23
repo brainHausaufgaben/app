@@ -5,7 +5,6 @@ import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/grades_page.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -33,7 +32,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.push(GradesPage(previousGrade: grade)),
+            action: () => NavigationHelper.pushNamed("gradesPage", payload: grade),
           )
       );
     }
@@ -54,7 +53,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.push(GradesPage(previousGrade: grade)),
+            action: () => NavigationHelper.pushNamed("gradesPage", payload: grade),
           )
       );
     }
@@ -68,7 +67,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
         title: widget.subject.name,
         backButton: true,
         floatingActionButton: BrainMenuButton(
-          defaultAction: () => NavigationHelper.push(GradesPage(subject: widget.subject)),
+          defaultAction: () => NavigationHelper.pushNamed("gradesPage", payload: widget.subject),
           defaultLabel: "Neue Note",
           icon: Icons.add,
           withEntries: false,

@@ -3,7 +3,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/custom_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/subject_page.dart';
+import 'package:brain_app/Pages/add_edit_subjects.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +36,7 @@ class _SubjectOverview extends State<SubjectOverview> {
     return PageTemplate(
       title: "Alle Fächer",
       floatingActionButton: BrainMenuButton(
-        defaultAction: () => NavigationHelper.pushNamed("/settings/timetable/subjectPage"),
+        defaultAction: () => NavigationHelper.pushNamed("subjectPage"),
         defaultLabel: "Neues Fach",
         icon: Icons.add,
         withEntries: false,

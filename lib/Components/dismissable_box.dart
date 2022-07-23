@@ -2,7 +2,7 @@ import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/homework_page.dart';
+import 'package:brain_app/Pages/add_homework.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
