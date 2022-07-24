@@ -9,11 +9,9 @@ import 'package:flutter/material.dart';
 import '../Components/brain_toast.dart';
 
 class EditEventPage extends StatefulWidget {
-  EditEventPage({Key? key, required this.previousEvent}) : super(key: key) {
-    eventSubpage = EventSubpage(previousEvent: previousEvent);
-  }
+  EditEventPage({Key? key}) : super(key: key);
 
-  final Event previousEvent;
+  late Event previousEvent;
   EventSubpage eventSubpage = EventSubpage();
 
   @override
@@ -21,8 +19,18 @@ class EditEventPage extends StatefulWidget {
 }
 
 class _TestPage extends State<EditEventPage> {
+  void getData() {
+    Event data = ModalRoute.of(context)!.settings.arguments as Event;
+    setState(() {
+      widget.previousEvent = data;
+      widget.eventSubpage = EventSubpage(previousEvent: data);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getData();
+
     return PageTemplate(
       backButton: true,
       title: "Event Bearbeiten",

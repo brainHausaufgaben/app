@@ -8,8 +8,7 @@ import 'package:numberpicker/numberpicker.dart';
 
 import '../Backend/design.dart';
 import '../Components/brain_toast.dart';
-import '../Components/custom_inputs.dart';
-import '../Components/navigation_helper.dart';
+import '../Components/brain_inputs.dart';
 
 class GradesPage extends StatefulWidget {
   GradesPage({Key? key}) : super(key: key);
@@ -24,6 +23,8 @@ class GradesPage extends StatefulWidget {
 }
 
 class _GradesPage extends State<GradesPage> {
+  bool alreadyFetchedData = false;
+
   void numberPickerDialog() {
     showDialog(
         context: context,
@@ -63,25 +64,30 @@ class _GradesPage extends State<GradesPage> {
   }
 
   void getData() {
-    Grade? args = ModalRoute.of(NavigationHelper.rootKey.currentContext!)!.settings.arguments as Grade?;
+    alreadyFetchedData = true;
+    dynamic args = ModalRoute.of(context)!.settings.arguments;
     if (args == null) return;
 
-    switch(args.runtimeType) {
-      case BigGrade:
-      case SmallGrade:
-      case Grade:
-        widget.grade = args.value;
-        widget.selectedSubject = args.subject;
-        widget.type = args.type;
-        break;
-      case Subject:
-        break;
-    }
+    setState(() {
+      switch(args.runtimeType) {
+        case BigGrade:
+        case SmallGrade:
+        case Grade:
+          widget.previousGrade = args;
+          widget.grade = args.value;
+          widget.selectedSubject = args.subject;
+          widget.type = args.type;
+          break;
+        case Subject:
+          widget.selectedSubject = args;
+          break;
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    if (!alreadyFetchedData) getData();
 
     return PageTemplate(
       backButton: true,
@@ -157,7 +163,7 @@ class _GradesPage extends State<GradesPage> {
                               return;
                           }
                         } else {
-                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type,null);
+                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type, null);
                         }
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);
@@ -175,7 +181,7 @@ class _GradesPage extends State<GradesPage> {
                       onPressed: () {
                         GradingSystem.removeGrade(widget.previousGrade!);
                         BrainApp.notifier.notifyOfChanges();
-                        NavigationHelper.pop();
+                        Navigator.of(context).pop();
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),

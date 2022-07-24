@@ -1,19 +1,14 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
-import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
-import 'package:brain_app/Pages/add_homework.dart';
-import 'package:brain_app/Pages/time_table.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../Components/box.dart';
-import '../add_edit_subjects.dart';
 import '../page_template.dart';
-import 'package:brain_app/Components/collapsible_box.dart';
+import 'package:brain_app/Components/brain_collapsible.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
@@ -83,7 +78,7 @@ class _HomePage extends State<HomePage>{
                           primary: AppDesign.current.primaryColor,
                           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
                       ),
-                      onPressed: () => NavigationHelper.push(TimeTablePage()),
+                      onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
                       child: Text("Stundenplan", style: AppDesign.current.textStyles.buttonText),
                     ),
                   ),
@@ -95,7 +90,7 @@ class _HomePage extends State<HomePage>{
                             primary: AppDesign.current.primaryColor,
                             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
                         ),
-                        onPressed: () => NavigationHelper.push(SubjectPage()),
+                        onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
                         child: Text("Neues Fach", style: AppDesign.current.textStyles.buttonText),
                       ),
                     ),
@@ -132,7 +127,7 @@ class _HomePage extends State<HomePage>{
       if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
       if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgabe" + (homework == 1 ? "" : "n");
 
-      return CollapsibleBox(
+      return BrainCollapsible(
         text: text,
         icon: icons[iconIndex],
         iconColor: iconColors[iconIndex],
@@ -150,16 +145,20 @@ class _HomePage extends State<HomePage>{
     //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return GestureDetector(
       onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity! > 0.0) {
-          NavigationHelper.replaceCurrent(GradeOverview(), true);
-        } else {
-          NavigationHelper.replaceCurrent(CalendarPage(), true);
+        if (MediaQuery.of(context).size.width < AppDesign.breakPointWidth) {
+          if (details.primaryVelocity! > 0.0) {
+            NavigationHelper.selectedPrimaryPage.value = 0;
+            NavigationHelper.pushNamedReplacement(context, "gradesOverview");
+          } else {
+            NavigationHelper.selectedPrimaryPage.value = 2;
+            NavigationHelper.pushNamedReplacement(context, "calendar");
+          }
         }
       },
       child: PageTemplate(
           title: 'Übersicht',
           floatingActionButton: BrainMenuButton(
-            defaultAction: () => NavigationHelper.push(HomeworkPage()),
+            defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
             defaultLabel: "Neu",
           ),
           child: Wrap(
@@ -170,7 +169,7 @@ class _HomePage extends State<HomePage>{
               runSpacing: 5,
               children: [
                 getWarningBox(),
-                if (BrainApp.preferences["showMediaBox"]) CollapsibleBox(
+                if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysJoke.isNotEmpty) BrainCollapsible(
                     text: BrainApp.todaysJoke,
                     icon: BrainApp.icon,
                     collapsed: BrainApp.preferences["mediaBoxCollapsed"],

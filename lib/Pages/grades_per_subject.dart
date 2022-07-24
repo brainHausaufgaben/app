@@ -1,7 +1,7 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
@@ -10,9 +10,9 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Pages/page_template.dart';
 
 class GradesPerSubjectPage extends StatefulWidget {
-  const GradesPerSubjectPage({Key? key, required this.subject}): super(key: key);
+  GradesPerSubjectPage({Key? key}): super(key: key);
 
-  final Subject subject;
+  late Subject subject;
 
   @override
   State<GradesPerSubjectPage> createState() => _GradesPerSubjectPage();
@@ -32,7 +32,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.pushNamed("gradesPage", payload: grade),
+            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
           )
       );
     }
@@ -53,7 +53,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.pushNamed("gradesPage", payload: grade),
+            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
           )
       );
     }
@@ -61,13 +61,21 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     return buttons;
   }
 
+  void getData() {
+    setState(() {
+      widget.subject = ModalRoute.of(context)!.settings.arguments as Subject;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    getData();
+
     return PageTemplate(
         title: widget.subject.name,
         backButton: true,
         floatingActionButton: BrainMenuButton(
-          defaultAction: () => NavigationHelper.pushNamed("gradesPage", payload: widget.subject),
+          defaultAction: () => NavigationHelper.pushNamed(context, "gradesPage", payload: widget.subject),
           defaultLabel: "Neue Note",
           icon: Icons.add,
           withEntries: false,

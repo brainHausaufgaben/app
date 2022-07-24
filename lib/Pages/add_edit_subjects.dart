@@ -1,19 +1,15 @@
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 import '../Components/brain_toast.dart';
 
 class SubjectPage extends StatefulWidget {
-  SubjectPage({Key? key, this.previousSubject}) : super(key: key) {
-    subjectController.text = previousSubject != null ? previousSubject!.name : "";
-    pickerColor = previousSubject != null ? previousSubject!.color : Colors.red;
-  }
+  SubjectPage({Key? key}) : super(key: key);
 
   Subject? previousSubject;
   final subjectController = TextEditingController();
@@ -24,8 +20,30 @@ class SubjectPage extends StatefulWidget {
 }
 
 class _SubjectPage extends State<SubjectPage> {
+  bool alreadyFetchedData = false;
+
+  @override
+  void dispose() {
+    widget.subjectController.dispose();
+    super.dispose();
+  }
+
+  void getData() {
+    alreadyFetchedData = true;
+    Subject? data = ModalRoute.of(context)!.settings.arguments as Subject?;
+    if (data != null) {
+      setState(() {
+        widget.previousSubject = data;
+        widget.subjectController.text = data.name;
+        widget.pickerColor = data.color;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (!alreadyFetchedData) getData();
+
     return PageTemplate(
       backButton: true,
       title: widget.previousSubject != null ? "Fach Bearbeiten" : "Neues Fach",
@@ -40,7 +58,7 @@ class _SubjectPage extends State<SubjectPage> {
                   setState(() {
                     widget.pickerColor = color;
                   });
-                  Navigator.of(context, rootNavigator: true).pop();
+                  Navigator.of(context).pop();
                 }
             )
           ),
@@ -73,7 +91,7 @@ class _SubjectPage extends State<SubjectPage> {
                             Subject(widget.subjectController.text, widget.pickerColor);
                           }
                           BrainApp.notifier.notifyOfChanges();
-                          NavigationHelper.pop();
+                          Navigator.of(context).pop();
                         }
                       },
                       child: Padding(
@@ -88,7 +106,7 @@ class _SubjectPage extends State<SubjectPage> {
                         onPressed: () {
                           TimeTable.deleteSubject(widget.previousSubject!);
                           BrainApp.notifier.notifyOfChanges();
-                          NavigationHelper.pop();
+                          Navigator.of(context).pop();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),

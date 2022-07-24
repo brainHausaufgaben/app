@@ -2,11 +2,9 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/add_edit_subjects.dart';
-import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -50,8 +48,8 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           ),
           onPressed: () {
             // Dropdown popup zu machen
-            NavigationHelper.pop();
-            NavigationHelper.push(SubjectPage());
+            Navigator.of(context).pop();
+            NavigationHelper.pushNamed(context, "subjectPage");
           },
           child: Text("Fach hinzufügen", style: TextStyle(
             color: AppDesign.current.textStyles.contrastColor,
@@ -123,7 +121,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         title: "Stundenplan",
         backButton: true,
         floatingActionButton: BrainMenuButton(
-          defaultAction: () => NavigationHelper.pushNamed("subjectOverview"),
+          defaultAction: () => NavigationHelper.pushNamed(context, "subjectOverview"),
           defaultLabel: "Fächer Bearbeiten",
           icon: Icons.edit,
           withEntries: false,

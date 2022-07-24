@@ -2,9 +2,6 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/Pages/add_edit_grades.dart';
-import 'package:brain_app/Pages/add_events.dart';
-import 'package:brain_app/Pages/add_homework.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/services.dart';
@@ -421,11 +418,13 @@ class SettingsSwitchButton extends StatefulWidget {
   const SettingsSwitchButton({
     Key? key,
     required this.text,
+    this.description,
     required this.action,
     required this.state
   }) : super(key: key);
 
   final String text;
+  final String? description;
   final Function() action;
   final bool state;
 
@@ -441,9 +440,18 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
         widget.action();
       },
       child: Row(
+        crossAxisAlignment: widget.description == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(widget.text, style: AppDesign.current.textStyles.settingsSubMenu),
+          Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(widget.text, style: AppDesign.current.textStyles.settingsSubMenu),
+                if (widget.description != null) Text(widget.description!, style: AppDesign.current.textStyles.settingsSubMenuDescription)
+              ],
+            ),
+          ),
           Container(
             width: 22,
             height: 22,
@@ -495,7 +503,7 @@ class SettingsEntry extends StatelessWidget {
   }
 }
 
-class BrainMenuButton extends StatelessWidget {
+class BrainMenuButton extends StatefulWidget {
   const BrainMenuButton({
     Key? key,
     required this.defaultAction,
@@ -509,27 +517,6 @@ class BrainMenuButton extends StatelessWidget {
   final IconData icon;
   final String defaultLabel;
 
-  @override
-  Widget build(BuildContext context) {
-    return SpeedDial(
-      onPress: defaultAction,
-      child: Icon(icon, color: AppDesign.current.textStyles.contrastColor),
-      activeChild: Icon(Icons.close, color: AppDesign.current.textStyles.contrastColor),
-      children: withEntries ? [
-        getHomeworkMenu(context),
-        getEventMenu(context),
-        getGradesMenu(context)
-      ] : [],
-      overlayColor: Colors.black,
-      overlayOpacity: 0.6,
-      spacing: 5,
-      childrenButtonSize: const Size(50, 50),
-      childPadding: const EdgeInsets.only(right: 6),
-      animationDuration: const Duration(milliseconds: 200),
-      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(defaultLabel, style: const TextStyle(letterSpacing: 0.5)) : null,
-    );
-  }
-
   SpeedDialChild getHomeworkMenu(BuildContext context) {
     return SpeedDialChild(
         backgroundColor: AppDesign.current.primaryColor,
@@ -538,7 +525,7 @@ class BrainMenuButton extends StatelessWidget {
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
         label: "Neue Hausaufgabe",
         child: const Icon(Icons.description_rounded),
-        onTap: () => NavigationHelper.push(HomeworkPage())
+        onTap: () => NavigationHelper.pushNamed(context, "homework")
     );
   }
 
@@ -550,7 +537,7 @@ class BrainMenuButton extends StatelessWidget {
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
         label: "Neues Event",
         child: const Icon(Icons.schedule_rounded),
-        onTap: () => NavigationHelper.push(AddEventsPage())
+        onTap: () => NavigationHelper.pushNamed(context, "addEventPage")
 
     );
   }
@@ -563,7 +550,57 @@ class BrainMenuButton extends StatelessWidget {
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
         label: "Neue Note",
         child: const Icon(Icons.grading),
-        onTap: () => NavigationHelper.push(GradesPage())
+        onTap: () => NavigationHelper.pushNamed(context, "gradesPage")
+    );
+  }
+
+  @override
+  State<StatefulWidget> createState() => _BrainMenuButton();
+}
+
+class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+
+  @override
+  void initState() {
+    controller = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SpeedDial(
+      onOpen: () => controller.forward(),
+      onPress: () => widget.defaultAction(),
+      onClose: () => controller.reverse(),
+      child: RotationTransition(
+        turns: Tween(begin: 0.0, end: 5 / 8).animate(CurvedAnimation(
+            parent: controller,
+            curve: Curves.easeInOutBack
+        )),
+        child: Icon(widget.icon, color: AppDesign.current.textStyles.contrastColor)
+      ),
+      children: widget.withEntries ? [
+        widget.getHomeworkMenu(context),
+        widget.getEventMenu(context),
+        widget.getGradesMenu(context)
+      ] : [],
+      overlayColor: Colors.black,
+      overlayOpacity: 0.6,
+      spacing: 5,
+      childrenButtonSize: const Size(50, 50),
+      childPadding: const EdgeInsets.only(right: 6),
+      animationDuration: const Duration(milliseconds: 200),
+      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: const TextStyle(letterSpacing: 0.5)) : null,
     );
   }
 }

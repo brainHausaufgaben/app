@@ -4,29 +4,26 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_toast.dart';
-import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class HomeworkPage extends StatefulWidget {
-  HomeworkPage({Key? key, this.previousHomework}) : super(key: key) {
-    homeworkController.text = previousHomework != null ? previousHomework!.name : "";
-    selectedSubject = previousHomework != null ? previousHomework!.subject : null;
-    selectedDate = previousHomework != null ? previousHomework!.dueTime : DateTime(10);
-  }
+  HomeworkPage({Key? key}) : super(key: key);
 
-  final Homework? previousHomework;
+  Homework? previousHomework;
   final homeworkController = TextEditingController();
   Subject? selectedSubject;
-  late DateTime selectedDate;
+  DateTime selectedDate = DateTime(10);
 
   @override
   State<HomeworkPage> createState() => _HomeworkPage();
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
+  bool alreadyFetchedData = false;
+
   @override
   void dispose() {
     widget.homeworkController.dispose();
@@ -63,12 +60,27 @@ class _HomeworkPage extends State<HomeworkPage> {
       } else {
         Homework(widget.selectedSubject!,widget.selectedSubject!.getNextDate()! ,widget.homeworkController.text);
       }
-      NavigationHelper.pop();
+      Navigator.of(context).pop();
+    }
+  }
+
+  void getData() {
+    alreadyFetchedData = true;
+    Homework? data = ModalRoute.of(context)!.settings.arguments as Homework?;
+    if (data != null) {
+      setState(() {
+        widget.previousHomework = data;
+        widget.homeworkController.text = data.name;
+        widget.selectedSubject = data.subject;
+        widget.selectedDate = data.dueTime;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!alreadyFetchedData) getData();
+
     return PageTemplate(
       backButton: true,
       title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",

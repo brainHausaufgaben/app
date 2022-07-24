@@ -27,7 +27,7 @@ class _BoxState extends  State<Box>{
           child: Container(
             decoration: BoxDecoration(
               color: AppDesign.current.boxStyle.backgroundColor,
-              borderRadius: AppDesign.current.boxStyle.borderRadius
+              borderRadius: AppDesign.current.boxStyle.borderRadius,
             ),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: widget.child

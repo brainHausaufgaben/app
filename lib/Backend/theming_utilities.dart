@@ -29,11 +29,11 @@ class TextStyles {
   TextStyle collapsibleTextContrast;
   TextStyle buttonText;
   TextStyle input;
-  TextStyle inputError;
   TextStyle tab;
   TextStyle alertDialogHeader;
   TextStyle alertDialogDescription;
   TextStyle settingsSubMenu;
+  TextStyle settingsSubMenuDescription;
 
   TextStyles({
     required this.color,
@@ -47,11 +47,11 @@ class TextStyles {
     required this.collapsibleTextContrast,
     required this.buttonText,
     required this.input,
-    required this.inputError,
     required this.tab,
     required this.alertDialogHeader,
     required this.alertDialogDescription,
-    required this.settingsSubMenu
+    required this.settingsSubMenu,
+    required this.settingsSubMenuDescription
   });
 }
 
@@ -94,18 +94,17 @@ DesignPackage generateDesign(Color primaryColor, Color backgroundColor, Color bo
           collapsibleTextContrast: TextStyle(fontWeight: FontWeight.w400, fontSize:16, color: contrastColor),
           buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: contrastColor),
           input: TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: textColor.withAlpha(210)),
-          inputError: const TextStyle(fontWeight: FontWeight.w400, fontSize:17, height: 1, color: Colors.red),
           tab: TextStyle(fontWeight: FontWeight.w600, fontSize:18, color: textColor),
           alertDialogHeader: TextStyle(fontWeight: FontWeight.w600, fontSize:22, color: textColor),
           alertDialogDescription: TextStyle(fontWeight: FontWeight.w500, fontSize:17, color: textColor),
-          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:17, height: 1, color: textColor.withAlpha(210))
+          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:17, height: 1, color: textColor.withAlpha(210)),
+          settingsSubMenuDescription: TextStyle(fontWeight: FontWeight.w400, fontSize:14, height: 1.3, color: textColor.withOpacity(0.6))
       ),
       boxStyle: BoxStyle(
           backgroundColor: boxBackground,
           boxShadow: BoxShadow(
               color: const Color(0xFF303540).withOpacity(0.2),
-              spreadRadius: 0,
-              blurRadius: 2,
+              blurRadius: 5,
               offset: const Offset(0, 1)
           )
       )

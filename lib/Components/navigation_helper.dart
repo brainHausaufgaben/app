@@ -4,14 +4,19 @@ import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
 import 'package:brain_app/Pages/Primary%20Pages/home.dart';
 import 'package:brain_app/Pages/add_edit_grades.dart';
+import 'package:brain_app/Pages/add_edit_homework.dart';
 import 'package:brain_app/Pages/add_edit_subjects.dart';
+import 'package:brain_app/Pages/add_events.dart';
 import 'package:brain_app/Pages/design_settings.dart';
+import 'package:brain_app/Pages/edit_events.dart';
+import 'package:brain_app/Pages/edit_tests.dart';
+import 'package:brain_app/Pages/grades_per_subject.dart';
 import 'package:brain_app/Pages/settings.dart';
 import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Components/custom_navigation_bar.dart';
+import 'package:brain_app/Components/brain_navigation_bar.dart';
 
 import '../Backend/quick_actions.dart';
 
@@ -21,58 +26,22 @@ class NavigationHelper extends StatefulWidget {
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   static GlobalKey<NavigatorState> rootKey = GlobalKey();
+  static ValueNotifier<int> selectedPrimaryPage = ValueNotifier<int>(1);
 
-  static BuildContext get context => navigatorKey.currentContext!;
-
-  static NavigatorState getNavigator([bool forceNested = false]) {
+  static NavigatorState getNavigator(BuildContext context, {bool forceNested = false}) {
     if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth || forceNested) {
-      return Navigator.of(context);
+      return navigatorKey.currentState!;
     } else {
-      return Navigator.of(context, rootNavigator: true);
+      return rootKey.currentState!;
     }
   }
 
-  static void pop() {
-    getNavigator().pop();
+  static void pushNamed(BuildContext context, String route, {dynamic payload}) async {
+    getNavigator(context).pushNamed(route, arguments: payload);
   }
 
-  static void push(Widget route) {
-
-  }
-
-  static void pushNamed(String route, {dynamic payload}) {
-    getNavigator().pushNamed(route, arguments: payload);
-  }
-
-  static void replaceCurrent(Widget route, [forceNested = false]) {
-    // getNavigator(forceNested).pushReplacement(getRouteBuilder(route));
-  }
-
-  static FadeTransition transitionBuilder(context, animation, secondaryAnimation, child) {
-    const begin = 0.0;
-    const end = 1.0;
-    final tween = Tween(begin: begin, end: end);
-    final offsetAnimation = animation.drive(tween);
-
-    return FadeTransition(
-      opacity: offsetAnimation,
-      child: child,
-    );
-  }
-
-  static PageRoute getRouteBuilder(String route) {
-    Map<String, WidgetBuilder> routes = NavigationRoutes.get();
-
-    if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
-      return PageRouteBuilder(
-        pageBuilder: (context, a1, a2) => routes[route]!(context),
-        transitionsBuilder: transitionBuilder,
-      );
-    } else {
-      return MaterialPageRoute(
-          builder: routes[route]!
-      );
-    }
+  static void pushNamedReplacement(BuildContext context, String route) {
+    getNavigator(context, forceNested: true).pushReplacementNamed(route);
   }
 
   @override
@@ -109,16 +78,12 @@ class _NavigationHelper extends State<NavigationHelper> {
     Widget navigator = Navigator(
       key: NavigationHelper.navigatorKey,
       initialRoute: "home",
-      onGenerateRoute: (settings) {
-          return NavigationHelper.getRouteBuilder(settings.name!);
-      },
-
+      onGenerateRoute: NavigationRoutes.onGenerateRoute
     );
 
     return WillPopScope(
       onWillPop: () async {
-        NavigationHelper.pop();
-        return false;
+        return !await NavigationHelper.navigatorKey.currentState!.maybePop();
       },
       child: Scaffold(
         body: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
@@ -140,13 +105,50 @@ class NavigationRoutes {
           : CustomQuickActions(child: NavigationHelper()),
       "home": (context) => HomePage(),
       "calendar": (context) => CalendarPage(),
+      "editEventsPage": (context) => EditEventPage(),
+      "addEventPage": (context) => AddEventsPage(),
+      "editTestPage": (context) => EditTestPage(),
       "gradesOverview": (context) => GradeOverview(),
+      "gradesPerSubject": (context) => GradesPerSubjectPage(),
       "gradesPage": (context) => GradesPage(),
       "subjectOverview": (context) => SubjectOverview(),
       "subjectPage": (context) => SubjectPage(),
       "timeTable": (context) => TimeTablePage(),
       "settings": (context) => SettingsPage(),
+      "homework": (context) => HomeworkPage(),
       "designSettings": (context) => DesignSettingsPage()
     };
+  }
+
+  static PageRouteBuilder onGenerateRoute(settings) {
+    Map<String, WidgetBuilder> routes = NavigationRoutes.get();
+
+    return PageRouteBuilder(
+        pageBuilder: (context, a1, a2) => routes[settings.name!]!(context),
+        transitionDuration: const Duration(milliseconds: 600),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const offsetBegin = Offset(0, 0.15);
+          const offsetEnd = Offset(0, 0);
+          const begin = 0.0;
+          const end = 1.0;
+          final tween = Tween(begin: begin, end: end);
+          final offsetTween = Tween(begin: offsetBegin, end: offsetEnd);
+
+          return FadeTransition(
+            opacity: tween.animate(CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeInOutBack
+            )),
+            child: SlideTransition(
+              position: offsetTween.animate(CurvedAnimation(
+                  parent: animation,
+                  curve: Curves.easeInOutBack
+              )),
+              child: child,
+            ),
+          );
+        },
+        settings: settings
+    );
   }
 }

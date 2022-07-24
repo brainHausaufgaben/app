@@ -1,5 +1,4 @@
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/settings.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
@@ -30,11 +29,11 @@ class PageTemplate extends StatefulWidget {
 
 class _PageTemplateState extends State<PageTemplate> {
   void _settings(){
-    NavigationHelper.pushNamed("settings");
+    NavigationHelper.pushNamed(context, "settings");
   }
 
   void _back() {
-    NavigationHelper.pop();
+    Navigator.of(context).pop();
   }
 
   String getDateString(DateTime date){
@@ -80,7 +79,7 @@ class _PageTemplateState extends State<PageTemplate> {
                         alignment: Alignment.topLeft,
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 30, bottom: widget.floatingHeader != null ? 20 : 30),
+                          padding: EdgeInsets.only(top: 30, bottom: widget.floatingHeader != null ? 15 : 25),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget> [

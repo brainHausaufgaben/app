@@ -4,7 +4,7 @@ import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:flutter/material.dart';
-import 'dismissable_box.dart';
+import 'brain_dismissible.dart';
 
 import 'box.dart';
 
@@ -28,7 +28,7 @@ class HomePageDay extends StatefulWidget {
     }
     for(Homework homework in subject.getHomework()){
       homeworkWidgets.add(
-          DismissableBox(homework: homework)
+          BrainDismissible(homework: homework)
       );
     }
     return homeworkWidgets;

@@ -1,5 +1,5 @@
 import 'package:brain_app/Backend/theming_utilities.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';

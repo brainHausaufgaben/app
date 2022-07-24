@@ -1,8 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
-import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
-import 'package:brain_app/Pages/Primary%20Pages/home.dart';
 import 'package:flutter/material.dart';
 
 class CustomSidebar extends StatefulWidget {
@@ -13,8 +10,6 @@ class CustomSidebar extends StatefulWidget {
 }
 
 class _CustomSidebar extends State<CustomSidebar> {
-  int selectedIndex = 1;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,12 +45,12 @@ class _CustomSidebar extends State<CustomSidebar> {
             title: "Noten",
             icon: Icons.grading,
             iconSize: 22,
-            activated: selectedIndex == 0,
+            activated: NavigationHelper.selectedPrimaryPage.value == 0,
             onTap: () {
-              if (selectedIndex != 0) {
-                NavigationHelper.pushNamed("gradesOverview");
+              if (NavigationHelper.selectedPrimaryPage.value != 0) {
+                NavigationHelper.pushNamedReplacement(context, "gradesOverview");
                 setState(() {
-                  selectedIndex = 0;
+                  NavigationHelper.selectedPrimaryPage.value = 0;
                 });
               }
             }
@@ -64,12 +59,12 @@ class _CustomSidebar extends State<CustomSidebar> {
             title: "Home",
             icon: Icons.home_rounded,
             iconSize: 22,
-            activated: selectedIndex == 1,
+            activated: NavigationHelper.selectedPrimaryPage.value == 1,
             onTap: () {
-              if (selectedIndex != 1) {
-                NavigationHelper.push(HomePage());
+              if (NavigationHelper.selectedPrimaryPage.value != 1) {
+                NavigationHelper.pushNamedReplacement(context, "home");
                 setState(() {
-                  selectedIndex = 1;
+                  NavigationHelper.selectedPrimaryPage.value = 1;
                 });
               }
             }
@@ -78,12 +73,12 @@ class _CustomSidebar extends State<CustomSidebar> {
             title: "Kalender",
             icon: Icons.calendar_today,
             iconSize: 22,
-            activated: selectedIndex == 2,
+            activated: NavigationHelper.selectedPrimaryPage.value == 2,
             onTap: () {
-              if (selectedIndex != 2) {
-                NavigationHelper.push(CalendarPage());
+              if (NavigationHelper.selectedPrimaryPage.value != 2) {
+                NavigationHelper.pushNamedReplacement(context, "calendar");
                 setState(() {
-                  selectedIndex = 2;
+                  NavigationHelper.selectedPrimaryPage.value = 2;
                 });
               }
             }

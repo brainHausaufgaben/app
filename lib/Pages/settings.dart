@@ -1,9 +1,7 @@
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
-import 'package:brain_app/Components/custom_inputs.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/design_settings.dart';
-import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
@@ -89,7 +87,7 @@ class _SettingsPage extends State<SettingsPage> {
             children: [
               SettingsNavigatorButton(
                 text: "Stundenplan",
-                action: () => NavigationHelper.pushNamed("timeTable")
+                action: () => NavigationHelper.pushNamed(context, "timeTable")
               )
             ]
           ),
@@ -97,7 +95,7 @@ class _SettingsPage extends State<SettingsPage> {
             children: [
               SettingsNavigatorButton(
                 text: "Design Einstellungen",
-                action: () => NavigationHelper.pushNamed("designSettings")
+                action: () => NavigationHelper.pushNamed(context, "designSettings")
               )
             ]
           ),
@@ -105,6 +103,7 @@ class _SettingsPage extends State<SettingsPage> {
             children: [
               SettingsSwitchButton(
                 text: "Witze, Funfacts...",
+                description: "Wird nicht an jedem Tag angezeigt!",
                 action: () {
                   setState(() {
                     BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);

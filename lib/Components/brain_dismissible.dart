@@ -2,15 +2,12 @@ import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Pages/add_homework.dart';
-import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 import 'brain_toast.dart';
 
-
-class DismissableBox extends StatelessWidget {
-  const DismissableBox({Key? key,required this.homework}) : super(key: key);
+class BrainDismissible extends StatelessWidget {
+  const BrainDismissible({Key? key, required this.homework}) : super(key: key);
 
   final Homework homework;
 
@@ -28,14 +25,14 @@ class DismissableBox extends StatelessWidget {
                 buttonText: "Rückgängig",
                 action: () {
                   TimeTable.reinstateLastHomework();
-                  ScaffoldMessenger.of(NavigationHelper.context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 }
               );
               toast.show(context);
 
               return true;
             } else if (direction == DismissDirection.endToStart) {
-              NavigationHelper.push(HomeworkPage(previousHomework: homework));
+              NavigationHelper.pushNamed(context, "homework", payload: homework);
               return false;
             }
 

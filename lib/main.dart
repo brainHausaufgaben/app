@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/grade.dart';
-import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -29,7 +28,7 @@ class BrainApp extends StatefulWidget {
 
   static Notifier notifier = Notifier();
 
-  static String todaysJoke = "Wird geladen...";
+  static String todaysJoke = "";
   static IconData icon = Icons.autorenew_rounded;
   static int selectedPageIndex = 1;
 
@@ -83,10 +82,10 @@ class _BrainApp extends State<BrainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      key: NavigationHelper.rootKey,
+      navigatorKey: NavigationHelper.rootKey,
       title: 'Brain Hausaufgabenheft',
       initialRoute: "/",
-      routes: NavigationRoutes.get(),
+      onGenerateRoute: NavigationRoutes.onGenerateRoute,
       theme: AppDesign.current.themeData,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
@@ -225,7 +224,7 @@ class _BrainApp extends State<BrainApp> {
           BrainApp.todaysJoke = value.key;
           BrainApp.icon = value.value;
         } else {
-          BrainApp.todaysJoke = "Keine Schule heute :)";
+          BrainApp.todaysJoke = "";
           BrainApp.icon = Icons.celebration;
         }
       });
