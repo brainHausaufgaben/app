@@ -13,7 +13,7 @@ class HomeworkPage extends StatefulWidget {
   HomeworkPage({Key? key}) : super(key: key);
 
   Homework? previousHomework;
-  final homeworkController = TextEditingController();
+  TextEditingController homeworkController = TextEditingController();
   Subject? selectedSubject;
   DateTime selectedDate = DateTime(10);
 
@@ -23,12 +23,6 @@ class HomeworkPage extends StatefulWidget {
 
 class _HomeworkPage extends State<HomeworkPage> {
   bool alreadyFetchedData = false;
-
-  @override
-  void dispose() {
-    widget.homeworkController.dispose();
-    super.dispose();
-  }
 
   void onPressed() {
     if (widget.homeworkController.text.isEmpty) {

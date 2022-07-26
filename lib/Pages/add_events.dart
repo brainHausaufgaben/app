@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/easter_eggs.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
@@ -46,6 +47,10 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       toast.show(context);
       return;
     } else {
+      if (title == "Sterben") {
+        EasterEggs.deadLine(context);
+        return;
+      }
       Event(date, title, description);
 
       BrainApp.notifier.notifyOfChanges();
@@ -84,28 +89,26 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       child: PageTemplate(
         backButton: true,
         title: "Neues Event",
-        floatingHeader: Center(
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 275),
-            decoration: BoxDecoration(
-                color: AppDesign.current.boxStyle.backgroundColor,
-                borderRadius: BorderRadius.circular(100)
-            ),
-            clipBehavior: Clip.hardEdge,
-            child: TabBar(
-              controller: tabController,
-              labelStyle: AppDesign.current.textStyles.tab,
-              labelColor: AppDesign.current.textStyles.contrastColor,
-              unselectedLabelColor: AppDesign.current.textStyles.color,
-              indicator: BoxDecoration(
+        floatingHeader: Container(
+          constraints: const BoxConstraints(maxWidth: 275),
+          decoration: BoxDecoration(
+              color: AppDesign.current.boxStyle.backgroundColor,
+              borderRadius: BorderRadius.circular(100)
+          ),
+          clipBehavior: Clip.hardEdge,
+          child: TabBar(
+            controller: tabController,
+            labelStyle: AppDesign.current.textStyles.tab,
+            labelColor: AppDesign.current.textStyles.contrastColor,
+            unselectedLabelColor: AppDesign.current.textStyles.color,
+            indicator: BoxDecoration(
                 color: AppDesign.current.primaryColor,
                 borderRadius: BorderRadius.circular(100)
-              ),
-              tabs: const [
-                Tab(text: "Event", height: 55),
-                Tab(text: "Test", height: 55)
-              ],
             ),
+            tabs: const [
+              Tab(text: "Event", height: 55),
+              Tab(text: "Test", height: 55)
+            ],
           ),
         ),
         child: SizedBox(

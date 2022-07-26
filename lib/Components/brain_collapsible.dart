@@ -31,7 +31,7 @@ class BrainCollapsible extends StatelessWidget {
               color: AppDesign.current.primaryColor,
               borderRadius: AppDesign.current.boxStyle.borderRadius
           ),
-          padding: collapsed ? const EdgeInsets.all(8) : const EdgeInsets.all(17),
+          padding: collapsed ? const EdgeInsets.all(8) : const EdgeInsets.all(20),
           duration: const Duration(milliseconds: 500),
           child: Row(
               children: [
@@ -39,8 +39,8 @@ class BrainCollapsible extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 12),
                     child: AnimatedContainer(
                         curve: Curves.easeOutBack,
-                        height: collapsed ? 25 : 35,
-                        width: collapsed ? 25 : 35,
+                        height: collapsed ? 25 : 40,
+                        width: collapsed ? 25 : 40,
                         alignment: Alignment.center,
                         duration: const Duration(milliseconds: 100),
                         child: FittedBox(
@@ -48,7 +48,7 @@ class BrainCollapsible extends StatelessWidget {
                           child: Icon(
                               icon,
                               color: iconColor == null || AppDesign.current.overrideIconColor ? AppDesign.current.textStyles.contrastColor : iconColor,
-                              size: 35
+                              size: 40
                           ),
                         )
                     )

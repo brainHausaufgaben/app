@@ -55,7 +55,9 @@ class BrainToast {
                     child: Text(
                         buttonText!,
                         style: TextStyle(
-                            color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF))
+                          fontSize: 13,
+                          color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF)
+                        )
                     ),
                   ),
               )

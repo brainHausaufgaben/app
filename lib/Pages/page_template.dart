@@ -68,18 +68,26 @@ class _PageTemplateState extends State<PageTemplate> {
                     padding: const EdgeInsets.only(top: 10, bottom: 25),
                     children: [
                       Align(
-                        child: IconButton(
-                          constraints: const BoxConstraints(),
-                          padding: const EdgeInsets.all(0),
-                          onPressed: widget.backButton == null ? _settings : _back,
-                          icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_backspace, color: AppDesign.current.textStyles.color),
-                          iconSize: 26,
-                          splashRadius: 15,
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: AppDesign.current.boxStyle.backgroundColor,
+                            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+                          ),
+                          child: IconButton(
+                            tooltip: widget.backButton == null ? "Einstellungen" : "Zurück",
+                            constraints: const BoxConstraints(),
+                            padding: const EdgeInsets.all(0),
+                            onPressed: widget.backButton == null ? _settings : _back,
+                            icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_backspace, color: AppDesign.current.textStyles.color),
+                            iconSize: 24,
+                            splashRadius: 15,
+                          ),
                         ),
                         alignment: Alignment.topLeft,
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 30, bottom: widget.floatingHeader != null ? 15 : 25),
+                          padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget> [
@@ -87,9 +95,18 @@ class _PageTemplateState extends State<PageTemplate> {
                                   widget.title,
                                   style: AppDesign.current.textStyles.pageHeadline,
                                 ),
-                                Text(
-                                  widget.subtitle ?? getDateString(DateTime.now()),
-                                  style: AppDesign.current.textStyles.pageSubtitle,
+                                Container(
+                                  margin: const EdgeInsets.only(top: 3, left: 5),
+                                  padding: const EdgeInsets.only(left: 6, top: 3, bottom: 1),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      left: BorderSide(color: AppDesign.current.textStyles.pageSubtitle.color!, width: 2)
+                                    )
+                                  ),
+                                  child: Text(
+                                    widget.subtitle ?? getDateString(DateTime.now()),
+                                    style: AppDesign.current.textStyles.pageSubtitle,
+                                  ),
                                 )
                               ]
                           )
@@ -100,24 +117,26 @@ class _PageTemplateState extends State<PageTemplate> {
                             padding: const EdgeInsets.only(top: 20),
                             child: widget.child,
                           ),
-                          header: Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppDesign.current.themeData.scaffoldBackgroundColor,
-                                  blurRadius: 10,
-                                  spreadRadius: 8
-                                )
-                              ]
+                          header: Center(
+                            child: Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        color: AppDesign.current.themeData.scaffoldBackgroundColor,
+                                        blurRadius: 10,
+                                        spreadRadius: 8
+                                    )
+                                  ]
+                              ),
+                              child: widget.floatingHeader!,
                             ),
-                            child: widget.floatingHeader!,
                           )
                         )
                       else
                         widget.child
                     ]
-                ),
+                )
               )
           ),
           floatingActionButtonLocation: widget.floatingActionButtonLocation,

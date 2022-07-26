@@ -1,5 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Components/sidebar.dart';
+import 'package:brain_app/Components/brain_sidebar.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
 import 'package:brain_app/Pages/Primary%20Pages/home.dart';

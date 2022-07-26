@@ -23,7 +23,7 @@ class TimeTable {
     TimeInterval(const TimeOfDay(hour: 8, minute: 45), const TimeOfDay(hour: 9, minute: 30)),
     TimeInterval(const TimeOfDay(hour: 9, minute: 45), const TimeOfDay(hour: 10, minute: 30)),
     TimeInterval(const TimeOfDay(hour: 10, minute: 30), const TimeOfDay(hour: 11, minute: 45)),
-    TimeInterval(const TimeOfDay(hour: 11, minute: 15), const TimeOfDay(hour: 12, minute: 10)),
+    TimeInterval(const TimeOfDay(hour: 11, minute: 25), const TimeOfDay(hour: 12, minute: 10)),
     TimeInterval(const TimeOfDay(hour: 12, minute: 10), const TimeOfDay(hour: 12, minute: 55)),
     TimeInterval(const TimeOfDay(hour: 13, minute: 50), const TimeOfDay(hour: 14, minute: 35)),
     TimeInterval(const TimeOfDay(hour: 14, minute: 35), const TimeOfDay(hour: 15, minute: 20)),

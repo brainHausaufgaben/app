@@ -7,21 +7,23 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
+import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
+
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BrainTextField extends StatefulWidget {
   BrainTextField({
     Key? key,
-    required this.controller,
     required this.placeholder,
+    required this.controller,
     this.minLines,
     this.maxLines,
-    this.maxLength
+    this.maxLength,
   }) : super(key: key);
 
   TextEditingController controller;
-  String placeholder;
+  final String placeholder;
   final int? minLines;
   final int? maxLines;
   final int? maxLength;
@@ -112,7 +114,6 @@ class BrainDropdown<ItemType> extends StatelessWidget {
             underline: Container(),
             isExpanded: true,
             dropdownColor: AppDesign.current.boxStyle.backgroundColor,
-            style: AppDesign.current.textStyles.input,
             value: currentValue,
             hint: defaultText,
             items: items,
@@ -161,72 +162,102 @@ class BrainDateButton extends StatelessWidget {
     return weekDay + ", " + day + "." + month + "." + year;
   }
 
+  Widget getPicker() {
+    return FlutterRoundedDatePickerDialog(
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 1)),
+      borderRadius: 10,
+      height: 300,
+      era: EraMode.CHRIST_YEAR,
+      lastDate: DateTime(DateTime.now().year + 1),
+      initialDatePickerMode: DatePickerMode.day,
+      styleDatePicker: MaterialRoundedDatePickerStyle(
+        backgroundHeader: AppDesign.current.primaryColor,
+        paddingMonthHeader: const EdgeInsets.all(11),
+        backgroundPicker: AppDesign.current.boxStyle.backgroundColor,
+        textStyleDayOnCalendar: TextStyle(color: AppDesign.current.textStyles.color),
+        textStyleDayOnCalendarDisabled: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
+        textStyleMonthYearHeader: TextStyle(color: AppDesign.current.textStyles.color),
+        textStyleDayHeader: TextStyle(color: AppDesign.current.textStyles.color),
+        colorArrowNext: AppDesign.current.textStyles.color,
+        colorArrowPrevious: AppDesign.current.textStyles.color,
+      ),
+      builderDay: (DateTime dateTime, bool isCurrentDay, bool isSelected, TextStyle defaultTextStyle) {
+        // Default
+        if (isSelected) {
+          return Container(
+              decoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+              child: Center(
+                  child: Text(
+                    dateTime.day.toString(),
+                    style: defaultTextStyle,
+                  )
+              )
+          );
+        }
+
+        if (selectedSubject != null) {
+          DateTime now = DateTime.now();
+
+          if (dateTime.day >= now.day || dateTime.month > now.month) {
+            if (TimeTable.getSubjectsByDate(dateTime).contains(selectedSubject)) {
+              return Container(
+                  decoration: BoxDecoration(
+                    color: selectedSubject!.color.withOpacity(0.2),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(
+                      child: Text(dateTime.day.toString(), style: defaultTextStyle)
+                  )
+              );
+            }
+          }
+        }
+        // Default
+        return Center(
+            child: Text(
+              dateTime.day.toString(),
+              style: defaultTextStyle,
+            )
+        );
+      }
+    );
+  }
+
+  Widget builder(BuildContext context) {
+    if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            constraints: const BoxConstraints(maxWidth: 1000, maxHeight: 600),
+            child: Theme(
+              data: AppDesign.current.themeData,
+              child: getPicker()
+            )
+          )
+        ]
+      );
+    } else {
+      return Theme(
+        data: AppDesign.current.themeData,
+        child: getPicker()
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BrainIconButton(
       child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.current.textStyles.input),
       icon: Icons.date_range,
       action: () {
-        Future<DateTime?> newDateTime = showRoundedDatePicker(
-            context: context,
-            initialDate: DateTime.now(),
-            firstDate: DateTime.now().subtract(const Duration(days: 1)),
-            lastDate: DateTime(DateTime.now().year + 1),
-            borderRadius: 10,
-            theme: AppDesign.current.themeData,
-            height: 300,
-            styleDatePicker: MaterialRoundedDatePickerStyle(
-              backgroundHeader: AppDesign.current.primaryColor,
-              paddingMonthHeader: const EdgeInsets.all(11),
-              backgroundPicker: AppDesign.current.boxStyle.backgroundColor,
-              textStyleDayOnCalendar: TextStyle(color: AppDesign.current.textStyles.color),
-              textStyleDayOnCalendarDisabled: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-              textStyleMonthYearHeader: TextStyle(color: AppDesign.current.textStyles.color),
-              textStyleDayHeader: TextStyle(color: AppDesign.current.textStyles.color),
-              colorArrowNext: AppDesign.current.textStyles.color,
-              colorArrowPrevious: AppDesign.current.textStyles.color,
-            ),
-            builderDay: (DateTime dateTime, bool isCurrentDay, bool isSelected, TextStyle defaultTextStyle) {
-              // Default
-              if (isSelected) {
-                return Container(
-                  decoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
-                  child: Center(
-                    child: Text(
-                      dateTime.day.toString(),
-                      style: defaultTextStyle,
-                    )
-                  )
-                );
-              }
-
-              if (selectedSubject != null) {
-                DateTime now = DateTime.now();
-
-                if (dateTime.day >= now.day || dateTime.month > now.month) {
-                  if (TimeTable.getSubjectsByDate(dateTime).contains(selectedSubject)) {
-                    return Container(
-                        decoration: BoxDecoration(
-                          color: selectedSubject!.color.withOpacity(0.2),
-                          shape: BoxShape.circle,
-                        ),
-                        child: Center(
-                            child: Text(dateTime.day.toString(), style: defaultTextStyle)
-                        )
-                    );
-                  }
-                }
-              }
-              // Default
-              return Center(
-                child: Text(
-                  dateTime.day.toString(),
-                  style: defaultTextStyle,
-                )
-              );
-            }
+        Future<DateTime?> selectedDate = showDialog(
+          context: context,
+          builder: (context) => builder(context)
         );
-        newDateTime.then((_value) => onDateSelect(_value ?? value));
+
+        selectedDate.then((selectedDate) => onDateSelect(selectedDate ?? value));
       }
     );
   }
@@ -523,7 +554,15 @@ class BrainMenuButton extends StatefulWidget {
         foregroundColor: AppDesign.current.textStyles.contrastColor,
         labelBackgroundColor: AppDesign.current.primaryColor,
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-        label: "Neue Hausaufgabe",
+        labelWidget: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+          margin: const EdgeInsets.only(right: 10),
+          decoration: BoxDecoration(
+              color: AppDesign.current.primaryColor,
+              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+          ),
+          child: Text("Neue Hausaufgabe", style: AppDesign.current.textStyles.pointElementSecondary.copyWith(color: AppDesign.current.textStyles.contrastColor)),
+        ),
         child: const Icon(Icons.description_rounded),
         onTap: () => NavigationHelper.pushNamed(context, "homework")
     );
@@ -535,7 +574,15 @@ class BrainMenuButton extends StatefulWidget {
         foregroundColor: AppDesign.current.textStyles.contrastColor,
         labelBackgroundColor: AppDesign.current.primaryColor,
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-        label: "Neues Event",
+        labelWidget: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+          margin: const EdgeInsets.only(right: 10),
+          decoration: BoxDecoration(
+              color: AppDesign.current.primaryColor,
+              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+          ),
+          child: Text("Neues Event", style: AppDesign.current.textStyles.pointElementSecondary.copyWith(color: AppDesign.current.textStyles.contrastColor)),
+        ),
         child: const Icon(Icons.schedule_rounded),
         onTap: () => NavigationHelper.pushNamed(context, "addEventPage")
 
@@ -548,7 +595,15 @@ class BrainMenuButton extends StatefulWidget {
         foregroundColor: AppDesign.current.textStyles.contrastColor,
         labelBackgroundColor: AppDesign.current.primaryColor,
         labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
-        label: "Neue Note",
+        labelWidget: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+          margin: const EdgeInsets.only(right: 10),
+          decoration: BoxDecoration(
+            color: AppDesign.current.primaryColor,
+            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+          ),
+          child: Text("Neue Note", style: AppDesign.current.textStyles.pointElementSecondary.copyWith(color: AppDesign.current.textStyles.contrastColor)),
+        ),
         child: const Icon(Icons.grading),
         onTap: () => NavigationHelper.pushNamed(context, "gradesPage")
     );
@@ -579,11 +634,13 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
   @override
   Widget build(BuildContext context) {
     return SpeedDial(
-      onOpen: () => controller.forward(),
+      onOpen: () => controller.forward().then(
+              (value) => !widget.withEntries ? controller.reset() : null
+      ),
       onPress: () => widget.defaultAction(),
       onClose: () => controller.reverse(),
       child: RotationTransition(
-        turns: Tween(begin: 0.0, end: 5 / 8).animate(CurvedAnimation(
+        turns: Tween(begin: 0.0, end: widget.withEntries ? 5 / 8 : 1.0).animate(CurvedAnimation(
             parent: controller,
             curve: Curves.easeInOutBack
         )),
@@ -604,4 +661,3 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
     );
   }
 }
-

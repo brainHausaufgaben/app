@@ -140,6 +140,26 @@ class _SettingsPage extends State<SettingsPage> {
                 link: "https://forms.gle/GcfGNa1Lhvnt245Y6",
               )
             ]
+          ),
+          SettingsEntry(
+            children: [
+              SettingsNavigatorButton(
+                text: "Über die App",
+                action: () => showDialog(
+                  context: context,
+                  builder: (context) => AboutDialog(
+                    applicationName: "Brain Hausaufgaben App",
+                    applicationVersion: "0.5",
+                    applicationIcon: Image.asset("icons/appIcon.jpg", width: 60, height: 60),
+                    children: [
+                      Text("Entwickler: Sebastian Merk, Manuel Murmann"),
+                      Text("Designer: Manuel Murmann"),
+                      Text("Project Manager: David Will")
+                    ],
+                  )
+                ),
+              )
+            ],
           )
         ]
       )
