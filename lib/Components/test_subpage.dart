@@ -24,22 +24,6 @@ class TestSubpage extends StatefulWidget {
 }
 
 class _TestSubpage extends State<TestSubpage> {
-  List<DropdownMenuItem<Subject>> getDropdowns() {
-    List<DropdownMenuItem<Subject>> subjects = [];
-    for (Subject subject in TimeTable.subjects) {
-      subjects.add(
-          DropdownMenuItem<Subject>(
-            alignment: Alignment.bottomCenter,
-            child: PointElement(
-                primaryText: subject.name,
-                color: subject.color),
-            value: subject,
-          )
-      );
-    }
-    return subjects;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,9 +39,8 @@ class _TestSubpage extends State<TestSubpage> {
                   maxLines: 10,
                 ),
                 BrainDropdown(
-                    defaultText: Text(
-                        "Fach", style: AppDesign.current.textStyles.input),
-                    items: getDropdowns(),
+                    defaultText: "Fach",
+                    items: BrainDropdown.getSubjectDropdowns(),
                     currentValue: widget.selectedSubject,
                     onChanged: (newValue) {
                       setState(() {

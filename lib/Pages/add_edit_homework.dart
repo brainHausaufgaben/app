@@ -44,7 +44,7 @@ class _HomeworkPage extends State<HomeworkPage> {
           BrainToast toast = BrainToast(text: "An diesem Tag hast du das ausgewählte Fach nicht!");
           toast.show(context);
           return;
-        };
+        }
         DateTime date = DateTime(
             widget.selectedDate.year, widget.selectedDate.month,
             widget.selectedDate.day, time.startTime.hour,
@@ -86,14 +86,15 @@ class _HomeworkPage extends State<HomeworkPage> {
             placeholder: "Hausaufgabe",
           ),
           BrainDropdown(
-              defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
-              items: BrainDropdown.getSubjectDropdowns(),
-              currentValue: widget.selectedSubject,
-              onChanged: (newValue) {
-                setState(() {
-                  widget.selectedSubject = newValue;
-                });
-              }
+            dialogTitle: "Wähle ein Fach",
+            defaultText: "Fach",
+            items: BrainDropdown.getSubjectDropdowns(),
+            currentValue: widget.selectedSubject,
+            onChanged: (newValue) {
+              setState(() {
+                widget.selectedSubject = newValue;
+              });
+            }
           ),
           BrainDateButton(
             value: widget.selectedDate,

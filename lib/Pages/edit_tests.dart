@@ -24,22 +24,6 @@ class EditTestPage extends StatefulWidget {
 }
 
 class _EditTestPage extends State<EditTestPage> {
-  List<DropdownMenuItem<Subject>> getDropdowns() {
-    List<DropdownMenuItem<Subject>> subjects = [];
-    for (Subject subject in TimeTable.subjects) {
-      subjects.add(
-          DropdownMenuItem<Subject>(
-            alignment: Alignment.bottomCenter,
-            child: PointElement(
-                primaryText: subject.name,
-                color: subject.color),
-            value: subject,
-          )
-      );
-    }
-    return subjects;
-  }
-
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
@@ -58,15 +42,15 @@ class _EditTestPage extends State<EditTestPage> {
                     maxLines: 10,
                   ),
                   BrainDropdown(
-                      defaultText: Text(
-                          "Fach", style: AppDesign.current.textStyles.input),
-                      items: getDropdowns(),
-                      currentValue: widget.testSubpage.selectedSubject,
-                      onChanged: (newValue) {
-                        setState(() {
-                          widget.testSubpage.selectedSubject = newValue;
-                        });
-                      }
+                    dialogTitle: "Wähle ein Fach",
+                    defaultText: "Fach",
+                    items: BrainDropdown.getSubjectDropdowns(),
+                    currentValue: widget.testSubpage.selectedSubject,
+                    onChanged: (newValue) {
+                      setState(() {
+                        widget.testSubpage.selectedSubject = newValue;
+                      });
+                    }
                   ),
                   BrainDateButton(
                       value: widget.testSubpage.selectedDate,

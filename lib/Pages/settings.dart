@@ -148,7 +148,7 @@ class _SettingsPage extends State<SettingsPage> {
                 action: () => showDialog(
                   context: context,
                   builder: (context) => AboutDialog(
-                    applicationName: "Brain Hausaufgaben App",
+                    applicationName: "Brain App",
                     applicationVersion: "0.5",
                     applicationIcon: Image.asset("icons/appIcon.jpg", width: 60, height: 60),
                     children: [

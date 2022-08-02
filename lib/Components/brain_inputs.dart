@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,7 +40,7 @@ class _BrainTextField extends State<BrainTextField> {
       decoration: BoxDecoration(
         borderRadius: AppDesign.current.boxStyle.inputBorderRadius
       ),
-      clipBehavior: Clip.antiAlias,
+      clipBehavior: Clip.hardEdge,
       child: Stack(
         children: [
           TextField(
@@ -85,57 +86,141 @@ class _BrainTextField extends State<BrainTextField> {
   }
 }
 
-class BrainDropdown<ItemType> extends StatelessWidget {
+class BrainDropdownEntry<ItemType> {
+  BrainDropdownEntry({
+    required this.value,
+    required this.child
+  });
+
+  ItemType value;
+  Widget child;
+}
+
+class BrainDropdown<ItemType> extends StatefulWidget {
   const BrainDropdown({
     Key? key,
     required this.defaultText,
     required this.currentValue,
     required this.items,
     required this.onChanged,
+    this.dialogTitle,
+    this.additionalAction
   }) : super(key: key);
 
-  final Widget defaultText;
+  final String? dialogTitle;
+  final String defaultText;
   final ItemType currentValue;
-  final List<DropdownMenuItem<ItemType>> items;
-  final void Function(dynamic)? onChanged;
+  final List<BrainDropdownEntry> items;
+  final Widget? additionalAction;
+  final void Function(dynamic) onChanged;
 
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-        decoration: BoxDecoration(
-            borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
-            color: AppDesign.current.boxStyle.backgroundColor
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
-          child: DropdownButton<dynamic>(
-            iconEnabledColor: AppDesign.current.textStyles.color,
-            isDense: true,
-            underline: Container(),
-            isExpanded: true,
-            dropdownColor: AppDesign.current.boxStyle.backgroundColor,
-            value: currentValue,
-            hint: defaultText,
-            items: items,
-            onChanged: onChanged,
-            borderRadius: const BorderRadius.all(Radius.circular(10)),
-          ),
-        )
-    );
-  }
-
-  static List<DropdownMenuItem<Subject>> getSubjectDropdowns(){
-    List<DropdownMenuItem<Subject>> subjects = [];
+  static List<BrainDropdownEntry> getSubjectDropdowns(){
+    List<BrainDropdownEntry> subjects = [];
     for(Subject subject in TimeTable.subjects){
       subjects.add(
-          DropdownMenuItem<Subject>(
-            alignment: Alignment.bottomCenter,
-            child: PointElement(primaryText: subject.name, color: subject.color),
+          BrainDropdownEntry(
             value: subject,
+            child: PointElement(primaryText: subject.name, color: subject.color)
           )
       );
     }
     return subjects;
+  }
+
+  @override
+  State<StatefulWidget> createState() => _BrainDropdown();
+}
+
+class _BrainDropdown extends State<BrainDropdown> {
+  late List<bool> radioValues;
+  bool isOpen = false;
+
+  @override
+  void initState() {
+    radioValues = List.filled(widget.items.length, false);
+    super.initState();
+  }
+
+  List<Widget> getButtons(BuildContext context) {
+    List<Widget> buttons = [];
+
+    for (int i=0; i<widget.items.length; i++) {
+      buttons.add(
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+            ),
+            clipBehavior: Clip.hardEdge,
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                widget.onChanged(widget.items[i].value);
+              },
+              style: TextButton.styleFrom(
+                  backgroundColor: widget.items[i].value == widget.currentValue ? AppDesign.current.themeData.scaffoldBackgroundColor : Colors.transparent
+              ),
+              child: widget.items[i].child,
+            )
+          )
+      );
+    }
+
+    return buttons;
+  }
+
+  Widget? getCorrespondingChild() {
+    for (BrainDropdownEntry entry in widget.items) {
+      if (entry.value == widget.currentValue) return entry.child;
+    }
+    return null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BrainIconButton(
+      child: getCorrespondingChild() ?? Text(widget.defaultText, style: AppDesign.current.textStyles.input),
+      icon: isOpen ? Icons.arrow_drop_up_outlined : Icons.arrow_drop_down_outlined,
+      action: () {
+        setState(() => isOpen = true);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                actions: [
+                  Row(
+                    mainAxisAlignment: widget.additionalAction != null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.end,
+                    children: [
+                      if (widget.additionalAction != null) widget.additionalAction!,
+                      TextButton(
+                        child: Text("Abbrechen"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  )
+                ],
+                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                title: widget.dialogTitle == null ? Text("Wähle ein Fach") : Text(widget.dialogTitle!),
+                content: Container(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  child: ScrollShadow(
+                    color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+                    curve: Curves.ease,
+                    size: 15,
+                    child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          children: getButtons(context),
+                        )
+                    )
+                  )
+                )
+              );
+            }
+        ).then((value) => setState(() => isOpen = false));
+      }
+    );
   }
 }
 

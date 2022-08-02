@@ -19,46 +19,17 @@ class TimeTablePage extends StatefulWidget {
 }
 
 class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin {
-  List<DropdownMenuItem<Subject>> getDropdowns() {
-    List<DropdownMenuItem<Subject>> subjects = [];
-    for(Subject subject in TimeTable.subjects){
-      subjects.add(
-        DropdownMenuItem<Subject>(
-          child: PointElement(
-            primaryText: subject.name,
-            color: subject.color
-          ),
-          value: subject,
-        )
-      );
-    }
-    subjects.add(DropdownMenuItem<Subject>(
+  List<BrainDropdownEntry> getDropdowns() {
+    List<BrainDropdownEntry> subjects = BrainDropdown.getSubjectDropdowns();
+
+    subjects.add(BrainDropdownEntry(
       child: PointElement(
           primaryText: TimeTable.emptySubject.name,
           color: TimeTable.emptySubject.color
       ),
       value: TimeTable.emptySubject,
     ));
-    subjects.add(DropdownMenuItem<Subject>(
-      child: Center(
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: AppDesign.current.primaryColor,
-            minimumSize: Size.infinite
-          ),
-          onPressed: () {
-            // Dropdown popup zu machen
-            Navigator.of(context).pop();
-            NavigationHelper.pushNamed(context, "subjectPage");
-          },
-          child: Text("Fach hinzufügen", style: TextStyle(
-            color: AppDesign.current.textStyles.contrastColor,
-            fontSize: 16
-          )),
-        ),
-      ),
-      value: Subject.empty(),
-    ));
+
     return subjects;
   }
 
@@ -82,8 +53,18 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                 Expanded(
                   flex: 4,
                   child: BrainDropdown(
-                    defaultText: Text("Freistunde", style: AppDesign.current.textStyles.input),
+                    dialogTitle: "Wähle ein Fach",
+                    defaultText: "Freistunde",
                     currentValue: TimeTable.week[day].subjects[i]?.subject,
+                    additionalAction: TextButton(
+                      child: Text("Neues Fach"),
+                      onPressed: () {
+                        if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
+                          NavigationHelper.rootKey.currentState!.pop();
+                        }
+                        NavigationHelper.pushNamed(context, "subjectPage");
+                      },
+                    ),
                     items: getDropdowns(),
                     onChanged: (value) {
                       if(value == TimeTable.emptySubject) {

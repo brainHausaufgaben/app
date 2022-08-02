@@ -101,7 +101,8 @@ class _GradesPage extends State<GradesPage> {
               action: numberPickerDialog
             ),
             BrainDropdown(
-              defaultText: Text("Fach", style: AppDesign.current.textStyles.input),
+              dialogTitle: "Wähle ein Fach",
+              defaultText: "Fach",
               currentValue: widget.selectedSubject,
               items: BrainDropdown.getSubjectDropdowns(),
               onChanged: (subject) {
@@ -109,18 +110,19 @@ class _GradesPage extends State<GradesPage> {
               },
             ),
             BrainDropdown(
-              defaultText: Text("Art der Note", style: AppDesign.current.textStyles.input),
+              dialogTitle: "Wähle eine Notenart",
+              defaultText: "Art der Note",
               currentValue: widget.type,
               items: [
-                DropdownMenuItem(
+                BrainDropdownEntry(
                   value: GradeType.smallTest,
                   child: Text("Ex", style: AppDesign.current.textStyles.input)
                 ),
-                DropdownMenuItem(
+                BrainDropdownEntry(
                   value: GradeType.bigTest,
                   child: Text("Schulaufgabe", style: AppDesign.current.textStyles.input)
                 ),
-                DropdownMenuItem(
+                BrainDropdownEntry(
                   value: GradeType.oralGrade,
                   child: Text("Mündliche Note", style: AppDesign.current.textStyles.input)
                 )
