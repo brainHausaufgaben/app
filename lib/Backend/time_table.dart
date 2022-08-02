@@ -66,7 +66,8 @@ class TimeTable {
     homeworks.add(homework);
     BrainApp.notifier.notifyOfChanges();
     if(saveEnabled) SaveSystem.saveHomework();
-    CustomNotifications.persistentNotification();
+    CustomNotifications.persistentNotification() ;
+    CustomNotifications.homeworkNotification(homework);
   }
 
   static void addEvent(Event event){
@@ -110,6 +111,7 @@ class TimeTable {
       BrainApp.notifier.notifyOfChanges();
       if(saveEnabled) SaveSystem.saveHomework();
       CustomNotifications.persistentNotification();
+    CustomNotifications.notificationsPlugin.cancel(homework.notificationID);
   }
 
   static void reinstateHomework(Homework homework){

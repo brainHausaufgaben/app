@@ -77,6 +77,7 @@ class _BrainApp extends State<BrainApp> {
     await CustomNotifications.init();
     await getBoxText();
     await load();
+
   }
 
   @override
@@ -176,6 +177,7 @@ class _BrainApp extends State<BrainApp> {
         if (TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) !=
             null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
       }
+
     }
 
     dynamic events = await SaveSystem.getEvents();

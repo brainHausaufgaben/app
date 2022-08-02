@@ -6,6 +6,7 @@ class Homework {
   Subject subject;
   DateTime dueTime;
   String name;
+  int notificationID = 0;
 
   Homework(this.subject,this.dueTime,this.name){
     TimeTable.addHomework(this);
