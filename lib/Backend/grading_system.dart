@@ -92,7 +92,7 @@ class GradingSystem{
         d += grade;
       }
     }
-    if(s == 0) return 0;
+    if(s == 0) return -1;
     return d / s;
   }
 

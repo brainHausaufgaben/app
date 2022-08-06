@@ -42,7 +42,7 @@ class BrainCollapsible extends StatelessWidget {
                         height: collapsed ? 25 : 40,
                         width: collapsed ? 25 : 40,
                         alignment: Alignment.center,
-                        duration: const Duration(milliseconds: 100),
+                        duration: const Duration(milliseconds: 500),
                         child: FittedBox(
                           fit: BoxFit.fill,
                           child: Icon(

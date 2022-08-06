@@ -70,7 +70,13 @@ class _GradeOverview extends State<GradeOverview>{
                 children: [
                   GradeWidget(
                     name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
-                    value: GradingSystem.getYearAverage().round().toString(),
+                    value: (){
+                      if(GradingSystem.getYearAverage() == -1) {
+                        return "-";
+                      } else {
+                        return GradingSystem.getYearAverage().round().toString();
+                      }
+                    }(),
                     reversed: false,
                   ),
                   const Spacer(flex: 1),

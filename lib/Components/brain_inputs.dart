@@ -202,19 +202,24 @@ class _BrainDropdown extends State<BrainDropdown> {
                 ],
                 backgroundColor: AppDesign.current.boxStyle.backgroundColor,
                 title: widget.dialogTitle == null ? Text("Wähle ein Fach") : Text(widget.dialogTitle!),
-                content: Container(
+                content: widget.items.length > 6 ? Container(
                   constraints: const BoxConstraints(maxHeight: 400),
                   child: ScrollShadow(
                     color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
                     curve: Curves.ease,
                     size: 15,
                     child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: getButtons(context),
-                        )
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: getButtons(context),
+                      )
                     )
                   )
+                ) : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: getButtons(context),
                 )
               );
             }

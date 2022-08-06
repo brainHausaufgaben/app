@@ -47,7 +47,9 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
 
   Widget getThemeChooser() {
     return Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
+      child: NotificationListener<OverscrollNotification> (
+        onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
         child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: ToggleButtons(
@@ -70,6 +72,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                 children: getRadios()
             )
         )
+      )
     );
   }
 

@@ -25,7 +25,7 @@ class BrainDismissible extends StatelessWidget {
                 buttonText: "Rückgängig",
                 action: () {
                   TimeTable.reinstateLastHomework();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(NavigationHelper.rootKey.currentContext!).hideCurrentSnackBar();
                 }
               );
               toast.show(context);
