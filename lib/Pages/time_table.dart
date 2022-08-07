@@ -133,8 +133,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         // TODO: Very dumm aber es geht im moment
         child: SizedBox(
           height: 600,
-          child: TabBarView(
-            children: getTimetableTabs(),
+          child: NotificationListener<OverscrollNotification> (
+            onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
+            child: TabBarView(
+              children: getTimetableTabs(),
+            )
           )
         )
       )

@@ -357,13 +357,13 @@ class BrainIconButton extends StatelessWidget {
   const BrainIconButton({
     Key? key,
     required this.action,
-    required this.child,
     required this.icon,
+    this.child,
     this.dense = false
   }) : super(key: key);
 
   final Function() action;
-  final Widget child;
+  final Widget? child;
   final IconData icon;
   final bool dense;
 
@@ -383,8 +383,8 @@ class BrainIconButton extends StatelessWidget {
         child: Flex(
           direction: Axis.horizontal,
           children: [
-            Expanded(
-              child: child
+            if (child != null) Expanded(
+              child: child!
             ),
             Icon(icon, color: AppDesign.current.textStyles.color, size: dense ? 20 : 24),
           ],

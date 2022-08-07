@@ -113,10 +113,13 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
         ),
         child: SizedBox(
           height: 400,
-          child: TabBarView(
-            controller: tabController,
-            children: widget.subpages,
-          ),
+          child: NotificationListener<OverscrollNotification> (
+            onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
+            child: TabBarView(
+              controller: tabController,
+              children: widget.subpages,
+            )
+          )
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
