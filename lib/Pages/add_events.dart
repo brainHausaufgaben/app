@@ -89,6 +89,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       child: PageTemplate(
         backButton: true,
         title: "Neues Event",
+        floatingBorderRadius: BorderRadius.circular(100),
         floatingHeader: Container(
           constraints: const BoxConstraints(maxWidth: 275),
           decoration: BoxDecoration(

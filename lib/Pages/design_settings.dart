@@ -79,18 +79,38 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-        title: "Design Einstellungen",
+        title: "Design & Ansicht",
         subtitle: "Version " + version,
         backButton: true,
-        child: SettingsEntry(
-            children: [
-              SettingsSwitchButton(
-                text: "Darkmode",
-                action: () => AppDesign.toggleDarkMode(),
-                state: BrainApp.preferences["darkMode"],
-              ),
-              getThemeChooser()
-            ]
+        child: Wrap(
+          runSpacing: 10,
+          children: [
+            SettingsEntry(
+                children: [
+                  SettingsSwitchButton(
+                    text: "Darkmode",
+                    action: () => AppDesign.toggleDarkMode(),
+                    state: BrainApp.preferences["darkMode"],
+                  ),
+                  getThemeChooser()
+                ]
+            ),
+            SettingsEntry(
+              children: [
+                SettingsSwitchButton(
+                  text: "Witze, Funfacts...",
+                  description: "Wird nicht an jedem Tag angezeigt!",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["showMediaBox"],
+                )
+              ]
+            )
+          ]
         )
     );
   }

@@ -94,24 +94,13 @@ class _SettingsPage extends State<SettingsPage> {
           SettingsEntry(
             children: [
               SettingsNavigatorButton(
-                text: "Design Einstellungen",
+                text: "Design & Ansicht",
                 action: () => NavigationHelper.pushNamed(context, "designSettings")
               )
             ]
           ),
           SettingsEntry(
             children: [
-              SettingsSwitchButton(
-                text: "Witze, Funfacts...",
-                description: "Wird nicht an jedem Tag angezeigt!",
-                action: () {
-                  setState(() {
-                    BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);
-                    BrainApp.notifier.notifyOfChanges();
-                  });
-                },
-                state: BrainApp.preferences["showMediaBox"],
-              ),
               SettingsSwitchButton(
                 text: "Benachrichtigungen",
                 action: () {

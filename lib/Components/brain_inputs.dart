@@ -103,11 +103,13 @@ class BrainDropdown<ItemType> extends StatefulWidget {
     required this.currentValue,
     required this.items,
     required this.onChanged,
+    this.scrollableDialog = true,
     this.dialogTitle,
     this.additionalAction
   }) : super(key: key);
 
   final String? dialogTitle;
+  final bool scrollableDialog;
   final String defaultText;
   final ItemType currentValue;
   final List<BrainDropdownEntry> items;
@@ -202,7 +204,7 @@ class _BrainDropdown extends State<BrainDropdown> {
                 ],
                 backgroundColor: AppDesign.current.boxStyle.backgroundColor,
                 title: widget.dialogTitle == null ? Text("Wähle ein Fach") : Text(widget.dialogTitle!),
-                content: widget.items.length > 6 ? Container(
+                content: widget.scrollableDialog ? Container(
                   constraints: const BoxConstraints(maxHeight: 400),
                   child: ScrollShadow(
                     color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
@@ -377,8 +379,9 @@ class BrainIconButton extends StatelessWidget {
       child: TextButton(
         onPressed: action,
         style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
-            backgroundColor: AppDesign.current.boxStyle.backgroundColor
+          padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
+          backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+          minimumSize: Size.zero
         ),
         child: Flex(
           direction: Axis.horizontal,

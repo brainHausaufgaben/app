@@ -4,13 +4,16 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
+
 class PageTemplate extends StatefulWidget {
   const PageTemplate({
     Key? key,
     required this.title,
     required this.child,
     this.floatingHeader,
-    this.backButton, this.subtitle,
+    this.floatingBorderRadius,
+    this.backButton = false,
+    this.subtitle,
     this.floatingActionButton,
     this.floatingActionButtonLocation
   }) : super(key: key);
@@ -19,7 +22,8 @@ class PageTemplate extends StatefulWidget {
   final Widget child;
   final Widget? floatingHeader;
   final String? subtitle;
-  final bool? backButton;
+  final BorderRadius? floatingBorderRadius;
+  final bool backButton;
   final Widget? floatingActionButton;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 
@@ -64,27 +68,21 @@ class _PageTemplateState extends State<PageTemplate> {
                 curve: Curves.ease,
                 size: 15,
                 child: ListView (
-                   shrinkWrap: true,
+                    shrinkWrap: true,
                     padding: const EdgeInsets.only(top: 10, bottom: 25),
                     children: [
-                      Align(
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: AppDesign.current.boxStyle.backgroundColor,
-                            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
-                          ),
-                          child: IconButton(
-                            tooltip: widget.backButton == null ? "Einstellungen" : "Zurück",
-                            constraints: const BoxConstraints(),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: widget.backButton == null ? _settings : _back,
-                            icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_backspace, color: AppDesign.current.textStyles.color),
-                            iconSize: 24,
-                            splashRadius: 15,
-                          ),
-                        ),
-                        alignment: Alignment.topLeft,
+                      Row(
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                                minimumSize: Size.zero
+                            ),
+                            onPressed: widget.backButton ? _back : _settings,
+                            child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded),
+                          )
+                        ]
                       ),
                       Padding(
                           padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
@@ -121,13 +119,14 @@ class _PageTemplateState extends State<PageTemplate> {
                             child: Container(
                               margin: const EdgeInsets.only(top: 10),
                               decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AppDesign.current.themeData.scaffoldBackgroundColor,
-                                        blurRadius: 10,
-                                        spreadRadius: 8
-                                    )
-                                  ]
+                                borderRadius: widget.floatingBorderRadius,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: AppDesign.current.themeData.scaffoldBackgroundColor,
+                                      blurRadius: 10,
+                                      spreadRadius: 8
+                                  )
+                                ]
                               ),
                               child: widget.floatingHeader!,
                             ),

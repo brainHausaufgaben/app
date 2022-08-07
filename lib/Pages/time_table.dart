@@ -107,6 +107,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           icon: Icons.edit,
           withEntries: false,
         ),
+        floatingBorderRadius: BorderRadius.circular(100),
         floatingHeader: Container(
           decoration: BoxDecoration(
             color: AppDesign.current.boxStyle.backgroundColor,

@@ -52,20 +52,20 @@ class _HomePage extends State<HomePage>{
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.add_box_outlined, size: 40),
+                children: [
+                  Icon(Icons.add_box_outlined, size: 40, color: AppDesign.current.primaryColor),
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Icon(Icons.add_box_rounded, size: 40)
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Icon(Icons.add_box_rounded, size: 40, color: AppDesign.current.primaryColor)
                   ),
-                  Icon(Icons.add_box_outlined, size: 40)
+                  Icon(Icons.add_box_outlined, size: 40, color: AppDesign.current.primaryColor)
                 ],
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 25),
                 child: Text(
                   "Dein Stundenplan ist noch leer",
-                  style: AppDesign.current.textStyles.boxHeadline.copyWith(fontSize: 22),
+                  style: AppDesign.current.textStyles.boxHeadline.copyWith(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -76,10 +76,10 @@ class _HomePage extends State<HomePage>{
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           primary: AppDesign.current.primaryColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
+                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 14)
                       ),
                       onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
-                      child: Text("Stundenplan", style: AppDesign.current.textStyles.buttonText),
+                      child: Text("Stundenplan", style: AppDesign.current.textStyles.buttonText.copyWith(fontSize: 16)),
                     ),
                   ),
                   Expanded(
@@ -88,10 +88,10 @@ class _HomePage extends State<HomePage>{
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             primary: AppDesign.current.primaryColor,
-                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 13)
+                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 14)
                         ),
                         onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
-                        child: Text("Neues Fach", style: AppDesign.current.textStyles.buttonText),
+                        child: Text("Neues Fach", style: AppDesign.current.textStyles.buttonText.copyWith(fontSize: 16)),
                       ),
                     ),
                   )
