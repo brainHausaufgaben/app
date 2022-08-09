@@ -98,6 +98,17 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
             SettingsEntry(
               children: [
                 SettingsSwitchButton(
+                  text: "Angepinnte Boxen",
+                  description: "Ob die Boxen auf der Homepage angepinnt sein sollen oder mitscrollen",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("pinnedHeader", !BrainApp.preferences["pinnedHeader"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["pinnedHeader"],
+                ),
+                SettingsSwitchButton(
                   text: "Witze, Funfacts...",
                   description: "Wird nicht an jedem Tag angezeigt!",
                   action: () {

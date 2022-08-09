@@ -68,3 +68,15 @@ flutter:
          weight: 500
        - asset: fonts/Inter/Inter-Regular.ttf
          weight: 400
+   - family: CrimsonPro
+     fonts:
+       - asset: fonts/CrimsonPro/CrimsonPro-ExtraBold.ttf
+         weight: 800
+       - asset: fonts/CrimsonPro/CrimsonPro-Bold.ttf
+         weight: 700
+       - asset: fonts/CrimsonPro/CrimsonPro-SemiBold.ttf
+         weight: 600
+       - asset: fonts/CrimsonPro/CrimsonPro-Medium.ttf
+         weight: 500
+       - asset: fonts/CrimsonPro/CrimsonPro-Regular.ttf
+         weight: 400

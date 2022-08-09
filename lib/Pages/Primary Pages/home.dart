@@ -8,7 +8,7 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../Components/box.dart';
 import '../page_template.dart';
-import 'package:brain_app/Components/brain_collapsible.dart';
+import 'package:brain_app/Components/brain_infobox.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
@@ -53,12 +53,12 @@ class _HomePage extends State<HomePage>{
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.add_box_outlined, size: 40, color: AppDesign.current.primaryColor),
+                  Icon(Icons.add_box_outlined, size: 40, color: AppDesign.current.textStyles.color),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: Icon(Icons.add_box_rounded, size: 40, color: AppDesign.current.primaryColor)
+                    child: Icon(Icons.add_box_rounded, size: 40, color: AppDesign.current.textStyles.color)
                   ),
-                  Icon(Icons.add_box_outlined, size: 40, color: AppDesign.current.primaryColor)
+                  Icon(Icons.add_box_outlined, size: 40, color: AppDesign.current.textStyles.color)
                 ],
               ),
               Padding(
@@ -106,9 +106,9 @@ class _HomePage extends State<HomePage>{
     return days;
   }
 
-  Widget getWarningBox(){
-      List<IconData> icons = [Icons.warning_rounded, Icons.warning_rounded, Icons.check_circle_rounded];
-      List<Color> iconColors = [Colors.red, Colors.orange, Colors.green];
+  Widget getHeader(){
+      List<IconData> icons = [Icons.warning_rounded, Icons.check_circle_rounded];
+
       int homework = TimeTable.homeworks.length;
       int iconIndex = 0;
       DateTime nextHomework = DateTime(99999);
@@ -116,27 +116,42 @@ class _HomePage extends State<HomePage>{
         if(nextHomework.isAfter(hom.dueTime)) nextHomework = hom.dueTime;
       }
       if(homework == 0) {
-        iconIndex = 2;
+        iconIndex = 1;
       } else if(nextHomework.day == DateTime.now().day && nextHomework.month == DateTime.now().month) {
         iconIndex = 0;
-      }else {
-        iconIndex = 1;
       }
+
       String text = "";
 
-      if(iconIndex == 2)text = "Du hast schon alle Hausaufgaben erledigt";
-      if(iconIndex == 1 || iconIndex ==  0) text = "Du hast noch " + homework.toString() + " unerledigte Hausaufgabe" + (homework == 1 ? "" : "n");
+      if(iconIndex == 1) text = "Du hast schon alle Hausaufgaben erledigt";
+      if(iconIndex ==  0) text = "Du hast noch ${homework.toString()} unerledigte Hausaufgabe ${homework == 1 ? "" : "n"}";
 
-      return BrainCollapsible(
-        text: text,
-        icon: icons[iconIndex],
-        iconColor: iconColors[iconIndex],
-        collapsed: BrainApp.preferences["warningBoxCollapsed"],
-        onTap: () {
-          setState(() {
-            BrainApp.updatePreference("warningBoxCollapsed", !BrainApp.preferences["warningBoxCollapsed"]);
-          });
-        },
+      return NotificationListener<OverscrollNotification> (
+          onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              spacing: 10,
+              children: [
+                BrainInfobox(
+                  isPrimary: true,
+                  title: text,
+                  shortDescription: "Hausaufgaben",
+                  icon: icons[iconIndex],
+                ),
+                BrainInfobox(
+                  title: "Du hast heute keine Termine",
+                  shortDescription: "Termine",
+                  icon: Icons.check_circle_rounded,
+                ),
+                if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysMedia != null) BrainInfobox(
+                    title: BrainApp.todaysMedia!.content,
+                    shortDescription: BrainApp.todaysMedia!.type,
+                    icon: BrainApp.todaysMedia!.icon
+                )
+              ],
+            ),
+          )
       );
   }
 
@@ -156,31 +171,19 @@ class _HomePage extends State<HomePage>{
         }
       },
       child: PageTemplate(
-          title: 'Übersicht',
-          floatingActionButton: BrainMenuButton(
-            defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
-            defaultLabel: "Neu",
-          ),
-          child: Wrap(
-            runSpacing: 20,
-            children: getDays(),
-          ),
-          floatingHeader: Wrap(
-              runSpacing: 5,
-              children: [
-                getWarningBox(),
-                if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysJoke.isNotEmpty) BrainCollapsible(
-                    text: BrainApp.todaysJoke,
-                    icon: BrainApp.icon,
-                    collapsed: BrainApp.preferences["mediaBoxCollapsed"],
-                    onTap: () {
-                      setState(() {
-                        BrainApp.updatePreference("mediaBoxCollapsed", !BrainApp.preferences["mediaBoxCollapsed"]);
-                      });
-                    }
-                )
-              ]
-          )
+        title: 'Übersicht',
+        floatingActionButton: BrainMenuButton(
+          defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
+          defaultLabel: "Neu",
+        ),
+        child: Wrap(
+          runSpacing: 20,
+          children: [
+            if (!BrainApp.preferences["pinnedHeader"]) getHeader(),
+            ...getDays()
+          ],
+        ),
+        floatingHeader: BrainApp.preferences["pinnedHeader"] ? getHeader() : null
       ),
     );
   }

@@ -91,26 +91,30 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
         title: "Neues Event",
         floatingBorderRadius: BorderRadius.circular(100),
         floatingHeader: Container(
-          constraints: const BoxConstraints(maxWidth: 275),
+          constraints: const BoxConstraints(maxWidth: 225),
           decoration: BoxDecoration(
               color: AppDesign.current.boxStyle.backgroundColor,
               borderRadius: BorderRadius.circular(100)
           ),
           clipBehavior: Clip.hardEdge,
-          child: TabBar(
-            controller: tabController,
-            labelStyle: AppDesign.current.textStyles.tab,
-            labelColor: AppDesign.current.textStyles.contrastColor,
-            unselectedLabelColor: AppDesign.current.textStyles.color,
-            indicator: BoxDecoration(
-                color: AppDesign.current.primaryColor,
-                borderRadius: BorderRadius.circular(100)
+          child: DefaultTextStyle(
+            style: AppDesign.current.textStyles.tab,
+            child: TabBar(
+              controller: tabController,
+              labelStyle: AppDesign.current.textStyles.tab,
+              labelColor: AppDesign.current.textStyles.contrastColor,
+              unselectedLabelColor: AppDesign.current.textStyles.color,
+              indicatorPadding: const EdgeInsets.all(5),
+              indicator: BoxDecoration(
+                  color: AppDesign.current.primaryColor,
+                  borderRadius: BorderRadius.circular(100)
+              ),
+              tabs: const [
+                Tab(text: "Event", height: 55),
+                Tab(text: "Test", height: 55)
+              ],
             ),
-            tabs: const [
-              Tab(text: "Event", height: 55),
-              Tab(text: "Test", height: 55)
-            ],
-          ),
+          )
         ),
         child: SizedBox(
           height: 400,

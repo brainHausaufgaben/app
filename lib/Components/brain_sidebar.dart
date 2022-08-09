@@ -41,6 +41,7 @@ class _CustomSidebar extends State<CustomSidebar> {
               textAlign: TextAlign.center,
             ),
           ),
+
           SideBarMenuEntry(
             title: "Noten",
             icon: Icons.grading,
@@ -83,8 +84,41 @@ class _CustomSidebar extends State<CustomSidebar> {
               }
             }
           ),
-        ],
-      ),
+          Divider(
+            height: 30,
+            thickness: 2,
+            color: AppDesign.current.textStyles.color.withOpacity(0.1),
+            indent: 30,
+            endIndent: 30,
+          ),
+          Container(
+            margin: const EdgeInsets.only(top: 10),
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppDesign.current.textStyles.color, width: 2),
+              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+            ),
+            child: TextButton(
+              onPressed: () {},
+              style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("Herunterladen ", style: TextStyle(
+                      color: AppDesign.current.textStyles.color,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600
+                    )
+                  ),
+                  Icon(Icons.phone_android_rounded, color: AppDesign.current.textStyles.color)
+                ]
+              )
+            )
+          )
+        ]
+      )
     );
   }
 }
@@ -107,32 +141,31 @@ class SideBarMenuEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(7),
-                color: activated ? AppDesign.current.primaryColor : AppDesign.current.primaryColor.withOpacity(0)
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(9)
+      ),
+      clipBehavior: Clip.antiAlias,
+      child: TextButton(
+        onPressed: onTap,
+        style: TextButton.styleFrom(
+          backgroundColor: activated ? AppDesign.current.primaryColor : Colors.transparent,
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        ),
+        child: Row(
+          children: [
+            Padding(
+              child: Icon(icon, size: iconSize, color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color),
+              padding: const EdgeInsets.only(right: 10),
             ),
-            child: Row(
-              children: [
-                Padding(
-                  child: Icon(icon, size: iconSize, color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color),
-                  padding: const EdgeInsets.only(right: 10),
-                ),
-                Text(
-                    title,
-                    style: TextStyle(
-                        color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w500)
-                ),
-              ],
-            )
+            Text(
+                title,
+                style: TextStyle(
+                    color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600)
+            ),
+          ],
         ),
       ),
     );

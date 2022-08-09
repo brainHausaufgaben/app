@@ -109,7 +109,7 @@ class NavigationItem extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
             color: activated ? AppDesign.current.primaryColor : AppDesign.current.primaryColor.withAlpha(0),
-            borderRadius: BorderRadius.circular(10)
+            borderRadius: AppDesign.current.boxStyle.borderRadius
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

@@ -80,7 +80,7 @@ class _PageTemplateState extends State<PageTemplate> {
                                 minimumSize: Size.zero
                             ),
                             onPressed: widget.backButton ? _back : _settings,
-                            child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded),
+                            child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded, color: AppDesign.current.textStyles.color),
                           )
                         ]
                       ),

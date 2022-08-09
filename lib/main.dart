@@ -28,17 +28,14 @@ class BrainApp extends StatefulWidget {
 
   static Notifier notifier = Notifier();
 
-  static String todaysJoke = "";
-  static IconData icon = Icons.autorenew_rounded;
-  static int selectedPageIndex = 1;
+  static TodaysMedia? todaysMedia;
 
   static Map<String, dynamic> preferences = {
-    "warningBoxCollapsed": false,
-    "mediaBoxCollapsed": false,
     "showMediaBox": true,
     "persistentNotifications": false,
     "design": "Monochrome",
     "darkMode": false,
+    "pinnedHeader": true
   };
 
   static void updatePreference(String key, dynamic value) async {
@@ -109,7 +106,7 @@ class _BrainApp extends State<BrainApp> {
     });
   }
 
-  Future<MapEntry<String, IconData>?> parseJokes() async {
+  Future<TodaysMedia?> parseJokes() async {
     final rawData = await rootBundle.loadString("data/witze.csv");
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
     for (List<dynamic> entry in listData) {
@@ -118,25 +115,35 @@ class _BrainApp extends State<BrainApp> {
 
       if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
         IconData icon;
+        String type;
 
         switch (entry[1]) {
           case "Fun Fact":
+            type = entry[1];
             icon = Icons.lightbulb;
             break;
           case "Witz":
+            type = entry[1];
             icon = Icons.celebration;
             break;
           case "Tipp":
+            type = entry[1];
             icon = Icons.verified;
             break;
           case "Zitat":
+            type = entry[1];
             icon = Icons.format_quote;
             break;
           default:
+            type = "";
             icon = Icons.celebration;
         }
 
-        return MapEntry(entry[2], icon);
+        return TodaysMedia(
+            icon: icon,
+            content: entry[2],
+            type: type
+        );
       }
     }
     return null;
@@ -221,11 +228,7 @@ class _BrainApp extends State<BrainApp> {
     parseJokes().then((value) {
       setState(() {
         if (value != null) {
-          BrainApp.todaysJoke = value.key;
-          BrainApp.icon = value.value;
-        } else {
-          BrainApp.todaysJoke = "";
-          BrainApp.icon = Icons.celebration;
+          BrainApp.todaysMedia = value;
         }
       });
     });
@@ -240,4 +243,16 @@ class StretchingIndicator extends ScrollBehavior {
         axisDirection: details.direction
     );
   }
+}
+
+class TodaysMedia {
+  TodaysMedia({
+    required this.icon,
+    required this.content,
+    required this.type
+  });
+
+  final IconData icon;
+  final String content;
+  final String type;
 }

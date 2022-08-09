@@ -29,13 +29,12 @@ class AppDesign {
 abstract class Design {
   static Map<String, Design> allDesigns = {
     "Monochrome" : MonochromeDesign(),
+    "Just Golden" : JustGoldenDesign(),
     "Carrot Orange" : CarrotOrangeDesign(),
     "Pastel Red" : PastelRedDesign(),
     "Forest Green" : ForestGreenDesign(),
     "Ocean Blue" : OceanBlueDesign(),
-    "Jeremias Purple" : JeremiasPurpleDesign(),
-    "Just Golden" : JustGoldenDesign(),
-    "Military Green" : MilitaryGreenDesign()
+    "Jeremias Purple" : JeremiasPurpleDesign()
   };
 
   DesignPackage get lightVariant;
@@ -57,8 +56,7 @@ class ForestGreenDesign extends Design {
       generateDesign(const Color(0xFF1A7343), const Color(0xFFEBF5EF), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFF1A7343), const Color(0xFF0E1A12), const Color(
-          0xFF15261B), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFF1A7343), const Color(0xFF0E1A12), const Color(0xFF15261B), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
 }
 
 class CarrotOrangeDesign extends Design {
@@ -73,7 +71,7 @@ class CarrotOrangeDesign extends Design {
 class PastelRedDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFFC73053), const Color(0xFFFFEEE7), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFFC73053), const Color(0xFFFFF2ED), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFFC73053), const Color(0xFF26151A), const Color(0xFF3B2026), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
@@ -85,7 +83,7 @@ class OceanBlueDesign extends Design {
       generateDesign(const Color(0xFF2A5AC5), const Color(0xFFF2F7FF), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFF5661C7), const Color(0xFF191B3A), const Color(0xFF262D5D), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), false);
+      generateDesign(const Color(0xFF5661C7), const Color(0xFF0E0E21), const Color(0xFF1A1F41), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), false);
 }
 
 class JeremiasPurpleDesign extends Design {
@@ -97,20 +95,11 @@ class JeremiasPurpleDesign extends Design {
       generateDesign(const Color(0xFF6249AB), const Color(0xFF261D38), const Color(0xFF382F59), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF), true);
 }
 
-class MilitaryGreenDesign extends Design {
-  @override
-  DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFF455147), const Color(0xFFAABCAC), const Color(0xFFC9D4CA), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
-  @override
-  DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFFA3BDA6), const Color(0xFF445346), const Color(0xFF637265), const Color(0xFFFFFFFF), const Color(0xFF212229), true);
-}
-
 class JustGoldenDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFFACA359), const Color(0xFFECE6D2), const Color(0xFFF8F7E7), const Color(0xFF303540), const Color(0xFFFFFFFF), true);
+      generateDesign(const Color(0xFFC9A84C), const Color(0xFFECE6D2), const Color(0xFFF8F7E7), const Color(0xFF303540), const Color(0xFFFFFFFF), true, "CrimsonPro", 1.15, true);
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFFB9AE51), const Color(0xFF35342A), const Color(0xFF464538), const Color(0xFFFFFFFF), const Color(0xFF212229), true);
+      generateDesign(const Color(0xFFE1A74F), const Color(0xFF0A0A0A), const Color(0xFF1F1C1A), const Color(0xFFF5EAE0), const Color(0xFF1A1613), true, "CrimsonPro", 1.15, true);
 }

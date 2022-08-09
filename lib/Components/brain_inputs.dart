@@ -563,11 +563,12 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
       onPressed: () {
         widget.action();
       },
-      child: Row(
+      child: Flex(
+        direction: Axis.horizontal,
         crossAxisAlignment: widget.description == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
+          Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
