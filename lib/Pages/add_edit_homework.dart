@@ -108,7 +108,9 @@ class _HomeworkPage extends State<HomeworkPage> {
           )
         ]
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      pageSettings: const PageSettings(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
       floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(

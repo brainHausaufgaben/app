@@ -89,9 +89,13 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       child: PageTemplate(
         backButton: true,
         title: "Neues Event",
-        floatingBorderRadius: BorderRadius.circular(100),
+        pageSettings: PageSettings(
+          floatingHeaderIsCentered: true,
+          floatingHeaderBorderRadius: BorderRadius.circular(100),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        ),
         floatingHeader: Container(
-          constraints: const BoxConstraints(maxWidth: 225),
+          constraints: const BoxConstraints(maxWidth: 250),
           decoration: BoxDecoration(
               color: AppDesign.current.boxStyle.backgroundColor,
               borderRadius: BorderRadius.circular(100)
@@ -104,13 +108,12 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
               labelStyle: AppDesign.current.textStyles.tab,
               labelColor: AppDesign.current.textStyles.contrastColor,
               unselectedLabelColor: AppDesign.current.textStyles.color,
-              indicatorPadding: const EdgeInsets.all(5),
               indicator: BoxDecoration(
                   color: AppDesign.current.primaryColor,
                   borderRadius: BorderRadius.circular(100)
               ),
               tabs: const [
-                Tab(text: "Event", height: 55),
+                Tab(text: "Termin", height: 55),
                 Tab(text: "Test", height: 55)
               ],
             ),
@@ -126,7 +129,6 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
             )
           )
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(

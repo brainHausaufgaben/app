@@ -66,7 +66,9 @@ class _EditTestPage extends State<EditTestPage> {
             )
           ]
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      pageSettings: const PageSettings(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
+      ),
       floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(

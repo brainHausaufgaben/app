@@ -239,7 +239,7 @@ class _CalendarPage extends State<CalendarPage> {
                   children: getSelectedHomework(),
                 ),
                 if (TimeTable.getEvents(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
-                  headline: "Events",
+                  headline: "Termine",
                   children: getSelectedEvents(),
                 )
               ]

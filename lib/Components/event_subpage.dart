@@ -31,12 +31,12 @@ class _EventSubpage extends State<EventSubpage> {
             children: [
               BrainTextField(
                 controller: widget.titleController,
-                placeholder: "Event Titel",
+                placeholder: "Termin Titel",
                 maxLines: 1,
               ),
               BrainTextField(
                 controller: widget.descriptionController,
-                placeholder: "Event Beschreibung",
+                placeholder: "Termin Beschreibung",
                 maxLines: 5,
               ),
               BrainDateButton(

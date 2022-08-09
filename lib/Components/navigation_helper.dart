@@ -36,11 +36,12 @@ class NavigationHelper extends StatefulWidget {
     }
   }
 
-  static void pushNamed(BuildContext context, String route, {dynamic payload}) async {
+  static void pushNamed(BuildContext context, String route, {dynamic payload}) {
     getNavigator(context).pushNamed(route, arguments: payload);
   }
 
   static void pushNamedReplacement(BuildContext context, String route) {
+    // TODO: Pop alle seiten
     getNavigator(context, forceNested: true).pushReplacementNamed(route);
   }
 
@@ -53,7 +54,7 @@ class _NavigationHelper extends State<NavigationHelper> {
     return Center(
       child: Container(
           padding: const EdgeInsets.all(20),
-          constraints: const BoxConstraints(maxWidth: 1300),
+          constraints: const BoxConstraints(maxWidth: 1400),
           child: Flex(
               direction: Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.stretch,

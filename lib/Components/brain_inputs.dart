@@ -447,11 +447,11 @@ class BrainColorPicker extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: asIconButton ? BorderRadius.circular(100) : AppDesign.current.boxStyle.inputBorderRadius,
+          borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
           color: AppDesign.current.boxStyle.backgroundColor
         ),
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: asIconButton ? 14 : 12),
-        child: asIconButton ? const Icon(Icons.color_lens_outlined) : Row(
+        child: Row(
           children: [
             Container(
               height: 25.0,
@@ -750,7 +750,7 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
       spacing: 5,
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),
-      animationDuration: const Duration(milliseconds: 200),
+      animationDuration: const Duration(milliseconds: 300),
       label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: const TextStyle(letterSpacing: 0.5)) : null,
     );
   }

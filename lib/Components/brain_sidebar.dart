@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CustomSidebar extends StatefulWidget {
   const CustomSidebar({Key? key}) : super(key: key);
@@ -11,6 +12,12 @@ class CustomSidebar extends StatefulWidget {
 
 class _CustomSidebar extends State<CustomSidebar> {
   @override
+  void initState() {
+    NavigationHelper.selectedPrimaryPage.addListener(() => setState(() {}));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       width: 300,
@@ -18,12 +25,7 @@ class _CustomSidebar extends State<CustomSidebar> {
       decoration: BoxDecoration(
           color: AppDesign.current.boxStyle.backgroundColor,
           borderRadius: AppDesign.current.boxStyle.borderRadius,
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withOpacity(0.05),
-                blurRadius: 10
-            )
-          ]
+
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -99,7 +101,10 @@ class _CustomSidebar extends State<CustomSidebar> {
               borderRadius: AppDesign.current.boxStyle.inputBorderRadius
             ),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Uri url = Uri.parse("https://play.google.com/store/apps/details?id=de.brainhausaufgabenheft.brain_app&hl=de");
+                launchUrl(url, mode: LaunchMode.externalApplication);
+              },
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
               ),

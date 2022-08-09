@@ -107,8 +107,14 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           icon: Icons.edit,
           withEntries: false,
         ),
-        floatingBorderRadius: BorderRadius.circular(100),
+        pageSettings: PageSettings(
+          floatingHeaderBorderRadius: BorderRadius.circular(100),
+          floatingHeaderIsCentered: true
+        ),
         floatingHeader: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 700
+          ),
           decoration: BoxDecoration(
             color: AppDesign.current.boxStyle.backgroundColor,
             borderRadius: BorderRadius.circular(100)
@@ -116,7 +122,6 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           clipBehavior: Clip.hardEdge,
           child: TabBar(
             labelStyle: AppDesign.current.textStyles.tab,
-            indicatorPadding: const EdgeInsets.all(5),
             labelColor: AppDesign.current.textStyles.contrastColor,
             unselectedLabelColor: AppDesign.current.textStyles.color,
             indicator: BoxDecoration(

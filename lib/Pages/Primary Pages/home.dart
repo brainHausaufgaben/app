@@ -4,6 +4,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import '../../Components/box.dart';
@@ -107,24 +108,30 @@ class _HomePage extends State<HomePage>{
   }
 
   Widget getHeader(){
-      List<IconData> icons = [Icons.warning_rounded, Icons.check_circle_rounded];
-
       int homework = TimeTable.homeworks.length;
-      int iconIndex = 0;
+
       DateTime nextHomework = DateTime(99999);
       for(Homework hom in TimeTable.homeworks){
         if(nextHomework.isAfter(hom.dueTime)) nextHomework = hom.dueTime;
       }
-      if(homework == 0) {
-        iconIndex = 1;
-      } else if(nextHomework.day == DateTime.now().day && nextHomework.month == DateTime.now().month) {
-        iconIndex = 0;
+
+      int eventsCount = TimeTable.getEvents(DateTime.now()).length;
+      IconData eventsIcon;
+      String eventsText = "";
+      if (eventsCount > 0) {
+        eventsIcon = Icons.warning_rounded;
+        eventsText = "Du hast heute noch ${eventsCount.toString()} Termin${eventsCount == 1 ? "" : "e"}!";
+      } else {
+        eventsIcon = Icons.check_circle_rounded;
+        eventsText = "Du hast heute keine Termine";
       }
 
-      String text = "";
-
-      if(iconIndex == 1) text = "Du hast schon alle Hausaufgaben erledigt";
-      if(iconIndex ==  0) text = "Du hast noch ${homework.toString()} unerledigte Hausaufgabe ${homework == 1 ? "" : "n"}";
+      IconData homeworkIcon = Icons.check_circle_rounded;
+      String homeworkText = "Du hast schon alle Hausaufgaben erledigt";
+      if(nextHomework.day == DateTime.now().day && nextHomework.month == DateTime.now().month) {
+        homeworkIcon = Icons.warning_rounded;
+        homeworkText = "Du hast noch ${homework.toString()} unerledigte Hausaufgabe${homework == 1 ? "" : "n"}!";
+      }
 
       return NotificationListener<OverscrollNotification> (
           onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
@@ -135,14 +142,19 @@ class _HomePage extends State<HomePage>{
               children: [
                 BrainInfobox(
                   isPrimary: true,
-                  title: text,
+                  title: homeworkText,
                   shortDescription: "Hausaufgaben",
-                  icon: icons[iconIndex],
+                  icon: homeworkIcon,
                 ),
                 BrainInfobox(
-                  title: "Du hast heute keine Termine",
+                  title: eventsText,
                   shortDescription: "Termine",
-                  icon: Icons.check_circle_rounded,
+                  icon: eventsIcon,
+                  action: () {
+                    CalendarPage.selectedDay = DateTime.now();
+                    NavigationHelper.selectedPrimaryPage.value = 2;
+                    NavigationHelper.pushNamedReplacement(context, "calendar");
+                  },
                 ),
                 if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysMedia != null) BrainInfobox(
                     title: BrainApp.todaysMedia!.content,
@@ -157,7 +169,6 @@ class _HomePage extends State<HomePage>{
 
   @override
   Widget build(BuildContext context) {
-    //if(DateTime.now().weekday == 7) return Text("heute ist sonntag geh in kirche");
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (MediaQuery.of(context).size.width < AppDesign.breakPointWidth) {
