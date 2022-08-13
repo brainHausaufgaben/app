@@ -14,6 +14,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/notifier.dart';
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 import 'Backend/event.dart';
@@ -35,7 +36,9 @@ class BrainApp extends StatefulWidget {
     "persistentNotifications": false,
     "design": "Monochrome",
     "darkMode": false,
-    "pinnedHeader": true
+    "pinnedHeader": true,
+    "daysUntilHomeworkWarning": 6,
+    "calendarFormat" : 0
   };
 
   static void updatePreference(String key, dynamic value) async {
@@ -48,6 +51,9 @@ class BrainApp extends StatefulWidget {
         break;
       case bool:
         prefs.setBool(key, value);
+        break;
+      case int:
+        prefs.setInt(key, value);
         break;
     }
   }

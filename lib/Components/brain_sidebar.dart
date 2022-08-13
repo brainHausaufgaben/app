@@ -146,15 +146,16 @@ class SideBarMenuEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
+        color: activated ? AppDesign.current.primaryColor : Colors.transparent,
         borderRadius: BorderRadius.circular(9)
       ),
       clipBehavior: Clip.antiAlias,
       child: TextButton(
         onPressed: onTap,
         style: TextButton.styleFrom(
-          backgroundColor: activated ? AppDesign.current.primaryColor : Colors.transparent,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
         child: Row(

@@ -128,7 +128,7 @@ class _HomePage extends State<HomePage>{
 
       IconData homeworkIcon = Icons.check_circle_rounded;
       String homeworkText = "Du hast schon alle Hausaufgaben erledigt";
-      if(nextHomework.day == DateTime.now().day && nextHomework.month == DateTime.now().month) {
+      if(homework > 0) {
         homeworkIcon = Icons.warning_rounded;
         homeworkText = "Du hast noch ${homework.toString()} unerledigte Hausaufgabe${homework == 1 ? "" : "n"}!";
       }

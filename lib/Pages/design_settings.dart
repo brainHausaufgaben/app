@@ -17,13 +17,11 @@ class DesignSettingsPage extends StatefulWidget {
 
 class _DesignSettingsPage extends State<DesignSettingsPage> {
   final List<bool> radioList = List.filled(Design.allDesigns.length, false);
-  String version = "...";
 
   @override
   void initState() {
     super.initState();
     radioList[Design.allDesigns.keys.toList().indexOf(BrainApp.preferences["design"])] = true;
-    getVersion();
   }
 
   List<IconRadio> getRadios() {
@@ -36,13 +34,6 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
     });
 
     return radios;
-  }
-
-  void getVersion() {
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      version = packageInfo.version;
-      BrainApp.notifier.notifyOfChanges();
-    });
   }
 
   Widget getThemeChooser() {
@@ -80,7 +71,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
         title: "Design & Ansicht",
-        subtitle: "Version " + version,
+        subtitle: "Passe die Brain App nach deinem Geschmack an!",
         backButton: true,
         child: Wrap(
           runSpacing: 10,
@@ -99,7 +90,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
               children: [
                 SettingsSwitchButton(
                   text: "Angepinnte Boxen",
-                  description: "Ob die Boxen auf der Homepage angepinnt sein sollen oder mitscrollen",
+                  description: "Wenn aktiviert, bleiben die Boxen auf der Homepage immer sichtbar",
                   action: () {
                     setState(() {
                       BrainApp.updatePreference("pinnedHeader", !BrainApp.preferences["pinnedHeader"]);

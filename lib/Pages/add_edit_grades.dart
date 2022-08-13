@@ -17,6 +17,7 @@ class GradesPage extends StatefulWidget {
   int grade = 0;
   Subject? selectedSubject;
   GradeType? type;
+  int semester = 0;
 
   @override
   State<GradesPage> createState() => _GradesPage();
@@ -77,6 +78,7 @@ class _GradesPage extends State<GradesPage> {
           widget.grade = args.value;
           widget.selectedSubject = args.subject;
           widget.type = args.type;
+          widget.semester = args.time.partOfYear;
           break;
         case Subject:
           widget.selectedSubject = args;
@@ -131,6 +133,29 @@ class _GradesPage extends State<GradesPage> {
               onChanged: (newType) {
                 setState(() => widget.type = newType);
               },
+            ),
+            BrainDropdown(
+              dialogTitle: "Semester des Jahres",
+              scrollableDialog: false,
+              defaultText: "Semester des Jahres",
+              currentValue: widget.semester,
+              items: [
+                BrainDropdownEntry(
+                    value: 1,
+                    child: Text("1. Semester", style: AppDesign.current.textStyles.input)
+                ),
+                BrainDropdownEntry(
+                    value: 2,
+                    child: Text("2. Semester", style: AppDesign.current.textStyles.input)
+                ),
+                BrainDropdownEntry(
+                    value: 3,
+                    child: Text("3. Semester", style: AppDesign.current.textStyles.input)
+                ),
+              ],
+              onChanged: (newSemester) {
+                setState(() => widget.semester = newSemester);
+              },
             )
           ]
       ),
@@ -155,20 +180,18 @@ class _GradesPage extends State<GradesPage> {
                       } else {
                         if (widget.previousGrade == null) {
                           switch(widget.type) {
-                          // TODO: man muss noch auswählen können welches halb/drittel jahr
                             case GradeType.bigTest:
-                              BigGrade(widget.grade, widget.selectedSubject!, 1);
+                              BigGrade(widget.grade, widget.selectedSubject!, widget.semester);
                               break;
                             case GradeType.smallTest:
                             case GradeType.oralGrade:
-                              SmallGrade(widget.grade, widget.selectedSubject!, widget.type!, 1);
+                              SmallGrade(widget.grade, widget.selectedSubject!, widget.type!, widget.semester);
                               break;
-
                             default:
                               return;
                           }
                         } else {
-                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type, null);
+                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type, GradeTime(GradingSystem.currentYear, widget.semester));
                         }
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);

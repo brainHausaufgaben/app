@@ -23,12 +23,35 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     List<Widget> buttons = [];
 
     for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
+      if (grade.type != GradeType.smallTest) continue;
       buttons.add(
           BrainIconButton(
             dense: true,
             child: PointElement(
               color: widget.subject.color,
               primaryText: "1. Exemporale",
+              child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
+            ),
+            icon: Icons.edit,
+            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
+          )
+      );
+    }
+
+    return buttons;
+  }
+
+  List<Widget> getOral() {
+    List<Widget> buttons = [];
+
+    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
+      if (grade.type != GradeType.oralGrade) continue;
+      buttons.add(
+          BrainIconButton(
+            dense: true,
+            child: PointElement(
+              color: widget.subject.color,
+              primaryText: "1. Mündliche Note",
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
@@ -117,13 +140,17 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
           child: Wrap(
             runSpacing: 20,
             children: [
-              if (GradingSystem.getSmallGradesBySubject(widget.subject).isNotEmpty) HeadlineWrap(
+              if (getTests().isNotEmpty) HeadlineWrap(
+                  headline: "Schulaufgaben",
+                  children: getTests()
+              ),
+              if (getShortTests().isNotEmpty) HeadlineWrap(
                   headline: "Exen",
                   children: getShortTests()
               ),
-              if (GradingSystem.getBigGradesBySubject(widget.subject).isNotEmpty) HeadlineWrap(
-                  headline: "Schulaufgaben",
-                  children: getTests()
+              if (getOral().isNotEmpty) HeadlineWrap(
+                  headline: "Mündliche Noten",
+                  children: getOral()
               )
             ],
           ),

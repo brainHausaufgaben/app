@@ -1,7 +1,6 @@
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/time_table.dart';
 
 abstract class Grade{
   int value;
@@ -131,5 +130,4 @@ class GradeTime{
 
   GradeTime(this.year,this.partOfYear);
   GradeTime.createOnLoad(this.year,this.partOfYear,this.isAdvancedLevel);
-
 }

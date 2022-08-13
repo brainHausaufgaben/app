@@ -11,6 +11,7 @@ import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -18,7 +19,6 @@ class CalendarPage extends StatefulWidget {
   CalendarPage({Key? key}): super(key: key);
 
   static DateTime selectedDay = DateTime.now();
-  CalendarFormat calendarFormat = CalendarFormat.month;
 
   @override
   _CalendarPage createState() => _CalendarPage();
@@ -141,7 +141,12 @@ class _CalendarPage extends State<CalendarPage> {
               children: [
                 Box(
                     child: TableCalendar(
-                        calendarFormat: widget.calendarFormat,
+                        calendarFormat: CalendarFormat.values[BrainApp.preferences["calendarFormat"]],
+                        availableCalendarFormats: const {
+                          CalendarFormat.month : "Monat",
+                          CalendarFormat.week : "Woche",
+                          CalendarFormat.twoWeeks : "2 Wochen"
+                        },
                         locale: "de_DE",
                         firstDay: DateTime.utc(2018, 10, 16),
                         lastDay: DateTime.now().add(const Duration(days:730)),
@@ -210,7 +215,9 @@ class _CalendarPage extends State<CalendarPage> {
                         formatAnimationCurve: Curves.easeOutBack,
                         formatAnimationDuration: const Duration(milliseconds: 500),
                         onFormatChanged: (format) {
-                          setState(() => widget.calendarFormat = format);
+                          setState(() {
+                            BrainApp.updatePreference("calendarFormat", format.index);
+                          });
                         },
                         onDaySelected: (_selectedDay, _focusedDay) {
                           setState(() {

@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/services.dart';
@@ -417,7 +418,7 @@ class BrainColorPicker extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100)
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: pickerColor,
@@ -569,6 +570,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
+            flex: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -577,6 +579,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
               ],
             ),
           ),
+          Spacer(),
           Container(
             width: 22,
             height: 22,
@@ -599,6 +602,48 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class SettingsTextfield extends StatelessWidget {
+  SettingsTextfield({
+    Key? key,
+    required this.text
+  }) : super(key: key);
+
+  final String text;
+  TextEditingController controller = TextEditingController(text: BrainApp.preferences["daysUntilHomeworkWarning"].toString());
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10)
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: TextField(
+              controller: controller,
+              style: AppDesign.current.textStyles.input,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(14),
+                isCollapsed: true,
+                border: InputBorder.none,
+                filled: true,
+                fillColor: AppDesign.current.themeData.scaffoldBackgroundColor
+              ),
+            ),
+          )
+        ]
       ),
     );
   }
