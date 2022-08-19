@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +26,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> {
               SettingsTextfield(
                 text: "Developer Code",
                 submitAction: (text) {
-
-                }
+                  DeveloperOptions.enterText(text);}
               )
             ]
           )
