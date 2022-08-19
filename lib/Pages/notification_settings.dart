@@ -8,13 +8,16 @@ import '../main.dart';
 class NotificationSettings extends StatefulWidget {
   NotificationSettings({Key? key}) : super(key: key);
 
-  TimeOfDay selectedTime = TimeOfDay.now();
-
   @override
   State<NotificationSettings> createState() => _NotificationSettings();
 }
 
 class _NotificationSettings extends State<NotificationSettings> {
+  TimeOfDay parseTime(String timeAsString) {
+    List<String> splitString = timeAsString.split(":");
+    return TimeOfDay(hour: int.parse(splitString[0]), minute: int.parse(splitString[1]));
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
@@ -50,15 +53,19 @@ class _NotificationSettings extends State<NotificationSettings> {
                       action: () {
                         setState(() {
                           BrainApp.updatePreference("homeworkNotifications", !BrainApp.preferences["homeworkNotifications"]);
+                          CustomNotifications.homeworkNotificationsEnabled = BrainApp.preferences["homeworkNotifications"];
                         });
                       },
                       state: BrainApp.preferences["homeworkNotifications"]
                   ),
                   SettingsTimePicker(
                     text: "Immer am Vortag um...",
-                    currentTime: widget.selectedTime,
+                    currentTime: parseTime(BrainApp.preferences["notificationTime"]),
                     onSelect: (time) {
-                      setState(() => widget.selectedTime = time);
+                      setState(() {
+                        CustomNotifications.notificationTime = DateTime(0);
+                        BrainApp.updatePreference("notificationTime", "${time.hour}:${time.minute}");
+                      });
                     },
                   )
                 ],

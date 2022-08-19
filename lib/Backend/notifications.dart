@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomNotifications{
   static final AndroidFlutterLocalNotificationsPlugin notificationsPlugin = AndroidFlutterLocalNotificationsPlugin();
-  static DateTime notificationTime = DateTime(0,0,0,22,24);
+  static DateTime notificationTime = DateTime(0,0,0,16,00);
   static int currentHomeworkNotificationID = 0;
   static bool permaNotificationEnabled = true;
   static bool homeworkNotificationsEnabled = true;
@@ -39,6 +39,7 @@ class CustomNotifications{
       else{
         CustomNotifications.disablePermaNotification();
       }
+      homeworkNotificationsEnabled = preferences.getBool("homeworkNotifications") ?? true;
     });
 
 
