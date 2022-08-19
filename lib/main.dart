@@ -136,6 +136,8 @@ class _BrainApp extends State<BrainApp> {
         String type = entry[1];
         type = type.trim();
 
+        String content = entry[2];
+
         switch (type) {
           case "Fun Fact":
             icon = Icons.lightbulb;
@@ -156,7 +158,8 @@ class _BrainApp extends State<BrainApp> {
             icon = Icons.question_mark_rounded;
             break;
           case "Ferien":
-            icon = Icons.free_cancellation;
+            icon = Icons.celebration;
+            content = "Endlich Ferien!";
             break;
           default:
             return null;
@@ -164,7 +167,7 @@ class _BrainApp extends State<BrainApp> {
 
         return TodaysMedia(
             icon: icon,
-            content: (entry[2] as String).isEmpty ? "Heute sind Ferien in Bayern!" : entry[2],
+            content: content,
             type: type
         );
       }

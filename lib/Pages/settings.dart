@@ -114,12 +114,12 @@ class _SettingsPage extends State<SettingsPage> {
                   context: context,
                   builder: (context) => AboutDialog(
                     applicationName: "Brain App",
-                    applicationVersion: "0.5",
+                    applicationVersion: BrainApp.appVersion,
                     applicationIcon: Image.asset("icons/appIcon.jpg", width: 60, height: 60),
                     children: [
                       Text("Entwickler: Sebastian Merk, Manuel Murmann"),
                       Text("Designer: Manuel Murmann"),
-                      Text("Project Manager: David Will")
+                      Text("Project Manager: David Will (aber nicht wirklich)")
                     ],
                   )
                 ),
