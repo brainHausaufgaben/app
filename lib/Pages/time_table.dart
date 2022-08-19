@@ -44,9 +44,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             child: Flex(
               direction: Axis.horizontal,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
+                SizedBox(
+                  width: 75,
+                  child: Center(
+                    child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
+                  ),
                 ),
                 Expanded(
                   child: BrainDropdown(
