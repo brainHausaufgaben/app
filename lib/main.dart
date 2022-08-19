@@ -34,6 +34,7 @@ class BrainApp extends StatefulWidget {
     "showMediaBox": true,
     "persistentNotifications": false,
     "homeworkNotifications": false,
+    "notificationTime": "16:00",
     "design": "Monochrome",
     "darkMode": false,
     "pinnedHeader": true,
@@ -129,27 +130,25 @@ class _BrainApp extends State<BrainApp> {
 
       if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
         IconData icon;
-        String type;
+        String type = entry[1];
 
         switch (entry[1]) {
           case "Fun Fact":
-            type = entry[1];
             icon = Icons.lightbulb;
             break;
           case "Witz":
-            type = entry[1];
             icon = Icons.celebration;
             break;
           case "Tipp":
-            type = entry[1];
             icon = Icons.verified;
             break;
           case "Zitat":
-            type = entry[1];
             icon = Icons.format_quote;
             break;
+          case "Vorschlag":
+            icon = Icons.star_border;
+            break;
           default:
-            type = "";
             icon = Icons.celebration;
         }
 

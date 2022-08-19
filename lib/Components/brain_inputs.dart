@@ -641,7 +641,7 @@ class SettingsTimePicker extends StatelessWidget {
             );
           }
         ).then((value) {
-          onSelect(value);
+          if (value != null) onSelect(value);
         });
       },
       child: Flex(
@@ -660,7 +660,7 @@ class SettingsTimePicker extends StatelessWidget {
                 )
               )
             ),
-            child: Text("${currentTime.hour}:${currentTime.minute} Uhr", style: AppDesign.current.textStyles.settingsSubMenuDescription),
+            child: Text("${currentTime.format(context)} Uhr", style: AppDesign.current.textStyles.settingsSubMenuDescription),
           )
         ],
       ),

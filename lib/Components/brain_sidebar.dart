@@ -120,7 +120,7 @@ class _CustomSidebar extends State<CustomSidebar> {
                                       backgroundColor: AppDesign.current.primaryColor,
                                       title: Text("Lade die Brain App auf deinem Android Gerät herunter", style: TextStyle(color: AppDesign.current.textStyles.contrastColor)),
                                       content: const Center(
-                                        child: Image(image: AssetImage("../images/qr_code.png"), width: 200, height: 200),
+                                        child: Image(image: AssetImage("images/qr_code.png"), width: 200, height: 200),
                                       ),
                                       contentPadding: const EdgeInsets.only(left: 40, right: 40, top: 40, bottom: 60),
                                     ),
