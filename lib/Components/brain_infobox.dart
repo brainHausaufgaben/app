@@ -20,8 +20,8 @@ class BrainInfobox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: const BoxConstraints(
-        maxWidth: 210,
+      constraints: BoxConstraints(
+        maxWidth: title.length > 50 ? 50 + title.length * 2 : 210,
         maxHeight: 150
       ),
       decoration: BoxDecoration(
@@ -57,22 +57,22 @@ class BrainInfobox extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 7, bottom: 5),
               child: Text(
-                  shortDescription,
-                  style: TextStyle(
-                      color: isPrimary ? AppDesign.current.textStyles.contrastColor.withOpacity(0.75)
-                          : AppDesign.current.textStyles.color.withOpacity(0.75),
-                      fontSize: 13,
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1.7
-                  )
+                shortDescription,
+                style: TextStyle(
+                  color: isPrimary ? AppDesign.current.textStyles.contrastColor.withOpacity(0.75)
+                                   : AppDesign.current.textStyles.color.withOpacity(0.75),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1.7
+                )
               ),
             ),
             Text(
-                title,
-                maxLines: 4,
-                overflow: TextOverflow.ellipsis,
-                style: isPrimary ? AppDesign.current.textStyles.collapsibleTextContrast
-                    : AppDesign.current.textStyles.collapsibleText
+              title,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: isPrimary ? AppDesign.current.textStyles.collapsibleTextContrast
+                               : AppDesign.current.textStyles.collapsibleText
             )
           ],
         ),

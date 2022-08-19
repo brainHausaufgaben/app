@@ -8,6 +8,7 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 import '../../Components/box.dart';
 import '../page_template.dart';
@@ -135,36 +136,36 @@ class _HomePage extends State<HomePage>{
       }
 
       return NotificationListener<OverscrollNotification> (
-          onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Wrap(
-              spacing: 10,
-              children: [
-                BrainInfobox(
-                  isPrimary: true,
-                  title: homeworkText,
-                  shortDescription: "Hausaufgaben",
-                  icon: homeworkIcon,
-                ),
-                BrainInfobox(
-                  title: eventsText,
-                  shortDescription: "Termine",
-                  icon: eventsIcon,
-                  action: () {
-                    CalendarPage.selectedDay = DateTime.now();
-                    NavigationHelper.selectedPrimaryPage.value = 2;
-                    NavigationHelper.pushNamedReplacement(context, "calendar");
-                  },
-                ),
-                if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysMedia != null) BrainInfobox(
-                    title: BrainApp.todaysMedia!.content,
-                    shortDescription: BrainApp.todaysMedia!.type,
-                    icon: BrainApp.todaysMedia!.icon
-                )
-              ],
-            ),
-          )
+        onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Wrap(
+            spacing: 10,
+            children: [
+              BrainInfobox(
+                isPrimary: true,
+                title: homeworkText,
+                shortDescription: "Hausaufgaben",
+                icon: homeworkIcon,
+              ),
+              BrainInfobox(
+                title: eventsText,
+                shortDescription: "Termine",
+                icon: eventsIcon,
+                action: () {
+                  CalendarPage.selectedDay = DateTime.now();
+                  NavigationHelper.selectedPrimaryPage.value = 2;
+                  NavigationHelper.pushNamedReplacement(context, "calendar");
+                },
+              ),
+              if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysMedia != null) BrainInfobox(
+                  title: BrainApp.todaysMedia!.content,
+                  shortDescription: BrainApp.todaysMedia!.type,
+                  icon: BrainApp.todaysMedia!.icon
+              )
+            ],
+          ),
+        )
       );
   }
 

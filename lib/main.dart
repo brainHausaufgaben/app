@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/homework.dart';
@@ -125,14 +127,16 @@ class _BrainApp extends State<BrainApp> {
     final rawData = await rootBundle.loadString("data/witze.csv");
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
     for (List<dynamic> entry in listData) {
-      DateTime parsedTime = DateTime.parse(entry[0]);
+      List<String> splitDate = (entry[0] as String).split(".");
+      DateTime parsedTime = DateTime.parse("${splitDate[2]}-${splitDate[1]}-${splitDate[0]}");
       DateTime now = DateTime.now();
 
       if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
         IconData icon;
         String type = entry[1];
+        type = type.trim();
 
-        switch (entry[1]) {
+        switch (type) {
           case "Fun Fact":
             icon = Icons.lightbulb;
             break;
@@ -148,13 +152,19 @@ class _BrainApp extends State<BrainApp> {
           case "Vorschlag":
             icon = Icons.star_border;
             break;
+          case "Quiz":
+            icon = Icons.question_mark_rounded;
+            break;
+          case "Ferien":
+            icon = Icons.free_cancellation;
+            break;
           default:
-            icon = Icons.celebration;
+            return null;
         }
 
         return TodaysMedia(
             icon: icon,
-            content: entry[2],
+            content: (entry[2] as String).isEmpty ? "Heute sind Ferien in Bayern!" : entry[2],
             type: type
         );
       }
@@ -250,6 +260,14 @@ class _BrainApp extends State<BrainApp> {
 }
 
 class StretchingIndicator extends ScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.unknown
+  };
+
   @override
   Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     return StretchingOverscrollIndicator(
