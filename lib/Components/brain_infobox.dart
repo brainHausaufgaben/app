@@ -8,7 +8,7 @@ class BrainInfobox extends StatelessWidget {
   final bool isPrimary;
   final Function()? action;
 
-  const BrainInfobox({
+  BrainInfobox({
     Key? key,
     required this.title,
     required this.shortDescription,
@@ -22,7 +22,8 @@ class BrainInfobox extends StatelessWidget {
     return Container(
       constraints: BoxConstraints(
         maxWidth: title.length > 50 ? 50 + title.length * 2 : 210,
-        maxHeight: 150
+        maxHeight: 150,
+        minHeight: 150
       ),
       decoration: BoxDecoration(
         borderRadius: AppDesign.current.boxStyle.borderRadius,
@@ -30,9 +31,9 @@ class BrainInfobox extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: TextButton(
         style: TextButton.styleFrom(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.all(10),
-          backgroundColor: isPrimary ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor
+            alignment: Alignment.topLeft,
+            padding: const EdgeInsets.all(10),
+            backgroundColor: isPrimary ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor
         ),
         onPressed: action,
         child: Column(
@@ -50,33 +51,33 @@ class BrainInfobox extends StatelessWidget {
                 if (action != null) Icon(
                   Icons.chevron_right,
                   color: isPrimary ? AppDesign.current.textStyles.contrastColor
-                                   : AppDesign.current.textStyles.color,
+                      : AppDesign.current.textStyles.color,
                 )
               ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 7, bottom: 5),
               child: Text(
-                shortDescription,
-                style: TextStyle(
-                  color: isPrimary ? AppDesign.current.textStyles.contrastColor.withOpacity(0.75)
-                                   : AppDesign.current.textStyles.color.withOpacity(0.75),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1.7
-                )
+                  shortDescription,
+                  style: TextStyle(
+                      color: isPrimary ? AppDesign.current.textStyles.contrastColor.withOpacity(0.75)
+                          : AppDesign.current.textStyles.color.withOpacity(0.75),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 1.7
+                  )
               ),
             ),
             Text(
-              title,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: isPrimary ? AppDesign.current.textStyles.collapsibleTextContrast
-                               : AppDesign.current.textStyles.collapsibleText
+                title,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: isPrimary ? AppDesign.current.textStyles.collapsibleTextContrast
+                    : AppDesign.current.textStyles.collapsibleText
             )
-          ],
-        ),
-      ),
+          ]
+        )
+      )
     );
   }
 }

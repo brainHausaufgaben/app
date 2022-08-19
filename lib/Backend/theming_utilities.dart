@@ -101,7 +101,7 @@ DesignPackage generateDesign(
           tab: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0, height: 1.5, color: textColor, fontFamily: "Inter"),
           alertDialogHeader: TextStyle(fontWeight: FontWeight.w600, fontSize:22.0, color: textColor),
           alertDialogDescription: TextStyle(fontWeight: FontWeight.w500, fontSize:17.0, color: textColor),
-          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1, color: Color.alphaBlend(textColor.withOpacity(0.9), backgroundColor)),
+          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1.1, color: Color.alphaBlend(textColor.withOpacity(0.9), backgroundColor)),
           settingsSubMenuDescription: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: Color.alphaBlend(textColor.withOpacity(0.7), backgroundColor))
       ),
       boxStyle: BoxStyle(

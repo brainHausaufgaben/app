@@ -5,17 +5,14 @@ import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperOptions{
-
-
   static void enterText(String? text){
 
     if(text == "" || text == null) return;
 
-    switch(text.toLowerCase().replaceAll(RegExp(" "), "")){
+    switch(text.toLowerCase().trim()){
       case "fortnite":
         Fortnite();
         break;
@@ -29,7 +26,6 @@ class DeveloperOptions{
         Sebastian();
         break;
     }
-
   }
 
   static void Fortnite(){

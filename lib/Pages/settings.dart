@@ -91,7 +91,8 @@ class _SettingsPage extends State<SettingsPage> {
                 action: () => NavigationHelper.pushNamed(context, "designSettings")
               ),
               SettingsNavigatorButton(
-                  text: "Benachrichtigungen ${kIsWeb ? "(In der Webversion nicht verfügbar!)" : ""}",
+                  text: "Benachrichtigungen",
+                  description: kIsWeb ? "In der Webversion nicht verfügbar" : null,
                   activated: !kIsWeb,
                   action: () => NavigationHelper.pushNamed(context, "notificationSettings")
               )

@@ -43,6 +43,11 @@ class BrainApp extends StatefulWidget {
     "calendarFormat" : 0
   };
 
+  static void clearPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
   static void updatePreference(String key, dynamic value) async {
     preferences[key] = value;
 
@@ -127,6 +132,7 @@ class _BrainApp extends State<BrainApp> {
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
     for (List<dynamic> entry in listData) {
       List<String> splitDate = (entry[0] as String).split(".");
+      if (splitDate.length <= 2) return null;
       DateTime parsedTime = DateTime.parse("${splitDate[2]}-${splitDate[1]}-${splitDate[0]}");
       DateTime now = DateTime.now();
 

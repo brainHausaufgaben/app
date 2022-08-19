@@ -1,5 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/Pages/developer_options.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
@@ -131,7 +132,14 @@ class _PageTemplateState extends State<PageTemplate> {
                                   ),
                                   child: GestureDetector(
                                     onTap: widget.pageSettings.developerOptions ? () {
-                                      NavigationHelper.pushNamed(context, "developerOptions");
+                                      if (DateTime.now().difference(DeveloperOptionsPage.lastClick).inSeconds < 2) {
+                                        DeveloperOptionsPage.timesClicked++;
+                                      } else {
+                                        DeveloperOptionsPage.timesClicked = 0;
+                                      }
+                                      DeveloperOptionsPage.lastClick = DateTime.now();
+
+                                      if (DeveloperOptionsPage.timesClicked == 10) NavigationHelper.pushNamed(context, "developerOptions");
                                     } : null,
                                     child: MouseRegion(
                                       cursor: widget.pageSettings.developerOptions ? SystemMouseCursors.click : SystemMouseCursors.basic,

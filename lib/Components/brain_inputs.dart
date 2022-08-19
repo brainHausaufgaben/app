@@ -489,11 +489,13 @@ class SettingsNavigatorButton extends StatelessWidget {
   const SettingsNavigatorButton({
     Key? key,
     required this.text,
+    this.description,
     required this.action,
     this.activated = true
   }) : super(key: key);
 
   final String text;
+  final String? description;
   final bool activated;
   final Function() action;
 
@@ -501,13 +503,26 @@ class SettingsNavigatorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: activated ? action : null,
-      child: Row(
+      child: Flex(
+        direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            text,
-            style: activated ? AppDesign.current.textStyles.settingsSubMenu
-                             : AppDesign.current.textStyles.settingsSubMenu.copyWith(color: AppDesign.current.textStyles.settingsSubMenu.color!.withOpacity(0.5))
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  text,
+                  style: activated ? AppDesign.current.textStyles.settingsSubMenu
+                      : AppDesign.current.textStyles.settingsSubMenu.copyWith(color: AppDesign.current.textStyles.color.withOpacity(0.5))
+                ),
+                if (description != null) Text(
+                  description!,
+                  style: activated ? AppDesign.current.textStyles.settingsSubMenuDescription
+                      : AppDesign.current.textStyles.settingsSubMenuDescription.copyWith(color: AppDesign.current.textStyles.color.withOpacity(0.5))
+                )
+              ],
+            ),
           ),
           Icon(
             Icons.arrow_forward_ios_rounded,
