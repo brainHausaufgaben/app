@@ -19,7 +19,7 @@ class CustomNotifications{
 
 
   static Future init() async{
-
+//bwuh
     if(kIsWeb){
       notificationsPossible = false;
       return;
