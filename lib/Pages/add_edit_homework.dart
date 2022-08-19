@@ -9,6 +9,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Backend/day.dart';
+
 class HomeworkPage extends StatefulWidget {
   HomeworkPage({Key? key}) : super(key: key);
 
@@ -52,7 +54,11 @@ class _HomeworkPage extends State<HomeworkPage> {
 
         Homework(widget.selectedSubject!, date, widget.homeworkController.text);
       } else {
-        Homework(widget.selectedSubject!,widget.selectedSubject!.getNextDate()! ,widget.homeworkController.text);
+        DateTime time = widget.selectedSubject!.getNextDate()!;
+        if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
+            time = time.add(Duration(days: 7));
+        }
+        Homework(widget.selectedSubject!,time,widget.homeworkController.text);
       }
       Navigator.of(context).pop();
     }
