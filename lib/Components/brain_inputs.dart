@@ -1,16 +1,15 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -296,7 +295,7 @@ class BrainDateButton extends StatelessWidget {
             if (TimeTable.getSubjectsByDate(dateTime).contains(selectedSubject)) {
               return Container(
                   decoration: BoxDecoration(
-                    color: selectedSubject!.color.withOpacity(0.2),
+                    color: selectedSubject!.color.withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -490,21 +489,32 @@ class SettingsNavigatorButton extends StatelessWidget {
   const SettingsNavigatorButton({
     Key? key,
     required this.text,
-    required this.action
+    required this.action,
+    this.activated = true
   }) : super(key: key);
 
   final String text;
+  final bool activated;
   final Function() action;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: action,
+      onPressed: activated ? action : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
-          Icon(Icons.arrow_forward_ios_rounded, color: AppDesign.current.textStyles.color, size: 20)
+          Text(
+            text,
+            style: activated ? AppDesign.current.textStyles.settingsSubMenu
+                             : AppDesign.current.textStyles.settingsSubMenu.copyWith(color: AppDesign.current.textStyles.settingsSubMenu.color!.withOpacity(0.5))
+          ),
+          Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: activated ? AppDesign.current.textStyles.color
+                             : AppDesign.current.textStyles.color.withOpacity(0.5),
+            size: 20
+          )
         ],
       ),
     );
@@ -607,23 +617,74 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
   }
 }
 
-class SettingsTextfield extends StatelessWidget {
-  SettingsTextfield({
+class SettingsTimePicker extends StatelessWidget {
+  const SettingsTimePicker({
     Key? key,
-    required this.text
+    required this.text,
+    required this.onSelect,
+    required this.currentTime
   }) : super(key: key);
 
   final String text;
+  final Function(TimeOfDay) onSelect;
+  final TimeOfDay currentTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return TimePickerDialog(
+                initialTime: currentTime
+            );
+          }
+        ).then((value) {
+          onSelect(value);
+        });
+      },
+      child: Flex(
+        direction: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.only(left: 6),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                    color: AppDesign.current.textStyles.settingsSubMenuDescription.color!,
+                    width: 1.5
+                )
+              )
+            ),
+            child: Text("${currentTime.hour}:${currentTime.minute} Uhr", style: AppDesign.current.textStyles.settingsSubMenuDescription),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsTextfield extends StatelessWidget {
+  SettingsTextfield({
+    Key? key,
+    this.text
+  }) : super(key: key);
+
+  final String? text;
   TextEditingController controller = TextEditingController(text: BrainApp.preferences["daysUntilHomeworkWarning"].toString());
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(7),
+      padding: const EdgeInsets.only(left: 7, right: 7, bottom: 7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          if (text != null) Text(text!, style: AppDesign.current.textStyles.settingsSubMenu),
           Container(
             margin: const EdgeInsets.only(top: 5),
             decoration: BoxDecoration(

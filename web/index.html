@@ -18,7 +18,6 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta name="author" content="Manuel Murmann & Sebastian Merk">
   <meta name="description" content="Mit der Brain App bist du auf jeden Schultag vorbereitet. Vom Stundenplan, über Hausaufgaben bis hin zu Noten und einem Kalendar besitzt die Brain App alles was man braucht">
@@ -28,7 +27,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="brain_app">
-  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icons/Icon-192.png">
 
   <!-- Random SEO stuff -->
   <meta property="og:title" content="Brain App">
@@ -71,7 +70,7 @@
           .then((reg) => {
             function waitForActivation(serviceWorker) {
               serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
+                if (serviceWorker.state === 'activated') {
                   console.log('Installed new service worker.');
                   loadMainDartJs();
                 }

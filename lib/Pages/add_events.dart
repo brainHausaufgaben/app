@@ -1,15 +1,14 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/easter_eggs.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
-import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/event_subpage.dart';
 import 'package:brain_app/Components/test_subpage.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-
-import '../Components/brain_toast.dart';
 
 class AddEventsPage extends StatefulWidget {
   AddEventsPage({Key? key}) : super(key: key);

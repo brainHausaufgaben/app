@@ -1,12 +1,11 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Backend/event.dart';
+import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/event_subpage.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-
-import '../Components/brain_toast.dart';
 
 class EditEventPage extends StatefulWidget {
   EditEventPage({Key? key}) : super(key: key);

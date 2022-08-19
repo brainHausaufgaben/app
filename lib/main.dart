@@ -1,21 +1,19 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
+import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/notifications.dart';
+import 'package:brain_app/Backend/notifier.dart';
+import 'package:brain_app/Backend/save_system.dart';
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/subject_instance.dart';
+import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:csv/csv.dart';
-
-import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Backend/homework.dart';
-import 'package:brain_app/Backend/save_system.dart';
-import 'package:brain_app/Backend/subject_instance.dart';
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/notifier.dart';
-import 'package:brain_app/Backend/notifications.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:table_calendar/table_calendar.dart';
-
 
 import 'Backend/event.dart';
 import 'Backend/test.dart';
@@ -29,11 +27,13 @@ class BrainApp extends StatefulWidget {
 
   static Notifier notifier = Notifier();
 
+  static String appVersion = "...";
   static TodaysMedia? todaysMedia;
 
   static Map<String, dynamic> preferences = {
     "showMediaBox": true,
     "persistentNotifications": false,
+    "homeworkNotifications": false,
     "design": "Monochrome",
     "darkMode": false,
     "pinnedHeader": true,
@@ -69,10 +69,17 @@ class _BrainApp extends State<BrainApp> {
 
     BrainApp.notifier.addListener(() => setState(() {}));
     getPreferences().then((value) => AppDesign.toggleTheme(BrainApp.preferences["design"]));
+    getVersion();
 
     init().then((value) => setState((){}));
     // ElternPortalConnection.getHtml();
     //CustomNotifications.persistentNotification();
+  }
+
+  void getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      BrainApp.appVersion = packageInfo.version;
+    });
   }
 
   Future init() async {

@@ -1,5 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -86,42 +87,68 @@ class _CustomSidebar extends State<CustomSidebar> {
               }
             }
           ),
-          Divider(
-            height: 30,
-            thickness: 2,
-            color: AppDesign.current.textStyles.color.withOpacity(0.1),
-            indent: 30,
-            endIndent: 30,
-          ),
-          Container(
-            margin: const EdgeInsets.only(top: 10),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              border: Border.all(color: AppDesign.current.textStyles.color, width: 2),
-              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+          if (kIsWeb) ...[
+            Divider(
+              height: 30,
+              thickness: 2,
+              color: AppDesign.current.textStyles.color.withOpacity(0.1),
+              indent: 30,
+              endIndent: 30,
             ),
-            child: TextButton(
-              onPressed: () {
-                Uri url = Uri.parse("https://play.google.com/store/apps/details?id=de.brainhausaufgabenheft.brain_app&hl=de");
-                launchUrl(url, mode: LaunchMode.externalApplication);
-              },
-              style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("Herunterladen ", style: TextStyle(
-                      color: AppDesign.current.textStyles.color,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600
+            Container(
+                margin: const EdgeInsets.only(top: 10),
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                    border: Border.all(color: AppDesign.current.textStyles.color, width: 2),
+                    borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+                ),
+                child: TextButton(
+                    onPressed: () {
+                      if (kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+                        Uri url = Uri.parse("https://play.google.com/store/apps/details?id=de.brainhausaufgabenheft.brain_app&hl=de");
+                        launchUrl(url, mode: LaunchMode.externalApplication);
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    constraints: const BoxConstraints(maxWidth: 400),
+                                    child: AlertDialog(
+                                      backgroundColor: AppDesign.current.primaryColor,
+                                      title: Text("Lade die Brain App auf deinem Android Gerät herunter", style: TextStyle(color: AppDesign.current.textStyles.contrastColor)),
+                                      content: const Center(
+                                        child: Image(image: AssetImage("../images/qr_code.png"), width: 200, height: 200),
+                                      ),
+                                      contentPadding: const EdgeInsets.only(left: 40, right: 40, top: 40, bottom: 60),
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
+                        );
+                      }
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
+                    ),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Herunterladen ", style: TextStyle(
+                              color: AppDesign.current.textStyles.color,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600
+                          )
+                          ),
+                          Icon(Icons.phone_android_rounded, color: AppDesign.current.textStyles.color)
+                        ]
                     )
-                  ),
-                  Icon(Icons.phone_android_rounded, color: AppDesign.current.textStyles.color)
-                ]
-              )
+                )
             )
-          )
+          ]
         ]
       )
     );

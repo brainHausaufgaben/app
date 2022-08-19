@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:brain_app/Backend/design.dart';
+import 'package:flutter/material.dart';
 
 class PointElement extends StatefulWidget {
   const PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child, this.secondaryIcon}) : super(key: key);

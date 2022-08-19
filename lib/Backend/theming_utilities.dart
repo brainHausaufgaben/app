@@ -73,7 +73,6 @@ DesignPackage generateDesign(
     Color textColor,
     Color contrastColor
   ){
-
   return DesignPackage(
       primaryColor: primaryColor,
       themeData: ThemeData(
@@ -91,19 +90,19 @@ DesignPackage generateDesign(
           color: textColor,
           contrastColor: contrastColor,
           pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36.0, height: 1, color: textColor),
-          pageSubtitle: TextStyle(fontWeight: FontWeight.w600, fontSize:18.0, height: 1, color: textColor.withOpacity(0.8)),
+          pageSubtitle: TextStyle(fontWeight: FontWeight.w600, fontSize:18.0, height: 1, color: Color.alphaBlend(textColor.withOpacity(0.8), backgroundColor)),
           boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:19.0, height: 1, color: textColor),
-          pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:15.0,height: 1, color: textColor.withOpacity(0.7)),
-          pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: textColor.withOpacity(0.6)),
+          pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:15.0,height: 1, color: Color.alphaBlend(textColor.withOpacity(0.8), backgroundColor)),
+          pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: Color.alphaBlend(textColor.withOpacity(0.7), backgroundColor)),
           collapsibleText: TextStyle(fontWeight: FontWeight.w500, fontSize:15.0, color: textColor),
           collapsibleTextContrast: TextStyle(fontWeight: FontWeight.w500, height: 1.3, fontSize:15.0, color: contrastColor),
           buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:17.0, color: contrastColor),
-          input: TextStyle(fontWeight: FontWeight.w400, fontSize:16.0, height: 1, color: textColor.withAlpha(210)),
+          input: TextStyle(fontWeight: FontWeight.w400, fontSize:16.0, height: 1, color: Color.alphaBlend(textColor.withOpacity(0.9), backgroundColor)),
           tab: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0, height: 1.5, color: textColor, fontFamily: "Inter"),
           alertDialogHeader: TextStyle(fontWeight: FontWeight.w600, fontSize:22.0, color: textColor),
           alertDialogDescription: TextStyle(fontWeight: FontWeight.w500, fontSize:17.0, color: textColor),
-          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1, color: textColor.withAlpha(210)),
-          settingsSubMenuDescription: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: textColor.withOpacity(0.6))
+          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1, color: Color.alphaBlend(textColor.withOpacity(0.9), backgroundColor)),
+          settingsSubMenuDescription: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: Color.alphaBlend(textColor.withOpacity(0.7), backgroundColor))
       ),
       boxStyle: BoxStyle(
         borderRadius: BorderRadius.circular(10),

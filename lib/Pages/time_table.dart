@@ -1,13 +1,12 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/save_system.dart';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:flutter/material.dart';
 
 import '../main.dart';
 
@@ -45,13 +44,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             child: Flex(
               direction: Axis.horizontal,
               children: [
-                Flexible(
-                  child: Center(
-                    child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
-                  )
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
                 ),
                 Expanded(
-                  flex: 4,
                   child: BrainDropdown(
                     dialogTitle: "Wähle ein Fach",
                     defaultText: "Freistunde",
@@ -113,7 +110,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         ),
         floatingHeader: Container(
           constraints: const BoxConstraints(
-            maxWidth: 700
+            maxWidth: 600
           ),
           decoration: BoxDecoration(
             color: AppDesign.current.boxStyle.backgroundColor,

@@ -1,10 +1,9 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../main.dart';
 
@@ -71,7 +70,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
         title: "Design & Ansicht",
-        subtitle: "Passe die Brain App nach deinem Geschmack an!",
+        subtitle: "Version " + BrainApp.appVersion,
         backButton: true,
         child: Wrap(
           runSpacing: 10,

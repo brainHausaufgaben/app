@@ -1,7 +1,8 @@
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io'show Platform;
+
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomNotifications{

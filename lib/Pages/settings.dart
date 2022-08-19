@@ -1,12 +1,11 @@
-import 'package:brain_app/Backend/notifications.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../main.dart';
 
@@ -19,12 +18,10 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPage extends State<SettingsPage> {
   final List<bool> radioList = List.filled(Design.allDesigns.length, false);
-  String version = "...";
 
   @override
   void initState() {
     super.initState();
-    getVersion();
   }
 
   List<IconRadio> getRadios() {
@@ -37,13 +34,6 @@ class _SettingsPage extends State<SettingsPage> {
     });
 
     return radios;
-  }
-
-  void getVersion() {
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      version = packageInfo.version;
-      BrainApp.notifier.notifyOfChanges();
-    });
   }
 
   Widget getThemeChooser() {
@@ -78,7 +68,7 @@ class _SettingsPage extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Einstellungen",
-      subtitle: "Version " + version,
+      subtitle: "Version " + BrainApp.appVersion,
       backButton: true,
       child: Wrap(
         runSpacing: 10,
@@ -96,25 +86,11 @@ class _SettingsPage extends State<SettingsPage> {
               SettingsNavigatorButton(
                 text: "Design & Ansicht",
                 action: () => NavigationHelper.pushNamed(context, "designSettings")
-              )
-            ]
-          ),
-          SettingsEntry(
-            children: [
-              SettingsSwitchButton(
-                text: "Benachrichtigungen",
-                action: () {
-                  setState(() {
-                    BrainApp.updatePreference("persistentNotifications", !BrainApp.preferences["persistentNotifications"]);
-
-                    if(BrainApp.preferences["persistentNotifications"]){
-                      CustomNotifications.enableNotifications();
-                    } else{
-                      CustomNotifications.disableNotifications();
-                    }
-                  });
-                },
-                state: BrainApp.preferences["persistentNotifications"],
+              ),
+              SettingsNavigatorButton(
+                  text: "Benachrichtigungen ${kIsWeb ? "(In der Webversion nicht verfügbar!)" : ""}",
+                  activated: !kIsWeb,
+                  action: () => NavigationHelper.pushNamed(context, "notificationSettings")
               )
             ]
           ),

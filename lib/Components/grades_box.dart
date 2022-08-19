@@ -1,6 +1,6 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 
 class CollapsibleGradesBox extends StatelessWidget {
   const CollapsibleGradesBox({Key? key}) : super(key: key);

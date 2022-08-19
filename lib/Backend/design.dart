@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:brain_app/main.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
+import 'package:brain_app/main.dart';
+import 'package:flutter/material.dart';
 
 class AppDesign {
   static DesignPackage current = MonochromeDesign().lightVariant;
@@ -111,5 +111,5 @@ class PrincessPinkDesign extends Design {
       generateDesign(const Color(0xFFB733E5), const Color(0xFFF7EEFF), const Color(0xFFFFFDFF), const Color(0xFF303540), const Color(0xFFFFFFFF));
   @override
   DesignPackage get darkVariant =>
-      generateDesign(const Color(0xFFB733E5), const Color(0xFF160C1A), const Color(0xFF281433), const Color(0xFFF5EAE0), const Color(0xFF1A1613));
+      generateDesign(const Color(0xFFB733E5), const Color(0xFF160C1A), const Color(0xFF281433), const Color(0xFFF5EAE0), const Color(0xFFF5EAE0));
 }

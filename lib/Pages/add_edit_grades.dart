@@ -1,14 +1,13 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
-
-import '../Backend/design.dart';
-import '../Components/brain_toast.dart';
-import '../Components/brain_inputs.dart';
 
 class GradesPage extends StatefulWidget {
   GradesPage({Key? key}) : super(key: key);

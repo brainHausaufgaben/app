@@ -1,13 +1,13 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:flutter/material.dart';
 
 class GradesPerSubjectPage extends StatefulWidget {
   GradesPerSubjectPage({Key? key}): super(key: key);

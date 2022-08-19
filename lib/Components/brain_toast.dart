@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:brain_app/main.dart';
+import 'package:flutter/material.dart';
 
 class BrainToast {
   BrainToast({
@@ -18,7 +18,7 @@ class BrainToast {
             borderRadius: BorderRadius.circular(5)
         ),
         dismissDirection: DismissDirection.horizontal,
-        backgroundColor: BrainApp.preferences["darkMode"] ? const Color(0xFFFFFFFF) : const Color(0xFF303540),
+        backgroundColor: BrainApp.preferences["darkMode"] ? const Color(0xFFFFFFFF) : const Color(0xFF000000),
         duration: const Duration(seconds: 6),
         behavior: SnackBarBehavior.floating,
         margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
