@@ -33,9 +33,9 @@ class _NotificationSettings extends State<NotificationSettings> {
                           BrainApp.updatePreference("persistentNotifications", !BrainApp.preferences["persistentNotifications"]);
 
                           if(BrainApp.preferences["persistentNotifications"]){
-                            CustomNotifications.enableNotifications();
+                            CustomNotifications.enablePermaNotification();
                           } else{
-                            CustomNotifications.disableNotifications();
+                            CustomNotifications.disablePermaNotification();
                           }
                         });
                       },
