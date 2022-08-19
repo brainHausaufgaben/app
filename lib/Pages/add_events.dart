@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/easter_eggs.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
@@ -46,10 +45,6 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       toast.show(context);
       return;
     } else {
-      if (title == "Sterben") {
-        EasterEggs.deadLine(context);
-        return;
-      }
       Event(date, title, description);
 
       BrainApp.notifier.notifyOfChanges();
@@ -99,7 +94,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
               color: AppDesign.current.boxStyle.backgroundColor,
               borderRadius: BorderRadius.circular(100)
           ),
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: Clip.antiAlias,
           child: DefaultTextStyle(
             style: AppDesign.current.textStyles.tab,
             child: TabBar(

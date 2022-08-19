@@ -118,7 +118,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             color: AppDesign.current.boxStyle.backgroundColor,
             borderRadius: BorderRadius.circular(100)
           ),
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: Clip.antiAlias,
           child: TabBar(
             labelStyle: AppDesign.current.textStyles.tab,
             labelColor: AppDesign.current.textStyles.contrastColor,

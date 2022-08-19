@@ -8,11 +8,13 @@ class PageSettings {
   const PageSettings({
     this.floatingActionButtonLocation,
     this.floatingHeaderBorderRadius,
-    this.floatingHeaderIsCentered = false
+    this.floatingHeaderIsCentered = false,
+    this.developerOptions = false,
   });
 
   final BorderRadius? floatingHeaderBorderRadius;
   final bool floatingHeaderIsCentered;
+  final bool developerOptions;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 }
 
@@ -127,10 +129,18 @@ class _PageTemplateState extends State<PageTemplate> {
                                       left: BorderSide(color: AppDesign.current.textStyles.pageSubtitle.color!, width: 2)
                                     )
                                   ),
-                                  child: Text(
-                                    widget.subtitle ?? getDateString(DateTime.now()),
-                                    style: AppDesign.current.textStyles.pageSubtitle,
-                                  ),
+                                  child: GestureDetector(
+                                    onTap: widget.pageSettings.developerOptions ? () {
+                                      NavigationHelper.pushNamed(context, "developerOptions");
+                                    } : null,
+                                    child: MouseRegion(
+                                      cursor: widget.pageSettings.developerOptions ? SystemMouseCursors.click : SystemMouseCursors.basic,
+                                      child: Text(
+                                        widget.subtitle ?? getDateString(DateTime.now()),
+                                        style: AppDesign.current.textStyles.pageSubtitle,
+                                      ),
+                                    )
+                                  )
                                 )
                               ]
                           )

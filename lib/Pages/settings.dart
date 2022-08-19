@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../main.dart';
+import 'package:brain_app/main.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -70,6 +70,9 @@ class _SettingsPage extends State<SettingsPage> {
       title: "Einstellungen",
       subtitle: "Version " + BrainApp.appVersion,
       backButton: true,
+      pageSettings: const PageSettings(
+        developerOptions: true
+      ),
       child: Wrap(
         runSpacing: 10,
         children: [

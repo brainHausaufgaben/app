@@ -671,38 +671,58 @@ class SettingsTimePicker extends StatelessWidget {
 class SettingsTextfield extends StatelessWidget {
   SettingsTextfield({
     Key? key,
-    this.text
+    this.text,
+    this.submitAction
   }) : super(key: key);
 
   final String? text;
-  TextEditingController controller = TextEditingController(text: BrainApp.preferences["daysUntilHomeworkWarning"].toString());
+  final Function(String text)? submitAction;
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 7, right: 7, bottom: 7),
+      padding: const EdgeInsets.all(7),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (text != null) Text(text!, style: AppDesign.current.textStyles.settingsSubMenu),
-          Container(
-            margin: const EdgeInsets.only(top: 5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10)
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: TextField(
-              controller: controller,
-              style: AppDesign.current.textStyles.input,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(14),
-                isCollapsed: true,
-                border: InputBorder.none,
-                filled: true,
-                fillColor: AppDesign.current.themeData.scaffoldBackgroundColor
+          Flex(
+            direction: Axis.horizontal,
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 5),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: TextField(
+                    controller: controller,
+                    style: AppDesign.current.textStyles.input,
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(14),
+                        isCollapsed: true,
+                        border: InputBorder.none,
+                        filled: true,
+                        fillColor: AppDesign.current.themeData.scaffoldBackgroundColor
+                    ),
+                  ),
+                ),
               ),
-            ),
+              if (submitAction != null) Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13)
+                  ),
+                  onPressed: () {
+                    submitAction!(controller.text);
+                  },
+                  child: Text("Ausführen")
+                ),
+              )
+            ],
           )
         ]
       ),

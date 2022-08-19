@@ -10,6 +10,7 @@ import 'package:brain_app/Pages/add_edit_homework.dart';
 import 'package:brain_app/Pages/add_edit_subjects.dart';
 import 'package:brain_app/Pages/add_events.dart';
 import 'package:brain_app/Pages/design_settings.dart';
+import 'package:brain_app/Pages/developer_options.dart';
 import 'package:brain_app/Pages/edit_events.dart';
 import 'package:brain_app/Pages/edit_tests.dart';
 import 'package:brain_app/Pages/grades_per_subject.dart';
@@ -127,7 +128,8 @@ class NavigationRoutes {
       "settings": (context) => SettingsPage(),
       "homework": (context) => HomeworkPage(),
       "designSettings": (context) => DesignSettingsPage(),
-      "notificationSettings": (context) => NotificationSettings()
+      "notificationSettings": (context) => NotificationSettings(),
+      "developerOptions": (context) => DeveloperOptionsPage()
     };
   }
 

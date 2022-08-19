@@ -40,7 +40,6 @@ class BrainApp extends StatefulWidget {
     "design": "Monochrome",
     "darkMode": false,
     "pinnedHeader": true,
-    "daysUntilHomeworkWarning": 6,
     "calendarFormat" : 0
   };
 
