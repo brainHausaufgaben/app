@@ -42,7 +42,8 @@ class Subject{
 
     if (i > 7) i = 1;
 
-    while(i != DateTime.now().weekday){
+
+    for(int j = 0; j < 7; j++){
       for(SubjectInstance? subject in TimeTable.getDay(i).subjects){
         if(subject != null){
           if(subject.subject == this) return subject.getDate();
