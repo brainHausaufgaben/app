@@ -1,15 +1,13 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
-import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/test_subpage.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-
-import '../Components/brain_toast.dart';
 
 class EditTestPage extends StatefulWidget {
   EditTestPage({Key? key, this.previousTest}) : super(key: key) {
@@ -66,7 +64,9 @@ class _EditTestPage extends State<EditTestPage> {
             )
           ]
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      pageSettings: const PageSettings(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
+      ),
       floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(

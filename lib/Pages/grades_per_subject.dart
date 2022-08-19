@@ -1,13 +1,13 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:flutter/material.dart';
 
 class GradesPerSubjectPage extends StatefulWidget {
   GradesPerSubjectPage({Key? key}): super(key: key);
@@ -23,12 +23,35 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     List<Widget> buttons = [];
 
     for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
+      if (grade.type != GradeType.smallTest) continue;
       buttons.add(
           BrainIconButton(
             dense: true,
             child: PointElement(
               color: widget.subject.color,
               primaryText: "1. Exemporale",
+              child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
+            ),
+            icon: Icons.edit,
+            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
+          )
+      );
+    }
+
+    return buttons;
+  }
+
+  List<Widget> getOral() {
+    List<Widget> buttons = [];
+
+    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
+      if (grade.type != GradeType.oralGrade) continue;
+      buttons.add(
+          BrainIconButton(
+            dense: true,
+            child: PointElement(
+              color: widget.subject.color,
+              primaryText: "1. Mündliche Note",
               child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
             ),
             icon: Icons.edit,
@@ -94,13 +117,13 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               children: [
                 GradeWidget(
                   name: GradingSystem.getAverage(widget.subject).round() == 1 ? "Punkt" : "Punkte",
-                  value:((){
+                  value: (){
                     if(GradingSystem.getAverage(widget.subject) == -1) {
                       return "-";
                     } else {
                       return GradingSystem.getAverage(widget.subject).round().toString();
                     }
-                  }()) ,
+                  }(),
                   reversed: false,
                 ),
                 const Spacer(flex: 1),
@@ -117,13 +140,17 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
           child: Wrap(
             runSpacing: 20,
             children: [
-              if (GradingSystem.getSmallGradesBySubject(widget.subject).isNotEmpty) HeadlineWrap(
+              if (getTests().isNotEmpty) HeadlineWrap(
+                  headline: "Schulaufgaben",
+                  children: getTests()
+              ),
+              if (getShortTests().isNotEmpty) HeadlineWrap(
                   headline: "Exen",
                   children: getShortTests()
               ),
-              if (GradingSystem.getBigGradesBySubject(widget.subject).isNotEmpty) HeadlineWrap(
-                  headline: "Schulaufgaben",
-                  children: getTests()
+              if (getOral().isNotEmpty) HeadlineWrap(
+                  headline: "Mündliche Noten",
+                  children: getOral()
               )
             ],
           ),

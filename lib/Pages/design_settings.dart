@@ -1,10 +1,9 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../main.dart';
 
@@ -17,13 +16,11 @@ class DesignSettingsPage extends StatefulWidget {
 
 class _DesignSettingsPage extends State<DesignSettingsPage> {
   final List<bool> radioList = List.filled(Design.allDesigns.length, false);
-  String version = "...";
 
   @override
   void initState() {
     super.initState();
     radioList[Design.allDesigns.keys.toList().indexOf(BrainApp.preferences["design"])] = true;
-    getVersion();
   }
 
   List<IconRadio> getRadios() {
@@ -38,16 +35,11 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
     return radios;
   }
 
-  void getVersion() {
-    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
-      version = packageInfo.version;
-      BrainApp.notifier.notifyOfChanges();
-    });
-  }
-
   Widget getThemeChooser() {
     return Padding(
-        padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
+      padding: const EdgeInsets.only(left: 5, right: 5, top: 0, bottom: 10),
+      child: NotificationListener<OverscrollNotification> (
+        onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
         child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: ToggleButtons(
@@ -70,24 +62,56 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                 children: getRadios()
             )
         )
+      )
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-        title: "Design Einstellungen",
-        subtitle: "Version " + version,
+        title: "Design & Ansicht",
+        subtitle: "Version " + BrainApp.appVersion,
         backButton: true,
-        child: SettingsEntry(
-            children: [
-              SettingsSwitchButton(
-                text: "Darkmode",
-                action: () => AppDesign.toggleDarkMode(),
-                state: BrainApp.preferences["darkMode"],
-              ),
-              getThemeChooser()
-            ]
+        child: Wrap(
+          runSpacing: 10,
+          children: [
+            SettingsEntry(
+                children: [
+                  SettingsSwitchButton(
+                    text: "Darkmode",
+                    action: () => AppDesign.toggleDarkMode(),
+                    state: BrainApp.preferences["darkMode"],
+                  ),
+                  getThemeChooser()
+                ]
+            ),
+            SettingsEntry(
+              children: [
+                SettingsSwitchButton(
+                  text: "Angepinnte Boxen",
+                  description: "Wenn aktiviert, bleiben die Boxen auf der Homepage immer sichtbar",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("pinnedHeader", !BrainApp.preferences["pinnedHeader"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["pinnedHeader"],
+                ),
+                SettingsSwitchButton(
+                  text: "Witze, Funfacts...",
+                  description: "Wird nicht an jedem Tag angezeigt!",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["showMediaBox"],
+                )
+              ]
+            )
+          ]
         )
     );
   }

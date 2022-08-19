@@ -1,20 +1,19 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
+import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/notifications.dart';
+import 'package:brain_app/Backend/notifier.dart';
+import 'package:brain_app/Backend/save_system.dart';
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/subject_instance.dart';
+import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:csv/csv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:csv/csv.dart';
-
-import 'package:brain_app/Components/navigation_helper.dart';
-import 'package:brain_app/Backend/homework.dart';
-import 'package:brain_app/Backend/save_system.dart';
-import 'package:brain_app/Backend/subject_instance.dart';
-import 'package:brain_app/Backend/time_table.dart';
-import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/notifier.dart';
-import 'package:brain_app/Backend/notifications.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 import 'Backend/event.dart';
 import 'Backend/test.dart';
@@ -28,17 +27,18 @@ class BrainApp extends StatefulWidget {
 
   static Notifier notifier = Notifier();
 
-  static String todaysJoke = "";
-  static IconData icon = Icons.autorenew_rounded;
-  static int selectedPageIndex = 1;
+  static String appVersion = "...";
+  static TodaysMedia? todaysMedia;
 
   static Map<String, dynamic> preferences = {
-    "warningBoxCollapsed": false,
-    "mediaBoxCollapsed": false,
     "showMediaBox": true,
     "persistentNotifications": false,
+    "homeworkNotifications": false,
     "design": "Monochrome",
     "darkMode": false,
+    "pinnedHeader": true,
+    "daysUntilHomeworkWarning": 6,
+    "calendarFormat" : 0
   };
 
   static void updatePreference(String key, dynamic value) async {
@@ -51,6 +51,9 @@ class BrainApp extends StatefulWidget {
         break;
       case bool:
         prefs.setBool(key, value);
+        break;
+      case int:
+        prefs.setInt(key, value);
         break;
     }
   }
@@ -66,10 +69,17 @@ class _BrainApp extends State<BrainApp> {
 
     BrainApp.notifier.addListener(() => setState(() {}));
     getPreferences().then((value) => AppDesign.toggleTheme(BrainApp.preferences["design"]));
+    getVersion();
 
     init().then((value) => setState((){}));
     // ElternPortalConnection.getHtml();
     //CustomNotifications.persistentNotification();
+  }
+
+  void getVersion() {
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      BrainApp.appVersion = packageInfo.version;
+    });
   }
 
   Future init() async {
@@ -110,7 +120,7 @@ class _BrainApp extends State<BrainApp> {
     });
   }
 
-  Future<MapEntry<String, IconData>?> parseJokes() async {
+  Future<TodaysMedia?> parseJokes() async {
     final rawData = await rootBundle.loadString("data/witze.csv");
     List<List<dynamic>> listData = const CsvToListConverter().convert(rawData);
     for (List<dynamic> entry in listData) {
@@ -119,25 +129,35 @@ class _BrainApp extends State<BrainApp> {
 
       if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
         IconData icon;
+        String type;
 
         switch (entry[1]) {
           case "Fun Fact":
+            type = entry[1];
             icon = Icons.lightbulb;
             break;
           case "Witz":
+            type = entry[1];
             icon = Icons.celebration;
             break;
           case "Tipp":
+            type = entry[1];
             icon = Icons.verified;
             break;
           case "Zitat":
+            type = entry[1];
             icon = Icons.format_quote;
             break;
           default:
+            type = "";
             icon = Icons.celebration;
         }
 
-        return MapEntry(entry[2], icon);
+        return TodaysMedia(
+            icon: icon,
+            content: entry[2],
+            type: type
+        );
       }
     }
     return null;
@@ -223,11 +243,7 @@ class _BrainApp extends State<BrainApp> {
     parseJokes().then((value) {
       setState(() {
         if (value != null) {
-          BrainApp.todaysJoke = value.key;
-          BrainApp.icon = value.value;
-        } else {
-          BrainApp.todaysJoke = "";
-          BrainApp.icon = Icons.celebration;
+          BrainApp.todaysMedia = value;
         }
       });
     });
@@ -242,4 +258,16 @@ class StretchingIndicator extends ScrollBehavior {
         axisDirection: details.direction
     );
   }
+}
+
+class TodaysMedia {
+  TodaysMedia({
+    required this.icon,
+    required this.content,
+    required this.type
+  });
+
+  final IconData icon;
+  final String content;
+  final String type;
 }

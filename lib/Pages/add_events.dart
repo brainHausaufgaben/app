@@ -1,15 +1,14 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/easter_eggs.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
-import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/event_subpage.dart';
 import 'package:brain_app/Components/test_subpage.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-
-import '../Components/brain_toast.dart';
 
 class AddEventsPage extends StatefulWidget {
   AddEventsPage({Key? key}) : super(key: key);
@@ -89,36 +88,46 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       child: PageTemplate(
         backButton: true,
         title: "Neues Event",
+        pageSettings: PageSettings(
+          floatingHeaderIsCentered: true,
+          floatingHeaderBorderRadius: BorderRadius.circular(100),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        ),
         floatingHeader: Container(
-          constraints: const BoxConstraints(maxWidth: 275),
+          constraints: const BoxConstraints(maxWidth: 250),
           decoration: BoxDecoration(
               color: AppDesign.current.boxStyle.backgroundColor,
               borderRadius: BorderRadius.circular(100)
           ),
           clipBehavior: Clip.hardEdge,
-          child: TabBar(
-            controller: tabController,
-            labelStyle: AppDesign.current.textStyles.tab,
-            labelColor: AppDesign.current.textStyles.contrastColor,
-            unselectedLabelColor: AppDesign.current.textStyles.color,
-            indicator: BoxDecoration(
-                color: AppDesign.current.primaryColor,
-                borderRadius: BorderRadius.circular(100)
+          child: DefaultTextStyle(
+            style: AppDesign.current.textStyles.tab,
+            child: TabBar(
+              controller: tabController,
+              labelStyle: AppDesign.current.textStyles.tab,
+              labelColor: AppDesign.current.textStyles.contrastColor,
+              unselectedLabelColor: AppDesign.current.textStyles.color,
+              indicator: BoxDecoration(
+                  color: AppDesign.current.primaryColor,
+                  borderRadius: BorderRadius.circular(100)
+              ),
+              tabs: const [
+                Tab(text: "Termin", height: 55),
+                Tab(text: "Test", height: 55)
+              ],
             ),
-            tabs: const [
-              Tab(text: "Event", height: 55),
-              Tab(text: "Test", height: 55)
-            ],
-          ),
+          )
         ),
         child: SizedBox(
           height: 400,
-          child: TabBarView(
-            controller: tabController,
-            children: widget.subpages,
-          ),
+          child: NotificationListener<OverscrollNotification> (
+            onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
+            child: TabBarView(
+              controller: tabController,
+              children: widget.subpages,
+            )
+          )
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(

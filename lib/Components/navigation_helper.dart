@@ -1,4 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/quick_actions.dart';
+import 'package:brain_app/Components/brain_navigation_bar.dart';
 import 'package:brain_app/Components/brain_sidebar.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/Pages/Primary%20Pages/grades.dart';
@@ -11,14 +13,13 @@ import 'package:brain_app/Pages/design_settings.dart';
 import 'package:brain_app/Pages/edit_events.dart';
 import 'package:brain_app/Pages/edit_tests.dart';
 import 'package:brain_app/Pages/grades_per_subject.dart';
+import 'package:brain_app/Pages/notification_settings.dart';
 import 'package:brain_app/Pages/settings.dart';
 import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Components/brain_navigation_bar.dart';
-
-import '../Backend/quick_actions.dart';
+import 'package:flutter/services.dart';
 
 
 class NavigationHelper extends StatefulWidget {
@@ -36,11 +37,12 @@ class NavigationHelper extends StatefulWidget {
     }
   }
 
-  static void pushNamed(BuildContext context, String route, {dynamic payload}) async {
+  static void pushNamed(BuildContext context, String route, {dynamic payload}) {
     getNavigator(context).pushNamed(route, arguments: payload);
   }
 
   static void pushNamedReplacement(BuildContext context, String route) {
+    // TODO: Pop alle seiten
     getNavigator(context, forceNested: true).pushReplacementNamed(route);
   }
 
@@ -53,7 +55,7 @@ class _NavigationHelper extends State<NavigationHelper> {
     return Center(
       child: Container(
           padding: const EdgeInsets.all(20),
-          constraints: const BoxConstraints(maxWidth: 1300),
+          constraints: const BoxConstraints(maxWidth: 1400),
           child: Flex(
               direction: Axis.horizontal,
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -101,8 +103,16 @@ class NavigationRoutes {
   static Map<String, WidgetBuilder> get() {
     return {
       "/": (context) => kIsWeb
-          ? NavigationHelper()
-          : CustomQuickActions(child: NavigationHelper()),
+        ? CallbackShortcuts(
+          bindings: { // Eins für submit
+            const SingleActivator(LogicalKeyboardKey.keyH, shift: true): () => NavigationHelper.pushNamed(context, "homework"),
+            const SingleActivator(LogicalKeyboardKey.keyT, shift: true): () => NavigationHelper.pushNamed(context, "timeTable"),
+          },
+          child: Focus(
+            autofocus: true,
+            child: NavigationHelper(),
+          ),
+        ) : CustomQuickActions(child: NavigationHelper()),
       "home": (context) => HomePage(),
       "calendar": (context) => CalendarPage(),
       "editEventsPage": (context) => EditEventPage(),
@@ -116,7 +126,8 @@ class NavigationRoutes {
       "timeTable": (context) => TimeTablePage(),
       "settings": (context) => SettingsPage(),
       "homework": (context) => HomeworkPage(),
-      "designSettings": (context) => DesignSettingsPage()
+      "designSettings": (context) => DesignSettingsPage(),
+      "notificationSettings": (context) => NotificationSettings()
     };
   }
 

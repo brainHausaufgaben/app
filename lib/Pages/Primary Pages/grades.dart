@@ -1,40 +1,101 @@
+import 'dart:collection';
+
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:flutter/material.dart';
+
+enum SortMethods {
+  bySubject,
+  byGrade
+}
 
 class GradeOverview extends StatefulWidget {
-  const GradeOverview({Key? key}): super(key: key);
+  GradeOverview({Key? key}): super(key: key);
+
+  bool sortAscending = false;
+  SortMethods? sortMethod;
 
   @override
   State<GradeOverview> createState() => _GradeOverview();
 }
 
 class _GradeOverview extends State<GradeOverview>{
+  LinkedHashMap sortByValue(Map map) {
+    List sortedKeys = map.keys.toList(growable: false)..sort((key1, key2) {
+      return widget.sortAscending
+          ? map[key1]!.compareTo(map[key2]!)
+          : map[key2]!.compareTo(map[key1]!);
+    });
+
+    LinkedHashMap sortedMap = LinkedHashMap.fromIterable(
+        sortedKeys,
+        key: (k) => k,
+        value: (k) => map[k]!
+    );
+
+    return sortedMap;
+  }
+
+  LinkedHashMap sortByKey(Map<Subject, double> map) {
+    List sortedKeys = map.keys.toList(growable: false)..sort((key1, key2) {
+      return widget.sortAscending
+          ? key1.name.compareTo(key2.name)
+          : key2.name.compareTo(key1.name);
+    });
+
+    LinkedHashMap sortedMap = LinkedHashMap.fromIterable(
+        sortedKeys,
+        key: (k) => k,
+        value: (k) => map[k]!
+    );
+
+    return sortedMap;
+  }
+
   List<Widget> getGradeButtons() {
+    Map<Subject, double> subjectPairs = {};
+
     List<Widget> buttons = [];
 
     for (Subject subject in TimeTable.subjects) {
       double average = GradingSystem.getAverage(subject);
+      subjectPairs[subject] = average;
+    }
+
+    LinkedHashMap sortedMap;
+
+    switch(widget.sortMethod) {
+      case SortMethods.bySubject:
+        sortedMap = sortByKey(subjectPairs);
+        break;
+      case SortMethods.byGrade:
+        sortedMap = sortByValue(subjectPairs);
+        break;
+      default:
+        sortedMap = LinkedHashMap.of(subjectPairs);
+    }
+
+    sortedMap.forEach((key, value) {
       buttons.add(
         BrainIconButton(
           dense: true,
           child: PointElement(
-            color: subject.color,
-            primaryText: subject.name,
-            child: Text(average == -1.0 ? "Noch keine Noten" : "${average.toInt()} Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
+            color: key.color,
+            primaryText: key.name,
+            child: Text(value == -1.0 ? "Noch keine Noten" : "${value.toInt()} Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
           ),
           icon: Icons.edit,
-          action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: subject),
+          action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),
         )
       );
-    }
+    });
 
     return buttons;
   }
@@ -56,36 +117,110 @@ class _GradeOverview extends State<GradeOverview>{
             defaultAction: () => NavigationHelper.pushNamed(context, "gradesPage"),
             defaultLabel: "Neu",
           ),
-          floatingHeader: Container(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 15,
-                vertical: 15
-            ),
-            decoration: BoxDecoration(
-                color: AppDesign.current.primaryColor,
-                borderRadius: AppDesign.current.boxStyle.borderRadius
-            ),
-            child: Flex(
+          floatingHeader: Wrap(
+            runSpacing: 10,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 15,
+                    vertical: 15
+                ),
+                decoration: BoxDecoration(
+                    color: AppDesign.current.primaryColor,
+                    borderRadius: AppDesign.current.boxStyle.borderRadius
+                ),
+                child: Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      GradeWidget(
+                        name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
+                        value: (){
+                          if(GradingSystem.getYearAverage() == -1) {
+                            return "-";
+                          } else {
+                            return GradingSystem.getYearAverage().round().toString();
+                          }
+                        }(),
+                        reversed: false,
+                      ),
+                      const Spacer(flex: 1),
+                      GradeWidget(
+                        name: "Note",
+                        value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
+                        reversed: true,
+                      )
+                    ]
+                ),
+              ),
+              Flex(
                 direction: Axis.horizontal,
                 children: [
-                  GradeWidget(
-                    name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
-                    value: GradingSystem.getYearAverage().round().toString(),
-                    reversed: false,
+                  Flexible(
+                    child: BrainDropdown(
+                        dialogTitle: "Sortieren nach...",
+                        scrollableDialog: false,
+                        defaultText: "Sortieren nach...",
+                        currentValue: widget.sortMethod,
+                        items: [
+                          BrainDropdownEntry(
+                              value: SortMethods.bySubject,
+                              child: Text("Fach", style: AppDesign.current.textStyles.input)
+                          ),
+                          BrainDropdownEntry(
+                              value: SortMethods.byGrade,
+                              child: Text("Note", style: AppDesign.current.textStyles.input)
+                          )
+                        ],
+                        onChanged: (value) {
+                          setState(() => widget.sortMethod = value);
+                        }
+                    ),
                   ),
-                  const Spacer(flex: 1),
-                  GradeWidget(
-                    name: "Note",
-                    value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
-                    reversed: true,
-                  )
-                ]
-            ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: TextButton(
+                        onPressed: () {
+                          setState(() => widget.sortAscending = true);
+                        },
+                        style: TextButton.styleFrom(
+                            backgroundColor: widget.sortAscending ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
+                            padding: EdgeInsets.all(14),
+                            minimumSize: Size.zero
+                        ),
+                        child: Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: widget.sortAscending ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color
+                        )
+                    ),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        setState(() => widget.sortAscending = false);
+                      },
+                      style: TextButton.styleFrom(
+                          backgroundColor: widget.sortAscending ? AppDesign.current.boxStyle.backgroundColor : AppDesign.current.primaryColor,
+                          padding: EdgeInsets.all(14),
+                          minimumSize: Size.zero
+                      ),
+                      child: Icon(
+                          Icons.keyboard_arrow_up_rounded,
+                          color: widget.sortAscending ? AppDesign.current.textStyles.color : AppDesign.current.textStyles.contrastColor
+                      )
+                  ),
+                ],
+              )
+            ],
           ),
-          child: TimeTable.subjects.isNotEmpty ? HeadlineWrap(
-              headline: "Alle Noten",
-              children: getGradeButtons()
-          ) : Container()
+          child: TimeTable.subjects.isEmpty
+              ? Container()
+              : Column(
+            children: [
+              HeadlineWrap(
+                  headline: "Alle Fächer",
+                  children: getGradeButtons()
+              )
+            ],
+          )
       )
     );
   }

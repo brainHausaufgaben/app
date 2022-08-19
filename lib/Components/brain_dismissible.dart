@@ -1,5 +1,5 @@
-import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +25,7 @@ class BrainDismissible extends StatelessWidget {
                 buttonText: "Rückgängig",
                 action: () {
                   TimeTable.reinstateLastHomework();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                  ScaffoldMessenger.of(NavigationHelper.rootKey.currentContext!).hideCurrentSnackBar();
                 }
               );
               toast.show(context);

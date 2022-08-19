@@ -1,8 +1,20 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
+
+class PageSettings {
+  const PageSettings({
+    this.floatingActionButtonLocation,
+    this.floatingHeaderBorderRadius,
+    this.floatingHeaderIsCentered = false
+  });
+
+  final BorderRadius? floatingHeaderBorderRadius;
+  final bool floatingHeaderIsCentered;
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+}
 
 class PageTemplate extends StatefulWidget {
   const PageTemplate({
@@ -10,18 +22,19 @@ class PageTemplate extends StatefulWidget {
     required this.title,
     required this.child,
     this.floatingHeader,
-    this.backButton, this.subtitle,
+    this.backButton = false,
+    this.subtitle,
     this.floatingActionButton,
-    this.floatingActionButtonLocation
+    this.pageSettings = const PageSettings()
   }) : super(key: key);
 
   final String title;
   final Widget child;
   final Widget? floatingHeader;
   final String? subtitle;
-  final bool? backButton;
+  final bool backButton;
   final Widget? floatingActionButton;
-  final FloatingActionButtonLocation? floatingActionButtonLocation;
+  final PageSettings pageSettings;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -48,6 +61,23 @@ class _PageTemplateState extends State<PageTemplate> {
     return weekDay + ", " + day + "." + month + "." + year;
   }
 
+  Widget getFloatingHeader() {
+    return Container(
+      margin: const EdgeInsets.only(top: 10),
+      decoration: BoxDecoration(
+          borderRadius: widget.pageSettings.floatingHeaderBorderRadius,
+          boxShadow: [
+            BoxShadow(
+                color: AppDesign.current.themeData.scaffoldBackgroundColor,
+                blurRadius: 10,
+                spreadRadius: 8
+            )
+          ]
+      ),
+      child: widget.floatingHeader!,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -64,27 +94,21 @@ class _PageTemplateState extends State<PageTemplate> {
                 curve: Curves.ease,
                 size: 15,
                 child: ListView (
-                   shrinkWrap: true,
+                    shrinkWrap: true,
                     padding: const EdgeInsets.only(top: 10, bottom: 25),
                     children: [
-                      Align(
-                        child: Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: AppDesign.current.boxStyle.backgroundColor,
-                            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
-                          ),
-                          child: IconButton(
-                            tooltip: widget.backButton == null ? "Einstellungen" : "Zurück",
-                            constraints: const BoxConstraints(),
-                            padding: const EdgeInsets.all(0),
-                            onPressed: widget.backButton == null ? _settings : _back,
-                            icon: Icon(widget.backButton == null ? Icons.settings_rounded : Icons.keyboard_backspace, color: AppDesign.current.textStyles.color),
-                            iconSize: 24,
-                            splashRadius: 15,
-                          ),
-                        ),
-                        alignment: Alignment.topLeft,
+                      Row(
+                        children: [
+                          TextButton(
+                            style: TextButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                                minimumSize: Size.zero
+                            ),
+                            onPressed: widget.backButton ? _back : _settings,
+                            child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded, color: AppDesign.current.textStyles.color),
+                          )
+                        ]
                       ),
                       Padding(
                           padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
@@ -117,21 +141,9 @@ class _PageTemplateState extends State<PageTemplate> {
                             padding: const EdgeInsets.only(top: 20),
                             child: widget.child,
                           ),
-                          header: Center(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 10),
-                              decoration: BoxDecoration(
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: AppDesign.current.themeData.scaffoldBackgroundColor,
-                                        blurRadius: 10,
-                                        spreadRadius: 8
-                                    )
-                                  ]
-                              ),
-                              child: widget.floatingHeader!,
-                            ),
-                          )
+                          header: widget.pageSettings.floatingHeaderIsCentered
+                              ? Center(child: getFloatingHeader())
+                              : getFloatingHeader()
                         )
                       else
                         widget.child
@@ -139,7 +151,7 @@ class _PageTemplateState extends State<PageTemplate> {
                 )
               )
           ),
-          floatingActionButtonLocation: widget.floatingActionButtonLocation,
+          floatingActionButtonLocation: widget.pageSettings.floatingActionButtonLocation,
           floatingActionButton: widget.floatingActionButton
       )
     );

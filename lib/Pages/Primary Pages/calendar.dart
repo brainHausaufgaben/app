@@ -1,21 +1,22 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
-import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/brain_dismissible.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
-  const CalendarPage({Key? key}): super(key: key);
+  CalendarPage({Key? key}): super(key: key);
 
   static DateTime selectedDay = DateTime.now();
 
@@ -140,6 +141,12 @@ class _CalendarPage extends State<CalendarPage> {
               children: [
                 Box(
                     child: TableCalendar(
+                        calendarFormat: CalendarFormat.values[BrainApp.preferences["calendarFormat"]],
+                        availableCalendarFormats: const {
+                          CalendarFormat.month : "Monat",
+                          CalendarFormat.week : "Woche",
+                          CalendarFormat.twoWeeks : "2 Wochen"
+                        },
                         locale: "de_DE",
                         firstDay: DateTime.utc(2018, 10, 16),
                         lastDay: DateTime.now().add(const Duration(days:730)),
@@ -162,7 +169,10 @@ class _CalendarPage extends State<CalendarPage> {
                           headerPadding: const EdgeInsets.only(bottom: 10),
                           titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
                           titleCentered: true,
-                          formatButtonVisible: false,
+                          formatButtonDecoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            border: Border.all(color: AppDesign.current.textStyles.color)
+                          ),
                           leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
                           rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
                         ),
@@ -202,6 +212,13 @@ class _CalendarPage extends State<CalendarPage> {
                             );
                           },
                         ),
+                        formatAnimationCurve: Curves.easeOutBack,
+                        formatAnimationDuration: const Duration(milliseconds: 500),
+                        onFormatChanged: (format) {
+                          setState(() {
+                            BrainApp.updatePreference("calendarFormat", format.index);
+                          });
+                        },
                         onDaySelected: (_selectedDay, _focusedDay) {
                           setState(() {
                             CalendarPage.selectedDay = _selectedDay;
@@ -229,7 +246,7 @@ class _CalendarPage extends State<CalendarPage> {
                   children: getSelectedHomework(),
                 ),
                 if (TimeTable.getEvents(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
-                  headline: "Events",
+                  headline: "Termine",
                   children: getSelectedEvents(),
                 )
               ]

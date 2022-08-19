@@ -1,15 +1,15 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
-
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -103,11 +103,13 @@ class BrainDropdown<ItemType> extends StatefulWidget {
     required this.currentValue,
     required this.items,
     required this.onChanged,
+    this.scrollableDialog = true,
     this.dialogTitle,
     this.additionalAction
   }) : super(key: key);
 
   final String? dialogTitle;
+  final bool scrollableDialog;
   final String defaultText;
   final ItemType currentValue;
   final List<BrainDropdownEntry> items;
@@ -202,19 +204,24 @@ class _BrainDropdown extends State<BrainDropdown> {
                 ],
                 backgroundColor: AppDesign.current.boxStyle.backgroundColor,
                 title: widget.dialogTitle == null ? Text("Wähle ein Fach") : Text(widget.dialogTitle!),
-                content: Container(
+                content: widget.scrollableDialog ? Container(
                   constraints: const BoxConstraints(maxHeight: 400),
                   child: ScrollShadow(
                     color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
                     curve: Curves.ease,
                     size: 15,
                     child: SingleChildScrollView(
-                        scrollDirection: Axis.vertical,
-                        child: Column(
-                          children: getButtons(context),
-                        )
+                      scrollDirection: Axis.vertical,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: getButtons(context),
+                      )
                     )
                   )
+                ) : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: getButtons(context),
                 )
               );
             }
@@ -288,7 +295,7 @@ class BrainDateButton extends StatelessWidget {
             if (TimeTable.getSubjectsByDate(dateTime).contains(selectedSubject)) {
               return Container(
                   decoration: BoxDecoration(
-                    color: selectedSubject!.color.withOpacity(0.2),
+                    color: selectedSubject!.color.withOpacity(0.4),
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -352,13 +359,13 @@ class BrainIconButton extends StatelessWidget {
   const BrainIconButton({
     Key? key,
     required this.action,
-    required this.child,
     required this.icon,
+    this.child,
     this.dense = false
   }) : super(key: key);
 
   final Function() action;
-  final Widget child;
+  final Widget? child;
   final IconData icon;
   final bool dense;
 
@@ -372,14 +379,15 @@ class BrainIconButton extends StatelessWidget {
       child: TextButton(
         onPressed: action,
         style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
-            backgroundColor: AppDesign.current.boxStyle.backgroundColor
+          padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
+          backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+          minimumSize: Size.zero
         ),
         child: Flex(
           direction: Axis.horizontal,
           children: [
-            Expanded(
-              child: child
+            if (child != null) Expanded(
+              child: child!
             ),
             Icon(icon, color: AppDesign.current.textStyles.color, size: dense ? 20 : 24),
           ],
@@ -409,7 +417,7 @@ class BrainColorPicker extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(100)
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: Clip.antiAlias,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: pickerColor,
@@ -439,11 +447,11 @@ class BrainColorPicker extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: asIconButton ? BorderRadius.circular(100) : AppDesign.current.boxStyle.inputBorderRadius,
+          borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
           color: AppDesign.current.boxStyle.backgroundColor
         ),
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: asIconButton ? 14 : 12),
-        child: asIconButton ? const Icon(Icons.color_lens_outlined) : Row(
+        child: Row(
           children: [
             Container(
               height: 25.0,
@@ -481,21 +489,32 @@ class SettingsNavigatorButton extends StatelessWidget {
   const SettingsNavigatorButton({
     Key? key,
     required this.text,
-    required this.action
+    required this.action,
+    this.activated = true
   }) : super(key: key);
 
   final String text;
+  final bool activated;
   final Function() action;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: action,
+      onPressed: activated ? action : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
-          Icon(Icons.arrow_forward_ios_rounded, color: AppDesign.current.textStyles.color, size: 20)
+          Text(
+            text,
+            style: activated ? AppDesign.current.textStyles.settingsSubMenu
+                             : AppDesign.current.textStyles.settingsSubMenu.copyWith(color: AppDesign.current.textStyles.settingsSubMenu.color!.withOpacity(0.5))
+          ),
+          Icon(
+            Icons.arrow_forward_ios_rounded,
+            color: activated ? AppDesign.current.textStyles.color
+                             : AppDesign.current.textStyles.color.withOpacity(0.5),
+            size: 20
+          )
         ],
       ),
     );
@@ -555,11 +574,13 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
       onPressed: () {
         widget.action();
       },
-      child: Row(
+      child: Flex(
+        direction: Axis.horizontal,
         crossAxisAlignment: widget.description == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Center(
+          Flexible(
+            flex: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -568,6 +589,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
               ],
             ),
           ),
+          Spacer(),
           Container(
             width: 22,
             height: 22,
@@ -590,6 +612,99 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class SettingsTimePicker extends StatelessWidget {
+  const SettingsTimePicker({
+    Key? key,
+    required this.text,
+    required this.onSelect,
+    required this.currentTime
+  }) : super(key: key);
+
+  final String text;
+  final Function(TimeOfDay) onSelect;
+  final TimeOfDay currentTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return TimePickerDialog(
+                initialTime: currentTime
+            );
+          }
+        ).then((value) {
+          onSelect(value);
+        });
+      },
+      child: Flex(
+        direction: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.only(left: 6),
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                    color: AppDesign.current.textStyles.settingsSubMenuDescription.color!,
+                    width: 1.5
+                )
+              )
+            ),
+            child: Text("${currentTime.hour}:${currentTime.minute} Uhr", style: AppDesign.current.textStyles.settingsSubMenuDescription),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsTextfield extends StatelessWidget {
+  SettingsTextfield({
+    Key? key,
+    this.text
+  }) : super(key: key);
+
+  final String? text;
+  TextEditingController controller = TextEditingController(text: BrainApp.preferences["daysUntilHomeworkWarning"].toString());
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 7, right: 7, bottom: 7),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (text != null) Text(text!, style: AppDesign.current.textStyles.settingsSubMenu),
+          Container(
+            margin: const EdgeInsets.only(top: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10)
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: TextField(
+              controller: controller,
+              style: AppDesign.current.textStyles.input,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                contentPadding: const EdgeInsets.all(14),
+                isCollapsed: true,
+                border: InputBorder.none,
+                filled: true,
+                fillColor: AppDesign.current.themeData.scaffoldBackgroundColor
+              ),
+            ),
+          )
+        ]
       ),
     );
   }
@@ -741,7 +856,7 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
       spacing: 5,
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),
-      animationDuration: const Duration(milliseconds: 200),
+      animationDuration: const Duration(milliseconds: 300),
       label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: const TextStyle(letterSpacing: 0.5)) : null,
     );
   }

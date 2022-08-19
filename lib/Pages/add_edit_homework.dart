@@ -1,11 +1,11 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
@@ -108,7 +108,9 @@ class _HomeworkPage extends State<HomeworkPage> {
           )
         ]
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      pageSettings: const PageSettings(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
       floatingActionButton: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
