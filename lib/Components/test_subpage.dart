@@ -36,14 +36,15 @@ class _TestSubpage extends State<TestSubpage> {
                   maxLines: 10,
                 ),
                 BrainDropdown(
-                    defaultText: "Fach",
-                    items: BrainDropdown.getSubjectDropdowns(),
-                    currentValue: widget.selectedSubject,
-                    onChanged: (newValue) {
-                      setState(() {
-                        widget.selectedSubject = newValue;
-                      });
-                    }
+                  dialogTitle: "Wähle ein Fach",
+                  defaultText: "Fach",
+                  items: BrainDropdown.getSubjectDropdowns(),
+                  currentValue: widget.selectedSubject,
+                  onChanged: (newValue) {
+                    setState(() {
+                      widget.selectedSubject = newValue;
+                    });
+                  }
                 ),
                 BrainDateButton(
                     value: widget.selectedDate,

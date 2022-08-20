@@ -72,8 +72,8 @@ class BrainInfobox extends StatelessWidget {
                 title,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
-                style: isPrimary ? AppDesign.current.textStyles.collapsibleTextContrast
-                    : AppDesign.current.textStyles.collapsibleText
+                style: isPrimary ? AppDesign.current.textStyles.infoBoxTextContrast
+                    : AppDesign.current.textStyles.infoBoxText
             )
           ]
         )

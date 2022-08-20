@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -25,12 +26,29 @@ class DeveloperOptions{
       case "sebastian":
         Sebastian();
         break;
+      case "ninja":
+        Ninja();
+        break;
+      case "dunkelheit":
+        Dunkelheit();
+        break;
     }
+  }
+
+  static void Ninja() {
+    AppDesign.setFromPackage(BlindnessDesign().darkVariant);
+  }
+
+  static void Dunkelheit() {
+    AppDesign.setFromPackage(BlindnessDesign().lightVariant);
+
   }
 
   static void Fortnite(){
 
   }
+
+
 
   static void SharkSwimmingOcean(){
 

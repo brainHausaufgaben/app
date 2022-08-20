@@ -150,7 +150,7 @@ class _GradeOverview extends State<GradeOverview>{
                         reversed: true,
                       )
                     ]
-                ),
+                )
               ),
               Flex(
                 direction: Axis.horizontal,
@@ -184,6 +184,7 @@ class _GradeOverview extends State<GradeOverview>{
                         },
                         style: TextButton.styleFrom(
                             backgroundColor: widget.sortAscending ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
+                            primary: widget.sortAscending ? AppDesign.current.boxStyle.backgroundColor : AppDesign.current.primaryColor,
                             padding: EdgeInsets.all(14),
                             minimumSize: Size.zero
                         ),
@@ -199,6 +200,7 @@ class _GradeOverview extends State<GradeOverview>{
                       },
                       style: TextButton.styleFrom(
                           backgroundColor: widget.sortAscending ? AppDesign.current.boxStyle.backgroundColor : AppDesign.current.primaryColor,
+                          primary: widget.sortAscending ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
                           padding: EdgeInsets.all(14),
                           minimumSize: Size.zero
                       ),

@@ -173,6 +173,7 @@ class _CalendarPage extends State<CalendarPage> {
                             borderRadius: BorderRadius.circular(50),
                             border: Border.all(color: AppDesign.current.textStyles.color)
                           ),
+                          formatButtonTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
                           leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
                           rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
                         ),

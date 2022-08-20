@@ -15,6 +15,11 @@ class AppDesign {
     BrainApp.notifier.notifyOfChanges();
   }
 
+  static void setFromPackage(DesignPackage package) {
+    current = package;
+    BrainApp.notifier.notifyOfChanges();
+  }
+
   static void toggleDarkMode() {
     BrainApp.updatePreference("darkMode", !BrainApp.preferences["darkMode"]);
 
@@ -112,4 +117,13 @@ class PrincessPinkDesign extends Design {
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFFB733E5), const Color(0xFF160C1A), const Color(0xFF281433), const Color(0xFFF5EAE0), const Color(0xFFF5EAE0));
+}
+
+class BlindnessDesign extends Design {
+  @override
+  DesignPackage get lightVariant =>
+      generateDesign(const Color(0xFF000000), const Color(0xFF000000), const Color(0xFF000000), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF));
+  @override
+  DesignPackage get darkVariant =>
+      generateDesign(const Color(0xFF000000), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0x00000000), const Color(0x00FFFFFF));
 }

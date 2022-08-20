@@ -103,12 +103,12 @@ class BrainDropdown<ItemType> extends StatefulWidget {
     required this.currentValue,
     required this.items,
     required this.onChanged,
+    required this.dialogTitle,
     this.scrollableDialog = true,
-    this.dialogTitle,
     this.additionalAction
   }) : super(key: key);
 
-  final String? dialogTitle;
+  final String dialogTitle;
   final bool scrollableDialog;
   final String defaultText;
   final ItemType currentValue;
@@ -203,7 +203,7 @@ class _BrainDropdown extends State<BrainDropdown> {
                   )
                 ],
                 backgroundColor: AppDesign.current.boxStyle.backgroundColor,
-                title: widget.dialogTitle == null ? Text("Wähle ein Fach") : Text(widget.dialogTitle!),
+                title: Text(widget.dialogTitle, style: AppDesign.current.textStyles.alertDialogHeader),
                 content: widget.scrollableDialog ? Container(
                   constraints: const BoxConstraints(maxHeight: 400),
                   child: ScrollShadow(
@@ -727,8 +727,10 @@ class SettingsTextfield extends StatelessWidget {
               ),
               if (submitAction != null) Padding(
                 padding: const EdgeInsets.only(left: 10),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: AppDesign.current.primaryColor,
+                    primary: AppDesign.current.textStyles.contrastColor,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13)
                   ),
                   onPressed: () {
@@ -892,7 +894,7 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),
       animationDuration: const Duration(milliseconds: 300),
-      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: const TextStyle(letterSpacing: 0.5)) : null,
+      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: TextStyle(letterSpacing: 0.5, color: AppDesign.current.textStyles.contrastColor)) : null,
     );
   }
 }

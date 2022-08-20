@@ -1,12 +1,9 @@
-import 'dart:html';
-import 'dart:io';
-
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -59,7 +56,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
         ),
       );
     }).then((value) => noBitchesController.reset());
-    await Future.delayed(const Duration(seconds: 3));
+    await Future.delayed(const Duration(seconds: 2));
   }
 
   @override
@@ -76,17 +73,60 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
         child: Row(
           children: [
             Expanded(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: const Color(0xFFB40000),
-                      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(color: Color(0xFFB40000), width: 3),
+                    primary: const Color(0xFFB40000),
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                   ),
                   onPressed: () {
-                    BrainApp.clearPreferences();
-                    //TODO: Local storage leer machen (sese)
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: const Text("Willst du die App wirklich zurücksetzen?"),
+                          backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                          content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Diese Aktion wird alle Einstellungen sowie dein Stundenplan, deine Noten etc. löschen",
+                                style: AppDesign.current.textStyles.alertDialogDescription,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: AppDesign.current.primaryColor,
+                                        primary: AppDesign.current.textStyles.contrastColor,
+                                        padding: const EdgeInsets.symmetric(vertical: 12)
+                                    ),
+                                    onPressed: () => Navigator.of(context).pop(),
+                                    child: const Text("Abbrechen")
+                                ),
+                              ),
+                              TextButton(
+                                  style: TextButton.styleFrom(
+                                      side: BorderSide(color: AppDesign.current.primaryColor, width: 2),
+                                      primary: AppDesign.current.primaryColor,
+                                      padding: const EdgeInsets.symmetric(vertical: 12)
+                                  ),
+                                  onPressed: () {
+                                    BrainApp.clearPreferences();
+                                    //TODO: Local storage leer machen (sese)
+                                    Navigator.of(context).pop();
+                                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                                  },
+                                  child: const Text("Fortfahren")
+                              )
+                            ]
+                          )
+                        );
+                      }
+                    );
                   },
-                  child: Text("App zurücksetzen", style: AppDesign.current.textStyles.buttonText)
+                  child: Text("App zurücksetzen", style: AppDesign.current.textStyles.buttonText.copyWith(color: const Color(0xFFB40000)))
               ),
             )
           ],
@@ -102,11 +142,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                 submitAction: (text) {
                   if (text == "no bitches?") {
                     noBitches().then((value) {
-                      if (kIsWeb) {
-                        window.close();
-                      } else {
-                        SystemNavigator.pop();
-                      }
+                      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                     });
                   } else {
                     DeveloperOptions.enterText(text);

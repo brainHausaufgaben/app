@@ -76,10 +76,11 @@ class _HomePage extends State<HomePage>{
                 direction: Axis.horizontal,
                 children: [
                   Expanded(
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: AppDesign.current.primaryColor,
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 14)
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: AppDesign.current.primaryColor,
+                        primary: AppDesign.current.textStyles.contrastColor,
+                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                       ),
                       onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
                       child: Text("Stundenplan", style: AppDesign.current.textStyles.buttonText.copyWith(fontSize: 16)),
@@ -88,10 +89,11 @@ class _HomePage extends State<HomePage>{
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 10),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            primary: AppDesign.current.primaryColor,
-                            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 14)
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppDesign.current.primaryColor,
+                          primary: AppDesign.current.textStyles.contrastColor,
+                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                         ),
                         onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
                         child: Text("Neues Fach", style: AppDesign.current.textStyles.buttonText.copyWith(fontSize: 16)),
