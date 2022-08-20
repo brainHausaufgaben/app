@@ -94,10 +94,12 @@ class _EditTestPage extends State<EditTestPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Text("Bearbeiten",
-                            style: AppDesign.current.textStyles.buttonText),
+                        child: Text(""
+                          "Bearbeiten",
+                          style: AppDesign.textStyles.buttonText
+                        )
                       )
-                  ),
+                  )
                 ),
                 Padding(
                     padding: const EdgeInsets.only(left: 10),
@@ -109,7 +111,7 @@ class _EditTestPage extends State<EditTestPage> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Icon(Icons.delete_forever, color: AppDesign.current.textStyles.contrastColor),
+                          child: Icon(Icons.delete_forever, color: AppDesign.colors.contrast),
                         )
                     )
                 )

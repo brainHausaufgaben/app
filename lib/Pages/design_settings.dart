@@ -142,13 +142,13 @@ class IconRadio extends StatelessWidget {
     }
 
     // Replace text color
-    String themeIcon = themeIconSvg.replaceAll("#303540", colorToString(designPackage.textStyles.color));
+    String themeIcon = themeIconSvg.replaceAll("#303540", colorToString(designPackage.colors.text));
     // Replace primaryColor
-    themeIcon = themeIcon.replaceAll("#9B9B9B", colorToString(designPackage.primaryColor));
+    themeIcon = themeIcon.replaceAll("#9B9B9B", colorToString(designPackage.colors.primary));
     // Replace backgroundColor
-    themeIcon = themeIcon.replaceAll("#F1F1F1", colorToString(designPackage.themeData.scaffoldBackgroundColor));
+    themeIcon = themeIcon.replaceAll("#F1F1F1", colorToString(designPackage.colors.background));
     // Replace boxBackground
-    themeIcon = themeIcon.replaceAll("white", colorToString(designPackage.boxStyle.backgroundColor));
+    themeIcon = themeIcon.replaceAll("white", colorToString(designPackage.colors.secondaryBackground));
 
     return SvgPicture.string(themeIcon, width: 45, height: 55);
   }
@@ -161,7 +161,7 @@ class IconRadio extends StatelessWidget {
         width: 50,
         height: 70,
         decoration: BoxDecoration(
-            color: isSelected ? AppDesign.current.primaryColor.withAlpha(50) : null,
+            color: isSelected ? AppDesign.colors.primary.withOpacity(0.5) : null,
             borderRadius: BorderRadius.circular(5)
         ),
         child: Center(

@@ -104,7 +104,7 @@ class _BrainApp extends State<BrainApp> {
       title: 'Brain Hausaufgabenheft',
       initialRoute: "/",
       onGenerateRoute: NavigationRoutes.onGenerateRoute,
-      theme: AppDesign.current.themeData,
+      theme: AppDesign.themeData,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: const [
         Locale('de', 'DE')

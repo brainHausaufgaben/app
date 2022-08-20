@@ -20,7 +20,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
           width: MediaQuery.of(context).size.width,
           height: 56,
           decoration: BoxDecoration(
-              color: AppDesign.current.boxStyle.backgroundColor,
+              color: AppDesign.colors.secondaryBackground,
               boxShadow: const [
                 BoxShadow(
                     color: Colors.black12,
@@ -109,21 +109,21 @@ class NavigationItem extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-            color: activated ? AppDesign.current.primaryColor : AppDesign.current.primaryColor.withAlpha(0),
-            borderRadius: AppDesign.current.boxStyle.borderRadius
+            color: activated ? AppDesign.colors.primary : Colors.transparent,
+            borderRadius: AppDesign.boxStyle.borderRadius
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
-              child: Icon(icon, size: iconSize, color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color),
+              child: Icon(icon, size: iconSize, color: activated ? AppDesign.colors.contrast : AppDesign.colors.text),
               padding: const EdgeInsets.only(right: 5),
             ),
             AnimatedSize(
               alignment: Alignment.centerLeft,
               duration: const Duration(milliseconds: 200),
-              child: Text(activated ? title : "", style: TextStyle(color: AppDesign.current.textStyles.contrastColor , fontSize: 14, fontWeight: FontWeight.w600)),
+              child: Text(activated ? title : "", style: TextStyle(color: AppDesign.colors.contrast , fontSize: 14, fontWeight: FontWeight.w600)),
             )
           ],
         ),

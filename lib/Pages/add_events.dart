@@ -91,19 +91,19 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
         floatingHeader: Container(
           constraints: const BoxConstraints(maxWidth: 250),
           decoration: BoxDecoration(
-              color: AppDesign.current.boxStyle.backgroundColor,
+              color: AppDesign.colors.secondaryBackground,
               borderRadius: BorderRadius.circular(100)
           ),
           clipBehavior: Clip.antiAlias,
           child: DefaultTextStyle(
-            style: AppDesign.current.textStyles.tab,
+            style: AppDesign.textStyles.tab,
             child: TabBar(
               controller: tabController,
-              labelStyle: AppDesign.current.textStyles.tab,
-              labelColor: AppDesign.current.textStyles.contrastColor,
-              unselectedLabelColor: AppDesign.current.textStyles.color,
+              labelStyle: AppDesign.textStyles.tab,
+              labelColor: AppDesign.colors.contrast,
+              unselectedLabelColor: AppDesign.colors.text,
               indicator: BoxDecoration(
-                  color: AppDesign.current.primaryColor,
+                  color: AppDesign.colors.primary,
                   borderRadius: BorderRadius.circular(100)
               ),
               tabs: const [
@@ -141,7 +141,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15),
-                            child: Text("Hinzufügen", style: AppDesign.current.textStyles.buttonText),
+                            child: Text("Hinzufügen", style: AppDesign.textStyles.buttonText),
                           )
                       )
                   )

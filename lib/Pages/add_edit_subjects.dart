@@ -99,7 +99,10 @@ class _SubjectPage extends State<SubjectPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Text(widget.previousSubject == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
+                        child: Text(
+                            widget.previousSubject == null ? "Hinzufügen" : "Bearbeiten",
+                            style: AppDesign.textStyles.buttonText
+                        ),
                       )
                   ),
                 ),
@@ -113,7 +116,7 @@ class _SubjectPage extends State<SubjectPage> {
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Icon(Icons.delete_forever, color: AppDesign.current.textStyles.contrastColor),
+                          child: Icon(Icons.delete_forever, color: AppDesign.colors.contrast),
                         )
                     )
                 )

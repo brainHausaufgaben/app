@@ -9,8 +9,8 @@ class CollapsibleGradesBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: AppDesign.current.primaryColor,
-            borderRadius: AppDesign.current.boxStyle.borderRadius
+            color: AppDesign.colors.primary,
+            borderRadius: AppDesign.boxStyle.borderRadius
         ),
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Flex(
@@ -52,11 +52,11 @@ class GradeWidget extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: AppDesign.current.boxStyle.borderRadius,
+                borderRadius: AppDesign.boxStyle.borderRadius,
                 boxShadow: [
-                  AppDesign.current.boxStyle.boxShadow
+                  AppDesign.boxStyle.boxShadow
                 ],
-                color: AppDesign.current.themeData.scaffoldBackgroundColor
+                color: AppDesign.colors.background
             ),
             child: Center(
                 child: Wrap(
@@ -70,7 +70,7 @@ class GradeWidget extends StatelessWidget {
                       Text(
                         value,
                         style: TextStyle(
-                            color: AppDesign.current.textStyles.color,
+                            color: AppDesign.colors.text,
                             fontSize: 25,
                             fontWeight: FontWeight.w700
                         ),
@@ -79,7 +79,7 @@ class GradeWidget extends StatelessWidget {
                       Text(
                         name,
                         style: TextStyle(
-                            color: AppDesign.current.textStyles.color,
+                            color: AppDesign.colors.text,
                             fontSize: 17,
                             fontWeight: FontWeight.w700
                         ),

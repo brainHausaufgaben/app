@@ -30,7 +30,10 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             child: PointElement(
               color: widget.subject.color,
               primaryText: "1. Exemporale",
-              child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
+              child: Text(
+                grade.value.toString(),
+                style: AppDesign.textStyles.pointElementSecondary
+              )
             ),
             icon: Icons.edit,
             action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
@@ -52,7 +55,10 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             child: PointElement(
               color: widget.subject.color,
               primaryText: "1. Mündliche Note",
-              child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
+              child: Text(
+                grade.value.toString(),
+                style: AppDesign.textStyles.pointElementSecondary
+              )
             ),
             icon: Icons.edit,
             action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
@@ -73,7 +79,10 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             child: PointElement(
               color: widget.subject.color,
               primaryText: "1. Schulaufgabe",
-              child: Text(grade.value.toString(), style: AppDesign.current.textStyles.pointElementSecondary),
+              child: Text(
+                grade.value.toString(),
+                style: AppDesign.textStyles.pointElementSecondary
+              )
             ),
             icon: Icons.edit,
             action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
@@ -109,8 +118,8 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               vertical: 15
           ),
           decoration: BoxDecoration(
-              color: AppDesign.current.primaryColor,
-              borderRadius: AppDesign.current.boxStyle.borderRadius
+              color: AppDesign.colors.primary,
+              borderRadius: AppDesign.boxStyle.borderRadius
           ),
           child: Flex(
               direction: Axis.horizontal,
@@ -178,8 +187,8 @@ class GradeWidget extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: AppDesign.current.boxStyle.borderRadius,
-                color: AppDesign.current.boxStyle.backgroundColor
+                borderRadius: AppDesign.boxStyle.borderRadius,
+                color: AppDesign.colors.secondaryBackground
             ),
             child: Center(
                 child: Wrap(
@@ -191,7 +200,7 @@ class GradeWidget extends StatelessWidget {
                       Text(
                           value,
                           style: TextStyle(
-                              color: AppDesign.current.textStyles.color,
+                              color: AppDesign.colors.text,
                               fontSize: 25,
                               fontWeight: FontWeight.w700
                           )
@@ -199,7 +208,7 @@ class GradeWidget extends StatelessWidget {
                       Text(
                           name,
                           style: TextStyle(
-                              color: AppDesign.current.textStyles.color,
+                              color: AppDesign.colors.text,
                               fontSize: 17,
                               fontWeight: FontWeight.w700
                           )

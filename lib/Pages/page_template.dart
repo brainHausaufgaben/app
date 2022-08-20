@@ -71,7 +71,7 @@ class _PageTemplateState extends State<PageTemplate> {
           borderRadius: widget.pageSettings.floatingHeaderBorderRadius,
           boxShadow: [
             BoxShadow(
-                color: AppDesign.current.themeData.scaffoldBackgroundColor,
+                color: AppDesign.colors.background,
                 blurRadius: 10,
                 spreadRadius: 8
             )
@@ -93,7 +93,7 @@ class _PageTemplateState extends State<PageTemplate> {
                   right: 15
               ),
               child: ScrollShadow(
-                color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+                color: AppDesign.colors.background.withOpacity(0.8),
                 curve: Curves.ease,
                 size: 15,
                 child: ListView (
@@ -105,11 +105,11 @@ class _PageTemplateState extends State<PageTemplate> {
                           TextButton(
                             style: TextButton.styleFrom(
                                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                                backgroundColor: AppDesign.colors.secondaryBackground,
                                 minimumSize: Size.zero
                             ),
                             onPressed: widget.backButton ? _back : _settings,
-                            child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded, color: AppDesign.current.textStyles.color),
+                            child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded, color: AppDesign.colors.text),
                           )
                         ]
                       ),
@@ -120,14 +120,14 @@ class _PageTemplateState extends State<PageTemplate> {
                               children: <Widget> [
                                 Text(
                                   widget.title,
-                                  style: AppDesign.current.textStyles.pageHeadline,
+                                  style: AppDesign.textStyles.pageHeadline,
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(top: 3, left: 5),
                                   padding: const EdgeInsets.only(left: 6, top: 3, bottom: 1),
                                   decoration: BoxDecoration(
                                     border: Border(
-                                      left: BorderSide(color: AppDesign.current.textStyles.pageSubtitle.color!, width: 2)
+                                      left: BorderSide(color: AppDesign.colors.text08, width: 2)
                                     )
                                   ),
                                   child: GestureDetector(
@@ -145,7 +145,7 @@ class _PageTemplateState extends State<PageTemplate> {
                                       cursor: widget.pageSettings.developerOptions ? SystemMouseCursors.click : SystemMouseCursors.basic,
                                       child: Text(
                                         widget.subtitle ?? getDateString(DateTime.now()),
-                                        style: AppDesign.current.textStyles.pageSubtitle,
+                                        style: AppDesign.textStyles.pageSubtitle,
                                       ),
                                     )
                                   )

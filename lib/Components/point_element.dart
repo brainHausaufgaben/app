@@ -38,7 +38,7 @@ class _PointElementState extends  State<PointElement>{
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.primaryText, style: AppDesign.current.textStyles.pointElementPrimary),
+                      Text(widget.primaryText, style: AppDesign.textStyles.pointElementPrimary),
                       if (widget.child != null) widget.child!
                     ],
                   ),
@@ -47,9 +47,9 @@ class _PointElementState extends  State<PointElement>{
             ),
           ),
           if (widget.secondaryText != null)
-            Text(widget.secondaryText!, style: AppDesign.current.textStyles.pointElementSecondary)
+            Text(widget.secondaryText!, style: AppDesign.textStyles.pointElementSecondary)
           else if (widget.secondaryIcon != null)
-            Icon(widget.secondaryIcon!, size: 20, color: AppDesign.current.textStyles.pointElementSecondary.color)
+            Icon(widget.secondaryIcon!, size: 20, color: AppDesign.colors.text07)
         ],
       ),
     );

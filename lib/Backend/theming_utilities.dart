@@ -1,67 +1,83 @@
+import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/material.dart';
 
 class DesignPackage {
-  Color primaryColor;
-  TextStyles textStyles;
+  AppColors colors;
+  ThemeData themeData;
   BoxStyle boxStyle;
 
-  ThemeData themeData;
-
   DesignPackage({
-    required this.primaryColor,
-    required this.textStyles,
+    required this.colors,
     required this.themeData,
     required this.boxStyle
   });
 }
 
-class TextStyles {
-  Color color;
-  Color contrastColor;
-  TextStyle pageHeadline;
-  TextStyle pageSubtitle;
-  TextStyle boxHeadline;
-  TextStyle pointElementPrimary;
-  TextStyle pointElementSecondary;
-  TextStyle infoBoxText;
-  TextStyle infoBoxTextContrast;
-  TextStyle buttonText;
-  TextStyle input;
-  TextStyle tab;
-  TextStyle alertDialogHeader;
-  TextStyle alertDialogDescription;
-  TextStyle settingsSubMenu;
-  TextStyle settingsSubMenuDescription;
+class AppColors {
+  Color primary;
+  Color contrast;
+  Color contrast07;
+  Color background;
+  Color secondaryBackground;
 
-  TextStyles({
-    required this.color,
-    required this.contrastColor,
-    required this.pageHeadline,
-    required this.pageSubtitle,
-    required this.boxHeadline,
-    required this.pointElementPrimary,
-    required this.pointElementSecondary,
-    required this.infoBoxText,
-    required this.infoBoxTextContrast,
-    required this.buttonText,
-    required this.input,
-    required this.tab,
-    required this.alertDialogHeader,
-    required this.alertDialogDescription,
-    required this.settingsSubMenu,
-    required this.settingsSubMenuDescription
+  Color text;
+  Color text09;
+  Color text08;
+  Color text07;
+  Color text06;
+  Color text05;
+
+  AppColors({
+    required this.primary,
+    required this.contrast,
+    required this.contrast07,
+    required this.background,
+    required this.secondaryBackground,
+    required this.text,
+    required this.text09,
+    required this.text08,
+    required this.text07,
+    required this.text06,
+    required this.text05
   });
+}
+
+class TextStyles {
+  TextStyle get pageHeadline =>
+      TextStyle(fontWeight: FontWeight.w800, fontSize:36.0, height: 1, color: AppDesign.colors.text);
+  TextStyle get pageSubtitle =>
+      TextStyle(fontWeight: FontWeight.w600, fontSize:18.0, height: 1, color: AppDesign.colors.text08);
+  TextStyle get boxHeadline =>
+      TextStyle(fontWeight: FontWeight.w600, fontSize:19.0, height: 1, color: AppDesign.colors.text);
+  TextStyle get pointElementPrimary =>
+      TextStyle(fontWeight: FontWeight.w400, fontSize:15.0,height: 1, color: AppDesign.colors.text08);
+  TextStyle get pointElementSecondary =>
+      TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: AppDesign.colors.text07);
+  TextStyle get infoBoxText =>
+      TextStyle(fontWeight: FontWeight.w500, fontSize:15.0, color: AppDesign.colors.text);
+  TextStyle get buttonText =>
+      TextStyle(fontWeight: FontWeight.w600, fontSize:17.0, color: AppDesign.colors.contrast);
+  TextStyle get input =>
+      TextStyle(fontWeight: FontWeight.w400, fontSize:16.0, height: 1, color: AppDesign.colors.text09);
+  TextStyle get tab =>
+      TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0, height: 1.5, fontFamily: "Inter", color: AppDesign.colors.text);
+  TextStyle get alertDialogHeader =>
+      TextStyle(fontWeight: FontWeight.w600, fontSize:22.0, color: AppDesign.colors.text);
+  TextStyle get alertDialogDescription =>
+      TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: AppDesign.colors.text07);
+  TextStyle get settingsSubMenu =>
+      TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1.1, color: AppDesign.colors.text09);
+  TextStyle get settingsSubMenuDescription =>
+      TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: AppDesign.colors.text08);
 }
 
 class BoxStyle {
   BorderRadius borderRadius = BorderRadius.circular(10);
   BorderRadius inputBorderRadius = BorderRadius.circular(5);
   BoxShadow boxShadow;
-  Color backgroundColor;
 
   BoxStyle({
     required this.borderRadius,
-    required this.backgroundColor,
     required this.boxShadow
   });
 }
@@ -73,50 +89,47 @@ DesignPackage generateDesign(
     Color textColor,
     Color contrastColor
   ){
-  Color textColor09 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.9), backgroundColor);
-  Color textColor08 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.8), backgroundColor);
-  Color textColor07 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.7), backgroundColor);
+  Color text09 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.9), backgroundColor);
+  Color text08 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.8), backgroundColor);
+  Color text07 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.7), backgroundColor);
+  Color text06 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.6), backgroundColor);
+  Color text05 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.5), backgroundColor);
+
+  Color contrast07 = contrastColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(contrastColor.withOpacity(0.7), backgroundColor);
 
   return DesignPackage(
+    colors: AppColors(
+      primary: primaryColor,
+      contrast: contrastColor,
+      contrast07: contrast07,
+      background: backgroundColor,
+      secondaryBackground: boxBackground,
+      text: textColor,
+      text09: text09,
+      text08: text08,
+      text07: text07,
+      text06: text06,
+      text05: text05
+    ),
+    themeData: ThemeData(
+      brightness: backgroundColor.computeLuminance() < 0.5 ? Brightness.dark : Brightness.light,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      cardColor: boxBackground,
+      visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
+      primarySwatch: createMaterialColor(primaryColor),
       primaryColor: primaryColor,
-      themeData: ThemeData(
-        brightness: backgroundColor.computeLuminance() < 0.5 ? Brightness.dark : Brightness.light,
-        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        cardColor: boxBackground,
-        visualDensity: const VisualDensity(horizontal: 0, vertical: 0),
-        primarySwatch: createMaterialColor(primaryColor),
-        primaryColor: primaryColor,
-        accentColor: primaryColor,
-        scaffoldBackgroundColor: backgroundColor,
-        fontFamily: "Inter",
-      ),
-      textStyles: TextStyles(
-          color: textColor,
-          contrastColor: contrastColor,
-          pageHeadline: TextStyle(fontWeight: FontWeight.w800, fontSize:36.0, height: 1, color: textColor),
-          pageSubtitle: TextStyle(fontWeight: FontWeight.w600, fontSize:18.0, height: 1, color: textColor08),
-          boxHeadline: TextStyle(fontWeight: FontWeight.w600, fontSize:19.0, height: 1, color: textColor),
-          pointElementPrimary: TextStyle(fontWeight: FontWeight.w400, fontSize:15.0,height: 1, color: textColor08),
-          pointElementSecondary: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: textColor07),
-          infoBoxText: TextStyle(fontWeight: FontWeight.w500, fontSize:15.0, color: textColor),
-          infoBoxTextContrast: TextStyle(fontWeight: FontWeight.w500, height: 1.3, fontSize:15.0, color: contrastColor),
-          buttonText: TextStyle(fontWeight: FontWeight.w600, fontSize:17.0, color: contrastColor),
-          input: TextStyle(fontWeight: FontWeight.w400, fontSize:16.0, height: 1, color: textColor09),
-          tab: TextStyle(fontWeight: FontWeight.w600, fontSize: 17.0, height: 1.5, color: textColor, fontFamily: "Inter"),
-          alertDialogHeader: TextStyle(fontWeight: FontWeight.w600, fontSize:22.0, color: textColor),
-          alertDialogDescription: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: textColor07),
-          settingsSubMenu: TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1.1, color: textColor09),
-          settingsSubMenuDescription: TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: textColor07)
-      ),
-      boxStyle: BoxStyle(
-        borderRadius: BorderRadius.circular(10),
-        backgroundColor: boxBackground,
-        boxShadow: BoxShadow(
-            color: const Color(0xFF303540).withOpacity(0.2),
-            blurRadius: 5,
-            offset: const Offset(0, 1)
-        )
+      accentColor: primaryColor,
+      scaffoldBackgroundColor: backgroundColor,
+      fontFamily: "Inter",
+    ),
+    boxStyle: BoxStyle(
+      borderRadius: BorderRadius.circular(10),
+      boxShadow: BoxShadow(
+          color: const Color(0xFF303540).withOpacity(0.2),
+          blurRadius: 5,
+          offset: const Offset(0, 1)
       )
+    )
   );
 }
 

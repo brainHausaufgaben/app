@@ -38,7 +38,7 @@ class _BrainTextField extends State<BrainTextField> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+        borderRadius: AppDesign.boxStyle.inputBorderRadius
       ),
       clipBehavior: Clip.hardEdge,
       child: Stack(
@@ -48,20 +48,20 @@ class _BrainTextField extends State<BrainTextField> {
             maxLines: widget.maxLines ?? 5,
             autocorrect: true,
             controller: widget.controller,
-            style: AppDesign.current.textStyles.input,
+            style: AppDesign.textStyles.input,
             decoration: InputDecoration (
               filled: true,
               enabledBorder: UnderlineInputBorder(
-                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+                  borderRadius: AppDesign.boxStyle.inputBorderRadius,
                   borderSide: BorderSide(
                       width: 4,
-                      color: AppDesign.current.textStyles.color
+                      color: AppDesign.colors.text
                   )
               ),
-              fillColor: AppDesign.current.boxStyle.backgroundColor,
+              fillColor: AppDesign.colors.secondaryBackground,
               label: Text(
                   widget.placeholder,
-                  style: AppDesign.current.textStyles.input
+                  style: AppDesign.textStyles.input
               ),
             ),
             inputFormatters: widget.maxLength != null ? [
@@ -75,7 +75,7 @@ class _BrainTextField extends State<BrainTextField> {
             child: Text(
                 "${widget.controller.text.length.toString()}/${widget.maxLength}",
                 style: TextStyle(
-                    color: AppDesign.current.textStyles.color,
+                    color: AppDesign.colors.text,
                     fontSize: 10
                 )
             ),
@@ -150,7 +150,7 @@ class _BrainDropdown extends State<BrainDropdown> {
       buttons.add(
           Container(
             decoration: BoxDecoration(
-              borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+              borderRadius: AppDesign.boxStyle.inputBorderRadius,
             ),
             clipBehavior: Clip.hardEdge,
             child: TextButton(
@@ -159,7 +159,7 @@ class _BrainDropdown extends State<BrainDropdown> {
                 widget.onChanged(widget.items[i].value);
               },
               style: TextButton.styleFrom(
-                  backgroundColor: widget.items[i].value == widget.currentValue ? AppDesign.current.themeData.scaffoldBackgroundColor : Colors.transparent
+                  backgroundColor: widget.items[i].value == widget.currentValue ? AppDesign.colors.background : Colors.transparent
               ),
               child: widget.items[i].child,
             )
@@ -180,7 +180,7 @@ class _BrainDropdown extends State<BrainDropdown> {
   @override
   Widget build(BuildContext context) {
     return BrainIconButton(
-      child: getCorrespondingChild() ?? Text(widget.defaultText, style: AppDesign.current.textStyles.input),
+      child: getCorrespondingChild() ?? Text(widget.defaultText, style: AppDesign.textStyles.input),
       icon: isOpen ? Icons.arrow_drop_up_outlined : Icons.arrow_drop_down_outlined,
       action: () {
         setState(() => isOpen = true);
@@ -202,12 +202,12 @@ class _BrainDropdown extends State<BrainDropdown> {
                     ],
                   )
                 ],
-                backgroundColor: AppDesign.current.boxStyle.backgroundColor,
-                title: Text(widget.dialogTitle, style: AppDesign.current.textStyles.alertDialogHeader),
+                backgroundColor: AppDesign.colors.secondaryBackground,
+                title: Text(widget.dialogTitle, style: AppDesign.textStyles.alertDialogHeader),
                 content: widget.scrollableDialog ? Container(
                   constraints: const BoxConstraints(maxHeight: 400),
                   child: ScrollShadow(
-                    color: AppDesign.current.themeData.scaffoldBackgroundColor.withOpacity(0.8),
+                    color: AppDesign.colors.background.withOpacity(0.8),
                     curve: Curves.ease,
                     size: 15,
                     child: SingleChildScrollView(
@@ -264,21 +264,21 @@ class BrainDateButton extends StatelessWidget {
       lastDate: DateTime(DateTime.now().year + 1),
       initialDatePickerMode: DatePickerMode.day,
       styleDatePicker: MaterialRoundedDatePickerStyle(
-        backgroundHeader: AppDesign.current.primaryColor,
+        backgroundHeader: AppDesign.colors.primary,
         paddingMonthHeader: const EdgeInsets.all(11),
-        backgroundPicker: AppDesign.current.boxStyle.backgroundColor,
-        textStyleDayOnCalendar: TextStyle(color: AppDesign.current.textStyles.color),
-        textStyleDayOnCalendarDisabled: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-        textStyleMonthYearHeader: TextStyle(color: AppDesign.current.textStyles.color),
-        textStyleDayHeader: TextStyle(color: AppDesign.current.textStyles.color),
-        colorArrowNext: AppDesign.current.textStyles.color,
-        colorArrowPrevious: AppDesign.current.textStyles.color,
+        backgroundPicker: AppDesign.colors.secondaryBackground,
+        textStyleDayOnCalendar: TextStyle(color: AppDesign.colors.text),
+        textStyleDayOnCalendarDisabled: TextStyle(color: AppDesign.colors.text05),
+        textStyleMonthYearHeader: TextStyle(color: AppDesign.colors.text),
+        textStyleDayHeader: TextStyle(color: AppDesign.colors.text),
+        colorArrowNext: AppDesign.colors.text,
+        colorArrowPrevious: AppDesign.colors.text,
       ),
       builderDay: (DateTime dateTime, bool isCurrentDay, bool isSelected, TextStyle defaultTextStyle) {
         // Default
         if (isSelected) {
           return Container(
-              decoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
+              decoration: BoxDecoration(color: AppDesign.colors.primary, shape: BoxShape.circle),
               child: Center(
                   child: Text(
                     dateTime.day.toString(),
@@ -324,7 +324,7 @@ class BrainDateButton extends StatelessWidget {
           Container(
             constraints: const BoxConstraints(maxWidth: 1000, maxHeight: 600),
             child: Theme(
-              data: AppDesign.current.themeData,
+              data: AppDesign.themeData,
               child: getPicker()
             )
           )
@@ -332,7 +332,7 @@ class BrainDateButton extends StatelessWidget {
       );
     } else {
       return Theme(
-        data: AppDesign.current.themeData,
+        data: AppDesign.themeData,
         child: getPicker()
       );
     }
@@ -341,7 +341,7 @@ class BrainDateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BrainIconButton(
-      child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.current.textStyles.input),
+      child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.textStyles.input),
       icon: Icons.date_range,
       action: () {
         Future<DateTime?> selectedDate = showDialog(
@@ -373,14 +373,14 @@ class BrainIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+        borderRadius: AppDesign.boxStyle.inputBorderRadius
       ),
       clipBehavior: Clip.antiAlias,
       child: TextButton(
         onPressed: action,
         style: TextButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
-          backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+          backgroundColor: AppDesign.colors.secondaryBackground,
           minimumSize: Size.zero
         ),
         child: Flex(
@@ -389,7 +389,7 @@ class BrainIconButton extends StatelessWidget {
             if (child != null) Expanded(
               child: child!
             ),
-            Icon(icon, color: AppDesign.current.textStyles.color, size: dense ? 20 : 24),
+            Icon(icon, color: AppDesign.colors.text, size: dense ? 20 : 24),
           ],
         ),
       ),
@@ -431,8 +431,8 @@ class BrainColorPicker extends StatelessWidget {
           context: context,
           builder: (_) {
             return AlertDialog(
-              title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
-              backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+              title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.colors.text)),
+              backgroundColor: AppDesign.colors.secondaryBackground,
               content: MaterialPicker(
                   pickerColor: pickerColor,
                   onColorChanged: onColorSelect
@@ -443,12 +443,12 @@ class BrainColorPicker extends StatelessWidget {
       ),
     ) : TextButton(
       style: TextButton.styleFrom(
-        primary: AppDesign.current.primaryColor,
+        primary: AppDesign.colors.primary,
       ),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
-          color: AppDesign.current.boxStyle.backgroundColor
+          borderRadius: AppDesign.boxStyle.inputBorderRadius,
+          color: AppDesign.colors.secondaryBackground
         ),
         padding: EdgeInsets.symmetric(vertical: 14, horizontal: asIconButton ? 14 : 12),
         child: Row(
@@ -457,13 +457,13 @@ class BrainColorPicker extends StatelessWidget {
               height: 25.0,
               width: 25.0,
               decoration: BoxDecoration(
-                  borderRadius: AppDesign.current.boxStyle.inputBorderRadius,
+                  borderRadius: AppDesign.boxStyle.inputBorderRadius,
                   color: pickerColor
               ),
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text("Farbe", style: AppDesign.current.textStyles.input),
+              child: Text("Farbe", style: AppDesign.textStyles.input),
             )
           ],
         ),
@@ -472,8 +472,8 @@ class BrainColorPicker extends StatelessWidget {
         context: context,
         builder: (_) {
           return AlertDialog(
-            title: Text("Farbe auswählen", style: TextStyle(color: AppDesign.current.textStyles.color)),
-            backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+            title: Text("Farbe auswählen", style: AppDesign.textStyles.alertDialogHeader),
+            backgroundColor: AppDesign.colors.secondaryBackground,
             content: MaterialPicker(
               pickerColor: pickerColor,
               onColorChanged: onColorSelect
@@ -513,21 +513,21 @@ class SettingsNavigatorButton extends StatelessWidget {
               children: [
                 Text(
                   text,
-                  style: activated ? AppDesign.current.textStyles.settingsSubMenu
-                      : AppDesign.current.textStyles.settingsSubMenu.copyWith(color: AppDesign.current.textStyles.color.withOpacity(0.5))
+                  style: activated ? AppDesign.textStyles.settingsSubMenu
+                      : AppDesign.textStyles.settingsSubMenu.copyWith(color: AppDesign.colors.text05)
                 ),
                 if (description != null) Text(
                   description!,
-                  style: activated ? AppDesign.current.textStyles.settingsSubMenuDescription
-                      : AppDesign.current.textStyles.settingsSubMenuDescription.copyWith(color: AppDesign.current.textStyles.color.withOpacity(0.5))
+                  style: activated ? AppDesign.textStyles.settingsSubMenuDescription
+                      : AppDesign.textStyles.settingsSubMenuDescription.copyWith(color: AppDesign.colors.text05)
                 )
               ],
             ),
           ),
           Icon(
             Icons.arrow_forward_ios_rounded,
-            color: activated ? AppDesign.current.textStyles.color
-                             : AppDesign.current.textStyles.color.withOpacity(0.5),
+            color: activated ? AppDesign.colors.text
+                             : AppDesign.colors.text05,
             size: 20
           )
         ],
@@ -556,8 +556,8 @@ class SettingsLinkButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
-          Icon(Icons.open_in_browser, color: AppDesign.current.textStyles.color, size: 20)
+          Text(text, style: AppDesign.textStyles.settingsSubMenu),
+          Icon(Icons.open_in_browser, color: AppDesign.colors.text, size: 20)
         ],
       ),
     );
@@ -599,8 +599,8 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(widget.text, style: AppDesign.current.textStyles.settingsSubMenu),
-                if (widget.description != null) Text(widget.description!, style: AppDesign.current.textStyles.settingsSubMenuDescription)
+                Text(widget.text, style: AppDesign.textStyles.settingsSubMenu),
+                if (widget.description != null) Text(widget.description!, style: AppDesign.textStyles.settingsSubMenuDescription)
               ],
             ),
           ),
@@ -611,7 +611,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               border: Border.all(
-                color: AppDesign.current.textStyles.color,
+                color: AppDesign.colors.text,
                 width: 2
               )
             ),
@@ -620,7 +620,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
                   width: 15,
                   height: 15,
                   decoration: BoxDecoration(
-                    color: widget.state ? AppDesign.current.textStyles.color : Colors.transparent,
+                    color: widget.state ? AppDesign.colors.text : Colors.transparent,
                     borderRadius: BorderRadius.circular(3)
                   ),
               ),
@@ -663,19 +663,19 @@ class SettingsTimePicker extends StatelessWidget {
         direction: Axis.horizontal,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text, style: AppDesign.current.textStyles.settingsSubMenu),
+          Text(text, style: AppDesign.textStyles.settingsSubMenu),
           const Spacer(),
           Container(
             padding: const EdgeInsets.only(left: 6),
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
-                    color: AppDesign.current.textStyles.settingsSubMenuDescription.color!,
+                    color: AppDesign.colors.text08,
                     width: 1.5
                 )
               )
             ),
-            child: Text("${currentTime.format(context)} Uhr", style: AppDesign.current.textStyles.settingsSubMenuDescription),
+            child: Text("${currentTime.format(context)} Uhr", style: AppDesign.textStyles.settingsSubMenuDescription),
           )
         ],
       ),
@@ -701,7 +701,7 @@ class SettingsTextfield extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (text != null) Text(text!, style: AppDesign.current.textStyles.settingsSubMenu),
+          if (text != null) Text(text!, style: AppDesign.textStyles.settingsSubMenu),
           Flex(
             direction: Axis.horizontal,
             children: [
@@ -714,13 +714,13 @@ class SettingsTextfield extends StatelessWidget {
                   clipBehavior: Clip.antiAlias,
                   child: TextField(
                     controller: controller,
-                    style: AppDesign.current.textStyles.input,
+                    style: AppDesign.textStyles.input,
                     decoration: InputDecoration(
                         contentPadding: const EdgeInsets.all(14),
                         isCollapsed: true,
                         border: InputBorder.none,
                         filled: true,
-                        fillColor: AppDesign.current.themeData.scaffoldBackgroundColor
+                        fillColor: AppDesign.colors.background
                     ),
                   ),
                 ),
@@ -729,8 +729,8 @@ class SettingsTextfield extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    backgroundColor: AppDesign.current.primaryColor,
-                    primary: AppDesign.current.textStyles.contrastColor,
+                    backgroundColor: AppDesign.colors.primary,
+                    primary: AppDesign.colors.contrast,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13)
                   ),
                   onPressed: () {
@@ -760,8 +760,8 @@ class SettingsEntry extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
       decoration: BoxDecoration(
-        color: AppDesign.current.boxStyle.backgroundColor,
-        borderRadius: AppDesign.current.boxStyle.borderRadius
+        color: AppDesign.colors.secondaryBackground,
+        borderRadius: AppDesign.boxStyle.borderRadius
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -787,18 +787,18 @@ class BrainMenuButton extends StatefulWidget {
 
   SpeedDialChild getHomeworkMenu(BuildContext context) {
     return SpeedDialChild(
-        backgroundColor: AppDesign.current.primaryColor,
-        foregroundColor: AppDesign.current.textStyles.contrastColor,
-        labelBackgroundColor: AppDesign.current.primaryColor,
-        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        backgroundColor: AppDesign.colors.primary,
+        foregroundColor: AppDesign.colors.contrast,
+        labelBackgroundColor: AppDesign.colors.primary,
+        labelStyle: TextStyle(color: AppDesign.colors.contrast),
         labelWidget: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
           margin: const EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
-              color: AppDesign.current.primaryColor,
-              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+              color: AppDesign.colors.primary,
+              borderRadius: AppDesign.boxStyle.inputBorderRadius
           ),
-          child: Text("Neue Hausaufgabe", style: AppDesign.current.textStyles.pointElementSecondary.copyWith(color: AppDesign.current.textStyles.contrastColor)),
+          child: Text("Neue Hausaufgabe", style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)),
         ),
         child: const Icon(Icons.description_rounded),
         onTap: () => NavigationHelper.pushNamed(context, "homework")
@@ -807,18 +807,18 @@ class BrainMenuButton extends StatefulWidget {
 
   SpeedDialChild getEventMenu(BuildContext context) {
     return SpeedDialChild(
-        backgroundColor: AppDesign.current.primaryColor,
-        foregroundColor: AppDesign.current.textStyles.contrastColor,
-        labelBackgroundColor: AppDesign.current.primaryColor,
-        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        backgroundColor: AppDesign.colors.primary,
+        foregroundColor: AppDesign.colors.contrast,
+        labelBackgroundColor: AppDesign.colors.primary,
+        labelStyle: TextStyle(color: AppDesign.colors.contrast),
         labelWidget: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
           margin: const EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
-              color: AppDesign.current.primaryColor,
-              borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+            color: AppDesign.colors.primary,
+            borderRadius: AppDesign.boxStyle.inputBorderRadius
           ),
-          child: Text("Neues Event", style: AppDesign.current.textStyles.pointElementSecondary.copyWith(color: AppDesign.current.textStyles.contrastColor)),
+          child: Text("Neues Event", style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)),
         ),
         child: const Icon(Icons.schedule_rounded),
         onTap: () => NavigationHelper.pushNamed(context, "addEventPage")
@@ -828,18 +828,18 @@ class BrainMenuButton extends StatefulWidget {
 
   SpeedDialChild getGradesMenu(BuildContext context) {
     return SpeedDialChild(
-        backgroundColor: AppDesign.current.primaryColor,
-        foregroundColor: AppDesign.current.textStyles.contrastColor,
-        labelBackgroundColor: AppDesign.current.primaryColor,
-        labelStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+        backgroundColor: AppDesign.colors.primary,
+        foregroundColor: AppDesign.colors.contrast,
+        labelBackgroundColor: AppDesign.colors.primary,
+        labelStyle: TextStyle(color: AppDesign.colors.contrast),
         labelWidget: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
           margin: const EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
-            color: AppDesign.current.primaryColor,
-            borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+            color: AppDesign.colors.primary,
+            borderRadius: AppDesign.boxStyle.inputBorderRadius
           ),
-          child: Text("Neue Note", style: AppDesign.current.textStyles.pointElementSecondary.copyWith(color: AppDesign.current.textStyles.contrastColor)),
+          child: Text("Neue Note", style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)),
         ),
         child: const Icon(Icons.grading),
         onTap: () => NavigationHelper.pushNamed(context, "gradesPage")
@@ -881,7 +881,7 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
             parent: controller,
             curve: Curves.easeInOutBack
         )),
-        child: Icon(widget.icon, color: AppDesign.current.textStyles.contrastColor)
+        child: Icon(widget.icon, color: AppDesign.colors.contrast)
       ),
       children: widget.withEntries ? [
         widget.getHomeworkMenu(context),
@@ -894,7 +894,7 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),
       animationDuration: const Duration(milliseconds: 300),
-      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: TextStyle(letterSpacing: 0.5, color: AppDesign.current.textStyles.contrastColor)) : null,
+      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: TextStyle(letterSpacing: 0.5, color: AppDesign.colors.contrast)) : null,
     );
   }
 }

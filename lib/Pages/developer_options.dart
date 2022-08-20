@@ -85,21 +85,21 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                       builder: (context) {
                         return AlertDialog(
                           title: const Text("Willst du die App wirklich zurücksetzen?"),
-                          backgroundColor: AppDesign.current.boxStyle.backgroundColor,
+                          backgroundColor: AppDesign.colors.secondaryBackground,
                           content: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
                                 "Diese Aktion wird alle Einstellungen sowie dein Stundenplan, deine Noten etc. löschen",
-                                style: AppDesign.current.textStyles.alertDialogDescription,
+                                style: AppDesign.textStyles.alertDialogDescription,
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(top: 20, bottom: 5),
                                 child: TextButton(
                                     style: TextButton.styleFrom(
-                                        backgroundColor: AppDesign.current.primaryColor,
-                                        primary: AppDesign.current.textStyles.contrastColor,
+                                        backgroundColor: AppDesign.colors.primary,
+                                        primary: AppDesign.colors.contrast,
                                         padding: const EdgeInsets.symmetric(vertical: 12)
                                     ),
                                     onPressed: () => Navigator.of(context).pop(),
@@ -107,18 +107,18 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                                 ),
                               ),
                               TextButton(
-                                  style: TextButton.styleFrom(
-                                      side: BorderSide(color: AppDesign.current.primaryColor, width: 2),
-                                      primary: AppDesign.current.primaryColor,
-                                      padding: const EdgeInsets.symmetric(vertical: 12)
-                                  ),
-                                  onPressed: () {
-                                    BrainApp.clearPreferences();
-                                    //TODO: Local storage leer machen (sese)
-                                    Navigator.of(context).pop();
-                                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                                  },
-                                  child: const Text("Fortfahren")
+                                style: TextButton.styleFrom(
+                                    side: BorderSide(color: AppDesign.colors.primary, width: 2),
+                                    primary: AppDesign.colors.primary,
+                                    padding: const EdgeInsets.symmetric(vertical: 12)
+                                ),
+                                onPressed: () {
+                                  BrainApp.clearPreferences();
+                                  //TODO: Local storage leer machen (sese)
+                                  Navigator.of(context).pop();
+                                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                                },
+                                child: const Text("Fortfahren")
                               )
                             ]
                           )
@@ -126,11 +126,11 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                       }
                     );
                   },
-                  child: Text("App zurücksetzen", style: AppDesign.current.textStyles.buttonText.copyWith(color: const Color(0xFFB40000)))
-              ),
+                  child: Text("App zurücksetzen", style: AppDesign.textStyles.buttonText.copyWith(color: const Color(0xFFB40000)))
+              )
             )
-          ],
-        ),
+          ]
+        )
       ),
       child: Wrap(
         runSpacing: 10,

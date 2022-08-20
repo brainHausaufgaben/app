@@ -26,14 +26,14 @@ class BrainInfobox extends StatelessWidget {
         minHeight: 150
       ),
       decoration: BoxDecoration(
-        borderRadius: AppDesign.current.boxStyle.borderRadius,
+        borderRadius: AppDesign.boxStyle.borderRadius,
       ),
       clipBehavior: Clip.antiAlias,
       child: TextButton(
         style: TextButton.styleFrom(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.all(10),
-            backgroundColor: isPrimary ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor
+            backgroundColor: isPrimary ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground
         ),
         onPressed: action,
         child: Column(
@@ -44,14 +44,14 @@ class BrainInfobox extends StatelessWidget {
               children: [
                 Icon(
                     icon,
-                    color: isPrimary ? AppDesign.current.textStyles.contrastColor
-                        : AppDesign.current.textStyles.color,
+                    color: isPrimary ? AppDesign.colors.contrast
+                        : AppDesign.colors.text,
                     size: 28
                 ),
                 if (action != null) Icon(
                   Icons.chevron_right,
-                  color: isPrimary ? AppDesign.current.textStyles.contrastColor
-                      : AppDesign.current.textStyles.color,
+                  color: isPrimary ? AppDesign.colors.contrast
+                      : AppDesign.colors.text,
                 )
               ],
             ),
@@ -60,8 +60,8 @@ class BrainInfobox extends StatelessWidget {
               child: Text(
                   shortDescription,
                   style: TextStyle(
-                      color: isPrimary ? AppDesign.current.textStyles.contrastColor.withOpacity(0.75)
-                          : AppDesign.current.textStyles.color.withOpacity(0.75),
+                      color: isPrimary ? AppDesign.colors.contrast07
+                          : AppDesign.colors.text07,
                       fontSize: 13,
                       fontWeight: FontWeight.w500,
                       letterSpacing: 1.7
@@ -72,8 +72,8 @@ class BrainInfobox extends StatelessWidget {
                 title,
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
-                style: isPrimary ? AppDesign.current.textStyles.infoBoxTextContrast
-                    : AppDesign.current.textStyles.infoBoxText
+                style: isPrimary ? AppDesign.textStyles.infoBoxText.copyWith(color: AppDesign.colors.contrast)
+                    : AppDesign.textStyles.infoBoxText
             )
           ]
         )

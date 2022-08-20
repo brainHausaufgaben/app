@@ -72,14 +72,14 @@ class BrainDismissible extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(5),
-                    color: AppDesign.current.themeData.scaffoldBackgroundColor,
+                    color: AppDesign.colors.background,
                     boxShadow: [
-                      AppDesign.current.boxStyle.boxShadow
+                      AppDesign.boxStyle.boxShadow
                     ]
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text(homework.name, style: AppDesign.current.textStyles.pointElementSecondary),
+                  child: Text(homework.name, style: AppDesign.textStyles.pointElementSecondary),
                 ),
               )
             ],

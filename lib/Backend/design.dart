@@ -3,29 +3,42 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class AppDesign {
-  static DesignPackage current = MonochromeDesign().lightVariant;
+  static AppColors colors = MonochromeDesign().lightVariant.colors;
+
+  static TextStyles textStyles = TextStyles();
+  static ThemeData themeData = MonochromeDesign().lightVariant.themeData;
+  static BoxStyle boxStyle = MonochromeDesign().lightVariant.boxStyle;
+
   static double breakPointWidth = 900;
 
   static void toggleTheme(String theme) {
-    current = BrainApp.preferences["darkMode"]
+    DesignPackage package = BrainApp.preferences["darkMode"]
         ? Design.allDesigns[theme]!.darkVariant
         : Design.allDesigns[theme]!.lightVariant;
+    setAttributes(package);
 
     BrainApp.updatePreference("design", theme);
     BrainApp.notifier.notifyOfChanges();
   }
 
   static void setFromPackage(DesignPackage package) {
-    current = package;
+    setAttributes(package);
     BrainApp.notifier.notifyOfChanges();
+  }
+
+  static void setAttributes(DesignPackage package) {
+    colors = package.colors;
+    boxStyle = package.boxStyle;
+    themeData = package.themeData;
   }
 
   static void toggleDarkMode() {
     BrainApp.updatePreference("darkMode", !BrainApp.preferences["darkMode"]);
 
-    current = BrainApp.preferences["darkMode"]
+    DesignPackage package = BrainApp.preferences["darkMode"]
         ? Design.allDesigns[BrainApp.preferences["design"]]!.darkVariant
         : Design.allDesigns[BrainApp.preferences["design"]]!.lightVariant;
+    setAttributes(package);
 
     BrainApp.notifier.notifyOfChanges();
   }

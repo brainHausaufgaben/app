@@ -18,7 +18,7 @@ class HeadlineWrap extends StatelessWidget {
         children: [
           Text(
               headline,
-              style: AppDesign.current.textStyles.boxHeadline
+              style: AppDesign.textStyles.boxHeadline
           ),
           Padding(
               padding: const EdgeInsets.only(top: 8),

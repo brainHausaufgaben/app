@@ -128,7 +128,10 @@ class _HomeworkPage extends State<HomeworkPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Text(widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
+                      child: Text(
+                        widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten",
+                        style: AppDesign.textStyles.buttonText
+                      ),
                     )
                 ),
               )

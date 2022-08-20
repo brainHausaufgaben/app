@@ -20,14 +20,14 @@ class _BoxState extends  State<Box>{
       children: [
         if (widget.headline != null) Text(
           widget.headline!,
-          style: AppDesign.current.textStyles.boxHeadline
+          style: AppDesign.textStyles.boxHeadline
         ),
         Padding(
           padding: widget.headline != null ? const EdgeInsets.only(top: 8) : const EdgeInsets.only(),
           child: Container(
             decoration: BoxDecoration(
-              color: AppDesign.current.boxStyle.backgroundColor,
-              borderRadius: AppDesign.current.boxStyle.borderRadius,
+              color: AppDesign.colors.secondaryBackground,
+              borderRadius: AppDesign.boxStyle.borderRadius,
             ),
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
             child: widget.child

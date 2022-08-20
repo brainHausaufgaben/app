@@ -47,7 +47,10 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                 SizedBox(
                   width: 75,
                   child: Center(
-                    child: Text(TimeTable.lessonTimes[i].startTime.format(context), style: AppDesign.current.textStyles.pointElementSecondary),
+                    child: Text(
+                      TimeTable.lessonTimes[i].startTime.format(context),
+                      style: AppDesign.textStyles.pointElementSecondary
+                    ),
                   ),
                 ),
                 Expanded(
@@ -115,16 +118,16 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             maxWidth: 600
           ),
           decoration: BoxDecoration(
-            color: AppDesign.current.boxStyle.backgroundColor,
+            color: AppDesign.colors.secondaryBackground,
             borderRadius: BorderRadius.circular(100)
           ),
           clipBehavior: Clip.antiAlias,
           child: TabBar(
-            labelStyle: AppDesign.current.textStyles.tab,
-            labelColor: AppDesign.current.textStyles.contrastColor,
-            unselectedLabelColor: AppDesign.current.textStyles.color,
+            labelStyle: AppDesign.textStyles.tab,
+            labelColor: AppDesign.colors.contrast,
+            unselectedLabelColor: AppDesign.colors.text,
             indicator: BoxDecoration(
-              color: AppDesign.current.primaryColor,
+              color: AppDesign.colors.primary,
               borderRadius: BorderRadius.circular(100)
             ),
             tabs: const [

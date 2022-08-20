@@ -24,8 +24,8 @@ class _CustomSidebar extends State<CustomSidebar> {
       width: 300,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: AppDesign.current.boxStyle.backgroundColor,
-          borderRadius: AppDesign.current.boxStyle.borderRadius,
+          color: AppDesign.colors.secondaryBackground,
+          borderRadius: AppDesign.boxStyle.borderRadius,
 
       ),
       child: Column(
@@ -38,7 +38,7 @@ class _CustomSidebar extends State<CustomSidebar> {
               style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w800,
-                  color: AppDesign.current.textStyles.color,
+                  color: AppDesign.colors.text,
                   height: 1.1
               ),
               textAlign: TextAlign.center,
@@ -91,7 +91,7 @@ class _CustomSidebar extends State<CustomSidebar> {
             Divider(
               height: 30,
               thickness: 2,
-              color: AppDesign.current.textStyles.color.withOpacity(0.1),
+              color: AppDesign.colors.text.withOpacity(0.1),
               indent: 30,
               endIndent: 30,
             ),
@@ -99,8 +99,8 @@ class _CustomSidebar extends State<CustomSidebar> {
                 margin: const EdgeInsets.only(top: 10),
                 clipBehavior: Clip.antiAlias,
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppDesign.current.textStyles.color, width: 2),
-                    borderRadius: AppDesign.current.boxStyle.inputBorderRadius
+                    border: Border.all(color: AppDesign.colors.text, width: 2),
+                    borderRadius: AppDesign.boxStyle.inputBorderRadius
                 ),
                 child: TextButton(
                     onPressed: () {
@@ -117,8 +117,8 @@ class _CustomSidebar extends State<CustomSidebar> {
                                   Container(
                                     constraints: const BoxConstraints(maxWidth: 400),
                                     child: AlertDialog(
-                                      backgroundColor: AppDesign.current.primaryColor,
-                                      title: Text("Lade die Brain App auf deinem Android Gerät herunter", style: TextStyle(color: AppDesign.current.textStyles.contrastColor)),
+                                      backgroundColor: AppDesign.colors.primary,
+                                      title: Text("Lade die Brain App auf deinem Android Gerät herunter", style: TextStyle(color: AppDesign.colors.contrast)),
                                       content: const Center(
                                         child: Image(image: AssetImage("images/qr_code.png"), width: 200, height: 200),
                                       ),
@@ -138,12 +138,12 @@ class _CustomSidebar extends State<CustomSidebar> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("Herunterladen ", style: TextStyle(
-                              color: AppDesign.current.textStyles.color,
+                              color: AppDesign.colors.text,
                               fontSize: 16,
                               fontWeight: FontWeight.w600
                           )
                           ),
-                          Icon(Icons.phone_android_rounded, color: AppDesign.current.textStyles.color)
+                          Icon(Icons.phone_android_rounded, color: AppDesign.colors.text)
                         ]
                     )
                 )
@@ -176,7 +176,7 @@ class SideBarMenuEntry extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 200),
       decoration: BoxDecoration(
-        color: activated ? AppDesign.current.primaryColor : Colors.transparent,
+        color: activated ? AppDesign.colors.primary : Colors.transparent,
         borderRadius: BorderRadius.circular(9)
       ),
       clipBehavior: Clip.antiAlias,
@@ -188,13 +188,13 @@ class SideBarMenuEntry extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              child: Icon(icon, size: iconSize, color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color),
+              child: Icon(icon, size: iconSize, color: activated ? AppDesign.colors.contrast : AppDesign.colors.text),
               padding: const EdgeInsets.only(right: 10),
             ),
             Text(
                 title,
                 style: TextStyle(
-                    color: activated ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color,
+                    color: activated ? AppDesign.colors.contrast : AppDesign.colors.text,
                     fontSize: 16,
                     fontWeight: FontWeight.w600)
             ),

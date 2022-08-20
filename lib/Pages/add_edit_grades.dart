@@ -30,13 +30,16 @@ class _GradesPage extends State<GradesPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            backgroundColor: AppDesign.current.boxStyle.backgroundColor,
-            title: Text("Wähle eine Note"),
+            backgroundColor: AppDesign.colors.secondaryBackground,
+            title: Text(
+              "Wähle eine Note",
+              style: AppDesign.textStyles.alertDialogHeader,
+            ),
             content: StatefulBuilder(
                 builder: (context, setBuilderState) {
                   return NumberPicker(
                       selectedTextStyle: TextStyle(
-                        color: AppDesign.current.primaryColor,
+                        color: AppDesign.colors.primary,
                         fontWeight: FontWeight.w700
                       ),
                       value: widget.grade,
@@ -51,7 +54,7 @@ class _GradesPage extends State<GradesPage> {
 
             actions: [
               TextButton(
-                child: Text("Ok"),
+                child: const Text("Ok"),
                 onPressed: () {
                   setState(() {});
                   Navigator.of(context).pop();
@@ -97,7 +100,10 @@ class _GradesPage extends State<GradesPage> {
           runSpacing: 10,
           children: [
             BrainIconButton(
-              child: Text(widget.grade.toString(), style: AppDesign.current.textStyles.input),
+              child: Text(
+                widget.grade.toString(),
+                style: AppDesign.textStyles.input
+              ),
               icon: Icons.numbers,
               action: numberPickerDialog
             ),
@@ -118,15 +124,24 @@ class _GradesPage extends State<GradesPage> {
               items: [
                 BrainDropdownEntry(
                   value: GradeType.smallTest,
-                  child: Text("Ex", style: AppDesign.current.textStyles.input)
+                  child: Text(
+                    "Ex",
+                    style: AppDesign.textStyles.input
+                  )
                 ),
                 BrainDropdownEntry(
                   value: GradeType.bigTest,
-                  child: Text("Schulaufgabe", style: AppDesign.current.textStyles.input)
+                  child: Text(
+                    "Schulaufgabe",
+                    style: AppDesign.textStyles.input
+                  )
                 ),
                 BrainDropdownEntry(
                   value: GradeType.oralGrade,
-                  child: Text("Mündliche Note", style: AppDesign.current.textStyles.input)
+                  child: Text(
+                    "Mündliche Note",
+                    style: AppDesign.textStyles.input
+                  )
                 )
               ],
               onChanged: (newType) {
@@ -141,15 +156,24 @@ class _GradesPage extends State<GradesPage> {
               items: [
                 BrainDropdownEntry(
                     value: 1,
-                    child: Text("1. Semester", style: AppDesign.current.textStyles.input)
+                    child: Text(
+                      "1. Semester",
+                      style: AppDesign.textStyles.input
+                    )
                 ),
                 BrainDropdownEntry(
                     value: 2,
-                    child: Text("2. Semester", style: AppDesign.current.textStyles.input)
+                    child: Text(
+                      "2. Semester",
+                      style: AppDesign.textStyles.input
+                    )
                 ),
                 BrainDropdownEntry(
                     value: 3,
-                    child: Text("3. Semester", style: AppDesign.current.textStyles.input)
+                    child: Text(
+                        "3. Semester",
+                        style: AppDesign.textStyles.input
+                    )
                 ),
               ],
               onChanged: (newSemester) {
@@ -198,7 +222,10 @@ class _GradesPage extends State<GradesPage> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Text(widget.previousGrade == null ? "Hinzufügen" : "Bearbeiten", style: AppDesign.current.textStyles.buttonText),
+                      child: Text(
+                        widget.previousGrade == null ? "Hinzufügen" : "Bearbeiten",
+                        style: AppDesign.textStyles.buttonText
+                      ),
                     )
                 ),
               ),
@@ -212,7 +239,7 @@ class _GradesPage extends State<GradesPage> {
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Icon(Icons.delete_forever, color: AppDesign.current.textStyles.contrastColor),
+                        child: Icon(Icons.delete_forever, color: AppDesign.colors.contrast),
                       )
                   )
               )

@@ -89,7 +89,7 @@ class _GradeOverview extends State<GradeOverview>{
           child: PointElement(
             color: key.color,
             primaryText: key.name,
-            child: Text(value == -1.0 ? "Noch keine Noten" : "${value.toInt()} Punkte", style: AppDesign.current.textStyles.pointElementSecondary),
+            child: Text(value == -1.0 ? "Noch keine Noten" : "${value.toInt()} Punkte", style: AppDesign.textStyles.pointElementSecondary),
           ),
           icon: Icons.edit,
           action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),
@@ -126,8 +126,8 @@ class _GradeOverview extends State<GradeOverview>{
                     vertical: 15
                 ),
                 decoration: BoxDecoration(
-                    color: AppDesign.current.primaryColor,
-                    borderRadius: AppDesign.current.boxStyle.borderRadius
+                    color: AppDesign.colors.primary,
+                    borderRadius: AppDesign.boxStyle.borderRadius
                 ),
                 child: Flex(
                     direction: Axis.horizontal,
@@ -164,11 +164,11 @@ class _GradeOverview extends State<GradeOverview>{
                         items: [
                           BrainDropdownEntry(
                               value: SortMethods.bySubject,
-                              child: Text("Fach", style: AppDesign.current.textStyles.input)
+                              child: Text("Fach", style: AppDesign.textStyles.input)
                           ),
                           BrainDropdownEntry(
                               value: SortMethods.byGrade,
-                              child: Text("Note", style: AppDesign.current.textStyles.input)
+                              child: Text("Note", style: AppDesign.textStyles.input)
                           )
                         ],
                         onChanged: (value) {
@@ -183,14 +183,14 @@ class _GradeOverview extends State<GradeOverview>{
                           setState(() => widget.sortAscending = true);
                         },
                         style: TextButton.styleFrom(
-                            backgroundColor: widget.sortAscending ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
-                            primary: widget.sortAscending ? AppDesign.current.boxStyle.backgroundColor : AppDesign.current.primaryColor,
+                            backgroundColor: widget.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
+                            primary: widget.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
                             padding: EdgeInsets.all(14),
                             minimumSize: Size.zero
                         ),
                         child: Icon(
                             Icons.keyboard_arrow_down_rounded,
-                            color: widget.sortAscending ? AppDesign.current.textStyles.contrastColor : AppDesign.current.textStyles.color
+                            color: widget.sortAscending ? AppDesign.colors.contrast : AppDesign.colors.text
                         )
                     ),
                   ),
@@ -199,14 +199,14 @@ class _GradeOverview extends State<GradeOverview>{
                         setState(() => widget.sortAscending = false);
                       },
                       style: TextButton.styleFrom(
-                          backgroundColor: widget.sortAscending ? AppDesign.current.boxStyle.backgroundColor : AppDesign.current.primaryColor,
-                          primary: widget.sortAscending ? AppDesign.current.primaryColor : AppDesign.current.boxStyle.backgroundColor,
+                          backgroundColor: widget.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
+                          primary: widget.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
                           padding: EdgeInsets.all(14),
                           minimumSize: Size.zero
                       ),
                       child: Icon(
                           Icons.keyboard_arrow_up_rounded,
-                          color: widget.sortAscending ? AppDesign.current.textStyles.color : AppDesign.current.textStyles.contrastColor
+                          color: widget.sortAscending ? AppDesign.colors.text : AppDesign.colors.contrast
                       )
                   ),
                 ],
@@ -247,8 +247,8 @@ class GradeWidget extends StatelessWidget {
         child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             decoration: BoxDecoration(
-                borderRadius: AppDesign.current.boxStyle.borderRadius,
-                color: AppDesign.current.boxStyle.backgroundColor
+                borderRadius: AppDesign.boxStyle.borderRadius,
+                color: AppDesign.colors.secondaryBackground
             ),
             child: Center(
                 child: Wrap(
@@ -260,7 +260,7 @@ class GradeWidget extends StatelessWidget {
                       Text(
                           value,
                           style: TextStyle(
-                              color: AppDesign.current.textStyles.color,
+                              color: AppDesign.colors.text,
                               fontSize: 25,
                               fontWeight: FontWeight.w700
                           )
@@ -268,7 +268,7 @@ class GradeWidget extends StatelessWidget {
                       Text(
                           name,
                           style: TextStyle(
-                              color: AppDesign.current.textStyles.color,
+                              color: AppDesign.colors.text,
                               fontSize: 17,
                               fontWeight: FontWeight.w700
                           )

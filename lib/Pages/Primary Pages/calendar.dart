@@ -35,9 +35,9 @@ class _CalendarPage extends State<CalendarPage> {
             action: () => NavigationHelper.pushNamed(context, "editEventsPage", payload: events[i]),
             icon: Icons.edit,
             child: PointElement(
-              color: AppDesign.current.primaryColor,
+              color: AppDesign.colors.primary,
               primaryText: events[i].name,
-              child: events[i].description.isEmpty ? null : Text(events[i].description, style: AppDesign.current.textStyles.pointElementSecondary),
+              child: events[i].description.isEmpty ? null : Text(events[i].description, style: AppDesign.textStyles.pointElementSecondary),
             )
           )
       );
@@ -60,7 +60,7 @@ class _CalendarPage extends State<CalendarPage> {
             color: tests[i].subject.color,
             primaryText: tests[i].subject.name,
             child: Text(tests[i].description,
-              style: AppDesign.current.textStyles.pointElementSecondary),
+              style: AppDesign.textStyles.pointElementSecondary),
           )
         )
       );
@@ -153,29 +153,29 @@ class _CalendarPage extends State<CalendarPage> {
                         startingDayOfWeek: StartingDayOfWeek.monday,
                         focusedDay: CalendarPage.selectedDay,
                         calendarStyle: CalendarStyle(
-                          defaultTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                          weekendTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                          outsideTextStyle: TextStyle(color: AppDesign.current.textStyles.color.withOpacity(0.5)),
-                          todayDecoration: BoxDecoration(color: AppDesign.current.themeData.scaffoldBackgroundColor, shape: BoxShape.circle),
-                          todayTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                          selectedDecoration: BoxDecoration(color: AppDesign.current.primaryColor, shape: BoxShape.circle),
-                          selectedTextStyle: TextStyle(color: AppDesign.current.textStyles.contrastColor),
+                          defaultTextStyle: TextStyle(color: AppDesign.colors.text),
+                          weekendTextStyle: TextStyle(color: AppDesign.colors.text),
+                          outsideTextStyle: TextStyle(color: AppDesign.colors.text05),
+                          todayDecoration: BoxDecoration(color: AppDesign.colors.background, shape: BoxShape.circle),
+                          todayTextStyle: TextStyle(color: AppDesign.colors.text),
+                          selectedDecoration: BoxDecoration(color: AppDesign.colors.primary, shape: BoxShape.circle),
+                          selectedTextStyle: TextStyle(color: AppDesign.colors.contrast),
                         ),
                         daysOfWeekStyle: DaysOfWeekStyle(
-                            weekdayStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                            weekendStyle: TextStyle(color: AppDesign.current.textStyles.color)
+                            weekdayStyle: TextStyle(color: AppDesign.colors.text),
+                            weekendStyle: TextStyle(color: AppDesign.colors.text)
                         ),
                         headerStyle: HeaderStyle(
                           headerPadding: const EdgeInsets.only(bottom: 10),
-                          titleTextStyle: TextStyle(color: AppDesign.current.textStyles.color, fontSize: 18, fontWeight: FontWeight.w600),
+                          titleTextStyle: TextStyle(color: AppDesign.colors.text, fontSize: 18, fontWeight: FontWeight.w600),
                           titleCentered: true,
                           formatButtonDecoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(50),
-                            border: Border.all(color: AppDesign.current.textStyles.color)
+                            border: Border.all(color: AppDesign.colors.text)
                           ),
-                          formatButtonTextStyle: TextStyle(color: AppDesign.current.textStyles.color),
-                          leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.current.textStyles.color),
-                          rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.current.textStyles.color),
+                          formatButtonTextStyle: TextStyle(color: AppDesign.colors.text),
+                          leftChevronIcon: Icon(Icons.chevron_left, color: AppDesign.colors.text),
+                          rightChevronIcon: Icon(Icons.chevron_right, color: AppDesign.colors.text),
                         ),
                         calendarBuilders: CalendarBuilders(
                           singleMarkerBuilder: (context, date, event) {
@@ -184,7 +184,7 @@ class _CalendarPage extends State<CalendarPage> {
                             switch (event.runtimeType) {
                               case Event:
                                 shape = BoxShape.rectangle;
-                                color = AppDesign.current.primaryColor;
+                                color = AppDesign.colors.primary;
                                 break;
                               case Homework:
                                 Homework hm = event as Homework;
