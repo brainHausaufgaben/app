@@ -66,9 +66,9 @@ class TextStyles {
   TextStyle get alertDialogDescription =>
       TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, color: AppDesign.colors.text07);
   TextStyle get settingsSubMenu =>
-      TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1.1, color: AppDesign.colors.text09);
+      TextStyle(fontWeight: FontWeight.w500, fontSize:16.0, height: 1.1, color: AppDesign.colors.text08);
   TextStyle get settingsSubMenuDescription =>
-      TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: AppDesign.colors.text08);
+      TextStyle(fontWeight: FontWeight.w400, fontSize:14.0, height: 1.3, color: AppDesign.colors.text07);
 }
 
 class BoxStyle {

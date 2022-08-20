@@ -194,7 +194,7 @@ class _BrainDropdown extends State<BrainDropdown> {
                     children: [
                       if (widget.additionalAction != null) widget.additionalAction!,
                       TextButton(
-                        child: Text("Abbrechen"),
+                        child: Text("Abbrechen", style: TextStyle(color: AppDesign.colors.text)),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -273,6 +273,18 @@ class BrainDateButton extends StatelessWidget {
         textStyleDayHeader: TextStyle(color: AppDesign.colors.text),
         colorArrowNext: AppDesign.colors.text,
         colorArrowPrevious: AppDesign.colors.text,
+      ),
+      styleYearPicker: MaterialRoundedYearPickerStyle(
+        backgroundPicker: AppDesign.colors.secondaryBackground,
+        textStyleYear: TextStyle(
+          color: AppDesign.colors.text,
+          fontSize: 18
+        ),
+        textStyleYearSelected: TextStyle(
+          color: AppDesign.colors.text,
+          fontWeight: FontWeight.w600,
+          fontSize: 22
+        )
       ),
       builderDay: (DateTime dateTime, bool isCurrentDay, bool isSelected, TextStyle defaultTextStyle) {
         // Default
@@ -701,13 +713,15 @@ class SettingsTextfield extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (text != null) Text(text!, style: AppDesign.textStyles.settingsSubMenu),
+          if (text != null) Padding(
+            padding: const EdgeInsets.only(bottom: 5),
+            child: Text(text!, style: AppDesign.textStyles.settingsSubMenu),
+          ),
           Flex(
             direction: Axis.horizontal,
             children: [
               Expanded(
                 child: Container(
-                  margin: const EdgeInsets.only(top: 5),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10)
                   ),

@@ -118,7 +118,9 @@ class _CustomSidebar extends State<CustomSidebar> {
                                     constraints: const BoxConstraints(maxWidth: 400),
                                     child: AlertDialog(
                                       backgroundColor: AppDesign.colors.primary,
-                                      title: Text("Lade die Brain App auf deinem Android Gerät herunter", style: TextStyle(color: AppDesign.colors.contrast)),
+                                      title: Text(
+                                        "Lade die Brain App auf deinem Android Gerät herunter",
+                                        style: AppDesign.textStyles.alertDialogHeader.copyWith(color: AppDesign.colors.contrast)),
                                       content: const Center(
                                         child: Image(image: AssetImage("images/qr_code.png"), width: 200, height: 200),
                                       ),

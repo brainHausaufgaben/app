@@ -84,7 +84,11 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          title: const Text("Willst du die App wirklich zurücksetzen?"),
+                          contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
+                          title: Text(
+                            "Willst du die App wirklich zurücksetzen?",
+                            style: AppDesign.textStyles.alertDialogHeader
+                          ),
                           backgroundColor: AppDesign.colors.secondaryBackground,
                           content: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
