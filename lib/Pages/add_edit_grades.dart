@@ -16,7 +16,7 @@ class GradesPage extends StatefulWidget {
   int grade = 0;
   Subject? selectedSubject;
   GradeType? type;
-  int semester = 0;
+  int? semester;
 
   @override
   State<GradesPage> createState() => _GradesPage();
@@ -200,21 +200,25 @@ class _GradesPage extends State<GradesPage> {
                         BrainToast toast = BrainToast(text: "Du hast keine Art der Note angegeben!");
                         toast.show(context);
                         return;
+                      } else if (widget.semester == null) {
+                        BrainToast toast = BrainToast(text: "Du hast kein Semester angegeben!");
+                        toast.show(context);
+                        return;
                       } else {
                         if (widget.previousGrade == null) {
                           switch(widget.type) {
                             case GradeType.bigTest:
-                              BigGrade(widget.grade, widget.selectedSubject!, widget.semester);
+                              BigGrade(widget.grade, widget.selectedSubject!, widget.semester!);
                               break;
                             case GradeType.smallTest:
                             case GradeType.oralGrade:
-                              SmallGrade(widget.grade, widget.selectedSubject!, widget.type!, widget.semester);
+                              SmallGrade(widget.grade, widget.selectedSubject!, widget.type!, widget.semester!);
                               break;
                             default:
                               return;
                           }
                         } else {
-                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type, GradeTime(GradingSystem.currentYear, widget.semester));
+                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type, GradeTime(GradingSystem.currentYear, widget.semester!));
                         }
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);

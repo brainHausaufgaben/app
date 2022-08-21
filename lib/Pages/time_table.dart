@@ -59,6 +59,9 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                     defaultText: "Freistunde",
                     currentValue: TimeTable.week[day].subjects[i]?.subject,
                     additionalAction: TextButton(
+                      style: TextButton.styleFrom(
+                        primary: AppDesign.colors.text
+                      ),
                       child: Text("Neues Fach"),
                       onPressed: () {
                         if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {

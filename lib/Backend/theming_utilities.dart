@@ -95,7 +95,7 @@ DesignPackage generateDesign(
   Color text06 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.6), backgroundColor);
   Color text05 = textColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(textColor.withOpacity(0.5), backgroundColor);
 
-  Color contrast07 = contrastColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(contrastColor.withOpacity(0.7), backgroundColor);
+  Color contrast07 = contrastColor.alpha == 0 ? const Color(0x00000000) : Color.alphaBlend(contrastColor.withOpacity(0.7), primaryColor);
 
   return DesignPackage(
     colors: AppColors(
@@ -125,9 +125,9 @@ DesignPackage generateDesign(
     boxStyle: BoxStyle(
       borderRadius: BorderRadius.circular(10),
       boxShadow: BoxShadow(
-          color: const Color(0xFF303540).withOpacity(0.2),
-          blurRadius: 5,
-          offset: const Offset(0, 1)
+          color: const Color(0xFF333B59).withOpacity(0.15),
+          blurRadius: 10,
+          offset: const Offset(0, 5)
       )
     )
   );

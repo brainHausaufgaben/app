@@ -118,8 +118,8 @@ class _SettingsPage extends State<SettingsPage> {
                                   "Entwickler: Sebastian Merk, Manuel Murmann",
                                   style: TextStyle(
                                       color: AppDesign.colors.text,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15
                                   ),
                                 ),
                                 Padding(
@@ -128,8 +128,8 @@ class _SettingsPage extends State<SettingsPage> {
                                     "Designer: Manuel Murmann",
                                     style: TextStyle(
                                         color: AppDesign.colors.text,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 15
                                     ),
                                   ),
                                 ),
@@ -137,8 +137,8 @@ class _SettingsPage extends State<SettingsPage> {
                                   "Project Manager: David Will (aber nicht wirklich)",
                                   style: TextStyle(
                                       color: AppDesign.colors.text,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 16
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15
                                   )
                                 )
                               ]
@@ -150,7 +150,10 @@ class _SettingsPage extends State<SettingsPage> {
                               primary: AppDesign.colors.contrast,
                               padding: const EdgeInsets.symmetric(vertical: 13)
                             ),
-                            child: Text("Lizenzen", style: AppDesign.textStyles.buttonText),
+                            child: Text(
+                              "Lizenzen",
+                              style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
+                            ),
                             onPressed: () => showLicensePage(context: context),
                           )
                         ]

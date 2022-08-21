@@ -102,12 +102,15 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                                 padding: const EdgeInsets.only(top: 20, bottom: 5),
                                 child: TextButton(
                                     style: TextButton.styleFrom(
-                                        backgroundColor: AppDesign.colors.primary,
-                                        primary: AppDesign.colors.contrast,
-                                        padding: const EdgeInsets.symmetric(vertical: 12)
+                                      backgroundColor: AppDesign.colors.primary,
+                                      primary: AppDesign.colors.contrast,
+                                      padding: const EdgeInsets.symmetric(vertical: 12)
                                     ),
                                     onPressed: () => Navigator.of(context).pop(),
-                                    child: const Text("Abbrechen")
+                                    child: Text(
+                                      "Abbrechen",
+                                      style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
+                                    )
                                 ),
                               ),
                               TextButton(
@@ -122,7 +125,13 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                                   Navigator.of(context).pop();
                                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                                 },
-                                child: const Text("Fortfahren")
+                                child: Text(
+                                  "Fortfahren",
+                                  style: AppDesign.textStyles.buttonText.copyWith(
+                                    fontSize: 16,
+                                    color: AppDesign.colors.primary
+                                  )
+                                )
                               )
                             ]
                           )

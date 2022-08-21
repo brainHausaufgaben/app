@@ -161,7 +161,7 @@ class IconRadio extends StatelessWidget {
         width: 50,
         height: 70,
         decoration: BoxDecoration(
-            color: isSelected ? AppDesign.colors.primary.withOpacity(0.5) : null,
+            color: isSelected ? AppDesign.colors.primary.withOpacity(0.3) : null,
             borderRadius: BorderRadius.circular(5)
         ),
         child: Center(
