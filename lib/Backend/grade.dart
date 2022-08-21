@@ -81,6 +81,8 @@ class SmallGrade extends Grade{
       if(type == GradeType.bigTest){
         GradingSystem.removeGrade(this);
         BigGrade(this.value,this.subject,this.time.partOfYear);
+      } else if (type != this.type) {
+        this.type = type;
       }
     }
     SaveSystem.saveGrades();
@@ -107,7 +109,7 @@ class BigGrade extends Grade{
   void edit(int? value, Subject? subject, GradeType? type, GradeTime? time) {
     super.edit(value, subject, type, time);
     if(type != null){
-      if(type == GradeType.bigTest){
+      if(type != GradeType.bigTest){
         GradingSystem.removeGrade(this);
         SmallGrade(this.value,this.subject,type ,this.time.partOfYear);
       }

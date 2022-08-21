@@ -54,6 +54,38 @@ class _SettingsPage extends State<SettingsPage> {
               )
             ]
           ),
+          if (kIsWeb) SettingsEntry(
+            children: [
+              SettingsNavigatorButton(
+                text: "Tastenkürzel",
+                action: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text(
+                        "Tastenkürzel",
+                        style: AppDesign.textStyles.alertDialogHeader
+                      ),
+                      content: Wrap(
+                        direction: Axis.vertical,
+                        spacing: 8,
+                        children: [
+                          Text(
+                            "Shift + H: Neue Hausaufgabe",
+                            style: AppDesign.textStyles.pointElementPrimary
+                          ),
+                          Text(
+                              "Shift + T: Stundenplan",
+                              style: AppDesign.textStyles.pointElementPrimary
+                          )
+                        ]
+                      )
+                    );
+                  }
+                )
+              )
+            ]
+          ),
           SettingsEntry(
             children: [
               SettingsLinkButton(
@@ -96,18 +128,20 @@ class _SettingsPage extends State<SettingsPage> {
                                     child: Image.asset("icons/appIcon.jpg", width: 60, height: 60),
                                   ),
                                 ),
-                                Flexible(child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
+                                Flexible(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text("Brain Hausaufgabenheft", style: AppDesign.textStyles.boxHeadline),
                                         Text("Version ${BrainApp.appVersion}", style: AppDesign.textStyles.pointElementSecondary)
                                       ]
-                                  ),
-                                ))
+                                    )
+                                  )
+                                )
                               ]
-                            ),
+                            )
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
@@ -116,30 +150,18 @@ class _SettingsPage extends State<SettingsPage> {
                               children: [
                                 Text(
                                   "Entwickler: Sebastian Merk, Manuel Murmann",
-                                  style: TextStyle(
-                                      color: AppDesign.colors.text,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15
-                                  ),
+                                  style: AppDesign.textStyles.pointElementPrimary
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical: 8),
                                   child: Text(
                                     "Designer: Manuel Murmann",
-                                    style: TextStyle(
-                                        color: AppDesign.colors.text,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 15
-                                    ),
+                                    style: AppDesign.textStyles.pointElementPrimary
                                   ),
                                 ),
                                 Text(
                                   "Project Manager: David Will (aber nicht wirklich)",
-                                  style: TextStyle(
-                                      color: AppDesign.colors.text,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15
-                                  )
+                                  style: AppDesign.textStyles.pointElementPrimary
                                 )
                               ]
                             )

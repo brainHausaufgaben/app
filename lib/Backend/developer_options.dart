@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
@@ -54,9 +56,14 @@ class DeveloperOptions{
 
   }
 
-  static void Manuel(){
-    Uri url = Uri.parse("https://murmannmanuel.de/");
-    launchUrl(url, mode: LaunchMode.externalApplication);
+  static void Manuel() async {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      AppDesign.setFromPackage(BlindnessDesign().darkVariant);
+    });
+    await Future.delayed(const Duration(milliseconds: 500));
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      AppDesign.setFromPackage(MonochromeDesign().lightVariant);
+    });
   }
 
   static void Sebastian(){
