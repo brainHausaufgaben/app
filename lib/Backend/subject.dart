@@ -35,6 +35,7 @@ class Subject{
     for(int i = 0; i < day.subjects.length; i++){
      if(day.subjects[i] != null) if(day.subjects[i]!.subject == this) return TimeTable.lessonTimes[i];
     }
+    return null;
   }
 
   DateTime? getNextDate(){

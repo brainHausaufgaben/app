@@ -136,7 +136,7 @@ class _NavigationItem extends State<NavigationItem> with SingleTickerProviderSta
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 400),
+        duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
             color: widget.activated ? AppDesign.colors.primary : Colors.transparent,
             borderRadius: AppDesign.boxStyle.borderRadius

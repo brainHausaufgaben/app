@@ -472,18 +472,16 @@ class SettingsColorPicker extends StatelessWidget {
         backgroundColor: AppDesign.colors.secondaryBackground
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Text("Akzent Farbe", style: AppDesign.textStyles.settingsSubMenu),
           Container(
-            height: 25.0,
-            width: 25.0,
+            height: 24.0,
+            width: 24.0,
             decoration: BoxDecoration(
-                borderRadius: AppDesign.boxStyle.inputBorderRadius,
+                borderRadius: BorderRadius.circular(100),
                 color: pickerColor
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: Text("Akzent Farbe", style: AppDesign.textStyles.settingsSubMenu),
+            )
           )
         ]
       ),

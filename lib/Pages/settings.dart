@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -51,6 +52,18 @@ class _SettingsPage extends State<SettingsPage> {
                   description: kIsWeb ? "In der Webversion nicht verfügbar" : null,
                   activated: !kIsWeb,
                   action: () => NavigationHelper.pushNamed(context, "notificationSettings")
+              )
+            ]
+          ),
+          SettingsEntry(
+            children: [
+              SettingsSwitchButton(
+                text: "Oberstufe",
+                action: () {
+                  GradingSystem.isAdvancedLevel = !GradingSystem.isAdvancedLevel;
+                  BrainApp.notifier.notifyOfChanges();
+                },
+                state: GradingSystem.isAdvancedLevel,
               )
             ]
           ),

@@ -109,9 +109,9 @@ class TimeTable {
       homeworks.remove(homework);
       deletedHomeworks.insert(0,homework);
     }
-      BrainApp.notifier.notifyOfChanges();
-      if(saveEnabled) SaveSystem.saveHomework();
-      CustomNotifications.persistentNotification();
+    BrainApp.notifier.notifyOfChanges();
+    if(saveEnabled) SaveSystem.saveHomework();
+    CustomNotifications.persistentNotification();
     CustomNotifications.notificationsPlugin.cancel(homework.notificationID);
   }
 
@@ -125,10 +125,11 @@ class TimeTable {
   }
 
 
-  static Subject ?getSubject(int id){
+  static Subject? getSubject(int id){
     for(Subject subject in subjects){
       if(subject.id == id) return subject;
     }
+    return null;
   }
 
   static List<SubjectInstance> getSubjects(int day){

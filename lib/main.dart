@@ -62,7 +62,7 @@ class _BrainApp extends State<BrainApp> {
   @override
   void initState() {
     BrainApp.notifier.addListener(() => setState(() {}));
-    Initializer.init().then((value) => setState(() {}));
+    Initializer.init().then((_) => setState(() {}));
     super.initState();
   }
 

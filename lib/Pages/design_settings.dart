@@ -83,15 +83,20 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                     state: BrainApp.preferences["darkMode"],
                   ),
                   getThemeChooser(),
-                  if (BrainApp.preferences["design"] == "Monochrome") SettingsColorPicker(
+
+                ]
+            ),
+            if (BrainApp.preferences["design"] == "Monochrome") SettingsEntry(
+              children: [
+                SettingsColorPicker(
                     pickerColor: Color(BrainApp.preferences["overridePrimaryWith"]),
                     onColorSelect: (color) {
                       BrainApp.updatePreference("overridePrimaryWith", color.value);
                       AppDesign.setAccentColor();
                       Navigator.of(context).pop();
                     }
-                  )
-                ]
+                )
+              ],
             ),
             SettingsEntry(
               children: [

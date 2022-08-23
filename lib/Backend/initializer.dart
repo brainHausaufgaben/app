@@ -152,7 +152,8 @@ class Initializer {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
-        Test(TimeTable.getSubject(id)!, time, item["description"]);
+        Subject? subject = TimeTable.getSubject(id);
+        if (subject != null) Test(subject, time, item["description"]);
       }
     }
 
@@ -163,13 +164,13 @@ class Initializer {
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
 
+        if (TimeTable.getSubject(id) == null) continue;
         if(item["isBig"]) {
           BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
         } else {
           GradeType type = Grade.stringToGradeType(item["type"]);
           SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time);
         }
-
       }
     }
 
