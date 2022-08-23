@@ -103,6 +103,7 @@ class TimeTable {
   static void removeTest(Test test){
     if(tests.contains(test))tests.remove(test);
     SaveSystem.saveTests();
+    CustomNotifications.notificationsPlugin.cancel(test.notificationID);
   }
 
 

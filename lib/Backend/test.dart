@@ -6,6 +6,7 @@ class Test {
   Subject subject;
   DateTime dueTime;
   String description;
+  int notificationID = 0;
 
   Test(this.subject,this.dueTime,this.description){
     TimeTable.addTest(this);

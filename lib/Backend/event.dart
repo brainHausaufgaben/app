@@ -6,6 +6,7 @@ class Event{
   String name;
   String description;
 
+
   Event(this.dueTime,this.name,this.description){
     TimeTable.addEvent(this);
 

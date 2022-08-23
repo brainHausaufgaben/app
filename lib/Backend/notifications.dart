@@ -1,4 +1,6 @@
+import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io'show Platform;
@@ -11,7 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CustomNotifications{
   static final AndroidFlutterLocalNotificationsPlugin notificationsPlugin = AndroidFlutterLocalNotificationsPlugin();
   static DateTime notificationTime = DateTime(0,0,0,16,00);
+  static int daysBeforeTest = 1;
   static int currentHomeworkNotificationID = 0;
+  static int currentTestNotificationID = 1000;
   static bool permaNotificationEnabled = true;
   static bool homeworkNotificationsEnabled = true;
   static bool testNotificationsEnabled = true;
@@ -77,9 +81,25 @@ class CustomNotifications{
     } else {
       await notificationsPlugin.show(currentHomeworkNotificationID, title, body,notificationDetails: platformChannelSpecifics);
     }
+  }
 
-
-
+  static void testNotification(Test test) async{
+    if(!testNotificationsEnabled || !notificationsPossible) return;
+    const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
+    String title = "Test in " + test.subject.name + " am " + test.dueTime.toString();
+    String body = test.description;
+    currentTestNotificationID++;
+    const AndroidNotificationDetails platformChannelSpecifics =
+    AndroidNotificationDetails("2","Test Benachrichtigung",channelDescription: 'Test Benachrichtigung',styleInformation: defStyleInformation);
+    initializeTimeZones();
+    DateTime scheduleTime = test.dueTime.subtract(Duration(days: daysBeforeTest));
+    TZDateTime scheduleZonedTime = TZDateTime(getLocation("Europe/Zurich"),scheduleTime.year,scheduleTime.month,scheduleTime.day,notificationTime.hour,notificationTime.minute);
+    test.notificationID = currentTestNotificationID;
+    if(!scheduleZonedTime.isBefore(TZDateTime.now(getLocation("Europe/Zurich")))) {
+      await notificationsPlugin.zonedSchedule(currentTestNotificationID, title, body, scheduleZonedTime, platformChannelSpecifics, androidAllowWhileIdle: true);
+    } else {
+      await notificationsPlugin.show(currentTestNotificationID, title, body,notificationDetails: platformChannelSpecifics);
+    }
   }
 
   static void persistentNotification() async {

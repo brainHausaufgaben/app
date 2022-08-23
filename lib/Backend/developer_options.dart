@@ -25,7 +25,7 @@ class DeveloperOptions{
     "dunkelheit" : [Dunkelheit, "Dunkelheit", "Macht alles Schwarz"],
     "krebs" : [Cancer, "Schöner Modus", "Macht alles sehr schön :)"],
     "felix" : [Doenerladen, "Felix", "Dieser Code basiert auf einem unserer sehr guten wenn nicht sogar besten Freunde namens Felix `Habhax` Leopold Drescher dieser dieses Lied Komponierter"
-        "um ihn zu ehren und um seinen tode an extremer fettsucht zu betraueren ist dieses lied hinzugefügt worden. " ]
+        " um ihn zu ehren und um seinen tode an extremer fettsucht zu betraueren ist dieses lied hinzugefügt worden. " ]
   };
 
 
