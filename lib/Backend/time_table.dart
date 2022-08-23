@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/event.dart';
+import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
@@ -48,6 +49,7 @@ class TimeTable {
       removeHomework(homework);
     }
     deleteSubjectInstances(subject);
+    GradingSystem.deleteSubject(subject);
     if(saveEnabled) SaveSystem.saveSubjects();
   }
   static void deleteSubjectInstances(Subject subject){

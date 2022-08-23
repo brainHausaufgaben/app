@@ -47,6 +47,16 @@ class GradingSystem{
   }
 
 
+  static void deleteSubject(Subject subject){
+    for(SmallGrade smallGrade in getSmallGradesBySubject(subject)){
+      removeGrade(smallGrade);
+    }
+    for(BigGrade bigGrade in getBigGradesBySubject(subject)){
+      removeGrade(bigGrade);
+    }
+
+  }
+
   static List<SmallGrade> getSmallGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<SmallGrade> output = [];
     for(SmallGrade e in smallGrades){
