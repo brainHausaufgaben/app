@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 class DesignPackage {
   AppColors colors;
   ThemeData themeData;
-  BoxStyle boxStyle;
 
   DesignPackage({
     required this.colors,
-    required this.themeData,
-    required this.boxStyle
+    required this.themeData
   });
 }
 
@@ -74,12 +72,11 @@ class TextStyles {
 class BoxStyle {
   BorderRadius borderRadius = BorderRadius.circular(10);
   BorderRadius inputBorderRadius = BorderRadius.circular(5);
-  BoxShadow boxShadow;
-
-  BoxStyle({
-    required this.borderRadius,
-    required this.boxShadow
-  });
+  BoxShadow boxShadow = BoxShadow(
+      color: const Color(0xFF333B59).withOpacity(0.15),
+      blurRadius: 10,
+      offset: const Offset(0, 5)
+  );
 }
 
 DesignPackage generateDesign(
@@ -121,14 +118,6 @@ DesignPackage generateDesign(
       accentColor: primaryColor,
       scaffoldBackgroundColor: backgroundColor,
       fontFamily: "Inter",
-    ),
-    boxStyle: BoxStyle(
-      borderRadius: BorderRadius.circular(10),
-      boxShadow: BoxShadow(
-          color: const Color(0xFF333B59).withOpacity(0.15),
-          blurRadius: 10,
-          offset: const Offset(0, 5)
-      )
     )
   );
 }

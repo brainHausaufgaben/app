@@ -8,7 +8,6 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 
 import '../../Components/box.dart';
 import '../page_template.dart';
@@ -58,19 +57,31 @@ class _HomePage extends State<HomePage>{
                 children: [
                   Icon(Icons.add_box_outlined, size: 40, color: AppDesign.colors.text),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 12),
                     child: Icon(Icons.add_box_rounded, size: 40, color: AppDesign.colors.text)
                   ),
                   Icon(Icons.add_box_outlined, size: 40, color: AppDesign.colors.text)
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 25),
+                padding: const EdgeInsets.only(top: 10, bottom: 5),
                 child: Text(
                   "Dein Stundenplan ist noch leer",
                   style: AppDesign.textStyles.boxHeadline.copyWith(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
+              ),
+              Text(
+                "Füge ein neues Fach hinzu oder fülle deinen Stundenplan aus :)",
+                textAlign: TextAlign.center,
+                style: AppDesign.textStyles.pointElementSecondary,
+              ),
+              Divider(
+                color: AppDesign.colors.text.withOpacity(0.2),
+                thickness: 2,
+                height: 35,
+                indent: 70,
+                endIndent: 70,
               ),
               Flex(
                 direction: Axis.horizontal,

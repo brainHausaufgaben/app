@@ -7,7 +7,7 @@ class AppDesign {
 
   static TextStyles textStyles = TextStyles();
   static ThemeData themeData = MonochromeDesign().lightVariant.themeData;
-  static BoxStyle boxStyle = MonochromeDesign().lightVariant.boxStyle;
+  static BoxStyle boxStyle = BoxStyle();
 
   static double breakPointWidth = 900;
 
@@ -17,8 +17,24 @@ class AppDesign {
         : Design.allDesigns[theme]!.lightVariant;
     setAttributes(package);
 
+    if (theme == "Monochrome") setAccentColor();
+
     BrainApp.updatePreference("design", theme);
     BrainApp.notifier.notifyOfChanges();
+  }
+
+  static void setAccentColor() {
+    Color primaryColor = Color(BrainApp.preferences["overridePrimaryWith"]);
+
+    setFromPackage(
+      generateDesign(
+          primaryColor,
+          colors.background,
+          colors.secondaryBackground,
+          colors.text,
+          primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white
+      )
+    );
   }
 
   static void setFromPackage(DesignPackage package) {
@@ -28,7 +44,6 @@ class AppDesign {
 
   static void setAttributes(DesignPackage package) {
     colors = package.colors;
-    boxStyle = package.boxStyle;
     themeData = package.themeData;
   }
 
@@ -39,6 +54,8 @@ class AppDesign {
         ? Design.allDesigns[BrainApp.preferences["design"]]!.darkVariant
         : Design.allDesigns[BrainApp.preferences["design"]]!.lightVariant;
     setAttributes(package);
+
+    if (BrainApp.preferences["design"] == "Monochrome") setAccentColor();
 
     BrainApp.notifier.notifyOfChanges();
   }

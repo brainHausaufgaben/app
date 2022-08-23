@@ -414,16 +414,14 @@ class BrainColorPicker extends StatelessWidget {
     Key? key,
     required this.pickerColor,
     required this.onColorSelect,
-    this.asIconButton = true
   }) : super(key: key);
 
   final Color pickerColor;
-  final bool asIconButton;
   final Function(Color) onColorSelect;
 
   @override
   Widget build(BuildContext context) {
-    return asIconButton ? Container(
+    return Container(
       width: 55,
       height: 55,
       decoration: BoxDecoration(
@@ -448,50 +446,59 @@ class BrainColorPicker extends StatelessWidget {
               content: MaterialPicker(
                   pickerColor: pickerColor,
                   onColorChanged: onColorSelect
-              ),
+              )
             );
           }
         )
-      ),
-    ) : TextButton(
+      )
+    );
+  }
+}
+
+class SettingsColorPicker extends StatelessWidget {
+  const SettingsColorPicker({
+    Key? key,
+    required this.pickerColor,
+    required this.onColorSelect,
+  }) : super(key: key);
+
+  final Color pickerColor;
+  final Function(Color) onColorSelect;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
       style: TextButton.styleFrom(
-        primary: AppDesign.colors.primary,
+        backgroundColor: AppDesign.colors.secondaryBackground
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: AppDesign.boxStyle.inputBorderRadius,
-          color: AppDesign.colors.secondaryBackground
-        ),
-        padding: EdgeInsets.symmetric(vertical: 14, horizontal: asIconButton ? 14 : 12),
-        child: Row(
-          children: [
-            Container(
-              height: 25.0,
-              width: 25.0,
-              decoration: BoxDecoration(
-                  borderRadius: AppDesign.boxStyle.inputBorderRadius,
-                  color: pickerColor
-              ),
+      child: Row(
+        children: [
+          Container(
+            height: 25.0,
+            width: 25.0,
+            decoration: BoxDecoration(
+                borderRadius: AppDesign.boxStyle.inputBorderRadius,
+                color: pickerColor
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text("Farbe", style: AppDesign.textStyles.input),
-            )
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text("Akzent Farbe", style: AppDesign.textStyles.settingsSubMenu),
+          )
+        ]
       ),
       onPressed: () => showDialog(
-        context: context,
-        builder: (_) {
-          return AlertDialog(
-            title: Text("Farbe auswählen", style: AppDesign.textStyles.alertDialogHeader),
-            backgroundColor: AppDesign.colors.secondaryBackground,
-            content: MaterialPicker(
-              pickerColor: pickerColor,
-              onColorChanged: onColorSelect
-            ),
-          );
-        }
+          context: context,
+          builder: (_) {
+            return AlertDialog(
+              title: Text("Farbe auswählen", style: AppDesign.textStyles.alertDialogHeader),
+              backgroundColor: AppDesign.colors.secondaryBackground,
+              content: MaterialPicker(
+                  pickerColor: pickerColor,
+                  onColorChanged: onColorSelect
+              ),
+            );
+          }
       )
     );
   }
@@ -904,6 +911,7 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
       ] : [],
       overlayColor: Colors.black,
       overlayOpacity: 0.6,
+      backgroundColor: AppDesign.colors.primary,
       spacing: 5,
       childrenButtonSize: const Size(50, 50),
       childPadding: const EdgeInsets.only(right: 6),

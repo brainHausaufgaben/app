@@ -82,7 +82,15 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                     action: () => AppDesign.toggleDarkMode(),
                     state: BrainApp.preferences["darkMode"],
                   ),
-                  getThemeChooser()
+                  getThemeChooser(),
+                  if (BrainApp.preferences["design"] == "Monochrome") SettingsColorPicker(
+                    pickerColor: Color(BrainApp.preferences["overridePrimaryWith"]),
+                    onColorSelect: (color) {
+                      BrainApp.updatePreference("overridePrimaryWith", color.value);
+                      AppDesign.setAccentColor();
+                      Navigator.of(context).pop();
+                    }
+                  )
                 ]
             ),
             SettingsEntry(
@@ -141,10 +149,14 @@ class IconRadio extends StatelessWidget {
       designPackage = design.lightVariant;
     }
 
+    Color primaryColor = design.runtimeType == MonochromeDesign
+        ? Color(BrainApp.preferences["overridePrimaryWith"])
+        : designPackage.colors.primary;
+
     // Replace text color
     String themeIcon = themeIconSvg.replaceAll("#303540", colorToString(designPackage.colors.text));
     // Replace primaryColor
-    themeIcon = themeIcon.replaceAll("#9B9B9B", colorToString(designPackage.colors.primary));
+    themeIcon = themeIcon.replaceAll("#9B9B9B", colorToString(primaryColor));
     // Replace backgroundColor
     themeIcon = themeIcon.replaceAll("#F1F1F1", colorToString(designPackage.colors.background));
     // Replace boxBackground

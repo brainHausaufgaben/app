@@ -191,6 +191,9 @@ class _GradesPage extends State<GradesPage> {
             children: [
               Expanded(
                 child: ElevatedButton (
+                    style: ElevatedButton.styleFrom(
+                        primary: AppDesign.colors.primary
+                    ),
                     onPressed: () {
                       if (widget.selectedSubject == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
@@ -236,6 +239,9 @@ class _GradesPage extends State<GradesPage> {
               if (widget.previousGrade != null) Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: ElevatedButton (
+                      style: ElevatedButton.styleFrom(
+                          primary: AppDesign.colors.primary
+                      ),
                       onPressed: () {
                         GradingSystem.removeGrade(widget.previousGrade!);
                         BrainApp.notifier.notifyOfChanges();

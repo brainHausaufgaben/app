@@ -129,6 +129,9 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                 children: [
                   Expanded(
                       child: ElevatedButton (
+                          style: ElevatedButton.styleFrom(
+                              primary: AppDesign.colors.primary
+                          ),
                           onPressed: () {
                             switch (widget.subpages[tabController.index].runtimeType) {
                               case EventSubpage:

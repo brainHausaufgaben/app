@@ -21,7 +21,7 @@ class BrainToast {
         backgroundColor: BrainApp.preferences["darkMode"] ? const Color(0xFFFFFFFF) : const Color(0xFF000000),
         duration: const Duration(seconds: 6),
         behavior: SnackBarBehavior.floating,
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: buttonText == null ? 15 : 10),
         content: Flex(
             direction: Axis.horizontal,

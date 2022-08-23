@@ -123,6 +123,9 @@ class _HomeworkPage extends State<HomeworkPage> {
             children: [
               Expanded(
                 child: ElevatedButton (
+                    style: ElevatedButton.styleFrom(
+                        primary: AppDesign.colors.primary
+                    ),
                     onPressed: () {
                       onPressed();
                     },
