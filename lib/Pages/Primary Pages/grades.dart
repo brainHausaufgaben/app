@@ -13,7 +13,8 @@ import 'package:flutter/material.dart';
 
 enum SortMethods {
   bySubject,
-  byGrade
+  byGrade,
+  bySemester
 }
 
 class GradeOverview extends StatefulWidget {
@@ -89,7 +90,13 @@ class _GradeOverview extends State<GradeOverview>{
           child: PointElement(
             color: key.color,
             primaryText: key.name,
-            child: Text(value == -1.0 ? "Noch keine Noten" : "${value.toInt()} Punkte", style: AppDesign.textStyles.pointElementSecondary),
+            child: Text(
+              value == -1.0
+                  ? "Noch keine Noten"
+                  : GradingSystem.isAdvancedLevel
+                      ? "${value.toInt()} Punkt${value.toInt() == 1 ? "" : "e"}"
+                      : "Note ${value.toString()}",
+              style: AppDesign.textStyles.pointElementSecondary),
           ),
           icon: Icons.edit,
           action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),
@@ -132,21 +139,25 @@ class _GradeOverview extends State<GradeOverview>{
                 child: Flex(
                     direction: Axis.horizontal,
                     children: [
-                      GradeWidget(
-                        name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
-                        value: (){
-                          if(GradingSystem.getYearAverage() == -1) {
-                            return "-";
-                          } else {
-                            return GradingSystem.getYearAverage().round().toString();
-                          }
-                        }(),
-                        reversed: false,
-                      ),
-                      const Spacer(flex: 1),
+                      if (GradingSystem.isAdvancedLevel) ...[
+                        GradeWidget(
+                          name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
+                          value: (){
+                            if(GradingSystem.getYearAverage() == -1) {
+                              return "-";
+                            } else {
+                              return GradingSystem.getYearAverage().round().toString();
+                            }
+                          }(),
+                          reversed: false,
+                        ),
+                        const Spacer(flex: 1)
+                      ],
                       GradeWidget(
                         name: "Note",
-                        value: GradingSystem.PointToGrade(GradingSystem.getYearAverage().round()),
+                        value: GradingSystem.isAdvancedLevel
+                            ? GradingSystem.PointToGrade(GradingSystem.getYearAverage().round())
+                            : (GradingSystem.getYearAverage() == -1.0 ? "-": GradingSystem.getYearAverage().toString()),
                         reversed: true,
                       )
                     ]

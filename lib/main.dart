@@ -29,7 +29,9 @@ class BrainApp extends StatefulWidget {
     "darkMode": MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness == Brightness.dark,
     "pinnedHeader": true,
     "calendarFormat" : 0,
-    "overridePrimaryWith" : Colors.black.value
+    "overridePrimaryWith" : Colors.black.value,
+    "showDeveloperOptions" : false,
+    "currentSemester": 0
   };
 
   static void clearPreferences() async {

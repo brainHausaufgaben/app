@@ -5,6 +5,7 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../Components/navigation_helper.dart';
 import '../main.dart';
 
 class DesignSettingsPage extends StatefulWidget {
@@ -93,7 +94,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                     onColorSelect: (color) {
                       BrainApp.updatePreference("overridePrimaryWith", color.value);
                       AppDesign.setAccentColor();
-                      Navigator.of(context).pop();
+                      Navigator.of(NavigationHelper.rootKey.currentContext!).pop();
                     }
                 )
               ],

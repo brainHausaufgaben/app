@@ -59,10 +59,63 @@ class _SettingsPage extends State<SettingsPage> {
             children: [
               SettingsSwitchButton(
                 text: "Oberstufe",
-                action: () {
-                  GradingSystem.isAdvancedLevel = !GradingSystem.isAdvancedLevel;
-                  BrainApp.notifier.notifyOfChanges();
-                },
+                action: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                        contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
+                        title: Text(
+                            "Bist du sicher?",
+                            style: AppDesign.textStyles.alertDialogHeader
+                        ),
+                        backgroundColor: AppDesign.colors.secondaryBackground,
+                        content: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Diese Aktion wird alle Noten von diesem Jahr löschen. Du solltest, falls noch nicht geschehen, erst ein neues Schuljahr setzen",
+                                style: AppDesign.textStyles.alertDialogDescription,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20, bottom: 5),
+                                child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        backgroundColor: AppDesign.colors.primary,
+                                        primary: AppDesign.colors.contrast,
+                                        padding: const EdgeInsets.symmetric(vertical: 12)
+                                    ),
+                                    onPressed: () => Navigator.of(context).pop(),
+                                    child: Text(
+                                        "Abbrechen",
+                                        style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
+                                    )
+                                ),
+                              ),
+                              TextButton(
+                                  style: TextButton.styleFrom(
+                                      side: BorderSide(color: AppDesign.colors.primary, width: 2),
+                                      primary: AppDesign.colors.primary,
+                                      padding: const EdgeInsets.symmetric(vertical: 12)
+                                  ),
+                                  onPressed: () {
+                                    GradingSystem.setAdvancedLevel(!GradingSystem.isAdvancedLevel);
+                                    BrainApp.notifier.notifyOfChanges();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text(
+                                      "Fortfahren",
+                                      style: AppDesign.textStyles.buttonText.copyWith(
+                                          fontSize: 16,
+                                          color: AppDesign.colors.primary
+                                      )
+                                  )
+                              )
+                            ]
+                        )
+                    );
+                  }
+                ),
                 state: GradingSystem.isAdvancedLevel,
               )
             ]
@@ -113,6 +166,12 @@ class _SettingsPage extends State<SettingsPage> {
           ),
           SettingsEntry(
             children: [
+              if (BrainApp.preferences["showDeveloperOptions"]) SettingsNavigatorButton(
+                text: "Developer Options",
+                action: () {
+                  NavigationHelper.pushNamed(context, "developerOptions");
+                },
+              ),
               SettingsNavigatorButton(
                 text: "Über die App",
                 action: () => showDialog(

@@ -13,7 +13,7 @@ class GradesPage extends StatefulWidget {
   GradesPage({Key? key}) : super(key: key);
 
   Grade? previousGrade;
-  int grade = 0;
+  int grade = GradingSystem.isAdvancedLevel ? 0 : 1;
   Subject? selectedSubject;
   GradeType? type;
   int? semester;
@@ -43,8 +43,8 @@ class _GradesPage extends State<GradesPage> {
                         fontWeight: FontWeight.w700
                       ),
                       value: widget.grade,
-                      minValue: 0,
-                      maxValue: 15,
+                      minValue: GradingSystem.isAdvancedLevel ? 0 : 1,
+                      maxValue: GradingSystem.isAdvancedLevel ? 15 : 6,
                       onChanged: (value) {
                         setBuilderState(() => widget.grade = value);
                       }
@@ -92,7 +92,6 @@ class _GradesPage extends State<GradesPage> {
   @override
   Widget build(BuildContext context) {
     if (!alreadyFetchedData) getData();
-
     return PageTemplate(
       backButton: true,
       title: widget.previousGrade == null ? "Neue Note" : "Note Bearbeiten",
@@ -152,7 +151,9 @@ class _GradesPage extends State<GradesPage> {
               dialogTitle: "Semester des Jahres",
               scrollableDialog: false,
               defaultText: "Semester des Jahres",
-              currentValue: widget.semester,
+              currentValue: widget.semester ?? (BrainApp.preferences["currentSemester"] == 0
+                      ? null
+                      : BrainApp.preferences["currentSemester"]),
               items: [
                 BrainDropdownEntry(
                     value: 1,
@@ -168,7 +169,7 @@ class _GradesPage extends State<GradesPage> {
                       style: AppDesign.textStyles.input
                     )
                 ),
-                BrainDropdownEntry(
+                if (!GradingSystem.isAdvancedLevel) BrainDropdownEntry(
                     value: 3,
                     child: Text(
                         "3. Semester",
@@ -208,6 +209,7 @@ class _GradesPage extends State<GradesPage> {
                         toast.show(context);
                         return;
                       } else {
+                        BrainApp.updatePreference("currentSemester", widget.semester);
                         if (widget.previousGrade == null) {
                           switch(widget.type) {
                             case GradeType.bigTest:

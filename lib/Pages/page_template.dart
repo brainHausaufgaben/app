@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/developer_options.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
@@ -142,7 +143,10 @@ class _PageTemplateState extends State<PageTemplate> {
                                       }
                                       DeveloperOptionsPage.lastClick = DateTime.now();
 
-                                      if (DeveloperOptionsPage.timesClicked == 10) NavigationHelper.pushNamed(context, "developerOptions");
+                                      if (DeveloperOptionsPage.timesClicked == 10) {
+                                        BrainApp.updatePreference("showDeveloperOptions", true);
+                                        BrainApp.notifier.notifyOfChanges();
+                                      }
                                     } : null,
                                     child: MouseRegion(
                                       cursor: widget.pageSettings.developerOptions ? SystemMouseCursors.click : SystemMouseCursors.basic,

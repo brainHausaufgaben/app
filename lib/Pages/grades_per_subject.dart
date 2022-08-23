@@ -31,7 +31,9 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               color: widget.subject.color,
               primaryText: "1. Exemporale",
               child: Text(
-                grade.value.toString(),
+                GradingSystem.isAdvancedLevel
+                    ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
+                    : "Note ${grade.value.toString()}",
                 style: AppDesign.textStyles.pointElementSecondary
               )
             ),
@@ -56,7 +58,9 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               color: widget.subject.color,
               primaryText: "1. Mündliche Note",
               child: Text(
-                grade.value.toString(),
+                GradingSystem.isAdvancedLevel
+                    ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
+                    : "Note ${grade.value.toString()}",
                 style: AppDesign.textStyles.pointElementSecondary
               )
             ),
@@ -80,7 +84,9 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               color: widget.subject.color,
               primaryText: "1. Schulaufgabe",
               child: Text(
-                grade.value.toString(),
+                GradingSystem.isAdvancedLevel
+                    ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
+                    : "Note ${grade.value.toString()}",
                 style: AppDesign.textStyles.pointElementSecondary
               )
             ),
@@ -124,21 +130,25 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
           child: Flex(
               direction: Axis.horizontal,
               children: [
-                GradeWidget(
-                  name: GradingSystem.getAverage(widget.subject).round() == 1 ? "Punkt" : "Punkte",
-                  value: (){
-                    if(GradingSystem.getAverage(widget.subject) == -1) {
-                      return "-";
-                    } else {
-                      return GradingSystem.getAverage(widget.subject).round().toString();
-                    }
-                  }(),
-                  reversed: false,
-                ),
-                const Spacer(flex: 1),
+                if (GradingSystem.isAdvancedLevel) ...[
+                  GradeWidget(
+                    name: GradingSystem.getAverage(widget.subject).round() == 1 ? "Punkt" : "Punkte",
+                    value: (){
+                      if(GradingSystem.getAverage(widget.subject) == -1) {
+                        return "-";
+                      } else {
+                        return GradingSystem.getAverage(widget.subject).round().toString();
+                      }
+                    }(),
+                    reversed: false,
+                  ),
+                  const Spacer(flex: 1),
+                ],
                 GradeWidget(
                   name: "Note",
-                  value: GradingSystem.PointToGrade(GradingSystem.getAverage(widget.subject).round()),
+                  value: GradingSystem.isAdvancedLevel
+                      ? GradingSystem.PointToGrade(GradingSystem.getAverage(widget.subject).round())
+                      : (GradingSystem.getAverage(widget.subject) == -1.0 ? "-": GradingSystem.getAverage(widget.subject).toString()),
                   reversed: true,
                 )
               ]
