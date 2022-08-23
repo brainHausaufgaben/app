@@ -110,11 +110,11 @@ class GradingSystem{
     ).toList();
   }
 
-  static double getYearAverage(){
+  static double getYearAverage({List<int> onlyPartsOfYear = const [1,2,3]}){
     double d = 0;
     int s = 0;
     for(Subject subject in TimeTable.subjects){
-      double grade = getAverage(subject);
+      double grade = getAverage(subject,onlyPartsOfYear: onlyPartsOfYear);
       if(grade != -1.0) {
         s++;
         d += grade;
