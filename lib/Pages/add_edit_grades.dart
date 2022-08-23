@@ -66,6 +66,14 @@ class _GradesPage extends State<GradesPage> {
     );
   }
 
+  @override
+  void initState() {
+    widget.semester = BrainApp.preferences["currentSemester"] == 0
+        ? null
+        : BrainApp.preferences["currentSemester"];
+    super.initState();
+  }
+
   void getData() {
     alreadyFetchedData = true;
     dynamic args = ModalRoute.of(context)!.settings.arguments;
@@ -151,9 +159,7 @@ class _GradesPage extends State<GradesPage> {
               dialogTitle: "Semester des Jahres",
               scrollableDialog: false,
               defaultText: "Semester des Jahres",
-              currentValue: widget.semester ?? (BrainApp.preferences["currentSemester"] == 0
-                      ? null
-                      : BrainApp.preferences["currentSemester"]),
+              currentValue: widget.semester,
               items: [
                 BrainDropdownEntry(
                     value: 1,
@@ -178,7 +184,10 @@ class _GradesPage extends State<GradesPage> {
                 ),
               ],
               onChanged: (newSemester) {
-                setState(() => widget.semester = newSemester);
+                setState(() {
+                  widget.semester = newSemester;
+                  BrainApp.preferences["currentSemester"] = newSemester;
+                });
               },
             )
           ]

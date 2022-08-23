@@ -5,6 +5,7 @@ import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/grades_box.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
@@ -22,12 +23,15 @@ class GradeOverview extends StatefulWidget {
 
   bool sortAscending = false;
   SortMethods? sortMethod;
+  static TimeSelectors timeSelectors = TimeSelectors.thisYear;
 
   @override
   State<GradeOverview> createState() => _GradeOverview();
 }
 
 class _GradeOverview extends State<GradeOverview>{
+  List<int> get partsOfYear => GradeOverview.timeSelectors == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.index];
+
   LinkedHashMap sortByValue(Map map) {
     List sortedKeys = map.keys.toList(growable: false)..sort((key1, key2) {
       return widget.sortAscending
@@ -66,7 +70,7 @@ class _GradeOverview extends State<GradeOverview>{
     List<Widget> buttons = [];
 
     for (Subject subject in TimeTable.subjects) {
-      double average = GradingSystem.getAverage(subject);
+      double average = GradingSystem.getAverage(subject, onlyPartsOfYear: partsOfYear);
       subjectPairs[subject] = average;
     }
 
@@ -127,41 +131,14 @@ class _GradeOverview extends State<GradeOverview>{
           floatingHeader: Wrap(
             runSpacing: 10,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 15,
-                    vertical: 15
-                ),
-                decoration: BoxDecoration(
-                    color: AppDesign.colors.primary,
-                    borderRadius: AppDesign.boxStyle.borderRadius
-                ),
-                child: Flex(
-                    direction: Axis.horizontal,
-                    children: [
-                      if (GradingSystem.isAdvancedLevel) ...[
-                        GradeWidget(
-                          name: GradingSystem.getYearAverage().round() == 1 ? "Punkt" : "Punkte",
-                          value: (){
-                            if(GradingSystem.getYearAverage() == -1) {
-                              return "-";
-                            } else {
-                              return GradingSystem.getYearAverage().round().toString();
-                            }
-                          }(),
-                          reversed: false,
-                        ),
-                        const Spacer(flex: 1)
-                      ],
-                      GradeWidget(
-                        name: "Note",
-                        value: GradingSystem.isAdvancedLevel
-                            ? GradingSystem.PointToGrade(GradingSystem.getYearAverage().round())
-                            : (GradingSystem.getYearAverage() == -1.0 ? "-": GradingSystem.getYearAverage().toString()),
-                        reversed: true,
-                      )
-                    ]
-                )
+              GradesBox(
+                value: GradingSystem.getYearAverage(onlyPartsOfYear: partsOfYear).toString(),
+                currentSelector: GradeOverview.timeSelectors,
+                onChanged: (value) {
+                  setState(() {
+                    GradeOverview.timeSelectors = value;
+                  });
+                },
               ),
               Flex(
                 direction: Axis.horizontal,

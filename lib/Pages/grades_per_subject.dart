@@ -3,11 +3,15 @@ import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/grades_box.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
+
+import 'Primary Pages/grades.dart';
 
 class GradesPerSubjectPage extends StatefulWidget {
   GradesPerSubjectPage({Key? key}): super(key: key);
@@ -19,10 +23,12 @@ class GradesPerSubjectPage extends StatefulWidget {
 }
 
 class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
+  List<int> get partsOfYear => GradeOverview.timeSelectors == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.index];
+
   List<Widget> getShortTests() {
     List<Widget> buttons = [];
 
-    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
+    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject, onlyPartsOfYear: partsOfYear)) {
       if (grade.type != GradeType.smallTest) continue;
       buttons.add(
           BrainIconButton(
@@ -49,7 +55,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
   List<Widget> getOral() {
     List<Widget> buttons = [];
 
-    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject)) {
+    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject, onlyPartsOfYear: partsOfYear)) {
       if (grade.type != GradeType.oralGrade) continue;
       buttons.add(
           BrainIconButton(
@@ -76,7 +82,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
   List<Widget> getTests() {
     List<Widget> buttons = [];
 
-    for (BigGrade grade in GradingSystem.getBigGradesBySubject(widget.subject)) {
+    for (BigGrade grade in GradingSystem.getBigGradesBySubject(widget.subject, onlyPartsOfYear: partsOfYear)) {
       buttons.add(
           BrainIconButton(
             dense: true,
@@ -118,41 +124,13 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
           icon: Icons.add,
           withEntries: false,
         ),
-        floatingHeader: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: 15,
-              vertical: 15
-          ),
-          decoration: BoxDecoration(
-              color: AppDesign.colors.primary,
-              borderRadius: AppDesign.boxStyle.borderRadius
-          ),
-          child: Flex(
-              direction: Axis.horizontal,
-              children: [
-                if (GradingSystem.isAdvancedLevel) ...[
-                  GradeWidget(
-                    name: GradingSystem.getAverage(widget.subject).round() == 1 ? "Punkt" : "Punkte",
-                    value: (){
-                      if(GradingSystem.getAverage(widget.subject) == -1) {
-                        return "-";
-                      } else {
-                        return GradingSystem.getAverage(widget.subject).round().toString();
-                      }
-                    }(),
-                    reversed: false,
-                  ),
-                  const Spacer(flex: 1),
-                ],
-                GradeWidget(
-                  name: "Note",
-                  value: GradingSystem.isAdvancedLevel
-                      ? GradingSystem.PointToGrade(GradingSystem.getAverage(widget.subject).round())
-                      : (GradingSystem.getAverage(widget.subject) == -1.0 ? "-": GradingSystem.getAverage(widget.subject).toString()),
-                  reversed: true,
-                )
-              ]
-          ),
+        floatingHeader: GradesBox(
+          currentSelector: GradeOverview.timeSelectors,
+          value: GradingSystem.getAverage(widget.subject, onlyPartsOfYear: partsOfYear).toString(),
+          onChanged: (value) {
+            GradeOverview.timeSelectors = value;
+            BrainApp.notifier.notifyOfChanges();
+          },
         ),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20),

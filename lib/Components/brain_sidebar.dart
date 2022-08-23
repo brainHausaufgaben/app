@@ -185,6 +185,7 @@ class SideBarMenuEntry extends StatelessWidget {
       child: TextButton(
         onPressed: onTap,
         style: TextButton.styleFrom(
+          primary: activated ? AppDesign.colors.contrast : AppDesign.colors.text,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         ),
         child: Row(

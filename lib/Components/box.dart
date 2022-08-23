@@ -12,7 +12,7 @@ class Box extends StatefulWidget {
 }
 
 
-class _BoxState extends  State<Box>{
+class _BoxState extends State<Box> {
   @override
   Widget build(BuildContext context) {
     return Column(

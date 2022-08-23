@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
@@ -8,7 +9,6 @@ import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperOptions{
   static void enterText(String? text){
@@ -34,6 +34,9 @@ class DeveloperOptions{
       case "dunkelheit":
         Dunkelheit();
         break;
+      case "felix":
+        Doenerladen();
+        break;
       case "krebs":
         Cancer();
         break;
@@ -51,15 +54,17 @@ class DeveloperOptions{
 
   }
 
+  static void Doenerladen() async {
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.play(AssetSource("../images/notification_sounds.mp3"), mode: PlayerMode.mediaPlayer, volume: 1);
+  }
+
   static void Fortnite(){
 
   }
 
   static void Cancer(){
     AppDesign.setFromPackage(CancerDesign().lightVariant);
-
-
-
   }
 
 
