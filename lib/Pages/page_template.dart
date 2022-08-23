@@ -145,6 +145,7 @@ class _PageTemplateState extends State<PageTemplate> {
 
                                       if (DeveloperOptionsPage.timesClicked == 10) {
                                         BrainApp.updatePreference("showDeveloperOptions", true);
+                                        NavigationHelper.pushNamed(context, "developerOptions");
                                         BrainApp.notifier.notifyOfChanges();
                                       }
                                     } : null,
