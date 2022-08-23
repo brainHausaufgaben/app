@@ -4,17 +4,46 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperOptions{
+
+  static List<String> activatedCodes = [];
+
+  static Map<String,List<dynamic>> codes = {
+    "fortnite" : [Fortnite, "Fortnite Gaming", "Macht Fortnite"],
+    "sharkswimmingocean" : [SharkSwimmingOcean, "Shark Swimming Ocean", "Der Hai der schwimmt"],
+    "manuel" : [Manuel, "Manuel", "Manuel hat das gemacht"],
+    "sebastian" : [Sebastian, "Sebastian", "Sebastian hat das gemacht"],
+    "ninja" : [Ninja, "Ninja", "Macht alles Unsichtbar"],
+    "dunkelheit" : [Dunkelheit, "Dunkelheit", "Macht alles Schwarz"],
+    "krebs" : [Cancer, "Schöner Modus", "Macht alles sehr schön :)"],
+  };
+
+
   static void enterText(String? text){
 
     if(text == "" || text == null) return;
 
+    List<dynamic>? result = codes[text.toLowerCase().trim()];
+
+    if(result != null){
+      Function function = result[0] as Function;
+      function.call();
+      if(!activatedCodes.contains(text)){
+        activatedCodes.add(text);
+        SaveSystem.saveDeveloperOptions();
+      }
+      BrainApp.notifier.notifyOfChanges();
+    }
+
+    /*
     switch(text.toLowerCase().trim()){
       case "fortnite":
         Fortnite();
@@ -34,16 +63,17 @@ class DeveloperOptions{
       case "dunkelheit":
         Dunkelheit();
         break;
-      case "felix":
-        Doenerladen();
-        break;
       case "krebs":
         Cancer();
         break;
       default:
         return;
     }
+    */
+
+
   }
+
 
   static void Ninja() {
     AppDesign.setFromPackage(BlindnessDesign().darkVariant);
@@ -63,8 +93,17 @@ class DeveloperOptions{
 
   }
 
-  static void Cancer(){
-    AppDesign.setFromPackage(CancerDesign().lightVariant);
+  static void Cancer() async{
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      AppDesign.setFromPackage(CancerDesign().darkVariant);
+    });
+    await Future.delayed(const Duration(milliseconds: 500));
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      AppDesign.setFromPackage(CancerDesign().lightVariant);
+    });
+
+
+
   }
 
 

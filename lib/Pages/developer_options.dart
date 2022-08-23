@@ -58,6 +58,46 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
     await Future.delayed(const Duration(seconds: 2));
   }
 
+  List<Widget> getDeveloperOptions(){
+    List<Widget> widgets = [];
+    widgets.add(
+      SettingsEntry(
+        children: [
+          SettingsTextfield(
+              text: "Developer Code",
+              submitAction: (text) {
+                if (text == "no bitches?") {
+                  noBitches().then((value) {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  });
+                } else {
+                  DeveloperOptions.enterText(text);
+                }
+              }
+          )
+        ]
+    )
+    );
+
+    for(String code in DeveloperOptions.activatedCodes){
+      List<dynamic>? result = DeveloperOptions.codes[code.toLowerCase().trim()];
+      if(result != null){
+        widgets.add(
+        SettingsEntry(
+            children: [
+              SettingsNavigatorButton(
+                  text: result[1],
+                  description: result[2],
+                  action: () => (result[0] as Function).call()
+              )
+            ]
+
+        ));
+  }
+    }
+    return widgets;
+  }
+
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
@@ -146,24 +186,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
       ),
       child: Wrap(
         runSpacing: 10,
-        children: [
-          SettingsEntry(
-            children: [
-              SettingsTextfield(
-                text: "Developer Code",
-                submitAction: (text) {
-                  if (text == "no bitches?") {
-                    noBitches().then((value) {
-                      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                    });
-                  } else {
-                    DeveloperOptions.enterText(text);
-                  }
-                }
-              )
-            ]
-          )
-        ]
+        children: getDeveloperOptions()
       )
     );
   }

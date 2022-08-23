@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -171,6 +172,14 @@ class Initializer {
           GradeType type = Grade.stringToGradeType(item["type"]);
           SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time);
         }
+      }
+    }
+
+    dynamic devOptions = await SaveSystem.getDeveloperOptions();
+    if(devOptions != null){
+      for (String code in devOptions){
+        print(code);
+        if(!DeveloperOptions.activatedCodes.contains(code)) DeveloperOptions.activatedCodes.add(code);
       }
     }
 

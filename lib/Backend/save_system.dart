@@ -1,4 +1,5 @@
 
+import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:localstorage/localstorage.dart';
 
@@ -54,6 +55,14 @@ class SaveSystem{
    }
    static  getGrades(){
      return storage.getItem("grades");
+   }
+   static void saveDeveloperOptions(){
+    print(DeveloperOptions.activatedCodes);
+    storage.setItem("devs", DeveloperOptions.activatedCodes);
+   }
+
+   static getDeveloperOptions(){
+    return storage.getItem("devs");
    }
 
 
