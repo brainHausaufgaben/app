@@ -57,6 +57,24 @@ class GradingSystem{
 
   }
 
+  static void setAdvancedLevel(bool state){
+    isAdvancedLevel = state;
+    removeAllGrades();
+  }
+
+  static void removeAllGrades( {bool onlyCurrentYear = true}){
+    for(Subject subject in TimeTable.subjects){
+      for(SmallGrade smallGrade in getSmallGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear)){
+        removeGrade(smallGrade);
+      }
+      for(BigGrade bigGrade in getBigGradesBySubject(subject,onlyCurrentYear: onlyCurrentYear)){
+        removeGrade(bigGrade);
+      }
+    }
+
+
+  }
+
   static List<SmallGrade> getSmallGradesBySubject(Subject subject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]} ){
     List<SmallGrade> output = [];
     for(SmallGrade e in smallGrades){
