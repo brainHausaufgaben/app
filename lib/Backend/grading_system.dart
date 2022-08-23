@@ -142,7 +142,7 @@ class GradingSystem{
         average += e.value.toDouble();
       }
       if(smallGradesSubject.length + bigGradesSubject.length == 0) return -1;
-      return average / (smallGradesSubject.length + bigGradesSubject.length);
+      return average / (smallGradesSubject.length + bigGradesSubject.length * 2);
     }
   }
 
