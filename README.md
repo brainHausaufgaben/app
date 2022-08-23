@@ -17,4 +17,4 @@
 ## Recompile Instructions
     flutter sdk: ">=2.15.0 <3.0.0"
     dart: so ziemlich das gleiche
-![](https://github.com/brainHausaufgaben/app/blob/master/images/Rendered_SSO.jpg)
+![](https://github.com/brainHausaufgaben/app/blob/master/images/Rendered%20SSO.jpg)
