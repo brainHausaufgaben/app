@@ -70,7 +70,8 @@ abstract class Design {
     "Forest Green" : ForestGreenDesign(),
     "Ocean Blue" : OceanBlueDesign(),
     "Princess Pink" : PrincessPinkDesign(),
-    "Jeremias Purple" : JeremiasPurpleDesign()
+    "Jeremias Purple" : JeremiasPurpleDesign(),
+
   };
 
   DesignPackage get lightVariant;
@@ -156,4 +157,13 @@ class BlindnessDesign extends Design {
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFF000000), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0x00000000), const Color(0x00FFFFFF));
+}
+
+class CancerDesign extends Design {
+  @override
+  DesignPackage get lightVariant =>
+      generateDesign(const Color(0xFFFC03D3), const Color(0xFFebfc03), const Color(0xFFfc0303), const Color(0xFF03fcdf), const Color(0xFF3dfc03));
+  @override
+  DesignPackage get darkVariant =>
+      generateDesign(const Color(0xFFebfc03), const Color(0xFFfc0303), const Color(0xFFFC03D3), const Color(0xFF3dfc03), const Color(0xFF03fcdf));
 }

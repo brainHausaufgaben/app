@@ -34,6 +34,11 @@ class DeveloperOptions{
       case "dunkelheit":
         Dunkelheit();
         break;
+      case "krebs":
+        Cancer();
+        break;
+      default:
+        return;
     }
   }
 
@@ -47,6 +52,13 @@ class DeveloperOptions{
   }
 
   static void Fortnite(){
+
+  }
+
+  static void Cancer(){
+    AppDesign.setFromPackage(CancerDesign().lightVariant);
+
+
 
   }
 
