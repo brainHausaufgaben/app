@@ -15,6 +15,7 @@ import 'package:brain_app/Pages/developer_options.dart';
 import 'package:brain_app/Pages/edit_events.dart';
 import 'package:brain_app/Pages/edit_tests.dart';
 import 'package:brain_app/Pages/grades_per_subject.dart';
+import 'package:brain_app/Pages/image_page.dart';
 import 'package:brain_app/Pages/notification_settings.dart';
 import 'package:brain_app/Pages/settings.dart';
 import 'package:brain_app/Pages/subject_overview.dart';
@@ -23,6 +24,7 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 
 
 class NavigationHelper extends StatefulWidget {
@@ -131,7 +133,8 @@ class NavigationRoutes {
       "homework": (context) => HomeworkPage(),
       "designSettings": (context) => DesignSettingsPage(),
       "notificationSettings": (context) => NotificationSettings(),
-      "developerOptions": (context) => DeveloperOptionsPage()
+      "developerOptions": (context) => DeveloperOptionsPage(),
+      "imagePage": (context) => ImagePage(),
     };
   }
 
