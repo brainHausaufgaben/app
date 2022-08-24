@@ -11,15 +11,15 @@ class ImagePage extends StatelessWidget{
     String? data = ModalRoute.of(context)!.settings.arguments as String?;
     return GestureDetector(
       child: Scaffold(
-        body:Flex(
+        body: Flex(
           direction: Axis.vertical,
-       children: [Expanded(
-
-          child:Image.asset(data!,fit: BoxFit.fill) ,
-        )
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child:Image.asset(data!,fit: BoxFit.cover),
+            )
           ]
         )
-        ,
       ),
       onTap: () => Navigator.pop(context),
     );

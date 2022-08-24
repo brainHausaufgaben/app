@@ -11,7 +11,6 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class DeveloperOptions{
 
@@ -112,7 +111,7 @@ class DeveloperOptions{
 
 
   static void SharkSwimmingOcean(){
-      NavigationHelper.pushNamed(NavigationHelper.rootKey.currentContext!,"imagePage",payload: "../images/Rendered SSO.jpg");
+    NavigationHelper.rootKey.currentState!.pushNamed("imagePage", arguments: "images/Rendered SSO.jpg");
   }
 
   static void Manuel() async {

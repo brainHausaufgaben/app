@@ -522,6 +522,7 @@ class SettingsNavigatorButton extends StatelessWidget {
       onPressed: activated ? action : null,
       child: Flex(
         direction: Axis.horizontal,
+        crossAxisAlignment: description == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(

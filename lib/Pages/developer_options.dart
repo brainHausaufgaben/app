@@ -116,6 +116,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                   style: TextButton.styleFrom(
                     side: const BorderSide(color: Color(0xFFB40000), width: 3),
                     primary: const Color(0xFFB40000),
+                    backgroundColor: AppDesign.colors.background,
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                   ),
                   onPressed: () {

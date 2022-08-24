@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:brain_app/Components/brain_navigation_bar.dart';
 import 'package:brain_app/Components/brain_sidebar.dart';
@@ -20,11 +19,9 @@ import 'package:brain_app/Pages/notification_settings.dart';
 import 'package:brain_app/Pages/settings.dart';
 import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:brain_app/Pages/time_table.dart';
-import 'package:brain_app/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path/path.dart';
 
 
 class NavigationHelper extends StatefulWidget {
@@ -34,8 +31,8 @@ class NavigationHelper extends StatefulWidget {
   static GlobalKey<NavigatorState> rootKey = GlobalKey();
   static ValueNotifier<int> selectedPrimaryPage = ValueNotifier<int>(1);
 
-  static NavigatorState getNavigator(BuildContext context, {bool forceNested = false}) {
-    if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth || forceNested) {
+  static NavigatorState getNavigator(BuildContext context, {bool forceNested = false, bool forceRoot = false}) {
+    if ((MediaQuery.of(context).size.width > AppDesign.breakPointWidth || forceNested) && !forceRoot) {
       return navigatorKey.currentState!;
     } else {
       return rootKey.currentState!;

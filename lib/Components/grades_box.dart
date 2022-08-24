@@ -47,15 +47,15 @@ class GradesBox extends StatelessWidget {
                         )
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 13, top: 8),
+                      padding: const EdgeInsets.only(bottom: 10, top: 3),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            value == "-1.0" ? "-" : value,
+                            value == "-1.0" || value == "-1" ? "-" : value,
                             style: TextStyle(
                               color: AppDesign.colors.contrast,
-                              fontSize: 50,
+                              fontSize: 43,
                               fontWeight: FontWeight.w800
                             )
                           ),
@@ -115,7 +115,7 @@ class GradesBox extends StatelessWidget {
             ),
             Positioned(
               right: -30,
-              top: -45,
+              top: -50,
               child: Icon(
                 Icons.school_rounded,
                 size: 150,
@@ -123,66 +123,6 @@ class GradesBox extends StatelessWidget {
               )
             )
           ]
-        )
-    );
-  }
-}
-
-class GradeWidget extends StatelessWidget {
-  GradeWidget({
-    Key? key,
-    required this.name,
-    required this.value,
-    required this.reversed
-  }) : super(key: key);
-
-  final String name;
-  final String value;
-  final bool reversed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-        flex: 8,
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            decoration: BoxDecoration(
-                borderRadius: AppDesign.boxStyle.borderRadius,
-                boxShadow: [
-                  AppDesign.boxStyle.boxShadow
-                ],
-                color: AppDesign.colors.background
-            ),
-            child: Center(
-                child: Wrap(
-                    textDirection: reversed ? TextDirection.rtl : TextDirection.ltr,
-                    direction: Axis.horizontal,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    alignment: WrapAlignment.center,
-                    runAlignment: WrapAlignment.center,
-                    spacing: 5,
-                    children: [
-                      Text(
-                        value,
-                        style: TextStyle(
-                            color: AppDesign.colors.text,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w700
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        name,
-                        style: TextStyle(
-                            color: AppDesign.colors.text,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700
-                        ),
-                        textAlign: TextAlign.center
-                      )
-                    ]
-                )
-            )
         )
     );
   }

@@ -161,7 +161,7 @@ class _PageTemplateState extends State<PageTemplate> {
                               ]
                           )
                       ),
-                      if (widget.floatingHeader != null)
+                      if (widget.floatingHeader != null && BrainApp.preferences["pinnedHeader"])
                         StickyHeader(
                           content: Padding(
                             padding: const EdgeInsets.only(top: 20),
@@ -172,7 +172,15 @@ class _PageTemplateState extends State<PageTemplate> {
                               : getFloatingHeader()
                         )
                       else
-                        widget.child
+                        Column(
+                          children: [
+                            if (widget.floatingHeader != null && !BrainApp.preferences["pinnedHeader"]) Padding(
+                              padding: const EdgeInsets.only(bottom: 20, top: 10),
+                              child: widget.floatingHeader!,
+                            ),
+                            widget.child
+                          ],
+                        )
                     ]
                 )
               )

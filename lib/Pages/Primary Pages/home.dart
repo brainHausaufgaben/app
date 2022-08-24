@@ -204,12 +204,9 @@ class _HomePage extends State<HomePage>{
         ),
         child: Wrap(
           runSpacing: 20,
-          children: [
-            if (!BrainApp.preferences["pinnedHeader"]) getHeader(),
-            ...getDays()
-          ],
+          children: getDays()
         ),
-        floatingHeader: BrainApp.preferences["pinnedHeader"] ? getHeader() : null
+        floatingHeader: getHeader()
       ),
     );
   }
