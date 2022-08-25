@@ -63,7 +63,7 @@ class _NotificationSettings extends State<NotificationSettings> {
                     currentTime: parseTime(BrainApp.preferences["notificationTime"]),
                     onSelect: (time) {
                       setState(() {
-                        CustomNotifications.notificationTime = DateTime(0);
+                        CustomNotifications.notificationTime = DateTime(0,0,0,time.hour,time.minute);
                         BrainApp.updatePreference("notificationTime", "${time.hour}:${time.minute}");
                       });
                     },

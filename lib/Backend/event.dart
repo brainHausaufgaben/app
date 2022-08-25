@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
@@ -16,6 +17,7 @@ class Event{
     if(newDescription != null) description = newDescription;
     if(newDueTime != null) dueTime = newDueTime;
     if(newName != null) name = newName;
+
     SaveSystem.saveEvents();
   }
 

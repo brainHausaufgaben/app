@@ -17,7 +17,7 @@ import 'package:localstorage/localstorage.dart';
 
 class DeveloperOptions{
 
-  static List<String> activatedCodes = [];
+  static List<String> activatedCodes = ["onscreenlogging","logsaves", "savelogs"];
 
   static Map<String,List<dynamic>> codes = {
     "fortnite" : [Fortnite, "Fortnite Gaming", "Macht Fortnite"],

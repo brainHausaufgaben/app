@@ -1,6 +1,8 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io'show Platform;
 
@@ -43,8 +45,21 @@ class CustomNotifications{
         CustomNotifications.disablePermaNotification();
       }
       homeworkNotificationsEnabled = preferences.getBool("homeworkNotifications") ?? true;
+
     });
 
+    if(BrainApp.preferences["persistentNotifications"]){
+      enablePermaNotification();
+    }
+    else{
+      disablePermaNotification();
+    }
+    homeworkNotificationsEnabled = BrainApp.preferences["homeworkNotifications"];
+    testNotificationsEnabled = BrainApp.preferences["testNotifications"];
+    String savedTime = BrainApp.preferences["notificationTime"];
+    List<String> split = savedTime.split(RegExp(":"));
+    notificationTime = DateTime(0,0,0, int.parse(split[0]),int.parse(split[1]) );
+    daysBeforeTest = BrainApp.preferences["daysUntilNotification"];
 
   }
 
@@ -74,30 +89,35 @@ class CustomNotifications{
     initializeTimeZones();
     DateTime scheduleTime = homework.dueTime.subtract(const Duration(days: 1));
     TZDateTime scheduleZonedTime = TZDateTime(getLocation("Europe/Zurich"),scheduleTime.year,scheduleTime.month,scheduleTime.day,notificationTime.hour,notificationTime.minute);
+    BrainDebug.log("Homework notification" + scheduleZonedTime.toString());
     homework.notificationID = currentHomeworkNotificationID;
     if(!scheduleZonedTime.isBefore(TZDateTime.now(getLocation("Europe/Zurich")))) {
       await notificationsPlugin.zonedSchedule(currentHomeworkNotificationID, title, body, scheduleZonedTime, platformChannelSpecifics, androidAllowWhileIdle: true);
     } else {
       await notificationsPlugin.show(currentHomeworkNotificationID, title, body,notificationDetails: platformChannelSpecifics);
+      BrainDebug.log("added to late, showing now");
     }
   }
 
   static void testNotification(Test test) async{
     if(!testNotificationsEnabled || !notificationsPossible) return;
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
-    String title = "Test in " + test.subject.name + " am " + test.dueTime.toString();
+    String title = "Test in " + test.subject.name + " in " + daysBeforeTest.toString() + " Tagen";
     String body = test.description;
     currentTestNotificationID++;
     const AndroidNotificationDetails platformChannelSpecifics =
     AndroidNotificationDetails("2","Test Benachrichtigung",channelDescription: 'Test Benachrichtigung',styleInformation: defStyleInformation);
     initializeTimeZones();
     DateTime scheduleTime = test.dueTime.subtract(Duration(days: daysBeforeTest));
+
     TZDateTime scheduleZonedTime = TZDateTime(getLocation("Europe/Zurich"),scheduleTime.year,scheduleTime.month,scheduleTime.day,notificationTime.hour,notificationTime.minute);
     test.notificationID = currentTestNotificationID;
+    BrainDebug.log("Test notification" + scheduleZonedTime.toString());
     if(!scheduleZonedTime.isBefore(TZDateTime.now(getLocation("Europe/Zurich")))) {
       await notificationsPlugin.zonedSchedule(currentTestNotificationID, title, body, scheduleZonedTime, platformChannelSpecifics, androidAllowWhileIdle: true);
     } else {
       await notificationsPlugin.show(currentTestNotificationID, title, body,notificationDetails: platformChannelSpecifics);
+      BrainDebug.log("added to late, showing now");
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -17,6 +18,8 @@ class Homework {
     if(newDueTime != null) dueTime = newDueTime;
     if(newName != null) name = newName;
     SaveSystem.saveHomework();
+    CustomNotifications.notificationsPlugin.cancel(notificationID);
+    CustomNotifications.homeworkNotification(this);
   }
 
   bool isDue(DateTime date){

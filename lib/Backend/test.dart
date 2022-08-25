@@ -2,6 +2,8 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
+import 'notifications.dart';
+
 class Test {
   Subject subject;
   DateTime dueTime;
@@ -17,6 +19,8 @@ class Test {
     if(newDueTime != null) dueTime = newDueTime;
     if(newDescription != null) description = newDescription;
     SaveSystem.saveTests();
+    CustomNotifications.notificationsPlugin.cancel(notificationID);
+    CustomNotifications.testNotification(this);
   }
 
   bool isDue(DateTime date){

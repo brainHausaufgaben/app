@@ -97,6 +97,7 @@ class TimeTable {
 
   static void addTest(Test test){
     tests.add(test);
+    CustomNotifications.testNotification(test);
     SaveSystem.saveTests();
   }
 
