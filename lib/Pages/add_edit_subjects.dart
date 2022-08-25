@@ -106,7 +106,8 @@ class _SubjectPage extends State<SubjectPage> {
                           } else {
                             Subject(widget.subjectController.text.trim(), widget.pickerColor);
                           }
-                          Navigator.of(context).pop(true);
+                          Navigator.of(context).pop();
+                          BrainApp.notifier.notifyOfChanges();
                         }
                       },
                       child: Padding(
@@ -127,7 +128,7 @@ class _SubjectPage extends State<SubjectPage> {
                         onPressed: () {
                           TimeTable.deleteSubject(widget.previousSubject!);
                           BrainApp.notifier.notifyOfChanges();
-                          Navigator.of(context).pop(true);
+                          Navigator.of(context).pop();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),

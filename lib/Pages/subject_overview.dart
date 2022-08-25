@@ -24,13 +24,7 @@ class _SubjectOverview extends State<SubjectOverview> {
         ),
         icon: Icons.edit,
         dense: true,
-        action: () {
-          NavigationHelper.pushNamed(context, "subjectPage", payload: subject).then((value) {
-            if (value != null) {
-              setState(() {});
-            }
-          });
-        }
+        action: () => NavigationHelper.pushNamed(context, "subjectPage", payload: subject)
       ));
     }
     return buttons;
@@ -41,13 +35,7 @@ class _SubjectOverview extends State<SubjectOverview> {
     return PageTemplate(
       title: "Alle Fächer",
       floatingActionButton: BrainMenuButton(
-        defaultAction: () {
-          NavigationHelper.pushNamed(context, "subjectPage").then((value) {
-            if (value != null) {
-              setState(() {});
-            }
-          });
-        },
+        defaultAction: () => NavigationHelper.pushNamed(context, "subjectPage"),
         defaultLabel: "Neues Fach",
         icon: Icons.add,
         withEntries: false,
