@@ -141,6 +141,7 @@ class NavigationRoutes {
     return PageRouteBuilder(
         pageBuilder: (context, a1, a2) => routes[settings.name!]!(context),
         transitionDuration: const Duration(milliseconds: 600),
+        reverseTransitionDuration: const Duration(milliseconds: 350),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const offsetBegin = Offset(0, 0.1);
           const offsetEnd = Offset(0, 0);

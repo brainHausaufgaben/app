@@ -11,6 +11,7 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 enum SortMethods {
   bySubject,
@@ -203,68 +204,21 @@ class _GradeOverview extends State<GradeOverview>{
           ),
           child: TimeTable.subjects.isEmpty
               ? Container()
-              : Column(
-            children: [
-              HeadlineWrap(
-                  headline: "Alle Fächer",
+              : HeadlineWrap(
+              headline: "Alle Fächer",
+              children: AnimationConfiguration.toStaggeredList(
+                  duration: const Duration(milliseconds: 300),
+                  childAnimationBuilder: (child) => SlideAnimation(
+                    key: GlobalKey(),
+                      verticalOffset: 30.0,
+                      child: FadeInAnimation(
+                        child: child,
+                      )
+                  ),
                   children: getGradeButtons()
               )
-            ],
           )
       )
-    );
-  }
-}
-
-class GradeWidget extends StatelessWidget {
-  GradeWidget({
-    Key? key,
-    required this.name,
-    required this.value,
-    required this.reversed
-  }) : super(key: key);
-
-  final String name;
-  final String value;
-  final bool reversed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Flexible(
-        flex: 8,
-        child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-            decoration: BoxDecoration(
-                borderRadius: AppDesign.boxStyle.borderRadius,
-                color: AppDesign.colors.secondaryBackground
-            ),
-            child: Center(
-                child: Wrap(
-                    textDirection: reversed ? TextDirection.rtl : TextDirection.ltr,
-                    direction: Axis.horizontal,
-                    crossAxisAlignment: WrapCrossAlignment.center,
-                    spacing: 5,
-                    children: [
-                      Text(
-                          value,
-                          style: TextStyle(
-                              color: AppDesign.colors.text,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w700
-                          )
-                      ),
-                      Text(
-                          name,
-                          style: TextStyle(
-                              color: AppDesign.colors.text,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w700
-                          )
-                      )
-                    ]
-                )
-            )
-        )
     );
   }
 }
