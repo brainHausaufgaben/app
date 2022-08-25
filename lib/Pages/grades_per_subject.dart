@@ -8,7 +8,6 @@ import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
-import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 import 'Primary Pages/grades.dart';
@@ -23,7 +22,8 @@ class GradesPerSubjectPage extends StatefulWidget {
 }
 
 class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
-  List<int> get partsOfYear => GradeOverview.timeSelectors == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.index];
+  List<int> get partsOfYear => GradeOverview.timeSelectors.value == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.value.index];
+  late Function() listener;
 
   List<Widget> getShortTests() {
     List<Widget> buttons = [];
@@ -112,6 +112,19 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
   }
 
   @override
+  void initState() {
+    listener = () => setState(() {});
+    GradeOverview.timeSelectors.addListener(listener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    GradeOverview.timeSelectors.removeListener(listener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     getData();
 
@@ -125,11 +138,10 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
           withEntries: false,
         ),
         floatingHeader: GradesBox(
-          currentSelector: GradeOverview.timeSelectors,
+          currentSelector: GradeOverview.timeSelectors.value,
           value: GradingSystem.getAverage(widget.subject, onlyPartsOfYear: partsOfYear).toString(),
           onChanged: (value) {
-            GradeOverview.timeSelectors = value;
-            BrainApp.notifier.notifyOfChanges();
+            GradeOverview.timeSelectors.value = value;
           },
         ),
         child: Padding(

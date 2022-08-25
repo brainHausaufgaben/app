@@ -10,9 +10,7 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class EditTestPage extends StatefulWidget {
-  EditTestPage({Key? key, this.previousTest}) : super(key: key) {
-    testSubpage = TestSubpage(previousTest: previousTest);
-  }
+  EditTestPage({Key? key}) : super(key: key);
 
   Test? previousTest;
   TestSubpage testSubpage = TestSubpage();
@@ -22,11 +20,21 @@ class EditTestPage extends StatefulWidget {
 }
 
 class _EditTestPage extends State<EditTestPage> {
+  void getData() {
+    Test data = ModalRoute.of(context)!.settings.arguments as Test;
+    setState(() {
+      widget.previousTest = data;
+      widget.testSubpage = TestSubpage(previousTest: data);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.previousTest == null) getData();
+
     return PageTemplate(
       backButton: true,
-      title: widget.previousTest != null ? "Test Bearbeiten" : "Neuer Test",
+      title: "Test Bearbeiten",
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,

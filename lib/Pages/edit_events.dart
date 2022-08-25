@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class EditEventPage extends StatefulWidget {
   EditEventPage({Key? key}) : super(key: key);
 
-  late Event previousEvent;
+  Event? previousEvent;
   EventSubpage eventSubpage = EventSubpage();
 
   @override
@@ -28,7 +28,7 @@ class _TestPage extends State<EditEventPage> {
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    if (widget.previousEvent == null) getData();
 
     return PageTemplate(
       backButton: true,
@@ -53,7 +53,7 @@ class _TestPage extends State<EditEventPage> {
                     toast.show(context);
                     return;
                   } else {
-                    widget.previousEvent.edit(date, title, description);
+                    widget.previousEvent!.edit(date, title, description);
                     BrainApp.notifier.notifyOfChanges();
                     Navigator.pop(context);
                   }
@@ -71,7 +71,7 @@ class _TestPage extends State<EditEventPage> {
               padding: const EdgeInsets.only(left: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  TimeTable.removeEvent(widget.previousEvent);
+                  TimeTable.removeEvent(widget.previousEvent!);
                   BrainApp.notifier.notifyOfChanges();
                   Navigator.pop(context);
                 },

@@ -24,14 +24,15 @@ class GradeOverview extends StatefulWidget {
 
   bool sortAscending = false;
   SortMethods? sortMethod;
-  static TimeSelectors timeSelectors = TimeSelectors.thisYear;
+  static ValueNotifier<TimeSelectors> timeSelectors = ValueNotifier(TimeSelectors.thisYear);
 
   @override
   State<GradeOverview> createState() => _GradeOverview();
 }
 
 class _GradeOverview extends State<GradeOverview>{
-  List<int> get partsOfYear => GradeOverview.timeSelectors == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.index];
+  List<int> get partsOfYear => GradeOverview.timeSelectors.value == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.value.index];
+  late Function() listener;
 
   LinkedHashMap sortByValue(Map map) {
     List sortedKeys = map.keys.toList(growable: false)..sort((key1, key2) {
@@ -113,6 +114,19 @@ class _GradeOverview extends State<GradeOverview>{
   }
 
   @override
+  void initState() {
+    listener = () => setState(() {});
+    GradeOverview.timeSelectors.addListener(listener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    GradeOverview.timeSelectors.removeListener(listener);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
@@ -134,11 +148,9 @@ class _GradeOverview extends State<GradeOverview>{
             children: [
               GradesBox(
                 value: GradingSystem.getYearAverage(onlyPartsOfYear: partsOfYear).toString(),
-                currentSelector: GradeOverview.timeSelectors,
+                currentSelector: GradeOverview.timeSelectors.value,
                 onChanged: (value) {
-                  setState(() {
-                    GradeOverview.timeSelectors = value;
-                  });
+                  GradeOverview.timeSelectors.value = value;
                 },
               ),
               Flex(
@@ -161,7 +173,7 @@ class _GradeOverview extends State<GradeOverview>{
                           )
                         ],
                         onChanged: (value) {
-                          setState(() => widget.sortMethod = value);
+                          if (widget.sortMethod != value) setState(() => widget.sortMethod = value);
                         }
                     ),
                   ),
@@ -169,7 +181,7 @@ class _GradeOverview extends State<GradeOverview>{
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     child: TextButton(
                         onPressed: () {
-                          setState(() => widget.sortAscending = true);
+                          if (!widget.sortAscending) setState(() => widget.sortAscending = true);
                         },
                         style: TextButton.styleFrom(
                             backgroundColor: widget.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
@@ -185,7 +197,7 @@ class _GradeOverview extends State<GradeOverview>{
                   ),
                   TextButton(
                       onPressed: () {
-                        setState(() => widget.sortAscending = false);
+                        if (widget.sortAscending) setState(() => widget.sortAscending = false);
                       },
                       style: TextButton.styleFrom(
                           backgroundColor: widget.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
