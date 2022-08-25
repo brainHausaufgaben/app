@@ -39,8 +39,8 @@ class NavigationHelper extends StatefulWidget {
     }
   }
 
-  static void pushNamed(BuildContext context, String route, {dynamic payload}) {
-    getNavigator(context).pushNamed(route, arguments: payload);
+  static Future<dynamic> pushNamed(BuildContext context, String route, {dynamic payload}) {
+    return getNavigator(context).pushNamed(route, arguments: payload);
   }
 
   static void pushNamedReplacement(BuildContext context, String route) {

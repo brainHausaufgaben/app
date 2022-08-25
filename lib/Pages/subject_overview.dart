@@ -24,7 +24,13 @@ class _SubjectOverview extends State<SubjectOverview> {
         ),
         icon: Icons.edit,
         dense: true,
-        action: () => NavigationHelper.pushNamed(context, "subjectPage", payload: subject)
+        action: () {
+          NavigationHelper.pushNamed(context, "subjectPage", payload: subject).then((value) {
+            if (value != null) {
+              setState(() {});
+            }
+          });
+        }
       ));
     }
     return buttons;

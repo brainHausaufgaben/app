@@ -104,8 +104,7 @@ class _SubjectPage extends State<SubjectPage> {
                           } else {
                             Subject(widget.subjectController.text.trim(), widget.pickerColor);
                           }
-                          BrainApp.notifier.notifyOfChanges();
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(true);
                         }
                       },
                       child: Padding(
