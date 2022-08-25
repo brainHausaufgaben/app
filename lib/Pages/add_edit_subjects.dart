@@ -92,10 +92,12 @@ class _SubjectPage extends State<SubjectPage> {
                           return;
                         } else {
                           for (Subject subject in TimeTable.subjects) {
-                            if (subject.name == widget.subjectController.text && widget.previousSubject == null) {
-                              BrainToast toast = BrainToast(text: "Ein Fach mit diesem Namen existiert bereits!");
-                              toast.show(context);
-                              return;
+                            if (subject.name == widget.subjectController.text) {
+                              if (widget.previousSubject?.id != subject.id) {
+                                BrainToast toast = BrainToast(text: "Ein Fach mit diesem Namen existiert bereits!");
+                                toast.show(context);
+                                return;
+                              }
                             }
                           }
 
@@ -125,7 +127,7 @@ class _SubjectPage extends State<SubjectPage> {
                         onPressed: () {
                           TimeTable.deleteSubject(widget.previousSubject!);
                           BrainApp.notifier.notifyOfChanges();
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(true);
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),
