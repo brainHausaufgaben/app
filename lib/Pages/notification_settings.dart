@@ -49,7 +49,7 @@ class _NotificationSettings extends State<NotificationSettings> {
               SettingsEntry(
                 children: [
                   SettingsSwitchButton(
-                      text: "Hausaufgaben Benachrichtigung",
+                      text: "Hausaufgaben Benachrichtigungen",
                       action: () {
                         setState(() {
                           BrainApp.updatePreference("homeworkNotifications", !BrainApp.preferences["homeworkNotifications"]);
@@ -69,6 +69,30 @@ class _NotificationSettings extends State<NotificationSettings> {
                     },
                   )
                 ],
+              ),
+              SettingsEntry(
+                children: [
+                  SettingsSwitchButton(
+                      text: "Schulaufgaben Benachrichtigungen",
+                      action: () {
+                        setState(() {
+                          BrainApp.updatePreference("testNotifications", !BrainApp.preferences["testNotifications"]);
+                          CustomNotifications.homeworkNotificationsEnabled = BrainApp.preferences["testNotifications"];
+                        });
+                      },
+                      state: BrainApp.preferences["testNotifications"]
+                  ),
+                  SettingsNumberPicker(
+                    text: "Immer ... Tage vorher",
+                    currentValue: BrainApp.preferences["daysUntilNotification"],
+                    action: (value) {
+                      setState(() {
+                        BrainApp.updatePreference("daysUntilNotification", value);
+                        CustomNotifications.daysBeforeTest = value;
+                      });
+                    }
+                  )
+                ]
               )
             ]
         )

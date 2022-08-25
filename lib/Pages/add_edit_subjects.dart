@@ -92,7 +92,7 @@ class _SubjectPage extends State<SubjectPage> {
                           return;
                         } else {
                           for (Subject subject in TimeTable.subjects) {
-                            if (subject.name == widget.subjectController.text) {
+                            if (subject.name == widget.subjectController.text && widget.previousSubject == null) {
                               BrainToast toast = BrainToast(text: "Ein Fach mit diesem Namen existiert bereits!");
                               toast.show(context);
                               return;
@@ -102,7 +102,7 @@ class _SubjectPage extends State<SubjectPage> {
                           if (widget.previousSubject != null) {
                             TimeTable.getSubject(widget.previousSubject!.id)!.edit(widget.subjectController.text, widget.pickerColor);
                           } else {
-                            Subject(widget.subjectController.text, widget.pickerColor);
+                            Subject(widget.subjectController.text.trim(), widget.pickerColor);
                           }
                           BrainApp.notifier.notifyOfChanges();
                           Navigator.of(context).pop();

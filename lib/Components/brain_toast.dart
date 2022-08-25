@@ -44,22 +44,23 @@ class BrainToast {
               if (buttonText != null) TextButton(
                 onPressed: action,
                 style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      side: BorderSide(
-                          color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
-                          width: 1.5
+                  primary: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
+                  padding: EdgeInsets.zero,
+                  side: BorderSide(
+                      color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
+                      width: 1.5
+                  )
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                  child: Text(
+                      buttonText!,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF)
                       )
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                    child: Text(
-                        buttonText!,
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF)
-                        )
-                    ),
-                  ),
+                ),
               )
             ]
         )

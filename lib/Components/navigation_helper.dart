@@ -142,7 +142,7 @@ class NavigationRoutes {
         pageBuilder: (context, a1, a2) => routes[settings.name!]!(context),
         transitionDuration: const Duration(milliseconds: 600),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const offsetBegin = Offset(0, 0.15);
+          const offsetBegin = Offset(0, 0.1);
           const offsetEnd = Offset(0, 0);
           const begin = 0.0;
           const end = 1.0;

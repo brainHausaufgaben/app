@@ -25,6 +25,8 @@ class BrainApp extends StatefulWidget {
     "persistentNotifications": false,
     "homeworkNotifications": false,
     "notificationTime": "16:00",
+    "testNotifications": false,
+    "daysUntilNotification": 1,
     "design": "Monochrome",
     "darkMode": MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness == Brightness.dark,
     "pinnedHeader": true,

@@ -3,7 +3,6 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
-import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -11,6 +10,7 @@ import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
 import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:numberpicker/numberpicker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BrainTextField extends StatefulWidget {
@@ -701,8 +701,89 @@ class SettingsTimePicker extends StatelessWidget {
   }
 }
 
-class SettingsTextfield extends StatelessWidget {
-  SettingsTextfield({
+class SettingsNumberPicker extends StatelessWidget {
+  SettingsNumberPicker({
+    Key? key,
+    required this.text,
+    required this.currentValue,
+    required this.action
+  }) : super(key: key);
+
+  final String text;
+  int currentValue;
+  final Function(int) action;
+
+  void numberPickerDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: AppDesign.colors.secondaryBackground,
+            title: Text(
+              "Tage",
+              style: AppDesign.textStyles.alertDialogHeader,
+            ),
+            content: StatefulBuilder(
+                builder: (context, setBuilderState) {
+                  return NumberPicker(
+                      selectedTextStyle: TextStyle(
+                          color: AppDesign.colors.primary,
+                          fontWeight: FontWeight.w700
+                      ),
+                      value: currentValue,
+                      minValue: 1,
+                      maxValue: 30,
+                      onChanged: (value) {
+                        setBuilderState(() => currentValue = value);
+                      }
+                  );
+                }
+            ),
+
+            actions: [
+              TextButton(
+                child: Text("Ok", style: TextStyle(color: AppDesign.colors.text)),
+                onPressed: () {
+                  action(currentValue);
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        }
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => numberPickerDialog(context),
+      child: Flex(
+        direction: Axis.horizontal,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(text, style: AppDesign.textStyles.settingsSubMenu),
+          const Spacer(),
+          Container(
+            padding: const EdgeInsets.only(left: 6),
+            decoration: BoxDecoration(
+                border: Border(
+                    left: BorderSide(
+                        color: AppDesign.colors.text08,
+                        width: 1.5
+                    )
+                )
+            ),
+            child: Text("${currentValue.toString()} Tage", style: AppDesign.textStyles.settingsSubMenuDescription),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsTextField extends StatelessWidget {
+  SettingsTextField({
     Key? key,
     this.text,
     this.submitAction

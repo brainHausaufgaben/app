@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -113,12 +112,12 @@ class CustomNotifications{
       if (TimeTable.homeworks.length > 1) body += "n";
     }
     else{
-      title = "<b> Gut Gemacht! </b>";
+      title = "<b> Gut gemacht! </b>";
       body =  "Du hast schon alle Hausaufgaben erledigt";
     }
 
     const AndroidNotificationDetails platformChannelSpecifics =
-    AndroidNotificationDetails('0', "Dauer Benachtichtigung",
+    AndroidNotificationDetails('0', "Dauer Benachrichtigung",
         showWhen: false,
         channelDescription: 'your channel description',
         ongoing: true,

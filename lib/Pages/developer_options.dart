@@ -63,7 +63,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
     widgets.add(
       SettingsEntry(
         children: [
-          SettingsTextfield(
+          SettingsTextField(
               text: "Developer Code",
               submitAction: (text) {
                 if (text == "no bitches?") {

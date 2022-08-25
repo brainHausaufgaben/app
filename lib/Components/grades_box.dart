@@ -60,7 +60,7 @@ class GradesBox extends StatelessWidget {
                             )
                           ),
                           if (GradingSystem.isAdvancedLevel) Padding(
-                            padding: const EdgeInsets.only(bottom: 8, left: 8),
+                            padding: const EdgeInsets.only(bottom: 6, left: 8),
                             child: Text(
                               "Note ${GradingSystem.PointToGrade(double.parse(value).toInt())}",
                               style: TextStyle(
