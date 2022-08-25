@@ -33,7 +33,9 @@ class BrainApp extends StatefulWidget {
     "calendarFormat" : 0,
     "overridePrimaryWith" : Colors.black.value,
     "showDeveloperOptions" : false,
-    "currentSemester": 0
+    "currentSemester": 0,
+    "showLogsOnScreen":false,
+    "saveLogs":false,
   };
 
   static void clearPreferences() async {

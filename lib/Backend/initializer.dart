@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'brain_debug.dart';
 import 'design.dart';
 import 'event.dart';
 import 'grade.dart';
@@ -114,6 +115,9 @@ class Initializer {
             item["id"]);
       }
     }
+    else {
+      BrainDebug.log("No Subjects");
+    }
 
     dynamic timetable = await SaveSystem.getTimeTable();
     if (timetable != null) {
@@ -124,6 +128,9 @@ class Initializer {
           if (id != 0 && subject != null) SubjectInstance(subject, i + 1, j);
         }
       }
+    }
+    else {
+      BrainDebug.log("No Time Table");
     }
 
     dynamic homework = await SaveSystem.getHomework();
@@ -137,6 +144,9 @@ class Initializer {
       }
 
     }
+    else {
+      BrainDebug.log("No Homework");
+    }
 
     dynamic events = await SaveSystem.getEvents();
     if(events != null) {
@@ -145,6 +155,9 @@ class Initializer {
         DateTime time = DateTime(t[0], t[1], t[2]);
         Event(time, item["name"], item["description"]);
       }
+    }
+    else {
+      BrainDebug.log("No Events");
     }
 
     dynamic tests = await SaveSystem.getTests();
@@ -156,6 +169,9 @@ class Initializer {
         Subject? subject = TimeTable.getSubject(id);
         if (subject != null) Test(subject, time, item["description"]);
       }
+    }
+    else {
+      BrainDebug.log("No Tests");
     }
 
     dynamic grades = await SaveSystem.getGrades();
@@ -174,13 +190,19 @@ class Initializer {
         }
       }
     }
+    else {
+      BrainDebug.log("No Grades");
+    }
 
     dynamic devOptions = await SaveSystem.getDeveloperOptions();
     if(devOptions != null){
       for (String code in devOptions){
-        print(code);
+        BrainDebug.log(code);
         if(!DeveloperOptions.activatedCodes.contains(code)) DeveloperOptions.activatedCodes.add(code);
       }
+    }
+    else {
+      BrainDebug.log("No Dev Options");
     }
 
     TimeTable.saveEnabled = true;

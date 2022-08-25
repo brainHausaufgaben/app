@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:brain_app/Backend/brain_debug.dart';
 
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
@@ -8,9 +9,11 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 class DeveloperOptions{
 
@@ -25,7 +28,11 @@ class DeveloperOptions{
     "dunkelheit" : [Dunkelheit, "Dunkelheit", "Macht alles Schwarz"],
     "krebs" : [Cancer, "Schöner Modus", "Macht alles sehr schön :)"],
     "felix" : [Doenerladen, "Felix", "Dieser Code basiert auf einem unserer sehr guten wenn nicht sogar besten Freunde namens Felix `Habhax` Leopold Drescher dieser dieses Lied Komponierter"
-        " um ihn zu ehren und um seinen tode an extremer fettsucht zu betraueren ist dieses lied hinzugefügt worden. " ]
+        " um ihn zu ehren und um seinen tode an extremer fettsucht zu betraueren ist dieses lied hinzugefügt worden. " ],
+    "test" : [Test,"Test","Wenn man mal was testen muss"],
+    "onscreenlogging" : [onScreenLogging,"On Screen Logging", "Zeigt alle Logs auf dem Bildschirm an"],
+    "logsaves" : [logSaves, "Log Saves", "onScreenLogging sollte aktiviert sein"],
+    "savelogs" : [saveLogs, "Save Logs", "Speichert alle Logs ACHTUNG: VERBRAUCHT VIEL SPEICHER"],
   };
 
 
@@ -122,6 +129,40 @@ class DeveloperOptions{
     Timer.periodic(const Duration(seconds: 1), (timer) {
       AppDesign.setFromPackage(MonochromeDesign().lightVariant);
     });
+  }
+
+  static void Test(){
+
+
+  }
+
+  static void onScreenLogging(){
+    BrainApp.updatePreference("showLogsOnScreen", !BrainApp.preferences["showLogsOnScreen"]);
+    BrainToast(text: "on screen logging is now " + BrainApp.preferences["showLogsOnScreen"].toString()).show(NavigationHelper.rootKey.currentContext!);
+
+  }
+
+  static void logSaves(){
+    LocalStorage ls =  LocalStorage("brain_app");
+
+    StreamSubscription ss =  ls.stream.listen((event) {},);
+    ss.onData((event) {
+      event.forEach((key, value)
+      {BrainDebug.log(key.toString() + ", " + value.toString());
+      });
+      ss.cancel();
+    });
+
+    BrainApp.preferences.forEach((key, value) {
+      BrainDebug.log(key.toString() + ", " + value.toString());
+    });
+
+
+  }
+
+  static void saveLogs(){
+    BrainApp.updatePreference("saveLogs", !BrainApp.preferences["saveLogs"]);
+    BrainToast(text: "log saving is now " + BrainApp.preferences["saveLogs"].toString()).show(NavigationHelper.rootKey.currentContext!);
   }
 
   static void Sebastian(){

@@ -8,6 +8,7 @@ import 'grading_system.dart';
 class SaveSystem{
    static LocalStorage storage = LocalStorage("brain_app");
 
+
   static void saveSubjects(){
      storage.setItem("subjects", TimeTable.subjectsToJSONEncodeble());
 
