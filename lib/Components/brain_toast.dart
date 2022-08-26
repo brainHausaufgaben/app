@@ -68,6 +68,8 @@ class BrainToast {
   }
 
   void show(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(build());
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      ScaffoldMessenger.of(context).showSnackBar(build());
+    });
   }
 }

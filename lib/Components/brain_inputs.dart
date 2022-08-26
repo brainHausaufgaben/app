@@ -706,10 +706,18 @@ class SettingsNumberPicker extends StatelessWidget {
     Key? key,
     required this.text,
     required this.currentValue,
-    required this.action
+    required this.action,
+    required this.dialogTitle,
+    required this.maxValue,
+    required this.minValue,
+    this.appendToNumber = ""
   }) : super(key: key);
 
   final String text;
+  final int minValue;
+  final int maxValue;
+  final String dialogTitle;
+  final String appendToNumber;
   int currentValue;
   final Function(int) action;
 
@@ -720,7 +728,7 @@ class SettingsNumberPicker extends StatelessWidget {
           return AlertDialog(
             backgroundColor: AppDesign.colors.secondaryBackground,
             title: Text(
-              "Tage",
+              dialogTitle,
               style: AppDesign.textStyles.alertDialogHeader,
             ),
             content: StatefulBuilder(
@@ -731,8 +739,8 @@ class SettingsNumberPicker extends StatelessWidget {
                           fontWeight: FontWeight.w700
                       ),
                       value: currentValue,
-                      minValue: 1,
-                      maxValue: 30,
+                      minValue: minValue,
+                      maxValue: maxValue,
                       onChanged: (value) {
                         setBuilderState(() => currentValue = value);
                       }
@@ -774,7 +782,7 @@ class SettingsNumberPicker extends StatelessWidget {
                     )
                 )
             ),
-            child: Text("${currentValue.toString()} Tage", style: AppDesign.textStyles.settingsSubMenuDescription),
+            child: Text("${currentValue.toString()} $appendToNumber", style: AppDesign.textStyles.settingsSubMenuDescription),
           )
         ],
       ),

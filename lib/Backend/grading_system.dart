@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/main.dart';
 
 class GradingSystem{
   static bool isAdvancedLevel = true;
@@ -60,6 +61,12 @@ class GradingSystem{
   static void setAdvancedLevel(bool state){
     isAdvancedLevel = state;
     removeAllGrades();
+    BrainApp.updatePreference("isAdvancedLevel", state);
+  }
+
+  static void setCurrentYear(int year) {
+    currentYear = year;
+    BrainApp.updatePreference("currentYear", year);
   }
 
   static void removeAllGrades( {bool onlyCurrentYear = true}){

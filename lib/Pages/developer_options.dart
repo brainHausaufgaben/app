@@ -1,5 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/developer_options.dart';
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
@@ -114,9 +115,8 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
             Expanded(
               child: TextButton(
                   style: TextButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFFB40000), width: 3),
-                    primary: const Color(0xFFB40000),
-                    backgroundColor: AppDesign.colors.background,
+                    primary: Colors.white,
+                    backgroundColor: const Color(0xFFB40000),
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                   ),
                   onPressed: () {
@@ -161,7 +161,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                                 ),
                                 onPressed: () {
                                   BrainApp.clearPreferences();
-                                  //TODO: Local storage leer machen (sese)
+                                  SaveSystem.storage.clear();
                                   Navigator.of(context).pop();
                                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                                 },
@@ -179,7 +179,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                       }
                     );
                   },
-                  child: Text("App zurücksetzen", style: AppDesign.textStyles.buttonText.copyWith(color: const Color(0xFFB40000)))
+                  child: Text("App zurücksetzen", style: AppDesign.textStyles.buttonText.copyWith(color: Colors.white))
               )
             )
           ]

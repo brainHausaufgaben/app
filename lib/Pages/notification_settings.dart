@@ -83,7 +83,11 @@ class _NotificationSettings extends State<NotificationSettings> {
                       state: BrainApp.preferences["testNotifications"]
                   ),
                   SettingsNumberPicker(
+                    minValue: 1,
+                    maxValue: 30,
                     text: "Immer ... Tage vorher",
+                    dialogTitle: "Tage",
+                    appendToNumber: "Tage",
                     currentValue: BrainApp.preferences["daysUntilNotification"],
                     action: (value) {
                       setState(() {

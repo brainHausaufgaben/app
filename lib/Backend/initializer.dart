@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/developer_options.dart';
+import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -20,8 +21,11 @@ import 'notifications.dart';
 
 class Initializer {
   static Future init() async {
-    getPreferences().then(
-      (value) => AppDesign.toggleTheme(BrainApp.preferences["design"])
+    getPreferences().then((value) {
+        AppDesign.toggleTheme(BrainApp.preferences["design"]);
+        GradingSystem.isAdvancedLevel = BrainApp.preferences["isAdvancedLevel"];
+        GradingSystem.currentYear = BrainApp.preferences["currentYear"];
+      }
     );
     TimeTable.init();
     await CustomNotifications.init();

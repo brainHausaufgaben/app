@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
@@ -27,13 +28,13 @@ class AppDesign {
     Color primaryColor = Color(BrainApp.preferences["overridePrimaryWith"]);
 
     setFromPackage(
-      generateDesign(
-          primaryColor,
-          colors.background,
-          colors.secondaryBackground,
-          colors.text,
-          primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white
-      )
+        generateDesign(
+            primaryColor,
+            colors.background,
+            colors.secondaryBackground,
+            colors.text,
+            primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white
+        )
     );
   }
 
@@ -50,12 +51,12 @@ class AppDesign {
   static void toggleDarkMode() {
     BrainApp.updatePreference("darkMode", !BrainApp.preferences["darkMode"]);
 
+    if (BrainApp.preferences["design"] == "Monochrome") setAccentColor();
+
     DesignPackage package = BrainApp.preferences["darkMode"]
         ? Design.allDesigns[BrainApp.preferences["design"]]!.darkVariant
         : Design.allDesigns[BrainApp.preferences["design"]]!.lightVariant;
     setAttributes(package);
-
-    if (BrainApp.preferences["design"] == "Monochrome") setAccentColor();
 
     BrainApp.notifier.notifyOfChanges();
   }

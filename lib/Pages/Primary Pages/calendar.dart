@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
@@ -16,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarPage extends StatefulWidget {
-  CalendarPage({Key? key}): super(key: key);
+  const CalendarPage({Key? key}): super(key: key);
 
   static DateTime selectedDay = DateTime.now();
 

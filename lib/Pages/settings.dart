@@ -117,6 +117,16 @@ class _SettingsPage extends State<SettingsPage> {
                   }
                 ),
                 state: GradingSystem.isAdvancedLevel,
+              ),
+              SettingsNumberPicker(
+                minValue: 5,
+                maxValue: 13,
+                dialogTitle: "Wähle eine Klasse",
+                text: "Klasse",
+                currentValue: GradingSystem.currentYear,
+                action: (value) {
+                  setState(() => GradingSystem.setCurrentYear(value));
+                },
               )
             ]
           ),
@@ -141,7 +151,15 @@ class _SettingsPage extends State<SettingsPage> {
                             style: AppDesign.textStyles.pointElementPrimary
                           ),
                           Text(
-                              "Shift + T: Stundenplan",
+                              "Shift + S: Stundenplan",
+                              style: AppDesign.textStyles.pointElementPrimary
+                          ),
+                          Text(
+                              "Shift + N: Neue Note",
+                              style: AppDesign.textStyles.pointElementPrimary
+                          ),
+                          Text(
+                              "Shift + E: Neues Event",
                               style: AppDesign.textStyles.pointElementPrimary
                           )
                         ]
@@ -197,7 +215,7 @@ class _SettingsPage extends State<SettingsPage> {
                                 Flexible(
                                   flex: 0,
                                   child: Center(
-                                    child: Image.asset("icons/appIcon.jpg", width: 60, height: 60),
+                                    child: Image.asset("icons/Icon-192.png", width: 60, height: 60),
                                   ),
                                 ),
                                 Flexible(
