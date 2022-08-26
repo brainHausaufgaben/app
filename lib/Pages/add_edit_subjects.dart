@@ -88,14 +88,14 @@ class _SubjectPage extends State<SubjectPage> {
                       onPressed: () {
                         if (widget.subjectController.text.isEmpty) {
                           BrainToast toast = BrainToast(text: "Du hast keinen Namen angegeben!");
-                          toast.show(context);
+                          toast.show();
                           return;
                         } else {
                           for (Subject subject in TimeTable.subjects) {
                             if (subject.name == widget.subjectController.text) {
                               if (widget.previousSubject?.id != subject.id) {
                                 BrainToast toast = BrainToast(text: "Ein Fach mit diesem Namen existiert bereits!");
-                                toast.show(context);
+                                toast.show();
                                 return;
                               }
                             }

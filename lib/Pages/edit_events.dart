@@ -50,7 +50,7 @@ class _TestPage extends State<EditEventPage> {
 
                   if (title.isEmpty) {
                     BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
-                    toast.show(context);
+                    toast.show();
                     return;
                   } else {
                     widget.previousEvent!.edit(date, title, description);

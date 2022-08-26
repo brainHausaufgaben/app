@@ -24,12 +24,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../main.dart';
+
 
 class NavigationHelper extends StatefulWidget {
   const NavigationHelper({Key? key}) : super(key: key);
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey();
   static GlobalKey<NavigatorState> rootKey = GlobalKey();
+  static GlobalKey<ScaffoldMessengerState> messengerKey = GlobalKey();
   static ValueNotifier<int> selectedPrimaryPage = ValueNotifier<int>(1);
 
   static NavigatorState getNavigator(BuildContext context, {bool forceNested = false, bool forceRoot = false}) {
@@ -80,6 +83,8 @@ class _NavigationHelper extends State<NavigationHelper> {
 
   @override
   Widget build(BuildContext context) {
+    BrainApp.screenWidth = MediaQuery.of(context).size.width;
+
     Widget navigator = Navigator(
       key: NavigationHelper.navigatorKey,
       initialRoute: "home",
@@ -91,13 +96,16 @@ class _NavigationHelper extends State<NavigationHelper> {
         return !await NavigationHelper.navigatorKey.currentState!.maybePop();
       },
       child: Scaffold(
-        body: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
-            ? wrapInSidebar(navigator)
-            : navigator,
+        body: ScaffoldMessenger(
+          key: NavigationHelper.messengerKey,
+          child: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
+              ? wrapInSidebar(navigator)
+              : navigator,
+        ),
         bottomNavigationBar: MediaQuery.of(context).size.width < AppDesign.breakPointWidth
             ? CustomNavigationBar()
-            : null,
-      ),
+            : null
+      )
     );
   }
 }

@@ -1,7 +1,7 @@
 name: brain_app
 description: Brain Hausaufgaben Heft App
 publish_to: 'none'
-version: 0.8.0
+version: 1.0.0
 
 environment:
   sdk: ">=2.17.5 <3.0.0"

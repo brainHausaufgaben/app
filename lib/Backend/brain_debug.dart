@@ -12,7 +12,7 @@ class BrainDebug{
   static void log(dynamic text){
     if(BrainApp.preferences["showLogsOnScreen"]){
       BrainToast toast = BrainToast(text: text.toString());
-      toast.show(NavigationHelper.rootKey.currentContext!);
+      toast.show();
     }
     if (kDebugMode) {
       print(text);

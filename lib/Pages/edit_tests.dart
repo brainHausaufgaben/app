@@ -88,11 +88,11 @@ class _EditTestPage extends State<EditTestPage> {
 
                         if (description.isEmpty) {
                           BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
-                          toast.show(context);
+                          toast.show();
                           return;
                         } else if (subject == null) {
                           BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
-                          toast.show(context);
+                          toast.show();
                           return;
                         } else {
                           widget.previousTest!.edit(subject, date, description);

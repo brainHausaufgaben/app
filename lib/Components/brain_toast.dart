@@ -1,3 +1,5 @@
+import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
@@ -67,9 +69,21 @@ class BrainToast {
     );
   }
 
-  void show(BuildContext context) {
+  void show() {
     WidgetsBinding.instance.addPostFrameCallback((_){
-      ScaffoldMessenger.of(context).showSnackBar(build());
+      if (BrainApp.screenWidth > AppDesign.breakPointWidth) {
+        NavigationHelper.messengerKey.currentState!.showSnackBar(build());
+      } else {
+        ScaffoldMessenger.of(NavigationHelper.rootKey.currentContext!).showSnackBar(build());
+      }
     });
+  }
+
+  static void close() {
+    if (BrainApp.screenWidth > AppDesign.breakPointWidth) {
+      NavigationHelper.messengerKey.currentState!.hideCurrentSnackBar();
+    } else {
+      ScaffoldMessenger.of(NavigationHelper.rootKey.currentContext!).hideCurrentSnackBar();
+    }
   }
 }

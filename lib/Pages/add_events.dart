@@ -42,7 +42,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
 
     if (title.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
-      toast.show(context);
+      toast.show();
       return;
     } else {
       Event(date, title, description);
@@ -61,11 +61,11 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
 
     if (description.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
-      toast.show(context);
+      toast.show();
       return;
     } else if (subject == null) {
       BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
-      toast.show(context);
+      toast.show();
       return;
     } else {
       Test(subject, date, description);

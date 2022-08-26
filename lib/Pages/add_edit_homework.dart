@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -9,8 +10,6 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
-import '../Backend/day.dart';
-
 class HomeworkPage extends StatefulWidget {
   HomeworkPage({Key? key}) : super(key: key);
 
@@ -18,8 +17,6 @@ class HomeworkPage extends StatefulWidget {
   TextEditingController homeworkController = TextEditingController();
   Subject? selectedSubject;
   DateTime selectedDate = DateTime(10);
-
-  bool alreadyFetchedData = false;
 
   @override
   State<HomeworkPage> createState() => _HomeworkPage();
@@ -29,11 +26,11 @@ class _HomeworkPage extends State<HomeworkPage> {
   void onPressed() {
     if (widget.homeworkController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
-      toast.show(context);
+      toast.show();
       return;
     } else if (widget.selectedSubject == null) {
       BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
-      toast.show(context);
+      toast.show();
       return;
     } else {
       if (widget.previousHomework != null) {
@@ -41,16 +38,11 @@ class _HomeworkPage extends State<HomeworkPage> {
         BrainApp.notifier.notifyOfChanges();
       } else if(widget.selectedDate.year != 10) {
         TimeInterval? time = widget.selectedSubject?.getTime(TimeTable.getDayFromDate(widget.selectedDate));
-        // TODO: Man soll das trotzdem rein machen können. muss dann halt im Kalendar sein
-        if (time == null) {
-          BrainToast toast = BrainToast(text: "An diesem Tag hast du das ausgewählte Fach nicht!");
-          toast.show(context);
-          return;
-        }
+
         DateTime date = DateTime(
             widget.selectedDate.year, widget.selectedDate.month,
-            widget.selectedDate.day, time.startTime.hour,
-            time.startTime.minute);
+            widget.selectedDate.day, time?.startTime.hour ?? 0,
+            time?.startTime.minute ?? 0);
 
         Homework(widget.selectedSubject!, date, widget.homeworkController.text);
       } else {
@@ -65,7 +57,6 @@ class _HomeworkPage extends State<HomeworkPage> {
   }
 
   void getData() {
-    widget.alreadyFetchedData = true;
     Homework? data = ModalRoute.of(context)!.settings.arguments as Homework?;
     if (data != null) {
       setState(() {
@@ -79,7 +70,7 @@ class _HomeworkPage extends State<HomeworkPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.alreadyFetchedData) getData();
+    if (widget.previousHomework == null) getData();
 
     return PageTemplate(
       backButton: true,
@@ -126,9 +117,7 @@ class _HomeworkPage extends State<HomeworkPage> {
                     style: ElevatedButton.styleFrom(
                         primary: AppDesign.colors.primary
                     ),
-                    onPressed: () {
-                      onPressed();
-                    },
+                    onPressed: onPressed,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: Text(

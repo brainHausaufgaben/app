@@ -138,7 +138,7 @@ class DeveloperOptions{
 
   static void onScreenLogging(){
     BrainApp.updatePreference("showLogsOnScreen", !BrainApp.preferences["showLogsOnScreen"]);
-    BrainToast(text: "on screen logging is now " + BrainApp.preferences["showLogsOnScreen"].toString()).show(NavigationHelper.rootKey.currentContext!);
+    BrainToast(text: "on screen logging is now " + BrainApp.preferences["showLogsOnScreen"].toString()).show();
 
   }
 
@@ -162,7 +162,7 @@ class DeveloperOptions{
 
   static void saveLogs(){
     BrainApp.updatePreference("saveLogs", !BrainApp.preferences["saveLogs"]);
-    BrainToast(text: "log saving is now " + BrainApp.preferences["saveLogs"].toString()).show(NavigationHelper.rootKey.currentContext!);
+    BrainToast(text: "log saving is now " + BrainApp.preferences["saveLogs"].toString()).show();
   }
 
   static void Sebastian(){

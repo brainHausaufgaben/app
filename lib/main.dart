@@ -19,6 +19,7 @@ class BrainApp extends StatefulWidget {
 
   static String appVersion = "...";
   static TodaysMedia? todaysMedia;
+  static double screenWidth = 0;
 
   static Map<String, dynamic> preferences = {
     "showMediaBox": true,

@@ -215,15 +215,15 @@ class _GradesPage extends State<GradesPage> {
                     onPressed: () {
                       if (widget.selectedSubject == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
-                        toast.show(context);
+                        toast.show();
                         return;
                       } else if (widget.type == null) {
                         BrainToast toast = BrainToast(text: "Du hast keine Art der Note angegeben!");
-                        toast.show(context);
+                        toast.show();
                         return;
                       } else if (widget.semester == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Semester angegeben!");
-                        toast.show(context);
+                        toast.show();
                         return;
                       } else {
                         if(widget.nameController.text == ""){
