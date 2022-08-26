@@ -27,8 +27,24 @@ class GradingSystem{
     1:"5-",
     0:"6",
   };
+  static Map<int,bool> yearsToLevel = {
+    5 : false,
+    6 : false,
+    7 : false,
+    8 : false,
+    9 : false,
+    10 : false,
+    11 : true,
+    12 : true,
+    13 : true,
 
+  };
 
+  static Map yearsToLevelJsonEncodable(){
+    Map<String,bool> map = {};
+    yearsToLevel.forEach((key, value) => map[key.toString()] = value);
+    return map;
+  }
 
   static void addGrade(Grade grade){
     if(grade.runtimeType == BigGrade) {
@@ -62,10 +78,14 @@ class GradingSystem{
     isAdvancedLevel = state;
     removeAllGrades();
     BrainApp.updatePreference("isAdvancedLevel", state);
+    yearsToLevel[currentYear] = state;
+    SaveSystem.saveAdvancedLevels();
   }
 
   static void setCurrentYear(int year) {
     currentYear = year;
+    isAdvancedLevel = yearsToLevel[year]!;
+    BrainApp.updatePreference("isAdvancedLevel", isAdvancedLevel);
     BrainApp.updatePreference("currentYear", year);
   }
 
@@ -116,6 +136,8 @@ class GradingSystem{
     }
     ).toList();
   }
+
+
 
   static double getYearAverage({List<int> onlyPartsOfYear = const [1,2,3]}){
     double d = 0;

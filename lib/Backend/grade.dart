@@ -3,21 +3,22 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 
 abstract class Grade{
+  String name;
   int value;
   Subject subject;
   GradeType type;
   late GradeTime time;
 
-  Grade(this.value, this.subject, this.type, int partOfYear){
+  Grade(this.value, this.subject, this.type,this.name, int partOfYear){
     time = GradeTime(GradingSystem.currentYear, partOfYear);
     GradingSystem.addGrade(this);
   }
 
-  Grade.createWithTime(this.value,this.subject,this.type,this.time){
+  Grade.createWithTime(this.value,this.subject,this.type,this.time,this.name){
     GradingSystem.addGrade(this);
   }
 
-  void edit(int? value,Subject? subject, GradeType? type,GradeTime? time ){
+  void edit(int? value,Subject? subject, GradeType? type,GradeTime? time,String? name ){
     if(value != null){
       this.value = value;
     }
@@ -26,6 +27,9 @@ abstract class Grade{
     }
     if(time != null){
       this.time = time;
+    }
+    if(name != null){
+      this.name = name;
     }
   }
 
@@ -59,8 +63,8 @@ abstract class Grade{
 }
 
 class SmallGrade extends Grade{
-  SmallGrade(int value, Subject subject,GradeType type, int partOfYear) : super(value, subject, type,partOfYear);
-  SmallGrade.createWithTime(int value, Subject subject,GradeType type, GradeTime time) : super.createWithTime(value,subject,type,time);
+  SmallGrade(int value, Subject subject,GradeType type,String name, int partOfYear) : super(value, subject, type,name,partOfYear);
+  SmallGrade.createWithTime(int value, Subject subject,GradeType type, GradeTime time,String name) : super.createWithTime(value,subject,type,time,name);
 
    @override
   Map toJSONEncodable(){
@@ -72,15 +76,16 @@ class SmallGrade extends Grade{
     map["year"] = time.year;
     map["isAdvanced"] = time.isAdvancedLevel;
     map["partOfYear"] = time.partOfYear;
+    map["name"] = name;
     return map;
   }
    @override
-  void edit(int? value, Subject? subject, GradeType? type, GradeTime? time) {
-    super.edit(value, subject, type, time);
+  void edit(int? value, Subject? subject, GradeType? type, GradeTime? time,String? name) {
+    super.edit(value, subject, type, time,name);
     if(type != null){
       if(type == GradeType.bigTest){
         GradingSystem.removeGrade(this);
-        BigGrade(this.value,this.subject,this.time.partOfYear);
+        BigGrade(this.value,this.subject,this.name,this.time.partOfYear);
       } else if (type != this.type) {
         this.type = type;
       }
@@ -91,8 +96,8 @@ class SmallGrade extends Grade{
 }
 
 class BigGrade extends Grade{
-  BigGrade(int value, Subject subject, int partOfYear) : super(value, subject,GradeType.bigTest,partOfYear);
-  BigGrade.createWithTime(int value, Subject subject, GradeTime time) : super.createWithTime(value,subject,GradeType.bigTest,time);
+  BigGrade(int value, Subject subject,String name, int partOfYear) : super(value, subject,GradeType.bigTest,name ,partOfYear);
+  BigGrade.createWithTime(int value, Subject subject, GradeTime time,String name) : super.createWithTime(value,subject,GradeType.bigTest,time,name);
   @override
   Map toJSONEncodable(){
     Map<String,dynamic> map = {};
@@ -102,16 +107,17 @@ class BigGrade extends Grade{
     map["year"] = time.year;
     map["isAdvanced"] = time.isAdvancedLevel;
     map["partOfYear"] = time.partOfYear;
+    map["name"] = name;
     return map;
   }
 
   @override
-  void edit(int? value, Subject? subject, GradeType? type, GradeTime? time) {
-    super.edit(value, subject, type, time);
+  void edit(int? value, Subject? subject, GradeType? type, GradeTime? time,String? name) {
+    super.edit(value, subject, type, time,name);
     if(type != null){
       if(type != GradeType.bigTest){
         GradingSystem.removeGrade(this);
-        SmallGrade(this.value,this.subject,type ,this.time.partOfYear);
+        SmallGrade(this.value,this.subject,type ,this.name ,this.time.partOfYear);
       }
     }
     SaveSystem.saveGrades();

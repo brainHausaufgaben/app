@@ -66,6 +66,13 @@ class SaveSystem{
     return storage.getItem("devs");
    }
 
+   static void saveAdvancedLevels(){
+    storage.setItem("advancedLevels", GradingSystem.yearsToLevelJsonEncodable());
+   }
+
+   static getAdvancedLevels(){
+      return storage.getItem("advancedLevels");
+   }
 
 
 

@@ -135,8 +135,9 @@ class Initializer {
           Subject? subject = TimeTable.getSubject(id);
           if (id != 0 && subject != null) {
             SubjectInstance(subject, i + 1, j);
-          } else {
+          } else if(id != 0) {
             BrainDebug.log("loadData() Timetable Error: Fach existiert nicht!");
+
           }
         }
       }
@@ -195,19 +196,30 @@ class Initializer {
       BrainDebug.log("No Tests");
     }
 
+    Map? advancedLevels = await SaveSystem.getAdvancedLevels();
+    if(advancedLevels != null){
+      advancedLevels.forEach((key, value) {
+        GradingSystem.yearsToLevel[int.parse(key)] = value;
+
+      });
+    }
+
+
     dynamic grades = await SaveSystem.getGrades();
     if(grades != null) {
       for (Map item in await SaveSystem.getGrades()) {
         int value = item["value"];
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
+        String? name = item["name"];
+        name ??= "Note";
 
         if (TimeTable.getSubject(id) != null) {
           if(item["isBig"]) {
-            BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
+            BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time,name);
           } else {
             GradeType type = Grade.stringToGradeType(item["type"]);
-            SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time);
+            SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time,name);
           }
         } else {
           BrainDebug.log("loadData() Grades Error: Fach existiert nicht!");

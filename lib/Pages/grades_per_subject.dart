@@ -35,7 +35,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             dense: true,
             child: PointElement(
               color: widget.subject.color,
-              primaryText: "1. Exemporale",
+              primaryText: grade.name,
               child: Text(
                 GradingSystem.isAdvancedLevel
                     ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
@@ -62,7 +62,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             dense: true,
             child: PointElement(
               color: widget.subject.color,
-              primaryText: "1. Mündliche Note",
+              primaryText: grade.name,
               child: Text(
                 GradingSystem.isAdvancedLevel
                     ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
@@ -88,7 +88,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             dense: true,
             child: PointElement(
               color: widget.subject.color,
-              primaryText: "1. Schulaufgabe",
+              primaryText: grade.name,
               child: Text(
                 GradingSystem.isAdvancedLevel
                     ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
