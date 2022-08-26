@@ -99,7 +99,12 @@ class _PageTemplateState extends State<PageTemplate> {
                 size: 15,
                 child: ListView (
                     shrinkWrap: true,
-                    padding: const EdgeInsets.only(top: 10, bottom: 25),
+                    padding: EdgeInsets.only(
+                      top: 10,
+                      bottom: widget.pageSettings.floatingActionButtonLocation == FloatingActionButtonLocation.centerFloat
+                        ? 75
+                        : 25
+                    ),
                     children: [
                       Row(
                         children: [

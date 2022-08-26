@@ -7,6 +7,8 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../Components/headline_wrap.dart';
+
 
 class DeveloperOptionsPage extends StatefulWidget {
   const DeveloperOptionsPage({Key? key}) : super(key: key);
@@ -61,24 +63,6 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
 
   List<Widget> getDeveloperOptions(){
     List<Widget> widgets = [];
-    widgets.add(
-      SettingsEntry(
-        children: [
-          SettingsTextField(
-              text: "Developer Code",
-              submitAction: (text) {
-                if (text == "no bitches?") {
-                  noBitches().then((value) {
-                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                  });
-                } else {
-                  DeveloperOptions.enterText(text);
-                }
-              }
-          )
-        ]
-    )
-    );
 
     for(String code in DeveloperOptions.activatedCodes){
       List<dynamic>? result = DeveloperOptions.codes[code.toLowerCase().trim()];
@@ -162,7 +146,6 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                                 onPressed: () {
                                   BrainApp.clearPreferences();
                                   SaveSystem.storage.clear();
-                                  Navigator.of(context).pop();
                                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                                 },
                                 child: Text(
@@ -185,8 +168,24 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
           ]
         )
       ),
-      child: Wrap(
-        runSpacing: 10,
+      floatingHeader: SettingsEntry(
+          children: [
+            SettingsTextField(
+                text: "Developer Code",
+                submitAction: (text) {
+                  if (text == "no bitches?") {
+                    noBitches().then((value) {
+                      SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                    });
+                  } else {
+                    DeveloperOptions.enterText(text);
+                  }
+                }
+            )
+          ]
+      ),
+      child: HeadlineWrap(
+        headline: 'Funktionen',
         children: getDeveloperOptions()
       )
     );

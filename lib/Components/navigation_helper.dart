@@ -107,10 +107,10 @@ class NavigationRoutes {
       "/": (context) => kIsWeb
         ? CallbackShortcuts(
           bindings: { // Eins für submit
-            const SingleActivator(LogicalKeyboardKey.keyH, shift: true): () => NavigationHelper.pushNamed(context, "homework"),
-            const SingleActivator(LogicalKeyboardKey.keyS, shift: true): () => NavigationHelper.pushNamed(context, "timeTable"),
-            const SingleActivator(LogicalKeyboardKey.keyN, shift: true): () => NavigationHelper.pushNamed(context, "gradesPage"),
-            const SingleActivator(LogicalKeyboardKey.keyE, shift: true): () => NavigationHelper.pushNamed(context, "addEventPage"),
+            const SingleActivator(LogicalKeyboardKey.keyH, alt: true): () => NavigationHelper.pushNamed(context, "homework"),
+            const SingleActivator(LogicalKeyboardKey.keyS, alt: true): () => NavigationHelper.pushNamed(context, "timeTable"),
+            const SingleActivator(LogicalKeyboardKey.keyN, alt: true): () => NavigationHelper.pushNamed(context, "gradesPage"),
+            const SingleActivator(LogicalKeyboardKey.keyE, alt: true): () => NavigationHelper.pushNamed(context, "addEventPage"),
           },
           child: Focus(
             autofocus: true,

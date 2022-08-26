@@ -17,11 +17,13 @@ class AppDesign {
         ? Design.allDesigns[theme]!.darkVariant
         : Design.allDesigns[theme]!.lightVariant;
     setAttributes(package);
-
-    if (theme == "Monochrome") setAccentColor();
-
     BrainApp.updatePreference("design", theme);
-    BrainApp.notifier.notifyOfChanges();
+
+    if (theme == "Monochrome") {
+      setAccentColor();
+    } else {
+      BrainApp.notifier.notifyOfChanges();
+    }
   }
 
   static void setAccentColor() {
@@ -51,14 +53,16 @@ class AppDesign {
   static void toggleDarkMode() {
     BrainApp.updatePreference("darkMode", !BrainApp.preferences["darkMode"]);
 
-    if (BrainApp.preferences["design"] == "Monochrome") setAccentColor();
-
     DesignPackage package = BrainApp.preferences["darkMode"]
         ? Design.allDesigns[BrainApp.preferences["design"]]!.darkVariant
         : Design.allDesigns[BrainApp.preferences["design"]]!.lightVariant;
     setAttributes(package);
 
-    BrainApp.notifier.notifyOfChanges();
+    if (BrainApp.preferences["design"] == "Monochrome") {
+      setAccentColor();
+    } else {
+      BrainApp.notifier.notifyOfChanges();
+    }
   }
 }
 

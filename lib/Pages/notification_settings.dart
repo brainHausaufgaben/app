@@ -87,7 +87,7 @@ class _NotificationSettings extends State<NotificationSettings> {
                     maxValue: 30,
                     text: "Immer ... Tage vorher",
                     dialogTitle: "Tage",
-                    appendToNumber: "Tage",
+                    appendToNumber: "Tag ${BrainApp.preferences["daysUntilNotification"] == 1 ? "" : "e"}",
                     currentValue: BrainApp.preferences["daysUntilNotification"],
                     action: (value) {
                       setState(() {

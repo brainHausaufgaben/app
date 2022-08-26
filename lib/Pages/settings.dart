@@ -125,7 +125,8 @@ class _SettingsPage extends State<SettingsPage> {
                 text: "Klasse",
                 currentValue: GradingSystem.currentYear,
                 action: (value) {
-                  setState(() => GradingSystem.setCurrentYear(value));
+                  GradingSystem.setCurrentYear(value);
+                  BrainApp.notifier.notifyOfChanges();
                 },
               )
             ]
@@ -147,20 +148,20 @@ class _SettingsPage extends State<SettingsPage> {
                         spacing: 8,
                         children: [
                           Text(
-                            "Shift + H: Neue Hausaufgabe",
+                            "Alt + H: Neue Hausaufgabe",
                             style: AppDesign.textStyles.pointElementPrimary
                           ),
                           Text(
-                              "Shift + S: Stundenplan",
-                              style: AppDesign.textStyles.pointElementPrimary
+                            "Alt + S: Stundenplan",
+                            style: AppDesign.textStyles.pointElementPrimary
                           ),
                           Text(
-                              "Shift + N: Neue Note",
-                              style: AppDesign.textStyles.pointElementPrimary
+                            "Alt + N: Neue Note",
+                            style: AppDesign.textStyles.pointElementPrimary
                           ),
                           Text(
-                              "Shift + E: Neues Event",
-                              style: AppDesign.textStyles.pointElementPrimary
+                            "Alt + E: Neues Event",
+                            style: AppDesign.textStyles.pointElementPrimary
                           )
                         ]
                       )

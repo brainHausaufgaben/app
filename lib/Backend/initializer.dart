@@ -107,7 +107,7 @@ class Initializer {
     return null;
   }
   
-  static Future loadData() async{
+  static Future loadData() async {
     TimeTable.saveEnabled = false;
 
     dynamic subjects = await SaveSystem.getSubjects();
@@ -129,7 +129,11 @@ class Initializer {
         for (int j = 0; j < 10; j++) {
           int id = timetable[i][j];
           Subject? subject = TimeTable.getSubject(id);
-          if (id != 0 && subject != null) SubjectInstance(subject, i + 1, j);
+          if (id != 0 && subject != null) {
+            SubjectInstance(subject, i + 1, j);
+          } else {
+            BrainDebug.log("loadData() Timetable Error: Fach existiert nicht!");
+          }
         }
       }
     }
@@ -143,8 +147,13 @@ class Initializer {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
-        if (TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) !=
-            null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
+        Subject? subject = TimeTable.getSubject(id);
+        if (subject != null) {
+          if (TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) !=
+              null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
+        } else {
+          BrainDebug.log("loadData() Homework Error: Fach existiert nicht!");
+        }
       }
 
     }
@@ -171,7 +180,11 @@ class Initializer {
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
         Subject? subject = TimeTable.getSubject(id);
-        if (subject != null) Test(subject, time, item["description"]);
+        if (subject != null) {
+          Test(subject, time, item["description"]);
+        } else {
+          BrainDebug.log("loadData() Test Error: Fach existiert nicht!");
+        }
       }
     }
     else {
@@ -185,12 +198,15 @@ class Initializer {
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
 
-        if (TimeTable.getSubject(id) == null) continue;
-        if(item["isBig"]) {
-          BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
+        if (TimeTable.getSubject(id) != null) {
+          if(item["isBig"]) {
+            BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time);
+          } else {
+            GradeType type = Grade.stringToGradeType(item["type"]);
+            SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time);
+          }
         } else {
-          GradeType type = Grade.stringToGradeType(item["type"]);
-          SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time);
+          BrainDebug.log("loadData() Grades Error: Fach existiert nicht!");
         }
       }
     }
