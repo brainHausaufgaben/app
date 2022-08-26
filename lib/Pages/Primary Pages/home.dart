@@ -1,5 +1,7 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_infobox.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
@@ -8,12 +10,15 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../Components/box.dart';
 import '../page_template.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
+
+  static int timesRun = 0;
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -182,6 +187,24 @@ class _HomePage extends State<HomePage>{
       );
   }
 
+  List<Widget> staggeredChildren() {
+    if (HomePage.timesRun <= 1) {
+      HomePage.timesRun++;
+      return AnimationConfiguration.toStaggeredList(
+          duration: const Duration(milliseconds: 500),
+          childAnimationBuilder: (child) => SlideAnimation(
+              verticalOffset: 20.0,
+              child: FadeInAnimation(
+                child: child,
+              )
+          ),
+          children: getDays()
+      );
+    } else {
+      return getDays();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -204,7 +227,9 @@ class _HomePage extends State<HomePage>{
         ),
         child: Wrap(
           runSpacing: 20,
-          children: getDays()
+          children: Initializer.initialized
+            ? staggeredChildren()
+            : []
         ),
         floatingHeader: getHeader()
       ),

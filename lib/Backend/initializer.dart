@@ -20,6 +20,8 @@ import 'homework.dart';
 import 'notifications.dart';
 
 class Initializer {
+  static bool initialized = false;
+
   static Future init() async {
     getPreferences().then((value) {
         AppDesign.toggleTheme(BrainApp.preferences["design"]);
@@ -32,6 +34,8 @@ class Initializer {
     await loadData();
     await getBoxText();
     await getVersion();
+
+    initialized = true;
   }
 
   static Future getVersion() async {

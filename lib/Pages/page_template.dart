@@ -87,6 +87,7 @@ class _PageTemplateState extends State<PageTemplate> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold (
+          backgroundColor: AppDesign.colors.background,
           body: Padding(
               padding: EdgeInsets.only(
                   left: 15,

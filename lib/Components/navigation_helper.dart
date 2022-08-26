@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:brain_app/Components/brain_navigation_bar.dart';
 import 'package:brain_app/Components/brain_sidebar.dart';
@@ -104,19 +105,24 @@ class _NavigationHelper extends State<NavigationHelper> {
 class NavigationRoutes {
   static Map<String, WidgetBuilder> get() {
     return {
-      "/": (context) => kIsWeb
-        ? CallbackShortcuts(
-          bindings: { // Eins für submit
-            const SingleActivator(LogicalKeyboardKey.keyH, alt: true): () => NavigationHelper.pushNamed(context, "homework"),
-            const SingleActivator(LogicalKeyboardKey.keyS, alt: true): () => NavigationHelper.pushNamed(context, "timeTable"),
-            const SingleActivator(LogicalKeyboardKey.keyN, alt: true): () => NavigationHelper.pushNamed(context, "gradesPage"),
-            const SingleActivator(LogicalKeyboardKey.keyE, alt: true): () => NavigationHelper.pushNamed(context, "addEventPage"),
-          },
-          child: Focus(
-            autofocus: true,
-            child: NavigationHelper(),
-          ),
-        ) : CustomQuickActions(child: NavigationHelper()),
+      "/": (context) {
+        if (kIsWeb) {
+          return CallbackShortcuts(
+            bindings: { // Eins für submit
+              const SingleActivator(LogicalKeyboardKey.keyH, alt: true): () => NavigationHelper.pushNamed(context, "homework"),
+              const SingleActivator(LogicalKeyboardKey.keyS, alt: true): () => NavigationHelper.pushNamed(context, "timeTable"),
+              const SingleActivator(LogicalKeyboardKey.keyN, alt: true): () => NavigationHelper.pushNamed(context, "gradesPage"),
+              const SingleActivator(LogicalKeyboardKey.keyE, alt: true): () => NavigationHelper.pushNamed(context, "addEventPage"),
+            },
+            child: Focus(
+              autofocus: true,
+              child: NavigationHelper(),
+            ),
+          );
+        } else {
+          return CustomQuickActions(child: NavigationHelper());
+        }
+      },
       "home": (context) => HomePage(),
       "calendar": (context) => CalendarPage(),
       "editEventsPage": (context) => EditEventPage(),
