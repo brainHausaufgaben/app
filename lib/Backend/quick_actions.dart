@@ -41,7 +41,7 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
       const ShortcutItem(
           type: 'add_event',
           localizedTitle: 'Termin Hinzufügen',
-          icon: ""
+          icon: "add_event"
       ),
     ]);
   }
