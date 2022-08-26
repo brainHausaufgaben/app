@@ -34,7 +34,7 @@ class CustomNotifications{
       return;
     }
 
-    AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/launcher_icon');
+    AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings('@drawable/launcher_monochrome');
     await notificationsPlugin.initialize(initializationSettingsAndroid,onSelectNotification:selectNotification );
 
     SharedPreferences.getInstance().then((preferences) {
@@ -85,7 +85,12 @@ class CustomNotifications{
     String body = homework.subject.name + ": " +homework.name;
     currentHomeworkNotificationID++;
     const AndroidNotificationDetails platformChannelSpecifics =
-    AndroidNotificationDetails("1","Hausaufgaben Benachrichtigung",channelDescription: 'Hausaufgaben Benachrichtigung',styleInformation: defStyleInformation);
+    AndroidNotificationDetails(
+      "1",
+      "Hausaufgaben Benachrichtigung",
+      channelDescription: 'Hausaufgaben Benachrichtigung',
+      styleInformation: defStyleInformation,
+    );
     initializeTimeZones();
     DateTime scheduleTime = homework.dueTime.subtract(const Duration(days: 1));
     TZDateTime scheduleZonedTime = TZDateTime(getLocation("Europe/Zurich"),scheduleTime.year,scheduleTime.month,scheduleTime.day,notificationTime.hour,notificationTime.minute);
@@ -95,7 +100,7 @@ class CustomNotifications{
       await notificationsPlugin.zonedSchedule(currentHomeworkNotificationID, title, body, scheduleZonedTime, platformChannelSpecifics, androidAllowWhileIdle: true);
     } else {
       await notificationsPlugin.show(currentHomeworkNotificationID, title, body,notificationDetails: platformChannelSpecifics);
-      BrainDebug.log("added to late, showing now");
+      BrainDebug.log("added too late, showing now");
     }
   }
 

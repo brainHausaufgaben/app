@@ -31,12 +31,12 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
       const ShortcutItem(
           type: 'add_homework',
           localizedTitle: 'Hausaufgabe Hinzufügen',
-          icon: ""
+          icon: "add_homework"
       ),
-       ShortcutItem(
+      const ShortcutItem(
           type: 'add_grade',
           localizedTitle: 'Note Hinzufügen',
-          icon:Icons.ac_unit.toString()
+          icon: 'add_grade'
        ),
     ]);
   }
