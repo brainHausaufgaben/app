@@ -38,6 +38,11 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
           localizedTitle: 'Note Hinzufügen',
           icon: 'add_grade'
        ),
+      const ShortcutItem(
+          type: 'add_event',
+          localizedTitle: 'Termin Hinzufügen',
+          icon: ""
+      ),
     ]);
   }
 
@@ -45,7 +50,10 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
     quickActions.initialize((shortcutType) {
       if (shortcutType == 'add_homework') {
         NavigationHelper.pushNamed(context, "homework");
-      } else if(shortcutType == 'action_help') {
+      } else if (shortcutType == 'add_event') {
+        NavigationHelper.pushNamed(context, "addEventPage");
+      }
+      else if (shortcutType == 'add_grade') {
         NavigationHelper.pushNamed(context, "gradesPage");
       }
     });
