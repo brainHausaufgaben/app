@@ -19,14 +19,13 @@ class GradesPage extends StatefulWidget {
   int? semester;
   TextEditingController nameController = TextEditingController();
 
+  bool alreadyFetchedData = false;
+
   @override
   State<GradesPage> createState() => _GradesPage();
 }
 
 class _GradesPage extends State<GradesPage> {
-  bool alreadyFetchedData = false;
-
-
   void numberPickerDialog() {
     showDialog(
         context: context,
@@ -77,7 +76,7 @@ class _GradesPage extends State<GradesPage> {
   }
 
   void getData() {
-    alreadyFetchedData = true;
+    widget.alreadyFetchedData = true;
     dynamic args = ModalRoute.of(context)!.settings.arguments;
     if (args == null) return;
 
@@ -102,7 +101,7 @@ class _GradesPage extends State<GradesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!alreadyFetchedData) getData();
+    if (!widget.alreadyFetchedData) getData();
     return PageTemplate(
       backButton: true,
       title: widget.previousGrade == null ? "Neue Note" : "Note Bearbeiten",

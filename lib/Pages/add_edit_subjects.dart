@@ -16,13 +16,13 @@ class SubjectPage extends StatefulWidget {
   final subjectController = TextEditingController();
   Color pickerColor = Colors.red;
 
+  bool alreadyFetchedData = false;
+
   @override
   State<SubjectPage> createState() => _SubjectPage();
 }
 
 class _SubjectPage extends State<SubjectPage> {
-  bool alreadyFetchedData = false;
-
   @override
   void dispose() {
     widget.subjectController.dispose();
@@ -30,7 +30,7 @@ class _SubjectPage extends State<SubjectPage> {
   }
 
   void getData() {
-    alreadyFetchedData = true;
+    widget.alreadyFetchedData = true;
     Subject? data = ModalRoute.of(context)!.settings.arguments as Subject?;
     if (data != null) {
       setState(() {
@@ -43,7 +43,7 @@ class _SubjectPage extends State<SubjectPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!alreadyFetchedData) getData();
+    if (!widget.alreadyFetchedData) getData();
 
     return PageTemplate(
       backButton: true,
@@ -127,8 +127,8 @@ class _SubjectPage extends State<SubjectPage> {
                         ),
                         onPressed: () {
                           TimeTable.deleteSubject(widget.previousSubject!);
-                          BrainApp.notifier.notifyOfChanges();
                           Navigator.of(context).pop();
+                          BrainApp.notifier.notifyOfChanges();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15),

@@ -19,13 +19,13 @@ class HomeworkPage extends StatefulWidget {
   Subject? selectedSubject;
   DateTime selectedDate = DateTime(10);
 
+  bool alreadyFetchedData = false;
+
   @override
   State<HomeworkPage> createState() => _HomeworkPage();
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
-  bool alreadyFetchedData = false;
-
   void onPressed() {
     if (widget.homeworkController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
@@ -65,7 +65,7 @@ class _HomeworkPage extends State<HomeworkPage> {
   }
 
   void getData() {
-    alreadyFetchedData = true;
+    widget.alreadyFetchedData = true;
     Homework? data = ModalRoute.of(context)!.settings.arguments as Homework?;
     if (data != null) {
       setState(() {
@@ -79,7 +79,7 @@ class _HomeworkPage extends State<HomeworkPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!alreadyFetchedData) getData();
+    if (!widget.alreadyFetchedData) getData();
 
     return PageTemplate(
       backButton: true,
