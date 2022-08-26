@@ -33,11 +33,16 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
           localizedTitle: 'Hausaufgabe Hinzufügen',
           icon: ""
       ),
-       ShortcutItem(
+      const ShortcutItem(
           type: 'add_grade',
           localizedTitle: 'Note Hinzufügen',
-          icon:Icons.ac_unit.toString()
+          icon: ""
        ),
+      const ShortcutItem(
+          type: 'add_event',
+          localizedTitle: 'Termin Hinzufügen',
+          icon: ""
+      ),
     ]);
   }
 
@@ -45,7 +50,10 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
     quickActions.initialize((shortcutType) {
       if (shortcutType == 'add_homework') {
         NavigationHelper.pushNamed(context, "homework");
-      } else if(shortcutType == 'action_help') {
+      } else if (shortcutType == 'add_event') {
+        NavigationHelper.pushNamed(context, "addEventPage");
+      }
+      else if (shortcutType == 'add_grade') {
         NavigationHelper.pushNamed(context, "gradesPage");
       }
     });
