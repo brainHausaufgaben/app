@@ -97,7 +97,26 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               )
             ),
             icon: Icons.edit,
-            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
+            action: () {
+              if (GradingSystem.isAdvancedLevel == grade.time.isAdvancedLevel) {
+                NavigationHelper.pushNamed(context, "gradesPage", payload: grade);
+              } else {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
+                      title: Text("Nicht änderbar", style: AppDesign.textStyles.alertDialogHeader),
+                      content: Text(
+                        "Diese Note wurde in der ${grade.time.isAdvancedLevel ? "Oberstufe" : "Unterstufe"} hinzugefügt, "
+                            "während du dich in der ${GradingSystem.isAdvancedLevel ? "Oberstufe" : "Unterstufe"} befindest",
+                        style: AppDesign.textStyles.alertDialogDescription
+                      )
+                    );
+                  }
+                );
+              }
+            }
           )
       );
     }
