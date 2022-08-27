@@ -147,7 +147,7 @@ class _GradeOverview extends State<GradeOverview>{
             runSpacing: 10,
             children: [
               GradesBox(
-                value: GradingSystem.getYearAverage(onlyPartsOfYear: partsOfYear).toString(),
+                value: GradingSystem.getYearAverage(onlyPartsOfYear: partsOfYear).toStringAsFixed(2),
                 currentSelector: GradeOverview.timeSelectors.value,
                 onChanged: (value) {
                   GradeOverview.timeSelectors.value = value;

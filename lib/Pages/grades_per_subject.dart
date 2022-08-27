@@ -158,7 +158,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
         ),
         floatingHeader: GradesBox(
           currentSelector: GradeOverview.timeSelectors.value,
-          value: GradingSystem.getAverage(widget.subject, onlyPartsOfYear: partsOfYear).toString(),
+          value: GradingSystem.getAverage(widget.subject, onlyPartsOfYear: partsOfYear).toStringAsFixed(2),
           onChanged: (value) {
             GradeOverview.timeSelectors.value = value;
           },

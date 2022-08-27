@@ -32,6 +32,15 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    signingConfigs {
+        release {
+            storeFile file("C:/Users/theha/Desktop/key.jks")
+            storePassword "123456"
+            keyAlias "key0"
+            keyPassword "123456"
+        }
+    }
+
     defaultConfig {
         applicationId "com.brain.brain_app"
         minSdkVersion 26
@@ -42,12 +51,14 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
+
             debuggable false
             crunchPngs true
             minifyEnabled true
             shrinkResources true
             signingConfig signingConfigs.debug
+            //signingConfig signingConfigs.release
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }

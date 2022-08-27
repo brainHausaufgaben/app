@@ -150,7 +150,7 @@ class GradingSystem{
       }
     }
     if(s == 0) return -1;
-    return d / s;
+    return  d / s;
   }
 
   static String PointToGrade(int points){

@@ -52,7 +52,7 @@ class GradesBox extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            value == "-1.0" || value == "-1" ? "-" : value,
+                            value == "-1.00" || value == "-1" ? "-" : value,
                             style: TextStyle(
                               color: AppDesign.colors.contrast,
                               fontSize: 43,

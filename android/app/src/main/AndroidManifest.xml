@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.brain.brain_app">
    <application
-        android:label="Brain Hausaufgaben"
+        android:label="Brain Development"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
