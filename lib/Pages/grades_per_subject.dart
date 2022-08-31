@@ -163,6 +163,18 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
             GradeOverview.timeSelectors.value = value;
           },
         ),
+        secondaryTitleButton: TextButton(
+            style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                backgroundColor: AppDesign.colors.secondaryBackground,
+                minimumSize: Size.zero
+            ),
+            onPressed: () => NavigationHelper.pushNamed(context, "subjectPage", payload: widget.subject),
+            child: Semantics(
+              label: "Fach Bearbeiten",
+              child: Icon(Icons.edit, color: AppDesign.colors.text),
+            )
+        ),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: Wrap(

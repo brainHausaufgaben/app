@@ -37,17 +37,6 @@ class CustomNotifications{
     AndroidInitializationSettings initializationSettingsAndroid = const AndroidInitializationSettings('@drawable/launcher_monochrome');
     await notificationsPlugin.initialize(initializationSettingsAndroid,onSelectNotification:selectNotification );
 
-    SharedPreferences.getInstance().then((preferences) {
-      if(preferences.getBool("persistentNotifications") ?? false){
-        CustomNotifications.enablePermaNotification();
-      }
-      else{
-        CustomNotifications.disablePermaNotification();
-      }
-      homeworkNotificationsEnabled = preferences.getBool("homeworkNotifications") ?? true;
-
-    });
-
     if(BrainApp.preferences["persistentNotifications"]){
       enablePermaNotification();
     }

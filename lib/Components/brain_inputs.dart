@@ -50,6 +50,7 @@ class _BrainTextField extends State<BrainTextField> {
             controller: widget.controller,
             style: AppDesign.textStyles.input,
             decoration: InputDecoration (
+              constraints: const BoxConstraints(maxHeight: 51),
               filled: true,
               enabledBorder: UnderlineInputBorder(
                   borderRadius: AppDesign.boxStyle.inputBorderRadius,
@@ -261,7 +262,7 @@ class BrainDateButton extends StatelessWidget {
       borderRadius: 10,
       height: 300,
       era: EraMode.CHRIST_YEAR,
-      lastDate: DateTime(DateTime.now().year + 1),
+      lastDate: DateTime.now().add(const Duration(days: 120)),
       initialDatePickerMode: DatePickerMode.day,
       styleDatePicker: MaterialRoundedDatePickerStyle(
         backgroundHeader: AppDesign.colors.primary,
@@ -298,9 +299,16 @@ class BrainDateButton extends StatelessWidget {
                   )
               )
           );
-        }
-
-        if (selectedSubject != null) {
+        } else if (isCurrentDay) {
+          return Container(
+              decoration: BoxDecoration(color: AppDesign.colors.background, shape: BoxShape.circle),
+              child: Center(
+                  child: Text(
+                    dateTime.day.toString(),
+                  )
+              )
+          );
+        } else if (selectedSubject != null) {
           DateTime now = DateTime.now();
 
           if (dateTime.day >= now.day || dateTime.month > now.month) {
@@ -372,12 +380,12 @@ class BrainIconButton extends StatelessWidget {
     Key? key,
     required this.action,
     required this.icon,
-    this.child,
+    required this.child,
     this.dense = false
   }) : super(key: key);
 
   final Function() action;
-  final Widget? child;
+  final Widget child;
   final IconData icon;
   final bool dense;
 
@@ -385,26 +393,26 @@ class BrainIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: AppDesign.boxStyle.inputBorderRadius
+          borderRadius: AppDesign.boxStyle.inputBorderRadius
       ),
       clipBehavior: Clip.antiAlias,
       child: TextButton(
         onPressed: action,
         style: TextButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
-          backgroundColor: AppDesign.colors.secondaryBackground,
-          minimumSize: Size.zero
+            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
+            backgroundColor: AppDesign.colors.secondaryBackground,
+            minimumSize: Size.zero
         ),
         child: Flex(
           direction: Axis.horizontal,
           children: [
-            if (child != null) Expanded(
-              child: child!
+            Expanded(
+              child: child
             ),
-            Icon(icon, color: AppDesign.colors.text, size: dense ? 20 : 24),
-          ],
-        ),
-      ),
+            Icon(icon, color: AppDesign.colors.text, size: dense ? 20 : 24)
+          ]
+        )
+      )
     );
   }
 }
@@ -979,32 +987,39 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    return SpeedDial(
-      onOpen: () => controller.forward().then(
-              (value) => !widget.withEntries ? controller.reset() : null
+    return Semantics(
+      container: true,
+      excludeSemantics: true,
+      label: "Hinzufügen Menü",
+      hint: "Tippe einmal, oder halte um alle Optionen zu sehen",
+      button: true,
+      child: SpeedDial(
+        onOpen: () => controller.forward().then(
+                (value) => !widget.withEntries ? controller.reset() : null
+        ),
+        onPress: () => widget.defaultAction(),
+        onClose: () => controller.reverse(),
+        child: RotationTransition(
+            turns: Tween(begin: 0.0, end: widget.withEntries ? 5 / 8 : 1.0).animate(CurvedAnimation(
+                parent: controller,
+                curve: Curves.easeInOutBack
+            )),
+            child: Icon(widget.icon, color: AppDesign.colors.contrast)
+        ),
+        children: widget.withEntries ? [
+          widget.getHomeworkMenu(context),
+          widget.getEventMenu(context),
+          widget.getGradesMenu(context)
+        ] : [],
+        overlayColor: Colors.black,
+        overlayOpacity: 0.6,
+        backgroundColor: AppDesign.colors.primary,
+        spacing: 5,
+        childrenButtonSize: const Size(50, 50),
+        childPadding: const EdgeInsets.only(right: 6),
+        animationDuration: const Duration(milliseconds: 300),
+        label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: TextStyle(letterSpacing: 0.5, color: AppDesign.colors.contrast)) : null,
       ),
-      onPress: () => widget.defaultAction(),
-      onClose: () => controller.reverse(),
-      child: RotationTransition(
-        turns: Tween(begin: 0.0, end: widget.withEntries ? 5 / 8 : 1.0).animate(CurvedAnimation(
-            parent: controller,
-            curve: Curves.easeInOutBack
-        )),
-        child: Icon(widget.icon, color: AppDesign.colors.contrast)
-      ),
-      children: widget.withEntries ? [
-        widget.getHomeworkMenu(context),
-        widget.getEventMenu(context),
-        widget.getGradesMenu(context)
-      ] : [],
-      overlayColor: Colors.black,
-      overlayOpacity: 0.6,
-      backgroundColor: AppDesign.colors.primary,
-      spacing: 5,
-      childrenButtonSize: const Size(50, 50),
-      childPadding: const EdgeInsets.only(right: 6),
-      animationDuration: const Duration(milliseconds: 300),
-      label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: TextStyle(letterSpacing: 0.5, color: AppDesign.colors.contrast)) : null,
     );
   }
 }

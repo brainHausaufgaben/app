@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/save_system.dart';
+import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
@@ -76,9 +77,8 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                   action: () => (result[0] as Function).call()
               )
             ]
-
         ));
-  }
+      }
     }
     return widgets;
   }
@@ -107,57 +107,14 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
                     showDialog(
                       context: context,
                       builder: (context) {
-                        return AlertDialog(
-                          contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
-                          title: Text(
-                            "Willst du die App wirklich zurücksetzen?",
-                            style: AppDesign.textStyles.alertDialogHeader
-                          ),
-                          backgroundColor: AppDesign.colors.secondaryBackground,
-                          content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "Diese Aktion wird alle Einstellungen sowie dein Stundenplan, deine Noten etc. löschen",
-                                style: AppDesign.textStyles.alertDialogDescription,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 20, bottom: 5),
-                                child: TextButton(
-                                    style: TextButton.styleFrom(
-                                      backgroundColor: AppDesign.colors.primary,
-                                      primary: AppDesign.colors.contrast,
-                                      padding: const EdgeInsets.symmetric(vertical: 12)
-                                    ),
-                                    onPressed: () => Navigator.of(context).pop(),
-                                    child: Text(
-                                      "Abbrechen",
-                                      style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
-                                    )
-                                ),
-                              ),
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    side: BorderSide(color: AppDesign.colors.primary, width: 2),
-                                    primary: AppDesign.colors.primary,
-                                    padding: const EdgeInsets.symmetric(vertical: 12)
-                                ),
-                                onPressed: () {
-                                  BrainApp.clearPreferences();
-                                  SaveSystem.storage.clear();
-                                  SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-                                },
-                                child: Text(
-                                  "Fortfahren",
-                                  style: AppDesign.textStyles.buttonText.copyWith(
-                                    fontSize: 16,
-                                    color: AppDesign.colors.primary
-                                  )
-                                )
-                              )
-                            ]
-                          )
+                        return BrainConfirmationDialog(
+                          description: "Diese Aktion wird alle Einstellungen sowie dein Stundenplan, deine Noten etc. löschen",
+                          onContinue: () {
+                            BrainApp.clearPreferences();
+                            SaveSystem.storage.clear();
+                            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                          },
+                          onCancel: () => Navigator.of(context).pop()
                         );
                       }
                     );

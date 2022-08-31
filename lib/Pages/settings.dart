@@ -1,5 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:brain_app/main.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -62,57 +64,14 @@ class _SettingsPage extends State<SettingsPage> {
                 action: () => showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(
-                        contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
-                        title: Text(
-                            "Bist du sicher?",
-                            style: AppDesign.textStyles.alertDialogHeader
-                        ),
-                        backgroundColor: AppDesign.colors.secondaryBackground,
-                        content: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                "Diese Aktion wird alle Noten von diesem Jahr löschen. Du solltest, falls noch nicht geschehen, erst ein neues Schuljahr setzen",
-                                style: AppDesign.textStyles.alertDialogDescription,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 20, bottom: 5),
-                                child: TextButton(
-                                    style: TextButton.styleFrom(
-                                        backgroundColor: AppDesign.colors.primary,
-                                        primary: AppDesign.colors.contrast,
-                                        padding: const EdgeInsets.symmetric(vertical: 12)
-                                    ),
-                                    onPressed: () => Navigator.of(context).pop(),
-                                    child: Text(
-                                        "Abbrechen",
-                                        style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
-                                    )
-                                ),
-                              ),
-                              TextButton(
-                                  style: TextButton.styleFrom(
-                                      side: BorderSide(color: AppDesign.colors.primary, width: 2),
-                                      primary: AppDesign.colors.primary,
-                                      padding: const EdgeInsets.symmetric(vertical: 12)
-                                  ),
-                                  onPressed: () {
-                                    GradingSystem.setAdvancedLevel(!GradingSystem.isAdvancedLevel);
-                                    BrainApp.notifier.notifyOfChanges();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(
-                                      "Fortfahren",
-                                      style: AppDesign.textStyles.buttonText.copyWith(
-                                          fontSize: 16,
-                                          color: AppDesign.colors.primary
-                                      )
-                                  )
-                              )
-                            ]
-                        )
+                    return BrainConfirmationDialog(
+                      description: "Diese Aktion wird alle Noten von diesem Jahr löschen. Du solltest, falls noch nicht geschehen, erst ein neues Schuljahr setzen",
+                      onCancel: () => Navigator.of(context).pop(),
+                      onContinue: () {
+                        GradingSystem.setAdvancedLevel(!GradingSystem.isAdvancedLevel);
+                        BrainApp.notifier.notifyOfChanges();
+                        Navigator.of(context).pop();
+                      }
                     );
                   }
                 ),
@@ -121,7 +80,7 @@ class _SettingsPage extends State<SettingsPage> {
               SettingsNumberPicker(
                 minValue: 5,
                 maxValue: 13,
-                dialogTitle: "Wähle eine Klasse",
+                dialogTitle: "Wähle deine Klasse",
                 text: "Klasse",
                 currentValue: GradingSystem.currentYear,
                 action: (value) {
@@ -259,15 +218,33 @@ class _SettingsPage extends State<SettingsPage> {
                           ),
                           TextButton(
                             style: TextButton.styleFrom(
-                              backgroundColor: AppDesign.colors.primary,
-                              primary: AppDesign.colors.contrast,
-                              padding: const EdgeInsets.symmetric(vertical: 13)
+                                backgroundColor: AppDesign.colors.primary,
+                                primary: AppDesign.colors.contrast,
+                                padding: const EdgeInsets.symmetric(vertical: 13)
                             ),
                             child: Text(
-                              "Lizenzen",
-                              style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
+                                "Datenschutz",
+                                style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
                             ),
-                            onPressed: () => showLicensePage(context: context),
+                            onPressed: () {
+                              Uri uri = Uri.parse("https://brain-hausaufgabenheft.de/datenschutz");
+                              launchUrl(uri, mode: LaunchMode.externalApplication);
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: TextButton(
+                              style: TextButton.styleFrom(
+                                primary: AppDesign.colors.text,
+                                padding: const EdgeInsets.symmetric(vertical: 13),
+                                side: BorderSide(color: AppDesign.colors.text, width: 2)
+                              ),
+                              child: Text(
+                                  "Lizenzen",
+                                  style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16, color: AppDesign.colors.text)
+                              ),
+                              onPressed: () => showLicensePage(context: context),
+                            ),
                           )
                         ]
                       )

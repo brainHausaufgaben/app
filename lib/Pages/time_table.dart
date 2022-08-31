@@ -60,9 +60,9 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                     currentValue: TimeTable.week[day].subjects[i]?.subject,
                     additionalAction: TextButton(
                       style: TextButton.styleFrom(
-                        primary: AppDesign.colors.text
+                        primary: AppDesign.colors.primary
                       ),
-                      child: Text("Neues Fach"),
+                      child: Text("Neues Fach", style: TextStyle(color: AppDesign.colors.text)),
                       onPressed: () {
                         if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
                           NavigationHelper.rootKey.currentState!.pop();

@@ -19,8 +19,6 @@ class GradesPage extends StatefulWidget {
   int? semester;
   TextEditingController nameController = TextEditingController();
 
-  bool alreadyFetchedData = false;
-
   @override
   State<GradesPage> createState() => _GradesPage();
 }
@@ -76,7 +74,6 @@ class _GradesPage extends State<GradesPage> {
   }
 
   void getData() {
-    widget.alreadyFetchedData = true;
     dynamic args = ModalRoute.of(context)!.settings.arguments;
     if (args == null) return;
 
@@ -101,20 +98,38 @@ class _GradesPage extends State<GradesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.alreadyFetchedData) getData();
+    if (widget.selectedSubject == null) getData();
     return PageTemplate(
       backButton: true,
       title: widget.previousGrade == null ? "Neue Note" : "Note Bearbeiten",
       child: Wrap(
           runSpacing: 10,
           children: [
-            BrainIconButton(
-              child: Text(
-                widget.grade.toString(),
-                style: AppDesign.textStyles.input
-              ),
-              icon: Icons.numbers,
-              action: numberPickerDialog
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                Expanded(
+                  child: BrainTextField(
+                    placeholder: "Noten Name",
+                    controller: widget.nameController,
+                    maxLines: 1,
+                  )
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  constraints: const BoxConstraints(
+                    maxWidth: 100
+                  ),
+                  child: BrainIconButton(
+                      child: Text(
+                          widget.grade.toString(),
+                          style: AppDesign.textStyles.input
+                      ),
+                      icon: Icons.numbers,
+                      action: numberPickerDialog
+                  ),
+                )
+              ],
             ),
             BrainDropdown(
               dialogTitle: "Wähle ein Fach",
@@ -125,12 +140,6 @@ class _GradesPage extends State<GradesPage> {
                 setState(() => widget.selectedSubject = subject);
               },
             ),
-            BrainTextField(
-                placeholder: "Noten Name",
-                controller: widget.nameController,
-                maxLines: 1,
-            ),
-
             BrainDropdown(
               dialogTitle: "Wähle eine Notenart",
               scrollableDialog: false,

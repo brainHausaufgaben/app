@@ -34,7 +34,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("C:/Users/theha/Desktop/key.jks")
+            storeFile file("key.jks")
             storePassword "123456"
             keyAlias "key0"
             keyPassword "123456"
@@ -51,14 +51,11 @@ android {
 
     buildTypes {
         release {
-
             debuggable false
             crunchPngs true
             minifyEnabled true
             shrinkResources true
-            signingConfig signingConfigs.debug
-            //signingConfig signingConfigs.release
-            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

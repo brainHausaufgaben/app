@@ -29,6 +29,7 @@ class PageTemplate extends StatefulWidget {
     this.backButton = false,
     this.subtitle,
     this.floatingActionButton,
+    this.secondaryTitleButton,
     this.pageSettings = const PageSettings()
   }) : super(key: key);
 
@@ -39,6 +40,7 @@ class PageTemplate extends StatefulWidget {
   final bool backButton;
   final Widget? floatingActionButton;
   final PageSettings pageSettings;
+  final Widget? secondaryTitleButton;
 
   @override
   State<PageTemplate> createState() => _PageTemplateState();
@@ -108,6 +110,7 @@ class _PageTemplateState extends State<PageTemplate> {
                     ),
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
                             style: TextButton.styleFrom(
@@ -120,7 +123,8 @@ class _PageTemplateState extends State<PageTemplate> {
                               label: widget.backButton ? "Zurück" : "Einstellungen",
                               child: Icon(widget.backButton ? Icons.keyboard_backspace : Icons.settings_rounded, color: AppDesign.colors.text),
                             )
-                          )
+                          ),
+                          if (widget.secondaryTitleButton != null) widget.secondaryTitleButton!
                         ]
                       ),
                       Padding(

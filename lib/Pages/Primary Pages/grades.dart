@@ -20,10 +20,10 @@ enum SortMethods {
 }
 
 class GradeOverview extends StatefulWidget {
-  GradeOverview({Key? key}): super(key: key);
+  const GradeOverview({Key? key}): super(key: key);
 
-  bool sortAscending = false;
-  SortMethods? sortMethod;
+  static bool sortAscending = false;
+  static SortMethods? sortMethod;
   static ValueNotifier<TimeSelectors> timeSelectors = ValueNotifier(TimeSelectors.thisYear);
 
   @override
@@ -36,7 +36,7 @@ class _GradeOverview extends State<GradeOverview>{
 
   LinkedHashMap sortByValue(Map map) {
     List sortedKeys = map.keys.toList(growable: false)..sort((key1, key2) {
-      return widget.sortAscending
+      return GradeOverview.sortAscending
           ? map[key1]!.compareTo(map[key2]!)
           : map[key2]!.compareTo(map[key1]!);
     });
@@ -52,7 +52,7 @@ class _GradeOverview extends State<GradeOverview>{
 
   LinkedHashMap sortByKey(Map<Subject, double> map) {
     List sortedKeys = map.keys.toList(growable: false)..sort((key1, key2) {
-      return widget.sortAscending
+      return GradeOverview.sortAscending
           ? key1.name.compareTo(key2.name)
           : key2.name.compareTo(key1.name);
     });
@@ -78,7 +78,7 @@ class _GradeOverview extends State<GradeOverview>{
 
     LinkedHashMap sortedMap;
 
-    switch(widget.sortMethod) {
+    switch(GradeOverview.sortMethod) {
       case SortMethods.bySubject:
         sortedMap = sortByKey(subjectPairs);
         break;
@@ -161,7 +161,7 @@ class _GradeOverview extends State<GradeOverview>{
                         dialogTitle: "Sortieren nach...",
                         scrollableDialog: false,
                         defaultText: "Sortieren nach...",
-                        currentValue: widget.sortMethod,
+                        currentValue: GradeOverview.sortMethod,
                         items: [
                           BrainDropdownEntry(
                               value: SortMethods.bySubject,
@@ -173,42 +173,54 @@ class _GradeOverview extends State<GradeOverview>{
                           )
                         ],
                         onChanged: (value) {
-                          if (widget.sortMethod != value) setState(() => widget.sortMethod = value);
+                          if (GradeOverview.sortMethod != value) setState(() => GradeOverview.sortMethod = value);
                         }
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Semantics(
+                      container: true,
+                      button: true,
+                      excludeSemantics: true,
+                      label: "Tippe um aufsteigend zu sortieren",
+                      child: TextButton(
+                          onPressed: () {
+                            if (!GradeOverview.sortAscending) setState(() => GradeOverview.sortAscending = true);
+                          },
+                          style: TextButton.styleFrom(
+                              backgroundColor: GradeOverview.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
+                              primary: GradeOverview.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
+                              padding: const EdgeInsets.all(14),
+                              minimumSize: Size.zero
+                          ),
+                          child: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: GradeOverview.sortAscending ? AppDesign.colors.contrast : AppDesign.colors.text
+                          )
+                      ),
+                    ),
+                  ),
+                  Semantics(
+                    container: true,
+                    button: true,
+                    excludeSemantics: true,
+                    label: "Tippe um absteigend zu sortieren",
                     child: TextButton(
                         onPressed: () {
-                          if (!widget.sortAscending) setState(() => widget.sortAscending = true);
+                          if (GradeOverview.sortAscending) setState(() => GradeOverview.sortAscending = false);
                         },
                         style: TextButton.styleFrom(
-                            backgroundColor: widget.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
-                            primary: widget.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
-                            padding: EdgeInsets.all(14),
+                            backgroundColor: GradeOverview.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
+                            primary: GradeOverview.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
+                            padding: const EdgeInsets.all(14),
                             minimumSize: Size.zero
                         ),
                         child: Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: widget.sortAscending ? AppDesign.colors.contrast : AppDesign.colors.text
+                            Icons.keyboard_arrow_up_rounded,
+                            color: GradeOverview.sortAscending ? AppDesign.colors.text : AppDesign.colors.contrast
                         )
                     ),
-                  ),
-                  TextButton(
-                      onPressed: () {
-                        if (widget.sortAscending) setState(() => widget.sortAscending = false);
-                      },
-                      style: TextButton.styleFrom(
-                          backgroundColor: widget.sortAscending ? AppDesign.colors.secondaryBackground : AppDesign.colors.primary,
-                          primary: widget.sortAscending ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground,
-                          padding: EdgeInsets.all(14),
-                          minimumSize: Size.zero
-                      ),
-                      child: Icon(
-                          Icons.keyboard_arrow_up_rounded,
-                          color: widget.sortAscending ? AppDesign.colors.text : AppDesign.colors.contrast
-                      )
                   ),
                 ],
               )

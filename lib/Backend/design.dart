@@ -86,7 +86,7 @@ abstract class Design {
 class MonochromeDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFF000000), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF000000), const Color(0xFFFFFFFF));
+      generateDesign(const Color(0xFF000000), const Color(0xFFF1F1F1), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF));
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFFFFFFFF), const Color(0xFF0D0E0F), const Color(0xFF1A1A1D), const Color(0xFFFFFFFF), const Color(0xFF212229));

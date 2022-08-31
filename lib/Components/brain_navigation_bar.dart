@@ -145,7 +145,7 @@ class _NavigationItem extends State<NavigationItem> with SingleTickerProviderSta
         child: TextButton(
           onPressed: widget.action,
           style: TextButton.styleFrom(
-              primary: widget.activated ? AppDesign.colors.contrast : AppDesign.colors.text
+              primary: widget.activated ? AppDesign.colors.contrast : AppDesign.colors.primary
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,

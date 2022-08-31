@@ -52,8 +52,7 @@ class _QuickActionsManagerState extends State<CustomQuickActions> {
         NavigationHelper.pushNamed(context, "homework");
       } else if (shortcutType == 'add_event') {
         NavigationHelper.pushNamed(context, "addEventPage");
-      }
-      else if (shortcutType == 'add_grade') {
+      } else if (shortcutType == 'add_grade') {
         NavigationHelper.pushNamed(context, "gradesPage");
       }
     });
