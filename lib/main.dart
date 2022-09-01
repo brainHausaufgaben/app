@@ -79,7 +79,7 @@ class _BrainApp extends State<BrainApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: NavigationHelper.rootKey,
-      title: 'Brain Hausaufgabenheft',
+      title: 'Brain Hausaufgaben',
       initialRoute: "/",
       onGenerateRoute: NavigationRoutes.onGenerateRoute,
       theme: AppDesign.themeData,
