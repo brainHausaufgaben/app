@@ -127,7 +127,7 @@ class DeveloperOptions{
 
   static void Doenerladen() async {
     AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.play(AssetSource("images/notification_sounds.mp3"), mode: PlayerMode.mediaPlayer, volume: 1);
+    await audioPlayer.play(AssetSource("../images/notification_sounds.mp3"), mode: PlayerMode.mediaPlayer, volume: 1);
   }
 
   static void Fortnite(){
