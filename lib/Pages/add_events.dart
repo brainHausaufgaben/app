@@ -113,16 +113,6 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
             ),
           )
         ),
-        child: SizedBox(
-          height: 400,
-          child: NotificationListener<OverscrollNotification> (
-            onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
-            child: TabBarView(
-              controller: tabController,
-              children: widget.subpages,
-            )
-          )
-        ),
         floatingActionButton: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -130,7 +120,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                   Expanded(
                       child: ElevatedButton (
                           style: ElevatedButton.styleFrom(
-                              primary: AppDesign.colors.primary
+                            backgroundColor: AppDesign.colors.primary
                           ),
                           onPressed: () {
                             switch (widget.subpages[tabController.index].runtimeType) {
@@ -150,6 +140,16 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                   )
                 ]
             )
+        ),
+        child: SizedBox(
+          height: 400,
+          child: NotificationListener<OverscrollNotification> (
+            onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
+            child: TabBarView(
+              controller: tabController,
+              children: widget.subpages,
+            )
+          )
         )
       )
     );

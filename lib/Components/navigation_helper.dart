@@ -1,5 +1,4 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
 import 'package:brain_app/Components/brain_navigation_bar.dart';
 import 'package:brain_app/Components/brain_sidebar.dart';
@@ -53,7 +52,7 @@ class NavigationHelper extends StatefulWidget {
   }
 
   @override
-  _NavigationHelper createState() => _NavigationHelper();
+  State<NavigationHelper> createState() => _NavigationHelper();
 }
 
 class _NavigationHelper extends State<NavigationHelper> {
@@ -83,8 +82,6 @@ class _NavigationHelper extends State<NavigationHelper> {
 
   @override
   Widget build(BuildContext context) {
-    BrainApp.screenWidth = MediaQuery.of(context).size.width;
-
     Widget navigator = Navigator(
       key: NavigationHelper.navigatorKey,
       initialRoute: "home",
@@ -110,13 +107,18 @@ class _NavigationHelper extends State<NavigationHelper> {
   }
 }
 
+double getScreenSize(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
+
 class NavigationRoutes {
   static Map<String, WidgetBuilder> get() {
     return {
       "/": (context) {
+        BrainApp.screenWidth = getScreenSize(context);
         if (kIsWeb) {
           return CallbackShortcuts(
-            bindings: { // Eins für submit
+            bindings: {
               const SingleActivator(LogicalKeyboardKey.keyH, alt: true): () => NavigationHelper.pushNamed(context, "homework"),
               const SingleActivator(LogicalKeyboardKey.keyS, alt: true): () => NavigationHelper.pushNamed(context, "timeTable"),
               const SingleActivator(LogicalKeyboardKey.keyN, alt: true): () => NavigationHelper.pushNamed(context, "gradesPage"),

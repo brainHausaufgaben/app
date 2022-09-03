@@ -65,7 +65,7 @@ class _SettingsPage extends State<SettingsPage> {
                   context: context,
                   builder: (context) {
                     return BrainConfirmationDialog(
-                      description: "Diese Aktion wird alle Noten von diesem Jahr löschen. Du solltest, falls noch nicht geschehen, erst ein neues Schuljahr setzen",
+                      description: "Diese Aktion wird alle Noten von diesem Jahr löschen. Du solltest, falls noch nicht geschehen, erst deine Klasse ändern",
                       onCancel: () => Navigator.of(context).pop(),
                       onContinue: () {
                         GradingSystem.setAdvancedLevel(!GradingSystem.isAdvancedLevel);
@@ -218,9 +218,9 @@ class _SettingsPage extends State<SettingsPage> {
                           ),
                           TextButton(
                             style: TextButton.styleFrom(
-                                backgroundColor: AppDesign.colors.primary,
-                                primary: AppDesign.colors.contrast,
-                                padding: const EdgeInsets.symmetric(vertical: 13)
+                              foregroundColor: AppDesign.colors.contrast,
+                              backgroundColor: AppDesign.colors.primary,
+                              padding: const EdgeInsets.symmetric(vertical: 13)
                             ),
                             child: Text(
                                 "Datenschutz",
@@ -235,7 +235,7 @@ class _SettingsPage extends State<SettingsPage> {
                             padding: const EdgeInsets.only(top: 5),
                             child: TextButton(
                               style: TextButton.styleFrom(
-                                primary: AppDesign.colors.text,
+                                foregroundColor: AppDesign.colors.text,
                                 padding: const EdgeInsets.symmetric(vertical: 13),
                                 side: BorderSide(color: AppDesign.colors.text, width: 2)
                               ),

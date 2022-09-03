@@ -170,7 +170,7 @@ class DeveloperOptions{
 
   static void onScreenLogging(){
     BrainApp.updatePreference("showLogsOnScreen", !BrainApp.preferences["showLogsOnScreen"]);
-    BrainToast(text: "on screen logging is now " + BrainApp.preferences["showLogsOnScreen"].toString()).show();
+    BrainToast(text: "on screen logging is now ${BrainApp.preferences["showLogsOnScreen"]}").show();
 
   }
 
@@ -180,13 +180,13 @@ class DeveloperOptions{
     StreamSubscription ss =  ls.stream.listen((event) {},);
     ss.onData((event) {
       event.forEach((key, value)
-      {BrainDebug.log(key.toString() + ", " + value.toString());
+      {BrainDebug.log("$key, $value");
       });
       ss.cancel();
     });
 
     BrainApp.preferences.forEach((key, value) {
-      BrainDebug.log(key.toString() + ", " + value.toString());
+      BrainDebug.log("$key, $value");
     });
 
 
@@ -194,7 +194,7 @@ class DeveloperOptions{
 
   static void saveLogs(){
     BrainApp.updatePreference("saveLogs", !BrainApp.preferences["saveLogs"]);
-    BrainToast(text: "log saving is now " + BrainApp.preferences["saveLogs"].toString()).show();
+    BrainToast(text: "log saving is now ${BrainApp.preferences["saveLogs"]}").show();
   }
 
   static void Sebastian(){
@@ -223,7 +223,7 @@ class DeveloperOptions{
       DateTime? time = subject.getNextDate();
       if(time != null){
         if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
-          time = time.add(Duration(days: 7));
+          time = time.add(const Duration(days: 7));
         }
         Homework(subject,time,"instagram: @sesegamer,twitter.com/cockman59627141,youtube: UwUGaming");
       }
@@ -231,7 +231,7 @@ class DeveloperOptions{
 
     TimeTable.saveEnabled = true;
     for(int i = 0; i < 100; i++){
-      Event(DateTime(2005 + i,3,12),"Sebastian Geburtstag", "Er wird heute " + i.toString() + " Jahre Alt");
+      Event(DateTime(2005 + i,3,12),"Sebastian Geburtstag", "Er wird heute $i Jahre Alt");
 
     }
     Event(DateTime(2005 + 100,3,12),"Sebastian Geburtstag", "Er wird heute sterben");

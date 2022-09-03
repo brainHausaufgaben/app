@@ -35,9 +35,9 @@ class BrainApp extends StatefulWidget {
     "overridePrimaryWith" : MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness == Brightness.dark ? Colors.white.value : Colors.black.value,
     "showDeveloperOptions" : false,
     "currentSemester": 0,
-    "showLogsOnScreen":false,
-    "saveLogs":false,
-    "isAdvancedLevel": true,
+    "showLogsOnScreen": false,
+    "saveLogs": false,
+    "isAdvancedLevel": false,
     "currentYear": 10
   };
 
@@ -64,7 +64,7 @@ class BrainApp extends StatefulWidget {
   }
 
   @override
-  _BrainApp createState() => _BrainApp();
+  State<BrainApp> createState() => _BrainApp();
 }
 
 class _BrainApp extends State<BrainApp> {
@@ -78,6 +78,7 @@ class _BrainApp extends State<BrainApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      color: AppDesign.colors.background,
       navigatorKey: NavigationHelper.rootKey,
       title: 'Brain Hausaufgaben',
       initialRoute: "/",
@@ -109,8 +110,8 @@ class StretchingIndicator extends ScrollBehavior {
   @override
   Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     return StretchingOverscrollIndicator(
-        child: child,
-        axisDirection: details.direction
+        axisDirection: details.direction,
+        child: child
     );
   }
 }

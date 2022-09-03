@@ -46,11 +46,11 @@ class _BrainTextField extends State<BrainTextField> {
           TextField(
             minLines: widget.minLines ?? 1,
             maxLines: widget.maxLines ?? 5,
+            textCapitalization: TextCapitalization.sentences,
             autocorrect: true,
             controller: widget.controller,
-            style: AppDesign.textStyles.input,
+            style: AppDesign.textStyles.input.copyWith(height: 0.9),
             decoration: InputDecoration (
-              constraints: const BoxConstraints(maxHeight: 51),
               filled: true,
               enabledBorder: UnderlineInputBorder(
                   borderRadius: AppDesign.boxStyle.inputBorderRadius,
@@ -399,7 +399,7 @@ class BrainIconButton extends StatelessWidget {
       child: TextButton(
         onPressed: action,
         style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 14, horizontal: 12),
+            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 15, horizontal: 12),
             backgroundColor: AppDesign.colors.secondaryBackground,
             minimumSize: Size.zero
         ),
@@ -438,7 +438,7 @@ class BrainColorPicker extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: pickerColor,
+          backgroundColor: pickerColor,
           padding: EdgeInsets.zero,
         ),
         child: Icon(
@@ -846,8 +846,8 @@ class SettingsTextField extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: TextButton(
                   style: TextButton.styleFrom(
+                    foregroundColor: AppDesign.colors.contrast,
                     backgroundColor: AppDesign.colors.primary,
-                    primary: AppDesign.colors.contrast,
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13)
                   ),
                   onPressed: () {

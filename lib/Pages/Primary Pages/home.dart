@@ -1,19 +1,17 @@
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/brain_infobox.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
+import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-
-import '../../Components/box.dart';
-import '../page_template.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
@@ -94,8 +92,8 @@ class _HomePage extends State<HomePage>{
                   Expanded(
                     child: TextButton(
                       style: TextButton.styleFrom(
+                        foregroundColor: AppDesign.colors.contrast,
                         backgroundColor: AppDesign.colors.primary,
-                        primary: AppDesign.colors.contrast,
                         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                       ),
                       onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
@@ -108,7 +106,7 @@ class _HomePage extends State<HomePage>{
                       child: TextButton(
                         style: TextButton.styleFrom(
                           backgroundColor: AppDesign.colors.primary,
-                          primary: AppDesign.colors.contrast,
+                          foregroundColor: AppDesign.colors.contrast,
                           padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                         ),
                         onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
