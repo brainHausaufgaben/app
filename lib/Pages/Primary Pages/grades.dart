@@ -159,7 +159,6 @@ class _GradeOverview extends State<GradeOverview>{
                   Flexible(
                     child: BrainDropdown(
                         dialogTitle: "Sortieren nach...",
-                        scrollableDialog: false,
                         defaultText: "Sortieren nach...",
                         currentValue: GradeOverview.sortMethod,
                         items: [

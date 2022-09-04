@@ -106,7 +106,6 @@ class GradesBox extends StatelessWidget {
                               )
                           )
                         ],
-                        scrollableDialog: false,
                         onChanged: onChanged,
                         dialogTitle: "Alle Noten von..."
                     )

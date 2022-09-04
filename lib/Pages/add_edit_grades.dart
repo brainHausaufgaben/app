@@ -142,7 +142,6 @@ class _GradesPage extends State<GradesPage> {
             ),
             BrainDropdown(
               dialogTitle: "Wähle eine Notenart",
-              scrollableDialog: false,
               defaultText: "Art der Note",
               currentValue: widget.type,
               items: [
@@ -174,7 +173,6 @@ class _GradesPage extends State<GradesPage> {
             ),
             BrainDropdown(
               dialogTitle: "Semester des Jahres",
-              scrollableDialog: false,
               defaultText: "Semester des Jahres",
               currentValue: widget.semester,
               items: [

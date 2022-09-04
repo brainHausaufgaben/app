@@ -21,6 +21,7 @@ class BrainTextField extends StatefulWidget {
     this.minLines,
     this.maxLines,
     this.maxLength,
+    this.autofocus = false
   }) : super(key: key);
 
   TextEditingController controller;
@@ -28,6 +29,7 @@ class BrainTextField extends StatefulWidget {
   final int? minLines;
   final int? maxLines;
   final int? maxLength;
+  final bool autofocus;
 
   @override
   State<StatefulWidget> createState() => _BrainTextField();
@@ -44,6 +46,7 @@ class _BrainTextField extends State<BrainTextField> {
       child: Stack(
         children: [
           TextField(
+            autofocus: widget.autofocus,
             minLines: widget.minLines ?? 1,
             maxLines: widget.maxLines ?? 5,
             textCapitalization: TextCapitalization.sentences,
@@ -105,12 +108,10 @@ class BrainDropdown<ItemType> extends StatefulWidget {
     required this.items,
     required this.onChanged,
     required this.dialogTitle,
-    this.scrollableDialog = true,
     this.additionalAction
   }) : super(key: key);
 
   final String dialogTitle;
-  final bool scrollableDialog;
   final String defaultText;
   final ItemType currentValue;
   final List<BrainDropdownEntry> items;
@@ -205,24 +206,16 @@ class _BrainDropdown extends State<BrainDropdown> {
                 ],
                 backgroundColor: AppDesign.colors.secondaryBackground,
                 title: Text(widget.dialogTitle, style: AppDesign.textStyles.alertDialogHeader),
-                content: widget.scrollableDialog ? Container(
+                content: Container(
                   constraints: const BoxConstraints(maxHeight: 400),
-                  child: ScrollShadow(
-                    color: AppDesign.colors.background.withOpacity(0.8),
-                    curve: Curves.ease,
-                    size: 15,
-                    child: SingleChildScrollView(
+                  child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: getButtons(context),
                       )
-                    )
                   )
-                ) : Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: getButtons(context),
                 )
               );
             }

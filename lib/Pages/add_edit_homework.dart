@@ -79,6 +79,7 @@ class _HomeworkPage extends State<HomeworkPage> {
         runSpacing: 10,
         children: [
           BrainTextField(
+            autofocus: true,
             controller: widget.homeworkController,
             placeholder: "Hausaufgabe",
           ),
