@@ -39,16 +39,16 @@ class DeveloperOptions{
 
 
   static void enterText(String? text){
-
     if(text == "" || text == null) return;
+    String convertedText = text.toLowerCase().trim();
 
-    List<dynamic>? result = codes[text.toLowerCase().trim()];
+    List<dynamic>? result = codes[convertedText];
 
     if(result != null){
       Function function = result[0] as Function;
       function.call();
-      if(!activatedCodes.contains(text)){
-        activatedCodes.add(text);
+      if(!activatedCodes.contains(convertedText)){
+        activatedCodes.add(convertedText);
         SaveSystem.saveDeveloperOptions();
       }
       BrainApp.notifier.notifyOfChanges();
@@ -125,9 +125,9 @@ class DeveloperOptions{
 
   }
 
-  static void Doenerladen() async {
+  static void Doenerladen() {
     AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.play(AssetSource("../images/notification_sounds.mp3"), mode: PlayerMode.mediaPlayer, volume: 1);
+    audioPlayer.play(AssetSource("../data/notification_sounds.mp3"), volume: 0.9);
   }
 
   static void Fortnite(){

@@ -89,7 +89,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         ),
         floatingHeader: Container(
-          constraints: const BoxConstraints(maxWidth: 250),
+          constraints: const BoxConstraints(maxWidth: 250, minHeight: 55),
           decoration: BoxDecoration(
               color: AppDesign.colors.secondaryBackground,
               borderRadius: BorderRadius.circular(100)
@@ -107,8 +107,8 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                   borderRadius: BorderRadius.circular(100)
               ),
               tabs: const [
-                Tab(text: "Termin", height: 55),
-                Tab(text: "Test", height: 55)
+                Text("Termin"),
+                Text("Test")
               ],
             ),
           )

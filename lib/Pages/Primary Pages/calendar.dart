@@ -125,7 +125,7 @@ class _CalendarPage extends State<CalendarPage> {
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (MediaQuery.of(context).size.width < AppDesign.breakPointWidth) {
-          if (details.primaryVelocity! > 0.0) {
+          if (details.velocity.pixelsPerSecond.dx > 0.0) {
             NavigationHelper.selectedPrimaryPage.value = 1;
             NavigationHelper.pushNamedReplacement(context, "home");
           }

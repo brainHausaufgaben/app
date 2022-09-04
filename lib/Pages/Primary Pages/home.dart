@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
@@ -208,10 +209,10 @@ class _HomePage extends State<HomePage>{
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (MediaQuery.of(context).size.width < AppDesign.breakPointWidth) {
-          if (details.primaryVelocity! > 0.0) {
+          if (details.velocity.pixelsPerSecond.dx > 0.0) {
             NavigationHelper.selectedPrimaryPage.value = 0;
             NavigationHelper.pushNamedReplacement(context, "gradesOverview");
-          } else {
+          } else if (details.velocity.pixelsPerSecond.dx < 0.0) {
             NavigationHelper.selectedPrimaryPage.value = 2;
             NavigationHelper.pushNamedReplacement(context, "calendar");
           }
