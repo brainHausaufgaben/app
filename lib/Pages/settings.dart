@@ -98,6 +98,7 @@ class _SettingsPage extends State<SettingsPage> {
                   context: context,
                   builder: (context) {
                     return AlertDialog(
+                      backgroundColor: AppDesign.colors.secondaryBackground,
                       title: Text(
                         "Tastenkürzel",
                         style: AppDesign.textStyles.alertDialogHeader
@@ -120,6 +121,10 @@ class _SettingsPage extends State<SettingsPage> {
                           ),
                           Text(
                             "Alt + E: Neues Event",
+                            style: AppDesign.textStyles.pointElementPrimary
+                          ),
+                          Text(
+                            "Escape: Zurück",
                             style: AppDesign.textStyles.pointElementPrimary
                           )
                         ]

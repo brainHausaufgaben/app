@@ -27,9 +27,12 @@ class BrainConfirmationDialog extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                description,
-                style: AppDesign.textStyles.alertDialogDescription,
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 400),
+                child: Text(
+                  description,
+                  style: AppDesign.textStyles.alertDialogDescription,
+                )
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 20, bottom: 5),

@@ -75,17 +75,13 @@ class _HomePage extends State<HomePage>{
                   textAlign: TextAlign.center,
                 ),
               ),
-              Text(
-                "Füge ein neues Fach hinzu oder fülle deinen Stundenplan aus :)",
-                textAlign: TextAlign.center,
-                style: AppDesign.textStyles.pointElementSecondary,
-              ),
-              Divider(
-                color: AppDesign.colors.text.withOpacity(0.2),
-                thickness: 2,
-                height: 35,
-                indent: 70,
-                endIndent: 70,
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Text(
+                  "Füge ein neues Fach hinzu oder fülle deinen Stundenplan aus :)",
+                  textAlign: TextAlign.center,
+                  style: AppDesign.textStyles.pointElementSecondary,
+                )
               ),
               Flex(
                 direction: Axis.horizontal,

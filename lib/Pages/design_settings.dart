@@ -147,7 +147,7 @@ class IconRadio extends StatelessWidget {
     return "#" + color.value.toRadixString(16);
   }
 
-  Widget getSvgIcon() {
+  Widget getSvgIcon(BuildContext context) {
     DesignPackage designPackage;
     if (BrainApp.preferences["darkMode"]) {
       designPackage = design.darkVariant;
@@ -155,12 +155,14 @@ class IconRadio extends StatelessWidget {
       designPackage = design.lightVariant;
     }
 
+    bool isDesktop = MediaQuery.of(context).size.width > AppDesign.breakPointWidth;
+
     Color primaryColor = design.runtimeType == MonochromeDesign
         ? Color(BrainApp.preferences["overridePrimaryWith"])
         : designPackage.colors.primary;
 
     // Replace text color
-    String themeIcon = themeIconSvg.replaceAll("#303540", colorToString(designPackage.colors.text));
+    String themeIcon = (isDesktop ? desktopThemeIconSvg : themeIconSvg).replaceAll("#303540", colorToString(designPackage.colors.text));
     // Replace primaryColor
     themeIcon = themeIcon.replaceAll("#9B9B9B", colorToString(primaryColor));
     // Replace backgroundColor
@@ -168,22 +170,28 @@ class IconRadio extends StatelessWidget {
     // Replace boxBackground
     themeIcon = themeIcon.replaceAll("white", colorToString(designPackage.colors.secondaryBackground));
 
-    return SvgPicture.string(themeIcon, width: 45, height: 55);
+    return SvgPicture.string(
+      themeIcon,
+      width: isDesktop ? 90 : 45,
+      height: isDesktop ? 50 : 55)
+    ;
   }
 
   @override
   Widget build(BuildContext context) {
+    bool isDesktop = MediaQuery.of(context).size.width > AppDesign.breakPointWidth;
+
     return Tooltip(
       message: tooltip,
       child: Container(
-        width: 50,
-        height: 70,
+        width: isDesktop ? 95: 50,
+        height: isDesktop ? 65 : 70,
         decoration: BoxDecoration(
             color: isSelected ? AppDesign.colors.primary.withOpacity(0.3) : null,
             borderRadius: BorderRadius.circular(5)
         ),
         child: Center(
-          child: getSvgIcon(),
+          child: getSvgIcon(context),
         ),
       ),
     );

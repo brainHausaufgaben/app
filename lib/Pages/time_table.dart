@@ -118,7 +118,8 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         ),
         floatingHeader: Container(
           constraints: const BoxConstraints(
-            maxWidth: 600
+            maxWidth: 600,
+            minHeight: 55
           ),
           decoration: BoxDecoration(
             color: AppDesign.colors.secondaryBackground,
@@ -134,11 +135,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
               borderRadius: BorderRadius.circular(100)
             ),
             tabs: const [
-              Tab(text: "Mo", height: 55),
-              Tab(text: "Di", height: 55),
-              Tab(text: "Mi", height: 55),
-              Tab(text: "Do", height: 55),
-              Tab(text: "Fr", height: 55)
+              Text("Mo"),
+              Text("Di"),
+              Text("Mi"),
+              Text("Do"),
+              Text("Fr")
             ],
           ),
         ),
