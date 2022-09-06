@@ -128,7 +128,7 @@ class _PageTemplateState extends State<PageTemplate> {
                         ]
                       ),
                       Padding(
-                          padding: EdgeInsets.only(top: 25, bottom: widget.floatingHeader != null ? 20 : 30),
+                          padding: EdgeInsets.only(top: 30, bottom: widget.floatingHeader != null ? 20 : 30),
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget> [

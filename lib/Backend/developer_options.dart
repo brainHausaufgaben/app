@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
