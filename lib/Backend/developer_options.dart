@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:brain_app/Backend/brain_debug.dart';
+import 'dart:math';
 
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
@@ -23,7 +24,7 @@ class DeveloperOptions{
   static Map<String,List<dynamic>> codes = {
     "fortnite" : [Fortnite, "Fortnite Gaming", "Macht Fortnite"],
     "sharkswimmingocean" : [SharkSwimmingOcean, "Shark Swimming Ocean", "Der Hai der schwimmt"],
-    "manuel" : [Manuel, "Manuel", "Manuel hat das gemacht"],
+    "manuel" : [Manuel, "Manuel", "Manuel hat das gemacht 🥳 🥳 "],
     "sebastian" : [Sebastian, "Sebastian", "Sebastian hat das gemacht"],
     "ninja" : [Ninja, "Ninja", "Macht alles Unsichtbar"],
     "dunkelheit" : [Dunkelheit, "Dunkelheit", "Macht alles Schwarz"],
@@ -34,7 +35,7 @@ class DeveloperOptions{
     "onscreenlogging" : [onScreenLogging,"On Screen Logging", "Zeigt alle Logs auf dem Bildschirm an"],
     "logsaves" : [logSaves, "Log Saves", "onScreenLogging sollte aktiviert sein"],
     "savelogs" : [saveLogs, "Save Logs", "Speichert alle Logs ACHTUNG: VERBRAUCHT VIEL SPEICHER"],
-    "habhax" : [VideoTest, "HabHax", "Schaut euch das populäre Fortnite playthrough des berühmten Youtubers HabHax in der Übersicht an!"]
+    "habhax" : [HabHax, "HabHax", "Schaut euch das populäre Fortnite playthrough des berühmten Youtubers HabHax in der Übersicht an!"]
   };
 
 
@@ -85,7 +86,7 @@ class DeveloperOptions{
 
   }
 
-  static void VideoTest() {
+  static void HabHax() {
     videoPlaying = true;
     BrainApp.notifier.notifyOfChanges();
   }
@@ -153,14 +154,63 @@ class DeveloperOptions{
     NavigationHelper.rootKey.currentState!.pushNamed("imagePage", arguments: "images/Rendered SSO.jpg");
   }
 
-  static void Manuel() async {
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      AppDesign.setFromPackage(BlindnessDesign().darkVariant);
-    });
-    await Future.delayed(const Duration(milliseconds: 500));
-    Timer.periodic(const Duration(seconds: 1), (timer) {
-      AppDesign.setFromPackage(MonochromeDesign().lightVariant);
-    });
+  static void Manuel() {
+    Doenerladen();
+    showDialog(
+      context: NavigationHelper.rootKey.currentContext!,
+      builder: (context) {
+        return Flex(
+          direction: Axis.vertical,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 0,
+                    child: Image.asset(
+                      "images/sparkle.gif",
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
+                      fit: BoxFit.cover,
+                    )
+                  ),
+                  Positioned(
+                      top: 0,
+                      left: MediaQuery.of(context).size.width / 2 - 75,
+                      child: Image.asset("images/party.gif", width: 150)
+                  ),
+                  Positioned(
+                    left: MediaQuery.of(context).size.width / 2 - 150,
+                    bottom: 50,
+                    child: RotatingImage(
+                        order: MatrixOrder.xyz,
+                        image: Image.asset("images/Rendered SSO.jpg", width: 150)
+                    )
+                  ),
+                  Positioned(
+                      left: MediaQuery.of(context).size.width / 2,
+                      bottom: 150,
+                      child: RotatingImage(
+                          order: MatrixOrder.yzx,
+                          image: Image.asset("images/Rendered SSO.jpg", width: 150)
+                      )
+                  ),
+                  Positioned(
+                      left: MediaQuery.of(context).size.width / 2 - 150,
+                      bottom: 250,
+                      child: RotatingImage(
+                          order: MatrixOrder.zxy,
+                          image: Image.asset("images/Rendered SSO.jpg", width: 150)
+                      )
+                  )
+                ]
+              )
+            )
+          ]
+        );
+      }
+    );
   }
 
   static void Test(){
@@ -242,4 +292,81 @@ class DeveloperOptions{
 
   }
 
+}
+
+enum MatrixOrder {
+  xyz,
+  yzx,
+  zxy
+}
+
+class RotatingImage extends StatefulWidget {
+  const RotatingImage({
+    super.key,
+    required this.image,
+    required this.order
+  });
+
+  final Widget image;
+  final MatrixOrder order;
+
+  @override
+  State<StatefulWidget> createState() => _RotatingImage();
+}
+
+class _RotatingImage extends State<RotatingImage> with SingleTickerProviderStateMixin {
+  late AnimationController animationController = AnimationController(
+    duration: const Duration(seconds: 2),
+    vsync: this,
+  );
+  late Animation<double> rotateY;
+
+  @override
+  void initState() {
+    animationController.repeat();
+    rotateY = Tween<double>(
+      begin: 0,
+      end: 2,
+    ).animate(animationController);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: animationController,
+      builder: (context, child) {
+        Matrix4 matrix;
+        switch (widget.order) {
+          case MatrixOrder.xyz:
+            matrix = Matrix4.rotationX(rotateY.value * pi)
+              ..multiply(Matrix4.rotationY(rotateY.value * pi))
+              ..multiply(Matrix4.rotationZ(rotateY.value * pi));
+            break;
+          case MatrixOrder.yzx:
+            matrix = Matrix4.rotationY(rotateY.value * pi)
+              ..multiply(Matrix4.rotationZ(rotateY.value * pi))
+              ..multiply(Matrix4.rotationX(rotateY.value * pi));
+            break;
+          case MatrixOrder.zxy:
+            matrix = Matrix4.rotationZ(rotateY.value * pi)
+              ..multiply(Matrix4.rotationX(rotateY.value * pi))
+              ..multiply(Matrix4.rotationY(rotateY.value * pi));
+            break;
+        }
+
+        return Transform(
+          alignment: FractionalOffset.centerLeft,
+          transform: matrix,
+          child: widget.image,
+        );
+      },
+    );
+  }
 }
