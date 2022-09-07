@@ -156,7 +156,8 @@ class DeveloperOptions{
   }
 
   static void Manuel() {
-    Doenerladen();
+    audioPlayer.play(AssetSource("../data/haptic_feedback_data.mp3"), volume: 0.9);
+
     showDialog(
       context: NavigationHelper.rootKey.currentContext!,
       builder: (context) {
