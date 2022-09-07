@@ -6,6 +6,7 @@ import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/notifier.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -19,12 +20,13 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DeveloperOptions{
   static bool videoPlaying = false;
+  static AudioPlayer audioPlayer = AudioPlayer();
   static List<String> activatedCodes = ["onscreenlogging","logsaves", "savelogs"];
 
   static Map<String,List<dynamic>> codes = {
     "fortnite" : [Fortnite, "Fortnite Gaming", "Macht Fortnite"],
     "sharkswimmingocean" : [SharkSwimmingOcean, "Shark Swimming Ocean", "Der Hai der schwimmt"],
-    "manuel" : [Manuel, "Manuel", "Manuel hat das gemacht 🥳 🥳 "],
+    "manuel" : [Manuel, "Manuel", "Manuel hat das gemacht"],
     "sebastian" : [Sebastian, "Sebastian", "Sebastian hat das gemacht"],
     "ninja" : [Ninja, "Ninja", "Macht alles Unsichtbar"],
     "dunkelheit" : [Dunkelheit, "Dunkelheit", "Macht alles Schwarz"],
@@ -127,7 +129,6 @@ class DeveloperOptions{
   }
 
   static void Doenerladen() {
-    AudioPlayer audioPlayer = AudioPlayer();
     audioPlayer.play(AssetSource("../data/notification_sounds.mp3"), volume: 0.9);
   }
 
@@ -159,6 +160,7 @@ class DeveloperOptions{
     showDialog(
       context: NavigationHelper.rootKey.currentContext!,
       builder: (context) {
+        Notifier notifier = Notifier();
         return Flex(
           direction: Axis.vertical,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -180,29 +182,52 @@ class DeveloperOptions{
                       left: MediaQuery.of(context).size.width / 2 - 75,
                       child: Image.asset("images/party.gif", width: 150)
                   ),
-                  Positioned(
-                    left: MediaQuery.of(context).size.width / 2 - 150,
-                    bottom: 50,
-                    child: RotatingImage(
-                        order: MatrixOrder.xyz,
-                        image: Image.asset("images/Rendered SSO.jpg", width: 150)
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 450),
+                      child: AnimatedBuilder(
+                          animation: notifier,
+                          builder: (context, child) {
+                            return DefaultTextStyle(
+                              style: const TextStyle(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    "Score",
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 25
+                                    ),
+                                  ),
+                                  Text(
+                                    BrainApp.preferences["manuelClickerScore"].toString(),
+                                    style: const TextStyle(
+                                        height: 1.1,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 60
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                      ),
                     )
                   ),
-                  Positioned(
-                      left: MediaQuery.of(context).size.width / 2,
-                      bottom: 150,
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {
+                        BrainApp.updatePreference("manuelClickerScore", BrainApp.preferences["manuelClickerScore"] + 1);
+                        notifier.notifyOfChanges();
+                      },
                       child: RotatingImage(
-                          order: MatrixOrder.yzx,
-                          image: Image.asset("images/Rendered SSO.jpg", width: 150)
-                      )
-                  ),
-                  Positioned(
-                      left: MediaQuery.of(context).size.width / 2 - 150,
-                      bottom: 250,
-                      child: RotatingImage(
-                          order: MatrixOrder.zxy,
-                          image: Image.asset("images/Rendered SSO.jpg", width: 150)
-                      )
+                          image: Image.asset("images/manuel_gesicht.png", width: 225)
+                      ),
+                    )
                   )
                 ]
               )
@@ -210,7 +235,7 @@ class DeveloperOptions{
           ]
         );
       }
-    );
+    ).then((value) => audioPlayer.stop());
   }
 
   static void Test(){
@@ -294,21 +319,13 @@ class DeveloperOptions{
 
 }
 
-enum MatrixOrder {
-  xyz,
-  yzx,
-  zxy
-}
-
 class RotatingImage extends StatefulWidget {
   const RotatingImage({
     super.key,
     required this.image,
-    required this.order
   });
 
   final Widget image;
-  final MatrixOrder order;
 
   @override
   State<StatefulWidget> createState() => _RotatingImage();
@@ -316,7 +333,7 @@ class RotatingImage extends StatefulWidget {
 
 class _RotatingImage extends State<RotatingImage> with SingleTickerProviderStateMixin {
   late AnimationController animationController = AnimationController(
-    duration: const Duration(seconds: 2),
+    duration: const Duration(seconds: 45),
     vsync: this,
   );
   late Animation<double> rotateY;
@@ -342,28 +359,10 @@ class _RotatingImage extends State<RotatingImage> with SingleTickerProviderState
     return AnimatedBuilder(
       animation: animationController,
       builder: (context, child) {
-        Matrix4 matrix;
-        switch (widget.order) {
-          case MatrixOrder.xyz:
-            matrix = Matrix4.rotationX(rotateY.value * pi)
-              ..multiply(Matrix4.rotationY(rotateY.value * pi))
-              ..multiply(Matrix4.rotationZ(rotateY.value * pi));
-            break;
-          case MatrixOrder.yzx:
-            matrix = Matrix4.rotationY(rotateY.value * pi)
-              ..multiply(Matrix4.rotationZ(rotateY.value * pi))
-              ..multiply(Matrix4.rotationX(rotateY.value * pi));
-            break;
-          case MatrixOrder.zxy:
-            matrix = Matrix4.rotationZ(rotateY.value * pi)
-              ..multiply(Matrix4.rotationX(rotateY.value * pi))
-              ..multiply(Matrix4.rotationY(rotateY.value * pi));
-            break;
-        }
 
         return Transform(
-          alignment: FractionalOffset.centerLeft,
-          transform: matrix,
+          alignment: FractionalOffset.center,
+          transform: Matrix4.rotationZ(rotateY.value * pi),
           child: widget.image,
         );
       },

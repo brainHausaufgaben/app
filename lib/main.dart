@@ -34,11 +34,12 @@ class BrainApp extends StatefulWidget {
     "calendarFormat" : 0,
     "overridePrimaryWith" : MediaQueryData.fromWindow(WidgetsBinding.instance.window).platformBrightness == Brightness.dark ? Colors.white.value : Colors.black.value,
     "showDeveloperOptions" : false,
-    "currentSemester": 0,
-    "showLogsOnScreen": false,
-    "saveLogs": false,
-    "isAdvancedLevel": false,
-    "currentYear": 10
+    "currentSemester" : 0,
+    "showLogsOnScreen" : false,
+    "saveLogs" : false,
+    "isAdvancedLevel" : false,
+    "currentYear" : 10,
+    "manuelClickerScore" : 0
   };
 
   static void clearPreferences() async {

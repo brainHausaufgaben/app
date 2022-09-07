@@ -102,111 +102,6 @@ class _GradesPage extends State<GradesPage> {
     return PageTemplate(
       backButton: true,
       title: widget.previousGrade == null ? "Neue Note" : "Note Bearbeiten",
-      child: Wrap(
-          runSpacing: 10,
-          children: [
-            Flex(
-              direction: Axis.horizontal,
-              children: [
-                Expanded(
-                  child: BrainTextField(
-                    placeholder: "Noten Name",
-                    controller: widget.nameController,
-                    maxLines: 1,
-                  )
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10),
-                  constraints: const BoxConstraints(
-                    maxWidth: 100
-                  ),
-                  child: BrainIconButton(
-                      child: Text(
-                          widget.grade.toString(),
-                          style: AppDesign.textStyles.input
-                      ),
-                      icon: Icons.numbers,
-                      action: numberPickerDialog
-                  ),
-                )
-              ],
-            ),
-            BrainDropdown(
-              dialogTitle: "Wähle ein Fach",
-              defaultText: "Fach",
-              currentValue: widget.selectedSubject,
-              items: BrainDropdown.getSubjectDropdowns(),
-              onChanged: (subject) {
-                setState(() => widget.selectedSubject = subject);
-              },
-            ),
-            BrainDropdown(
-              dialogTitle: "Wähle eine Notenart",
-              defaultText: "Art der Note",
-              currentValue: widget.type,
-              items: [
-                BrainDropdownEntry(
-                  value: GradeType.smallTest,
-                  child: Text(
-                    "Ex",
-                    style: AppDesign.textStyles.input
-                  )
-                ),
-                BrainDropdownEntry(
-                  value: GradeType.bigTest,
-                  child: Text(
-                    "Schulaufgabe",
-                    style: AppDesign.textStyles.input
-                  )
-                ),
-                BrainDropdownEntry(
-                  value: GradeType.oralGrade,
-                  child: Text(
-                    "Mündliche Note",
-                    style: AppDesign.textStyles.input
-                  )
-                )
-              ],
-              onChanged: (newType) {
-                setState(() => widget.type = newType);
-              },
-            ),
-            BrainDropdown(
-              dialogTitle: "Semester des Jahres",
-              defaultText: "Semester des Jahres",
-              currentValue: widget.semester,
-              items: [
-                BrainDropdownEntry(
-                    value: 1,
-                    child: Text(
-                      "1. Semester",
-                      style: AppDesign.textStyles.input
-                    )
-                ),
-                BrainDropdownEntry(
-                    value: 2,
-                    child: Text(
-                      "2. Semester",
-                      style: AppDesign.textStyles.input
-                    )
-                ),
-                if (!GradingSystem.isAdvancedLevel) BrainDropdownEntry(
-                    value: 3,
-                    child: Text(
-                        "3. Semester",
-                        style: AppDesign.textStyles.input
-                    )
-                ),
-              ],
-              onChanged: (newSemester) {
-                setState(() {
-                  widget.semester = newSemester;
-                  BrainApp.preferences["currentSemester"] = newSemester;
-                });
-              },
-            )
-          ]
-      ),
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
@@ -297,6 +192,93 @@ class _GradesPage extends State<GradesPage> {
             ],
           )
       ),
+      child: Wrap(
+          runSpacing: 10,
+          children: [
+            Flex(
+              direction: Axis.horizontal,
+              children: [
+                Expanded(
+                  child: BrainTextField(
+                    placeholder: "Noten Name",
+                    controller: widget.nameController,
+                    maxLines: 1,
+                  )
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  constraints: const BoxConstraints(
+                    maxWidth: 100
+                  ),
+                  child: BrainIconButton(
+                      icon: Icons.numbers,
+                      action: numberPickerDialog,
+                      child: Text(
+                          widget.grade.toString(),
+                          style: AppDesign.textStyles.input
+                      )
+                  ),
+                )
+              ],
+            ),
+            BrainDropdown(
+              dialogTitle: "Wähle ein Fach",
+              defaultText: "Fach",
+              currentValue: widget.selectedSubject,
+              items: BrainDropdown.getSubjectDropdowns(),
+              onChanged: (subject) {
+                setState(() => widget.selectedSubject = subject);
+              },
+            ),
+            BrainDropdown.fromMap(
+              dialogTitle: "Wähle eine Notenart",
+              defaultText: "Art der Note",
+              currentValue: widget.type,
+              entries: {
+                GradeType.smallTest : Text(
+                    "Ex",
+                    style: AppDesign.textStyles.input
+                ),
+                GradeType.bigTest : Text(
+                    "Schulaufgabe",
+                    style: AppDesign.textStyles.input
+                ),
+                GradeType.oralGrade : Text(
+                    "Mündliche Note",
+                    style: AppDesign.textStyles.input
+                )
+              },
+              onChanged: (newType) {
+                setState(() => widget.type = newType);
+              },
+            ),
+            BrainDropdown.fromMap(
+              dialogTitle: "Semester des Jahres",
+              defaultText: "Semester des Jahres",
+              currentValue: widget.semester,
+              entries: {
+                1 : Text(
+                    "1. Semester",
+                    style: AppDesign.textStyles.input
+                ),
+                2 : Text(
+                    "2. Semester",
+                    style: AppDesign.textStyles.input
+                ),
+                if (!GradingSystem.isAdvancedLevel) 3 : Text(
+                    "3. Semester",
+                    style: AppDesign.textStyles.input
+                )
+              },
+              onChanged: (newSemester) {
+                setState(() {
+                  widget.semester = newSemester;
+                  BrainApp.preferences["currentSemester"] = newSemester;
+                });
+              }
+            )
+          ]
+      )
     );
   }
 }

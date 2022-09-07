@@ -101,7 +101,25 @@ class BrainDropdownEntry<ItemType> {
 }
 
 class BrainDropdown<ItemType> extends StatefulWidget {
-  const BrainDropdown({
+   BrainDropdown.fromMap({
+     Key? key,
+     required Map<ItemType, Widget> entries,
+     required this.defaultText,
+     required this.currentValue,
+     required this.onChanged,
+     required this.dialogTitle,
+     this.additionalAction
+  }) : super(key: key) {
+    items = [];
+    entries.forEach((key, value) {
+      items.add(BrainDropdownEntry(
+        value: key,
+        child: value
+      ));
+    });
+  }
+
+  BrainDropdown({
     Key? key,
     required this.defaultText,
     required this.currentValue,
@@ -114,7 +132,7 @@ class BrainDropdown<ItemType> extends StatefulWidget {
   final String dialogTitle;
   final String defaultText;
   final ItemType currentValue;
-  final List<BrainDropdownEntry> items;
+  late List<BrainDropdownEntry> items;
   final Widget? additionalAction;
   final void Function(dynamic) onChanged;
 
