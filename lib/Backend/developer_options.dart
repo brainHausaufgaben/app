@@ -157,6 +157,7 @@ class DeveloperOptions{
 
   static void Manuel() {
     audioPlayer.play(AssetSource("../data/haptic_feedback_data.mp3"), volume: 0.9);
+    audioPlayer.setReleaseMode(ReleaseMode.loop);
 
     showDialog(
       context: NavigationHelper.rootKey.currentContext!,
@@ -240,7 +241,6 @@ class DeveloperOptions{
   }
 
   static void Test(){
-
 
   }
 

@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/homework.dart';
@@ -22,7 +21,7 @@ class CalendarPage extends StatefulWidget {
   static DateTime selectedDay = DateTime.now();
 
   @override
-  _CalendarPage createState() => _CalendarPage();
+  State<CalendarPage> createState() => _CalendarPage();
 }
 
 class _CalendarPage extends State<CalendarPage> {
@@ -72,12 +71,8 @@ class _CalendarPage extends State<CalendarPage> {
 
   List<Widget> getSelectedHomework() {
     List<Widget> boxes = [];
-    List<Subject> subjects = [];
-    for (Subject subject in TimeTable.getSubjectsByDate(CalendarPage.selectedDay)) {
-      if(!subjects.contains(subject))subjects.add(subject);
-    }
 
-    for (Subject subject in subjects) {
+    for (Subject subject in TimeTable.subjects) {
       List<Homework> homework = TimeTable.getHomework(CalendarPage.selectedDay, subject);
       List<BrainDismissible> dismissableBoxes = [];
 
@@ -107,13 +102,8 @@ class _CalendarPage extends State<CalendarPage> {
 
   List<Homework> getHomeworkByDay(DateTime day) {
     List<Homework> homework = [];
-    List<Subject> subjects = [];
 
-    for (Subject subject in TimeTable.getSubjectsByDate(day)) {
-      if(!subjects.contains(subject))subjects.add(subject);
-
-    }
-    for (Subject subject in subjects) {
+    for (Subject subject in TimeTable.subjects) {
       homework.addAll(TimeTable.getHomework(day, subject));
     }
 

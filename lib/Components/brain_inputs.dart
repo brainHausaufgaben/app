@@ -214,7 +214,7 @@ class _BrainDropdown extends State<BrainDropdown> {
                     children: [
                       if (widget.additionalAction != null) widget.additionalAction!,
                       TextButton(
-                        child: Text("Abbrechen", style: TextStyle(color: AppDesign.colors.text)),
+                        child: Text("Abbrechen", style: TextStyle(color: AppDesign.colors.primary)),
                         onPressed: () {
                           Navigator.pop(context);
                         },
@@ -622,48 +622,55 @@ class SettingsSwitchButton extends StatefulWidget {
 class _SettingsSwitchButton extends State<SettingsSwitchButton> {
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        widget.action();
-      },
-      child: Flex(
-        direction: Axis.horizontal,
-        crossAxisAlignment: widget.description == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            flex: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(widget.text, style: AppDesign.textStyles.settingsSubMenu),
-                if (widget.description != null) Text(widget.description!, style: AppDesign.textStyles.settingsSubMenuDescription)
-              ],
+    return Semantics(
+      container: true,
+      label: widget.text,
+      hint: widget.description,
+      excludeSemantics: true,
+      checked: widget.state,
+      child: TextButton(
+        onPressed: () {
+          widget.action();
+        },
+        child: Flex(
+          direction: Axis.horizontal,
+          crossAxisAlignment: widget.description == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              flex: 10,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(widget.text, style: AppDesign.textStyles.settingsSubMenu),
+                  if (widget.description != null) Text(widget.description!, style: AppDesign.textStyles.settingsSubMenuDescription)
+                ],
+              ),
             ),
-          ),
-          Spacer(),
-          Container(
-            width: 22,
-            height: 22,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(
-                color: AppDesign.colors.text,
-                width: 2
-              )
-            ),
-            child: Center(
-              child: Container(
+            Spacer(),
+            Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  border: Border.all(
+                      color: AppDesign.colors.text,
+                      width: 2
+                  )
+              ),
+              child: Center(
+                child: Container(
                   width: 15,
                   height: 15,
                   decoration: BoxDecoration(
-                    color: widget.state ? AppDesign.colors.text : Colors.transparent,
-                    borderRadius: BorderRadius.circular(3)
+                      color: widget.state ? AppDesign.colors.text : Colors.transparent,
+                      borderRadius: BorderRadius.circular(3)
                   ),
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -769,7 +776,7 @@ class SettingsNumberPicker extends StatelessWidget {
 
             actions: [
               TextButton(
-                child: Text("Ok", style: TextStyle(color: AppDesign.colors.text)),
+                child: Text("Ok", style: TextStyle(color: AppDesign.colors.primary)),
                 onPressed: () {
                   action(currentValue);
                   Navigator.of(context).pop();

@@ -42,13 +42,14 @@ class _HomeworkPage extends State<HomeworkPage> {
         DateTime date = DateTime(
             widget.selectedDate.year, widget.selectedDate.month,
             widget.selectedDate.day, time?.startTime.hour ?? 0,
-            time?.startTime.minute ?? 0);
+            time?.startTime.minute ?? 0
+        );
 
         Homework(widget.selectedSubject!, date, widget.homeworkController.text);
       } else {
         DateTime time = widget.selectedSubject!.getNextDate()!;
         if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
-            time = time.add(Duration(days: 7));
+            time = time.add(const Duration(days: 7));
         }
         Homework(widget.selectedSubject!,time,widget.homeworkController.text);
       }
@@ -110,26 +111,26 @@ class _HomeworkPage extends State<HomeworkPage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
       floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Row(
-            children: [
-              Expanded(
-                child: ElevatedButton (
-                    style: ElevatedButton.styleFrom(
-                        primary: AppDesign.colors.primary
-                    ),
-                    onPressed: onPressed,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Text(
-                        widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten",
-                        style: AppDesign.textStyles.buttonText
-                      ),
-                    )
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton (
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppDesign.colors.primary
                 ),
-              )
-            ],
-          )
+                onPressed: onPressed,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten",
+                    style: AppDesign.textStyles.buttonText
+                  ),
+                )
+              ),
+            )
+          ],
+        )
       ),
     );
   }
