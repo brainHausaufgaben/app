@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:url_launcher/url_launcher.dart';

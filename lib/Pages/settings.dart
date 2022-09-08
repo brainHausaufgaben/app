@@ -90,7 +90,7 @@ class _SettingsPage extends State<SettingsPage> {
               )
             ]
           ),
-          if (kIsWeb) SettingsEntry(
+          if (kIsWeb && defaultTargetPlatform != TargetPlatform.android && defaultTargetPlatform != TargetPlatform.iOS) SettingsEntry(
             children: [
               SettingsNavigatorButton(
                 text: "Tastenkürzel",

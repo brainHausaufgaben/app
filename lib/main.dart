@@ -39,7 +39,8 @@ class BrainApp extends StatefulWidget {
     "saveLogs" : false,
     "isAdvancedLevel" : false,
     "currentYear" : 10,
-    "manuelClickerScore" : 0
+    "manuelClickerScore" : 0,
+    "showPlayStorePopup" : true
   };
 
   static void clearPreferences() async {

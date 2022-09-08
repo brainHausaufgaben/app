@@ -1,9 +1,9 @@
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
+import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_infobox.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
@@ -11,8 +11,10 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
@@ -202,6 +204,25 @@ class _HomePage extends State<HomePage>{
 
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb && defaultTargetPlatform == TargetPlatform.android && BrainApp.preferences["showPlayStorePopup"]) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return BrainConfirmationDialog(
+            title: "Für Android Benutzer",
+            description: "Die Brain App ist auch im Playstore erhältlich",
+            onCancel: () {
+              BrainApp.updatePreference("showPlayStorePopup", false);
+              Navigator.of(context).pop();
+            },
+            onContinue: () {
+              Uri url = Uri.parse("https://play.google.com/store/apps/details?id=com.brain.brain_app");
+              launchUrl(url, mode: LaunchMode.externalApplication);
+            },
+          );
+        }
+      );
+    }
     return GestureDetector(
       onHorizontalDragEnd: (details) {
         if (MediaQuery.of(context).size.width < AppDesign.breakPointWidth) {
@@ -216,7 +237,7 @@ class _HomePage extends State<HomePage>{
       },
       child: PageTemplate(
         title: 'Übersicht',
-        secondaryTitleButton: TextButton(
+        secondaryTitleButton: true ? null : TextButton(
             style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
                 backgroundColor: AppDesign.colors.secondaryBackground,

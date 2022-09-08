@@ -53,7 +53,7 @@ class _GradesPage extends State<GradesPage> {
 
             actions: [
               TextButton(
-                child: Text("Ok", style: TextStyle(color: AppDesign.colors.text)),
+                child: Text("Ok", style: TextStyle(color: AppDesign.colors.primary)),
                 onPressed: () {
                   setState(() {});
                   Navigator.of(context).pop();

@@ -7,9 +7,11 @@ class BrainConfirmationDialog extends StatelessWidget {
     Key? key,
     required this.description,
     required this.onCancel,
-    required this.onContinue
+    required this.onContinue,
+    this.title = "Bist du dir sicher?"
   }) : super(key: key);
 
+  final String title;
   final String description;
   final Function() onCancel;
   final Function() onContinue;
@@ -19,7 +21,7 @@ class BrainConfirmationDialog extends StatelessWidget {
     return AlertDialog(
         contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
         title: Text(
-            "Bist du dir sicher?",
+            title,
             style: AppDesign.textStyles.alertDialogHeader
         ),
         backgroundColor: AppDesign.colors.secondaryBackground,

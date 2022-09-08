@@ -105,7 +105,7 @@ class _CustomSidebar extends State<CustomSidebar> {
                 child: TextButton(
                     onPressed: () {
                       if (kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
-                        Uri url = Uri.parse("https://play.google.com/store/apps/details?id=de.brainhausaufgabenheft.brain_app&hl=de");
+                        Uri url = Uri.parse("https://play.google.com/store/apps/details?id=com.brain.brain_app");
                         launchUrl(url, mode: LaunchMode.externalApplication);
                       } else {
                         showDialog(
