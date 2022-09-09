@@ -157,8 +157,10 @@ class NavigationRoutes {
   static PageRouteBuilder onGenerateRoute(settings) {
     Map<String, WidgetBuilder> routes = NavigationRoutes.get();
 
+    String routeName = settings.name!;
+
     return PageRouteBuilder(
-        pageBuilder: (context, a1, a2) => routes[settings.name!]!(context),
+        pageBuilder: (context, a1, a2) => routes[routeName]!(context),
         transitionDuration: const Duration(milliseconds: 600),
         reverseTransitionDuration: const Duration(milliseconds: 350),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {

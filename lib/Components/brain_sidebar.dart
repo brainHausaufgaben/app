@@ -42,9 +42,8 @@ class _CustomSidebar extends State<CustomSidebar> {
                   height: 1.1
               ),
               textAlign: TextAlign.center,
-            ),
+            )
           ),
-
           SideBarMenuEntry(
             title: "Noten",
             icon: Icons.grading,
@@ -176,34 +175,41 @@ class SideBarMenuEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
-        color: activated ? AppDesign.colors.primary : Colors.transparent,
+        color: activated ? AppDesign.colors.background : AppDesign.colors.background.withOpacity(0),
         borderRadius: BorderRadius.circular(9)
       ),
       clipBehavior: Clip.antiAlias,
       child: TextButton(
         onPressed: onTap,
         style: TextButton.styleFrom(
-          primary: activated ? AppDesign.colors.contrast : AppDesign.colors.primary,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          foregroundColor: AppDesign.colors.primary,
+          padding: const EdgeInsets.all(5),
         ),
         child: Row(
           children: [
-            Padding(
-              child: Icon(icon, size: iconSize, color: activated ? AppDesign.colors.contrast : AppDesign.colors.text),
-              padding: const EdgeInsets.only(right: 10),
+            AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                    color: activated ? AppDesign.colors.primary : Colors.transparent,
+                    borderRadius: BorderRadius.circular(9)
+                ),
+                child: Icon(icon, size: iconSize, color: activated ? AppDesign.colors.contrast : AppDesign.colors.text08)
             ),
             Text(
                 title,
                 style: TextStyle(
-                    color: activated ? AppDesign.colors.contrast : AppDesign.colors.text,
+                    color: activated ? AppDesign.colors.text : AppDesign.colors.text08,
                     fontSize: 16,
-                    fontWeight: FontWeight.w600)
-            ),
-          ],
-        ),
-      ),
+                    fontWeight: activated ? FontWeight.w700 : FontWeight.w600
+                )
+            )
+          ]
+        )
+      )
     );
   }
 }
