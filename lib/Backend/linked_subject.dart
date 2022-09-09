@@ -1,0 +1,35 @@
+import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/time_table.dart';
+
+class LinkedSubject extends Subject{
+  List<Subject> subjects;
+  List<int> evaluations;
+
+
+  LinkedSubject(super.name, super.color,this.subjects,this.evaluations){
+    TimeTable.addLinkedSubject(this);
+  }
+
+  @override
+  Map toJSONEncodable(){
+    Map<String,dynamic> map = {};
+    List c = [];
+    c.add(color.red);
+    c.add(color.green);
+    c.add(color.blue);
+    List<int> subjectIDs = [];
+    for (Subject subject in subjects) {
+      subjectIDs.add(subject.id);
+    }
+
+    map["name"] = name;
+    map["color"] = c;
+    map["subjectIDs"] = subjectIDs;
+    map["subjectEvaluations"] = evaluations;
+
+    return map;
+  }
+
+
+
+}

@@ -66,7 +66,7 @@ class Subject{
   void edit(String? newName,Color? newColor){
     if(newName != null) name = newName;
     if(newColor != null) color = newColor;
-    SaveSystem.saveTimeTable();
+    SaveSystem.saveSubjects();
   }
 
   Map toJSONEncodable(){

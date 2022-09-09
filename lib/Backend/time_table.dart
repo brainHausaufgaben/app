@@ -4,6 +4,7 @@ import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -16,6 +17,8 @@ import 'package:flutter/material.dart';
 class TimeTable {
   static List<Day> week = [];
   static List<Subject> subjects = [];
+  static List<LinkedSubject> linkedSubjects = [];
+  static List<Subject> noAverageSubjects = [];
   static List<Homework> homeworks = [];
   static List<Homework> deletedHomeworks = [];
   static List<Event> events = [];
@@ -39,6 +42,17 @@ class TimeTable {
     week[subject.day - 1].addSubject(subject);
     if(saveEnabled) SaveSystem.saveTimeTable();
   }
+  static void addLinkedSubject(LinkedSubject subject){
+    for(Subject s in subject.subjects){
+      if(noAverageSubjects.contains(s))return;
+    }
+    for(Subject s in subject.subjects){
+      noAverageSubjects.add(s);
+    }
+    linkedSubjects.add(subject);
+
+  }
+
   static void addSubject(Subject subject){
     subjects.add(subject);
     if(saveEnabled) SaveSystem.saveSubjects();
@@ -144,6 +158,15 @@ class TimeTable {
       }
     }
     return subjects;
+  }
+
+  static List<Subject> getAverageSubject(){
+    List<Subject> out = [];
+    for(Subject s in subjects){
+      if(noAverageSubjects.contains(s))out.add(s);
+    }
+    return out;
+
   }
 
   static List<Homework> getHomeworks(Subject subject){
@@ -254,7 +277,14 @@ class TimeTable {
     ).toList();
 
   }
+  static List linkedSubjectsToJSONEncodable(){
+    return linkedSubjects.map((item)
+    {
+      return item.toJSONEncodable();
+    }
+    ).toList();
 
+  }
 
 
 

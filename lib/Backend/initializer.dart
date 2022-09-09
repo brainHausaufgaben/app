@@ -1,5 +1,6 @@
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -126,6 +127,22 @@ class Initializer {
     else {
       BrainDebug.log("No Subjects");
     }
+
+    dynamic linkedSubjects = await SaveSystem.getSubjects();
+    if(linkedSubjects!= null){
+      for (Map item in linkedSubjects) {
+        List color = item["color"];
+        List<Subject> linkSubjects = [];
+        for(int i in item["subjectIDs"]){
+          linkSubjects.add(TimeTable.getSubject(i)!);
+        }
+        LinkedSubject(item["name"], Color.fromARGB(255, color[0], color[1], color[2]),linkSubjects,item["subjectEvaluations"]);
+      }
+    }
+    else {
+      BrainDebug.log("No Linked Subjects");
+    }
+
 
     dynamic timetable = await SaveSystem.getTimeTable();
     if (timetable != null) {

@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/grade.dart';
+import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -142,8 +143,15 @@ class GradingSystem{
   static double getYearAverage({List<int> onlyPartsOfYear = const [1,2,3]}){
     double d = 0;
     int s = 0;
-    for(Subject subject in TimeTable.subjects){
+    for(Subject subject in TimeTable.getAverageSubject()){
       double grade = getAverage(subject,onlyPartsOfYear: onlyPartsOfYear);
+      if(grade != -1.0) {
+        s++;
+        d += grade;
+      }
+    }
+    for(LinkedSubject linkedSubject in TimeTable.linkedSubjects){
+      double grade = getLinkedAverage(linkedSubject,onlyPartsOfYear: onlyPartsOfYear);
       if(grade != -1.0) {
         s++;
         d += grade;
@@ -202,6 +210,20 @@ class GradingSystem{
       return average / (smallGradesSubject.length + bigGradesSubject.length * 2);
     }
   }
+
+  static double getLinkedAverage(LinkedSubject linkedSubject, {bool onlyCurrentYear = true,List<int> onlyPartsOfYear = const [1,2,3]}){
+    double subjectAverages = 0.0;
+    int a = 0;
+    for(int i = 0; i < linkedSubject.subjects.length; i++){
+      double average =  getAverage(linkedSubject.subjects[i],onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
+      if(average > 0) continue;
+      subjectAverages += average * (linkedSubject.evaluations[i] as double);
+      a += linkedSubject.evaluations[i];
+    }
+    if(a == 0) return -1;
+    return subjectAverages / (a as double);
+  }
+
 
 
 

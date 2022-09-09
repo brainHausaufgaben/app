@@ -74,6 +74,13 @@ class SaveSystem{
       return storage.getItem("advancedLevels");
    }
 
+   static void saveLinkedSubjects(){
+    storage.setItem("linkedSubjects", TimeTable.linkedSubjectsToJSONEncodable());
+   }
+
+   static getLinkedSubjects(){
+     return storage.getItem("linkedSubjects");
+   }
 
 
 
