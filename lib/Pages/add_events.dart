@@ -97,19 +97,26 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
           clipBehavior: Clip.antiAlias,
           child: DefaultTextStyle(
             style: AppDesign.textStyles.tab,
-            child: TabBar(
-              controller: tabController,
-              labelStyle: AppDesign.textStyles.tab,
-              labelColor: AppDesign.colors.contrast,
-              unselectedLabelColor: AppDesign.colors.text,
-              indicator: BoxDecoration(
-                  color: AppDesign.colors.primary,
-                  borderRadius: BorderRadius.circular(100)
+            child: Theme(
+              data: ThemeData(
+                  highlightColor: Colors.transparent,
+                  splashColor: Colors.transparent,
+                  hoverColor: Colors.transparent
               ),
-              tabs: const [
-                Text("Termin"),
-                Text("Test")
-              ],
+              child: TabBar(
+                controller: tabController,
+                labelStyle: AppDesign.textStyles.tab,
+                labelColor: AppDesign.colors.contrast,
+                unselectedLabelColor: AppDesign.colors.text,
+                indicator: BoxDecoration(
+                    color: AppDesign.colors.primary,
+                    borderRadius: BorderRadius.circular(100)
+                ),
+                tabs: const [
+                  Tab(child: Text("Termin")),
+                  Tab(child: Text("Test"))
+                ],
+              ),
             ),
           )
         ),

@@ -183,6 +183,9 @@ class _PageTemplateState extends State<PageTemplate> {
                         )
                       else
                         Column(
+                          crossAxisAlignment: widget.pageSettings.floatingHeaderIsCentered
+                              ? CrossAxisAlignment.center
+                              : CrossAxisAlignment.start,
                           children: [
                             if (widget.floatingHeader != null && !BrainApp.preferences["pinnedHeader"]) Padding(
                               padding: const EdgeInsets.only(bottom: 20, top: 10),

@@ -110,34 +110,11 @@ class _HomePage extends State<HomePage>{
                 )
               ),
               Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: AppDesign.colors.contrast,
-                        backgroundColor: AppDesign.colors.primary,
-                        padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
-                      ),
-                      onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
-                      child: Text("Stundenplan", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: TextButton(
-                        style: TextButton.styleFrom(
-                          backgroundColor: AppDesign.colors.primary,
-                          foregroundColor: AppDesign.colors.contrast,
-                          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
-                        ),
-                        onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
-                        child: Text("Neues Fach", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
-                      ),
-                    ),
-                  )
-                ],
+                crossAxisAlignment: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
+                    ? CrossAxisAlignment.center : CrossAxisAlignment.stretch,
+                direction: MediaQuery.of(context).size.width > AppDesign.breakPointWidth
+                    ? Axis.horizontal : Axis.vertical,
+                children: getButtons(MediaQuery.of(context).size.width > AppDesign.breakPointWidth)
               )
             ]
           )
@@ -146,6 +123,41 @@ class _HomePage extends State<HomePage>{
     }
 
     return days;
+  }
+
+  List<Widget> getButtons(bool asRow) {
+    Widget button1 = TextButton(
+      style: TextButton.styleFrom(
+          foregroundColor: AppDesign.colors.contrast,
+          backgroundColor: AppDesign.colors.primary,
+          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+      ),
+      onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
+      child: Text("Stundenplan", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
+    );
+    Widget button2 = Padding(
+        padding: asRow
+            ? const EdgeInsets.only(left: 10)
+            : const EdgeInsets.only(top: 5),
+        child: TextButton(
+          style: TextButton.styleFrom(
+              backgroundColor: AppDesign.colors.primary,
+              foregroundColor: AppDesign.colors.contrast,
+              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+          ),
+          onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
+          child: Text("Neues Fach", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
+        )
+    );
+
+    return [
+      asRow ? Expanded(
+        child: button1,
+      ) : button1,
+      asRow ? Expanded(
+        child: button2,
+      ) : button2
+    ];
   }
 
   Widget getHeader(){

@@ -126,22 +126,29 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             borderRadius: BorderRadius.circular(100)
           ),
           clipBehavior: Clip.antiAlias,
-          child: TabBar(
-            labelStyle: AppDesign.textStyles.tab,
-            labelColor: AppDesign.colors.contrast,
-            unselectedLabelColor: AppDesign.colors.text,
-            indicator: BoxDecoration(
-              color: AppDesign.colors.primary,
-              borderRadius: BorderRadius.circular(100)
+          child: Theme(
+            data: ThemeData(
+              highlightColor: Colors.transparent,
+              splashColor: Colors.transparent,
+              hoverColor: Colors.transparent
             ),
-            tabs: const [
-              Text("Mo"),
-              Text("Di"),
-              Text("Mi"),
-              Text("Do"),
-              Text("Fr")
-            ],
-          ),
+            child: TabBar(
+              labelStyle: AppDesign.textStyles.tab,
+              labelColor: AppDesign.colors.contrast,
+              unselectedLabelColor: AppDesign.colors.text,
+              indicator: BoxDecoration(
+                  color: AppDesign.colors.primary,
+                  borderRadius: BorderRadius.circular(100)
+              ),
+              tabs: const [
+                Tab(child: Text("Mo")),
+                Tab(child: Text("Di")),
+                Tab(child: Text("Mi")),
+                Tab(child: Text("Do")),
+                Tab(child: Text("Fr")),
+              ]
+            )
+          )
         ),
         // TODO: Very dumm aber es geht im moment
         child: SizedBox(
