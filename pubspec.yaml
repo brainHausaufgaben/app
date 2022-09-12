@@ -11,7 +11,7 @@ dependencies:
   numberpicker: ^2.0.1
   flutter_svg: ^1.0.0
   table_calendar: ^3.0.6
-  flutter_rounded_date_picker: ^3.0.1
+  flutter_rounded_date_picker: ^3.0.2
   flutter_scroll_shadow: ^1.0.2
   shared_preferences: ^2.0.15
   flutter_localizations:

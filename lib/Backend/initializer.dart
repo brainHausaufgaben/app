@@ -128,7 +128,7 @@ class Initializer {
       BrainDebug.log("No Subjects");
     }
 
-    dynamic linkedSubjects = await SaveSystem.getSubjects();
+    dynamic linkedSubjects = await SaveSystem.getLinkedSubjects();
     if(linkedSubjects!= null){
       for (Map item in linkedSubjects) {
         List color = item["color"];

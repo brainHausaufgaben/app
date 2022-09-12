@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/export_import_system.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -254,7 +255,7 @@ class _HomePage extends State<HomePage>{
       },
       child: PageTemplate(
         title: 'Übersicht',
-        secondaryTitleButton: true ? null : TextButton(
+        secondaryTitleButton: false ? null : TextButton(
             style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
                 backgroundColor: AppDesign.colors.secondaryBackground,
@@ -307,7 +308,7 @@ class _HomePage extends State<HomePage>{
                                     foregroundColor: AppDesign.colors.contrast
                                   ),
                                   onPressed: () {
-                                    // TODO: Sachen machen sebastian merk
+                                    ExportImport.writeFile("test", shareTimetable, shareHomework, shareGrades, shareTests);
                                   },
                                   child: Text("Teilen", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
                                 ),

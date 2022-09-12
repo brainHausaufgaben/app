@@ -36,9 +36,34 @@ class HomePageDay extends StatefulWidget {
 
 
   List<Widget> getWidgets(){
-    List<SubjectInstance> subjects = TimeTable.getSubjects(day);
+
+    List<SubjectInstance> subjects = [];
     List<Widget> subjectWidgets = [];
+    bool fill = false;
+    for(int i = 9; i >= 0; i--){
+      if(!fill){
+        if(TimeTable.week[day-1].subjects[i] != null){
+          fill = true;
+          i++;
+        }
+      }
+      else{
+        if(TimeTable.week[day-1].subjects[i] == null) {
+          subjects.insert(0, SubjectInstance.empty(i));
+        } else {
+          subjects.insert(0, TimeTable.week[day-1].subjects[i]!);
+
+        }
+      }
+
+
+
+    }
+
+
+
     for(SubjectInstance subject in subjects){
+      print(subject);
       List<Widget> homework = getHomework(subject);
 
       subjectWidgets.add(

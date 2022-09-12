@@ -5,13 +5,17 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
 class SubjectInstance{
-  Subject subject;
+  late Subject subject;
   int day = 0;
   int lesson = 0;
 
 
   SubjectInstance (this.subject,this.day,this.lesson){
     TimeTable.addLesson(this);
+  }
+
+  SubjectInstance.empty(this.lesson){
+    subject = TimeTable.emptySubject;
   }
 
   String getStartTimeString(){
