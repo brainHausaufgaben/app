@@ -67,7 +67,7 @@ class _CustomNavigationBar extends State<CustomNavigationBar> {
               Flexible(
                 child: NavigationItem(
                     title: "Kalender",
-                    icon: Icons.calendar_today,
+                    icon: Icons.calendar_month_rounded,
                     iconSize: 20,
                     activated: NavigationHelper.selectedPrimaryPage.value == 2,
                     action: () {

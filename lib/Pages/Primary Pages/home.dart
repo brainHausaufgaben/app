@@ -131,7 +131,7 @@ class _HomePage extends State<HomePage>{
       style: TextButton.styleFrom(
           foregroundColor: AppDesign.colors.contrast,
           backgroundColor: AppDesign.colors.primary,
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13)
       ),
       onPressed: () => NavigationHelper.pushNamed(context, "timeTable"),
       child: Text("Stundenplan", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
@@ -142,12 +142,12 @@ class _HomePage extends State<HomePage>{
             : const EdgeInsets.only(top: 5),
         child: TextButton(
           style: TextButton.styleFrom(
-              backgroundColor: AppDesign.colors.primary,
-              foregroundColor: AppDesign.colors.contrast,
-              padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
+            foregroundColor: AppDesign.colors.text,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+            side: BorderSide(color: AppDesign.colors.text, width: 2.0)
           ),
           onPressed: () => NavigationHelper.pushNamed(context, "subjectPage"),
-          child: Text("Neues Fach", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
+          child: Text("Neues Fach", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16, color: AppDesign.colors.text)),
         )
     );
 
@@ -164,9 +164,9 @@ class _HomePage extends State<HomePage>{
   Widget getHeader(){
       int homework = TimeTable.homeworks.length;
 
-      DateTime nextHomework = DateTime(99999);
+      DateTime firstHomework = DateTime(99999);
       for(Homework hom in TimeTable.homeworks){
-        if(nextHomework.isAfter(hom.dueTime)) nextHomework = hom.dueTime;
+        if(firstHomework.isAfter(hom.dueTime)) firstHomework = hom.dueTime;
       }
 
       int eventsCount = TimeTable.getEvents(DateTime.now()).length;
@@ -199,6 +199,11 @@ class _HomePage extends State<HomePage>{
                 title: homeworkText,
                 shortDescription: "Hausaufgaben",
                 icon: homeworkIcon,
+                action: homework == 0 ? null : () {
+                  CalendarPage.selectedDay = firstHomework;
+                  NavigationHelper.selectedPrimaryPage.value = 2;
+                  NavigationHelper.pushNamedReplacement(context, "calendar");
+                },
               ),
               BrainInfobox(
                 title: eventsText,
@@ -255,77 +260,6 @@ class _HomePage extends State<HomePage>{
       },
       child: PageTemplate(
         title: 'Übersicht',
-        secondaryTitleButton: false ? null : TextButton(
-            style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                backgroundColor: AppDesign.colors.secondaryBackground,
-                minimumSize: Size.zero
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  bool shareHomework = false;
-                  bool shareTimetable = false;
-                  bool shareGrades = false;
-                  bool shareTests = false;
-                  return AlertDialog(
-                    contentPadding: const EdgeInsets.fromLTRB(24, 14, 24, 24),
-                    backgroundColor: AppDesign.colors.secondaryBackground,
-                    title: Text("Was willst du teilen?", style: AppDesign.textStyles.alertDialogHeader),
-                    content: StatefulBuilder(
-                      builder: (context, setBuilderState) {
-                        return Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SettingsSwitchButton(
-                                text: "Hausaufgaben",
-                                state: shareHomework,
-                                action: () => setBuilderState(() => shareHomework = !shareHomework),
-                              ),
-                              SettingsSwitchButton(
-                                text: "Stundenplan",
-                                state: shareTimetable,
-                                action: () => setBuilderState(() => shareTimetable = !shareTimetable),
-                              ),
-                              SettingsSwitchButton(
-                                text: "Noten",
-                                state: shareGrades,
-                                action: () => setBuilderState(() => shareGrades = !shareGrades),
-                              ),
-                              SettingsSwitchButton(
-                                text: "Tests",
-                                state: shareTests,
-                                action: () => setBuilderState(() => shareTests = !shareTests),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 15),
-                                child: TextButton(
-                                  style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(vertical: 12),
-                                    backgroundColor: AppDesign.colors.primary,
-                                    foregroundColor: AppDesign.colors.contrast
-                                  ),
-                                  onPressed: () {
-                                    ExportImport.writeFile("test", shareTimetable, shareHomework, shareGrades, shareTests);
-                                  },
-                                  child: Text("Teilen", style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)),
-                                ),
-                              )
-                            ]
-                        );
-                      }
-                    )
-                  );
-                }
-              );
-            },
-            child: Semantics(
-              label: "Teilen",
-              child: Icon(Icons.share, color: AppDesign.colors.text),
-            )
-        ),
         floatingActionButton: BrainMenuButton(
           defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
           defaultLabel: "Neu",

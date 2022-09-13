@@ -73,11 +73,7 @@ class _PageTemplateState extends State<PageTemplate> {
       decoration: BoxDecoration(
           borderRadius: widget.pageSettings.floatingHeaderBorderRadius,
           boxShadow: [
-            BoxShadow(
-                color: AppDesign.colors.background,
-                blurRadius: 10,
-                spreadRadius: 8
-            )
+            AppDesign.boxStyle.boxShadow
           ]
       ),
       child: widget.floatingHeader!,

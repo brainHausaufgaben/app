@@ -2,7 +2,7 @@
     package="com.brain.brain_app">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Brain Development"
+        android:label="Brain Hausaufgaben"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

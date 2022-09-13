@@ -36,7 +36,6 @@ class HomePageDay extends StatefulWidget {
 
 
   List<Widget> getWidgets(){
-
     List<SubjectInstance> subjects = [];
     List<Widget> subjectWidgets = [];
     bool fill = false;
@@ -55,16 +54,16 @@ class HomePageDay extends StatefulWidget {
 
         }
       }
-
-
-
     }
 
-
-
     for(SubjectInstance subject in subjects){
-      print(subject);
       List<Widget> homework = getHomework(subject);
+
+      if (subject.lesson == 6) {
+        subjectWidgets.add(
+          Text("...")
+        );
+      }
 
       subjectWidgets.add(
           PointElement(

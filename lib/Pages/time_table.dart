@@ -64,10 +64,15 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                       ),
                       child: const Text("Neues Fach"),
                       onPressed: () {
-                        if (MediaQuery.of(context).size.width > AppDesign.breakPointWidth) {
-                          NavigationHelper.rootKey.currentState!.pop();
-                        }
-                        NavigationHelper.pushNamed(context, "subjectPage");
+                        NavigationHelper.rootKey.currentState!.pop();
+                        
+                        NavigationHelper.pushNamed(context, "subjectPage").then((value) {
+                          if(value != null) {
+                            TimeTable.week[day].subjects[i] = SubjectInstance(value, day+1, i);
+                          }
+                          SaveSystem.saveTimeTable();
+                          BrainApp.notifier.notifyOfChanges();
+                        });
                       },
                     ),
                     items: getDropdowns(),

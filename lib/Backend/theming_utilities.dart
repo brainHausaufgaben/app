@@ -73,9 +73,9 @@ class BoxStyle {
   BorderRadius borderRadius = BorderRadius.circular(10);
   BorderRadius inputBorderRadius = BorderRadius.circular(5);
   BoxShadow boxShadow = BoxShadow(
-      color: const Color(0xFF333B59).withOpacity(0.15),
-      blurRadius: 10,
-      offset: const Offset(0, 5)
+      color: const Color(0xFF333B59).withOpacity(0.1),
+      blurRadius: 8,
+      offset: const Offset(0, 0)
   );
 }
 

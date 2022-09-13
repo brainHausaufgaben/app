@@ -1,19 +1,8 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
+  <link rel="stylesheet" href="loader.css">
 
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -27,7 +16,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="brain_app">
-  <link rel="apple-touch-icon" href="assets/icons/Icon-192.png">
+  <link rel="apple-touch-icon" href="/assets/icons/Icon-192.png">
 
   <!-- Random SEO stuff -->
   <meta property="og:title" content="Brain App">
@@ -42,9 +31,11 @@
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
-  <!-- This script installs service_worker.js to provide PWA functionality to
-       application. For more information, see:
-       https://developers.google.com/web/fundamentals/primers/service-workers -->
+  <div class="loader">
+    <div class="splash"></div>
+    <img src="assets/icons/Icon-192.png" alt="Brain Icon">
+  </div>
+
   <script>
     var serviceWorkerVersion = null;
     var scriptLoaded = false;

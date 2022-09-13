@@ -74,7 +74,7 @@ class _CustomSidebar extends State<CustomSidebar> {
           ),
           SideBarMenuEntry(
             title: "Kalender",
-            icon: Icons.calendar_today,
+            icon: Icons.calendar_month_rounded,
             iconSize: 22,
             activated: NavigationHelper.selectedPrimaryPage.value == 2,
             onTap: () {

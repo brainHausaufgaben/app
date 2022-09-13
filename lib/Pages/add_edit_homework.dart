@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -76,6 +75,31 @@ class _HomeworkPage extends State<HomeworkPage> {
     return PageTemplate(
       backButton: true,
       title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
+      pageSettings: const PageSettings(
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        child: Row(
+          children: [
+            Expanded(
+              child: ElevatedButton (
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppDesign.colors.primary
+                ),
+                onPressed: onPressed,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: Text(
+                    widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten",
+                    style: AppDesign.textStyles.buttonText
+                  )
+                )
+              )
+            )
+          ]
+        )
+      ),
       child: Wrap(
         runSpacing: 10,
         children: [
@@ -99,6 +123,7 @@ class _HomeworkPage extends State<HomeworkPage> {
             value: widget.selectedDate,
             text: "Nächste Stunde",
             selectedSubject: widget.selectedSubject,
+            todayAsDefault: widget.selectedDate.year == 10,
             onDateSelect: (value) {
               setState((){
                  widget.selectedDate = value;
@@ -106,32 +131,7 @@ class _HomeworkPage extends State<HomeworkPage> {
             }
           )
         ]
-      ),
-      pageSettings: const PageSettings(
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        child: Row(
-          children: [
-            Expanded(
-              child: ElevatedButton (
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppDesign.colors.primary
-                ),
-                onPressed: onPressed,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Text(
-                    widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten",
-                    style: AppDesign.textStyles.buttonText
-                  ),
-                )
-              ),
-            )
-          ],
-        )
-      ),
+      )
     );
   }
 }

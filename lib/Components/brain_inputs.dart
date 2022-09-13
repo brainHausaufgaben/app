@@ -249,11 +249,13 @@ class BrainDateButton extends StatelessWidget {
     required this.onDateSelect,
     required this.text,
     this.selectedSubject,
+    this.todayAsDefault = false
   }) : super(key: key);
 
   final Function(DateTime) onDateSelect;
   final Subject? selectedSubject;
   final DateTime value;
+  final bool todayAsDefault;
   final String text;
 
   String getDateString(DateTime date){
@@ -262,12 +264,12 @@ class BrainDateButton extends StatelessWidget {
     String month = date.month.toString();
     String year = date.year.toString();
     String weekDay =  weekDays[date.weekday - 1];
-    return weekDay + ", " + day + "." + month + "." + year;
+    return "$weekDay, $day.$month.$year";
   }
 
   Widget getPicker() {
     return FlutterRoundedDatePickerDialog(
-      initialDate: DateTime.now(),
+      initialDate: todayAsDefault ? DateTime.now() : value,
       firstDate: DateTime.now().subtract(const Duration(days: 1)),
       borderRadius: 10,
       height: 300,
@@ -921,18 +923,22 @@ class BrainMenuButton extends StatefulWidget {
 
   SpeedDialChild getHomeworkMenu(BuildContext context) {
     return SpeedDialChild(
-        backgroundColor: AppDesign.colors.primary,
-        foregroundColor: AppDesign.colors.contrast,
-        labelBackgroundColor: AppDesign.colors.primary,
-        labelStyle: TextStyle(color: AppDesign.colors.contrast),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         labelWidget: Container(
           padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
           margin: const EdgeInsets.only(right: 10),
           decoration: BoxDecoration(
-              color: AppDesign.colors.primary,
+              color: Colors.white,
               borderRadius: AppDesign.boxStyle.inputBorderRadius
           ),
-          child: Text("Neue Hausaufgabe", style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)),
+          child: const Text(
+            "Neue Hausaufgabe",
+            style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500
+            )
+          )
         ),
         child: const Icon(Icons.description_rounded),
         onTap: () => NavigationHelper.pushNamed(context, "homework")
@@ -941,18 +947,22 @@ class BrainMenuButton extends StatefulWidget {
 
   SpeedDialChild getEventMenu(BuildContext context) {
     return SpeedDialChild(
-        backgroundColor: AppDesign.colors.primary,
-        foregroundColor: AppDesign.colors.contrast,
-        labelBackgroundColor: AppDesign.colors.primary,
-        labelStyle: TextStyle(color: AppDesign.colors.contrast),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         labelWidget: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          margin: const EdgeInsets.only(right: 10),
-          decoration: BoxDecoration(
-            color: AppDesign.colors.primary,
-            borderRadius: AppDesign.boxStyle.inputBorderRadius
-          ),
-          child: Text("Neues Event", style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+            margin: const EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: AppDesign.boxStyle.inputBorderRadius
+            ),
+            child: const Text(
+                "Neues Event",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500
+                )
+            )
         ),
         child: const Icon(Icons.schedule_rounded),
         onTap: () => NavigationHelper.pushNamed(context, "addEventPage")
@@ -962,18 +972,22 @@ class BrainMenuButton extends StatefulWidget {
 
   SpeedDialChild getGradesMenu(BuildContext context) {
     return SpeedDialChild(
-        backgroundColor: AppDesign.colors.primary,
-        foregroundColor: AppDesign.colors.contrast,
-        labelBackgroundColor: AppDesign.colors.primary,
-        labelStyle: TextStyle(color: AppDesign.colors.contrast),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
         labelWidget: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-          margin: const EdgeInsets.only(right: 10),
-          decoration: BoxDecoration(
-            color: AppDesign.colors.primary,
-            borderRadius: AppDesign.boxStyle.inputBorderRadius
-          ),
-          child: Text("Neue Note", style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+            margin: const EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: AppDesign.boxStyle.inputBorderRadius
+            ),
+            child: const Text(
+                "Neue Note",
+                style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500
+                )
+            )
         ),
         child: const Icon(Icons.grading),
         onTap: () => NavigationHelper.pushNamed(context, "gradesPage")
@@ -1011,32 +1025,34 @@ class _BrainMenuButton extends State<BrainMenuButton> with SingleTickerProviderS
       hint: "Tippe einmal, oder halte um alle Optionen zu sehen",
       button: true,
       child: SpeedDial(
+        elevation: 6.0,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         onOpen: () => controller.forward().then(
                 (value) => !widget.withEntries ? controller.reset() : null
         ),
         onPress: () => widget.defaultAction(),
         onClose: () => controller.reverse(),
-        child: RotationTransition(
-            turns: Tween(begin: 0.0, end: widget.withEntries ? 5 / 8 : 1.0).animate(CurvedAnimation(
-                parent: controller,
-                curve: Curves.easeInOutBack
-            )),
-            child: Icon(widget.icon, color: AppDesign.colors.contrast)
-        ),
         children: widget.withEntries ? [
           widget.getHomeworkMenu(context),
           widget.getEventMenu(context),
           widget.getGradesMenu(context)
         ] : [],
-        overlayColor: Colors.black,
         overlayOpacity: 0.6,
+        overlayColor: Colors.black,
         backgroundColor: AppDesign.colors.primary,
         spacing: 5,
         childrenButtonSize: const Size(50, 50),
         childPadding: const EdgeInsets.only(right: 6),
         animationDuration: const Duration(milliseconds: 300),
         label: MediaQuery.of(context).size.width > AppDesign.breakPointWidth ? Text(widget.defaultLabel, style: TextStyle(letterSpacing: 0.5, color: AppDesign.colors.contrast)) : null,
-      ),
+        child: RotationTransition(
+            turns: Tween(begin: 0.0, end: widget.withEntries ? 5 / 8 : 1.0).animate(CurvedAnimation(
+                parent: controller,
+                curve: Curves.easeInOutBack
+            )),
+            child: Icon(widget.icon, color: AppDesign.colors.contrast)
+        )
+      )
     );
   }
 }
