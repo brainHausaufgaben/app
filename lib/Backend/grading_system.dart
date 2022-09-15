@@ -7,7 +7,7 @@ import 'package:brain_app/main.dart';
 
 class GradingSystem{
   static bool isAdvancedLevel = true;
-  static int currentYear = 11; //TODO: momentanes Jahr Festlegen
+  static int currentYear = 11;
   static List<SmallGrade> smallGrades = [];
   static List<BigGrade> bigGrades = [];
   static Map<int,String> pointsToGrade = {
@@ -143,6 +143,7 @@ class GradingSystem{
   static double getYearAverage({List<int> onlyPartsOfYear = const [1,2,3]}){
     double d = 0;
     int s = 0;
+
     for(Subject subject in TimeTable.getAverageSubject()){
       double grade = getAverage(subject,onlyPartsOfYear: onlyPartsOfYear);
       if(grade != -1.0) {

@@ -21,7 +21,13 @@ class SubjectInstance{
   String getStartTimeString(){
     String startTimeHour = TimeTable.lessonTimes[lesson].startTime.hour.toString();
     String startTimeMinute = TimeTable.lessonTimes[lesson].startTime.minute.toString();
-    return ((startTimeHour.length == 1 ? "0" : "") + startTimeHour) + ":" + ((startTimeMinute.length == 1 ? "0" : "") + startTimeMinute);
+    return "${startTimeHour.padLeft(2, "0")}:${startTimeMinute.padLeft(2, "0")}";
+  }
+
+  String getEndTimeString(){
+    String endTimeHour = TimeTable.lessonTimes[lesson].endTime.hour.toString();
+    String endTimeMinute = TimeTable.lessonTimes[lesson].endTime.minute.toString();
+    return "${endTimeHour.padLeft(2, "0")}:${endTimeMinute.padLeft(2, "0")}";
   }
 
   //returns the date of the current week

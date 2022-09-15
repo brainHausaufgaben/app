@@ -2,12 +2,17 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:flutter/material.dart';
 
 class PointElement extends StatefulWidget {
-  const PointElement({Key? key, required this.color, required this.primaryText, this.secondaryText, this.child, this.secondaryIcon}) : super(key: key);
+  const PointElement({
+    Key? key,
+    required this.color,
+    required this.primaryText,
+    this.secondaryText,
+    this.child
+  }) : super(key: key);
 
   final Color color;
   final String primaryText;
   final String? secondaryText;
-  final IconData? secondaryIcon;
   final Widget? child;
 
   @override
@@ -15,43 +20,34 @@ class PointElement extends StatefulWidget {
 }
 
 class _PointElementState extends  State<PointElement>{
+  
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
       alignment: Alignment.topCenter,
       duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOutCirc,
-      child: Flex(
-        direction: Axis.horizontal,
-        crossAxisAlignment: widget.child == null ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Flexible(
-            child: Row(
-              crossAxisAlignment: widget.child != null ? CrossAxisAlignment.start : CrossAxisAlignment.center,
-              children: [
-                Padding(
-                    padding: const EdgeInsets.only(right: 5, bottom: 3),
-                    child: Icon(Icons.circle, color: widget.color, size: 13)
-                ),
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(widget.primaryText, style: AppDesign.textStyles.pointElementPrimary),
-                      if (widget.child != null) widget.child!
-                    ],
-                  ),
-                )
-              ],
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 5, bottom: 1),
+                child: Icon(Icons.circle, color: widget.color, size: 13)
+              ),
+              Text(widget.primaryText, style: AppDesign.textStyles.pointElementPrimary),
+              const Spacer(),
+              if (widget.secondaryText != null) Text(widget.secondaryText!, style: AppDesign.textStyles.pointElementSecondary)
+            ]
           ),
-          if (widget.secondaryText != null)
-            Text(widget.secondaryText!, style: AppDesign.textStyles.pointElementSecondary)
-          else if (widget.secondaryIcon != null)
-            Icon(widget.secondaryIcon!, size: 20, color: AppDesign.colors.text07)
-        ],
-      ),
+          if (widget.child != null) Padding(
+            padding: const EdgeInsets.only(left: 18, right: 18),
+            child: widget.child!,
+          )
+        ]
+      )
     );
   }
 }

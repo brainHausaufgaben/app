@@ -103,7 +103,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
               children: [
                 SettingsSwitchButton(
                   text: "Angepinnte Boxen",
-                  description: "Wenn aktiviert, bleiben die Boxen auf der Homepage immer sichtbar",
+                  description: "Beeinflusst ob angepinnte Container mit dem Rest des Inhalts scrollen",
                   action: () {
                     setState(() {
                       BrainApp.updatePreference("pinnedHeader", !BrainApp.preferences["pinnedHeader"]);
@@ -114,7 +114,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                 ),
                 SettingsSwitchButton(
                   text: "Witze, Funfacts...",
-                  description: "Wird nicht an jedem Tag angezeigt!",
+                  description: "Werden nicht an jedem Tag angezeigt",
                   action: () {
                     setState(() {
                       BrainApp.updatePreference("showMediaBox", !BrainApp.preferences["showMediaBox"]);
@@ -122,6 +122,17 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                     });
                   },
                   state: BrainApp.preferences["showMediaBox"],
+                ),
+                SettingsSwitchButton(
+                  text: "Endzeiten eines Fachs",
+                  description: "Ob auf der Übersicht auch das Ende einer Stunde angezeigt werden soll",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("showLessonEndTimes", !BrainApp.preferences["showLessonEndTimes"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["showLessonEndTimes"],
                 )
               ]
             )

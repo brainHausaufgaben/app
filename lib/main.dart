@@ -22,6 +22,7 @@ class BrainApp extends StatefulWidget {
   static double screenWidth = 0;
 
   static Map<String, dynamic> preferences = {
+    "showPlayStorePopup" : true,
     "showMediaBox": true,
     "persistentNotifications": false,
     "homeworkNotifications": false,
@@ -40,7 +41,7 @@ class BrainApp extends StatefulWidget {
     "isAdvancedLevel" : false,
     "currentYear" : 10,
     "manuelClickerScore" : 0,
-    "showPlayStorePopup" : true
+    "showLessonEndTimes" : false
   };
 
   static void clearPreferences() async {

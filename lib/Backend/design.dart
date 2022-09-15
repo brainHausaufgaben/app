@@ -113,7 +113,7 @@ class CarrotOrangeDesign extends Design {
 class PastelRedDesign extends Design {
   @override
   DesignPackage get lightVariant =>
-      generateDesign(const Color(0xFFC73053), const Color(0xFFFFF2ED), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF));
+      generateDesign(const Color(0xFFC73053), const Color(0xFFFFF6F2), const Color(0xFFFFFFFF), const Color(0xFF303540), const Color(0xFFFFFFFF));
   @override
   DesignPackage get darkVariant =>
       generateDesign(const Color(0xFFC73053), const Color(0xFF180A0F), const Color(0xFF2A1217), const Color(0xFFFFFFFF), const Color(0xFFFFFFFF));

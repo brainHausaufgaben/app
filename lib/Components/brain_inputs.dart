@@ -107,7 +107,8 @@ class BrainDropdown<ItemType> extends StatefulWidget {
      required this.currentValue,
      required this.onChanged,
      required this.dialogTitle,
-     this.additionalAction
+     this.additionalAction,
+     this.onLongPress
   }) : super(key: key) {
     items = [];
     entries.forEach((key, value) {
@@ -125,7 +126,8 @@ class BrainDropdown<ItemType> extends StatefulWidget {
     required this.items,
     required this.onChanged,
     required this.dialogTitle,
-    this.additionalAction
+    this.additionalAction,
+    this.onLongPress
   }) : super(key: key);
 
   final String dialogTitle;
@@ -134,6 +136,7 @@ class BrainDropdown<ItemType> extends StatefulWidget {
   late List<BrainDropdownEntry> items;
   final Widget? additionalAction;
   final void Function(dynamic) onChanged;
+  final void Function(dynamic)? onLongPress;
 
   static List<BrainDropdownEntry> getSubjectDropdowns(){
     List<BrainDropdownEntry> subjects = [];
@@ -177,6 +180,7 @@ class _BrainDropdown extends State<BrainDropdown> {
                 Navigator.pop(context);
                 widget.onChanged(widget.items[i].value);
               },
+              onLongPress: widget.onLongPress == null ? null : () => widget.onLongPress!(widget.items[i].value),
               style: TextButton.styleFrom(
                   backgroundColor: widget.items[i].value == widget.currentValue ? AppDesign.colors.background : Colors.transparent
               ),

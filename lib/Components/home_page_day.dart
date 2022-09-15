@@ -3,6 +3,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/point_element.dart';
+import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 import 'box.dart';
@@ -61,7 +62,7 @@ class HomePageDay extends StatefulWidget {
 
       if (subject.lesson == 6) {
         subjectWidgets.add(
-          Text("...")
+          const Text("...")
         );
       }
 
@@ -69,7 +70,7 @@ class HomePageDay extends StatefulWidget {
           PointElement(
               color: subject.subject.color,
               primaryText: subject.subject.name,
-              secondaryText: subject.getStartTimeString(),
+              secondaryText: "${subject.getStartTimeString()} ${BrainApp.preferences["showLessonEndTimes"] ? " - ${subject.getEndTimeString()}" : ""}",
               child: homework.isEmpty ? null : Wrap(
                 runSpacing: 3,
                 children: homework

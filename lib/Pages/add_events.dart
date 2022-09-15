@@ -12,7 +12,10 @@ import 'package:flutter/material.dart';
 class AddEventsPage extends StatefulWidget {
   AddEventsPage({Key? key}) : super(key: key);
 
-  final List<Widget> subpages = [EventSubpage(), TestSubpage()];
+  final List<Widget> subpages = [
+    EventSubpage(withPadding: true),
+    TestSubpage(withPadding: true)
+  ];
 
   @override
   State<AddEventsPage> createState() => _EventsPage();

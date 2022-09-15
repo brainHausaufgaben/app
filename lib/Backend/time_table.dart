@@ -163,7 +163,7 @@ class TimeTable {
   static List<Subject> getAverageSubject(){
     List<Subject> out = [];
     for(Subject s in subjects){
-      if(noAverageSubjects.contains(s))out.add(s);
+      if(!noAverageSubjects.contains(s))out.add(s);
     }
     return out;
 

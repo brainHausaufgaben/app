@@ -112,7 +112,7 @@ class _GradesPage extends State<GradesPage> {
               Expanded(
                 child: ElevatedButton (
                     style: ElevatedButton.styleFrom(
-                        primary: AppDesign.colors.primary
+                        backgroundColor: AppDesign.colors.primary
                     ),
                     onPressed: () {
                       if (widget.selectedSubject == null) {
@@ -176,7 +176,7 @@ class _GradesPage extends State<GradesPage> {
                   padding: const EdgeInsets.only(left: 10),
                   child: ElevatedButton (
                       style: ElevatedButton.styleFrom(
-                          primary: AppDesign.colors.primary
+                          backgroundColor: AppDesign.colors.primary
                       ),
                       onPressed: () {
                         GradingSystem.removeGrade(widget.previousGrade!);

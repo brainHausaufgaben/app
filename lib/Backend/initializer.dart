@@ -31,7 +31,7 @@ class Initializer {
       }
     );
     TimeTable.init();
-    await CustomNotifications.init();
+    CustomNotifications.init();
     await loadData();
     await getBoxText();
     await getVersion();

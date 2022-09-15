@@ -55,6 +55,12 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                 ),
                 Expanded(
                   child: BrainDropdown(
+                    onLongPress: (value) {
+                      if (value != TimeTable.emptySubject) {
+                        NavigationHelper.rootKey.currentState!.pop();
+                        NavigationHelper.pushNamed(context, "subjectPage", payload: value);
+                      }
+                    },
                     dialogTitle: "Wähle ein Fach",
                     defaultText: "Freistunde",
                     currentValue: TimeTable.week[day].subjects[i]?.subject,

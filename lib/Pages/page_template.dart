@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Pages/developer_options.dart';
 import 'package:brain_app/main.dart';
@@ -52,7 +53,13 @@ class _PageTemplateState extends State<PageTemplate> {
   }
 
   void _back() {
-    Navigator.of(context).pop();
+    Navigator.of(context).maybePop().then((didPop) {
+      if (!didPop) {
+        NavigationHelper.pushNamedReplacement(context, "home");
+        BrainToast toast = BrainToast(text: "Du wurdest auf die Homepage geschickt, da die vorherigen Seiten nicht zu existieren scheinen");
+        toast.show();
+      }
+    });
   }
 
   String getDateString(DateTime date){
@@ -64,7 +71,7 @@ class _PageTemplateState extends State<PageTemplate> {
 
     String weekDay =  weekDays[date.weekday - 1];
 
-    return weekDay + ", " + day + "." + month + "." + year;
+    return "$weekDay, $day.$month.$year";
   }
 
   Widget getFloatingHeader() {
