@@ -30,15 +30,17 @@ class _PointElementState extends  State<PointElement>{
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
+          Flex(
             crossAxisAlignment: CrossAxisAlignment.center,
+            direction: Axis.horizontal,
             children: [
               Padding(
                 padding: const EdgeInsets.only(right: 5, bottom: 1),
                 child: Icon(Icons.circle, color: widget.color, size: 13)
               ),
-              Text(widget.primaryText, style: AppDesign.textStyles.pointElementPrimary),
-              const Spacer(),
+              Expanded(
+                child: Text(widget.primaryText, style: AppDesign.textStyles.pointElementPrimary)
+              ),
               if (widget.secondaryText != null) Text(widget.secondaryText!, style: AppDesign.textStyles.pointElementSecondary)
             ]
           ),

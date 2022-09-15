@@ -105,6 +105,16 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
 
 
   Widget getLinkedSubjectEntries() {
+    List<BrainDropdownEntry> firstSubjectEntries = BrainDropdown.getSubjectDropdowns(includeLinked: false);
+    firstSubjectEntries.removeWhere((dropdownEntry) {
+      return (dropdownEntry.value == widget.linkedSubjects[1]) || TimeTable.noAverageSubjects.contains(dropdownEntry.value);
+    });
+
+    List<BrainDropdownEntry> secondSubjectEntries = BrainDropdown.getSubjectDropdowns(includeLinked: false);
+    secondSubjectEntries.removeWhere((dropdownEntry) {
+      return (dropdownEntry.value == widget.linkedSubjects[0]) || TimeTable.noAverageSubjects.contains(dropdownEntry.value);
+    });
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Column(
@@ -143,7 +153,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                           child: BrainDropdown(
                               defaultText: "1. Fach",
                               dialogTitle: "Wähle ein Fach",
-                              items: BrainDropdown.getSubjectDropdowns(),
+                              items: firstSubjectEntries,
                               currentValue: widget.linkedSubjects[0],
                               onChanged: (value) {
                                 setState(() {
@@ -172,7 +182,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                       child: BrainDropdown(
                           defaultText: "2. Fach",
                           dialogTitle: "Wähle ein Fach",
-                          items: BrainDropdown.getSubjectDropdowns(),
+                          items: secondSubjectEntries,
                           currentValue: widget.linkedSubjects[1],
                           onChanged: (value) {
                             setState(() {
@@ -258,7 +268,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
       length: 2,
       child: PageTemplate(
           backButton: true,
-          title: widget.previousSubject != null ? "Fach Bearbeiten" : "Neues Fach",
+          title: widget.previousSubject != null ? "Fach Bearbeiten" : (widget.previousLinkedSubject != null ? "Verbindung Bearbeiten" : "Neues Fach"),
           pageSettings: PageSettings(
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             floatingHeaderIsCentered: true,
@@ -290,7 +300,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                               borderRadius: BorderRadius.circular(100)
                           ),
                           tabs: const [
-                            Tab(child: Text("Note")),
+                            Tab(child: Text("Fach")),
                             Tab(child: Text("Verbindung"))
                           ]
                       )
@@ -318,7 +328,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                                   widget.linkedPickerColor,
                                   widget.linkedSubjects,
                                   [int.parse(widget.firstEvaluationController.text), int.parse(widget.secondEvaluationController.text)]
-                                ));
+                                )..addToList());
                               }
                             } else if (widget.previousSubject != null) {
                               if (!evaluateSubjectEntries()) return;
@@ -326,7 +336,12 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                               Navigator.of(context).pop();
                             } else {
                               if (!evaluateLinkedSubjectEntries()) return;
-                              TimeTable.getSubject(widget.previousLinkedSubject!.id)!.edit(widget.linkedSubjectController.text, widget.linkedPickerColor);
+                              widget.previousLinkedSubject!.editLinked(
+                                  widget.linkedSubjectController.text.trim(),
+                                  widget.linkedPickerColor,
+                                  widget.linkedSubjects,
+                                  [int.parse(widget.firstEvaluationController.text), int.parse(widget.secondEvaluationController.text)]
+                              );
                               Navigator.of(context).pop();
                             }
 
@@ -335,7 +350,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 15),
                             child: Text(
-                                widget.previousSubject == null ? "Hinzufügen" : "Bearbeiten",
+                                widget.previousSubject == widget.previousLinkedSubject ? "Hinzufügen" : "Bearbeiten",
                                 style: AppDesign.textStyles.buttonText
                             )
                           )
@@ -348,7 +363,11 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                                 backgroundColor: AppDesign.colors.primary
                             ),
                             onPressed: () {
-                              TimeTable.deleteSubject(widget.previousSubject!);
+                              if (widget.previousSubject != null) {
+                                TimeTable.deleteSubject(widget.previousSubject!);
+                              } else {
+                                TimeTable.deleteLinkedSubject(widget.previousLinkedSubject!);
+                              }
                               Navigator.of(context).pop();
                               BrainApp.notifier.notifyOfChanges();
                             },

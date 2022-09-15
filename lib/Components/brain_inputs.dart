@@ -138,9 +138,9 @@ class BrainDropdown<ItemType> extends StatefulWidget {
   final void Function(dynamic) onChanged;
   final void Function(dynamic)? onLongPress;
 
-  static List<BrainDropdownEntry> getSubjectDropdowns(){
+  static List<BrainDropdownEntry> getSubjectDropdowns({bool includeLinked = true}){
     List<BrainDropdownEntry> subjects = [];
-    for(Subject subject in TimeTable.subjects){
+    for(Subject subject in [...TimeTable.subjects, if(includeLinked) ...TimeTable.linkedSubjects]){
       subjects.add(
           BrainDropdownEntry(
             value: subject,

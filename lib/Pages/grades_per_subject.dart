@@ -86,16 +86,6 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
       buttons.add(
           BrainIconButton(
             dense: true,
-            child: PointElement(
-              color: widget.subject.color,
-              primaryText: grade.name,
-              child: Text(
-                GradingSystem.isAdvancedLevel
-                    ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
-                    : "Note ${grade.value.toString()}",
-                style: AppDesign.textStyles.pointElementSecondary
-              )
-            ),
             icon: Icons.edit,
             action: () {
               if (GradingSystem.isAdvancedLevel == grade.time.isAdvancedLevel) {
@@ -116,7 +106,17 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
                   }
                 );
               }
-            }
+            },
+            child: PointElement(
+              color: widget.subject.color,
+              primaryText: grade.name,
+              child: Text(
+                GradingSystem.isAdvancedLevel
+                    ? "${grade.value.toInt()} Punkt${grade.value.toInt() == 1 ? "" : "e"}"
+                    : "Note ${grade.value.toStringAsFixed(2)}",
+                style: AppDesign.textStyles.pointElementSecondary
+              )
+            )
           )
       );
     }

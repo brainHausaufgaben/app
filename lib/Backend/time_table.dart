@@ -54,6 +54,11 @@ class TimeTable {
 
   static void deleteLinkedSubject(LinkedSubject linkedSubject){
     linkedSubjects.remove(linkedSubject);
+
+    for (Subject subject in linkedSubject.subjects) {
+      noAverageSubjects.remove(subject);
+    }
+
     if(saveEnabled) SaveSystem.saveLinkedSubjects();
   }
 

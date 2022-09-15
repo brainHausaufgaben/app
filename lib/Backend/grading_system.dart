@@ -217,18 +217,12 @@ class GradingSystem{
     int a = 0;
     for(int i = 0; i < linkedSubject.subjects.length; i++){
       double average =  getAverage(linkedSubject.subjects[i],onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
-      if(average > 0) continue;
+      if(average < 0) continue;
       subjectAverages += average * (linkedSubject.evaluations[i] as double);
       a += linkedSubject.evaluations[i];
     }
     if(a == 0) return -1;
     return subjectAverages / (a as double);
   }
-
-
-
-
-
-
 }
 

@@ -13,6 +13,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
+import '../../Backend/linked_subject.dart';
+
 enum SortMethods {
   bySubject,
   byGrade,
@@ -76,6 +78,11 @@ class _GradeOverview extends State<GradeOverview>{
       subjectPairs[subject] = average;
     }
 
+    for (LinkedSubject linkedSubject in TimeTable.linkedSubjects) {
+      double average = GradingSystem.getLinkedAverage(linkedSubject, onlyPartsOfYear: partsOfYear);
+      subjectPairs[linkedSubject] = average;
+    }
+
     LinkedHashMap sortedMap;
 
     switch(GradeOverview.sortMethod) {
@@ -93,6 +100,8 @@ class _GradeOverview extends State<GradeOverview>{
       buttons.add(
         BrainIconButton(
           dense: true,
+          icon: Icons.edit,
+          action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),
           child: PointElement(
             color: key.color,
             primaryText: key.name,
@@ -101,11 +110,9 @@ class _GradeOverview extends State<GradeOverview>{
                   ? "Noch keine Noten"
                   : GradingSystem.isAdvancedLevel
                       ? "${value.toInt()} Punkt${value.toInt() == 1 ? "" : "e"}"
-                      : "Note ${value.toString()}",
+                      : "Note ${value.toStringAsFixed(2)}",
               style: AppDesign.textStyles.pointElementSecondary),
           ),
-          icon: Icons.edit,
-          action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),
         )
       );
     });

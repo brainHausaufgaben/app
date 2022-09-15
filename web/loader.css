@@ -8,10 +8,8 @@ html {
 
 @keyframes bounce {
   0% {
-    transform: scale(0.8); }
-  50% {
     transform: scale(1); }
-  100% {
+  50% {
     transform: scale(0.8); } }
 @keyframes splash {
   0% {
@@ -27,17 +25,17 @@ html {
   justify-content: center;
   align-items: center; }
   .loader .splash {
-    width: 12rem;
-    height: 12rem;
+    width: calc(110px + 3vw);
+    height: calc(110px + 3vw);
     border-radius: 100%;
     position: absolute;
     background-color: #FEC828;
     opacity: 0.2;
-    animation: splash 2s 1s infinite; }
+    animation: splash 2s infinite; }
   .loader img {
-    width: 12rem;
-    height: 12rem;
-    border-radius: 2rem;
+    width: calc(110px + 3vw);
+    height: calc(110px + 3vw);
+    border-radius: calc(25px + 0.5vw);
     animation: bounce 2s infinite; }
 
 /*# sourceMappingURL=loader.css.map */
