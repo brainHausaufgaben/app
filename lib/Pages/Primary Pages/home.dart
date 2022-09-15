@@ -42,30 +42,6 @@ class _HomePage extends State<HomePage>{
     return dayIndices;
   }
 
-  @override
-  initState() {
-    if (kIsWeb && defaultTargetPlatform == TargetPlatform.android && BrainApp.preferences["showPlayStorePopup"]) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return BrainConfirmationDialog(
-              title: "Für Android Benutzer",
-              description: "Die Brain App ist auch im Playstore erhältlich",
-              onCancel: () {
-                BrainApp.updatePreference("showPlayStorePopup", false);
-                Navigator.of(context).pop();
-              },
-              onContinue: () {
-                Uri url = Uri.parse("https://play.google.com/store/apps/details?id=com.brain.brain_app");
-                launchUrl(url, mode: LaunchMode.externalApplication);
-              }
-            );
-          }
-      );
-    }
-    super.initState();
-  }
-
   List<Widget> getDays(){
     List<String> weekDays = ["Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag"];
 

@@ -44,9 +44,7 @@ class TimeTable {
   }
   static void addLinkedSubject(LinkedSubject subject){
     for(Subject s in subject.subjects){
-      if(noAverageSubjects.contains(s))return;
-    }
-    for(Subject s in subject.subjects){
+      if(noAverageSubjects.contains(s)) return;
       noAverageSubjects.add(s);
     }
     linkedSubjects.add(subject);

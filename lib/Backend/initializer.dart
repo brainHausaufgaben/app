@@ -6,13 +6,17 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:csv/csv.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
+import '../Components/brain_confirmation_dialog.dart';
 import 'brain_debug.dart';
 import 'design.dart';
 import 'event.dart';
@@ -28,6 +32,7 @@ class Initializer {
         AppDesign.toggleTheme(BrainApp.preferences["design"]);
         GradingSystem.isAdvancedLevel = BrainApp.preferences["isAdvancedLevel"];
         GradingSystem.currentYear = BrainApp.preferences["currentYear"];
+        showAndroidPopup();
       }
     );
     TimeTable.init();
@@ -37,6 +42,28 @@ class Initializer {
     await getVersion();
 
     initialized = true;
+  }
+
+  static void showAndroidPopup() {
+    if (kIsWeb && defaultTargetPlatform == TargetPlatform.android && BrainApp.preferences["showPlayStorePopup"]) {
+      showDialog(
+          context: NavigationHelper.rootKey.currentContext!,
+          builder: (context) {
+            return BrainConfirmationDialog(
+                title: "Für Android Benutzer",
+                description: "Die Brain App ist auch im Playstore erhältlich",
+                onCancel: () {
+                  BrainApp.updatePreference("showPlayStorePopup", false);
+                  Navigator.of(context).pop();
+                },
+                onContinue: () {
+                  Uri url = Uri.parse("https://play.google.com/store/apps/details?id=com.brain.brain_app");
+                  launchUrl(url, mode: LaunchMode.externalApplication);
+                }
+            );
+          }
+      );
+    }
   }
 
   static Future getVersion() async {

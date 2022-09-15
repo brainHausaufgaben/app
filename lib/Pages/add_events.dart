@@ -118,9 +118,9 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                 tabs: const [
                   Tab(child: Text("Termin")),
                   Tab(child: Text("Test"))
-                ],
-              ),
-            ),
+                ]
+              )
+            )
           )
         ),
         floatingActionButton: Padding(

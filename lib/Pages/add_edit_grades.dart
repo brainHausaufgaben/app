@@ -217,9 +217,9 @@ class _GradesPage extends State<GradesPage> {
                           widget.grade.toString(),
                           style: AppDesign.textStyles.input
                       )
-                  ),
+                  )
                 )
-              ],
+              ]
             ),
             BrainDropdown(
               dialogTitle: "Wähle ein Fach",

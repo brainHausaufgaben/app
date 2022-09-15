@@ -35,6 +35,7 @@ class BrainInfobox extends StatelessWidget {
         style: TextButton.styleFrom(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.all(10),
+            foregroundColor: isPrimary ? AppDesign.colors.contrast : AppDesign.colors.primary,
             backgroundColor: isPrimary ? AppDesign.colors.primary : AppDesign.colors.secondaryBackground
         ),
         onPressed: action,
