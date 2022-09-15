@@ -16,6 +16,7 @@ class SaveSystem{
 
   static Future getSubjects() async{
       await storage.ready;
+      print(storage.getItem("subjects"));
       return storage.getItem("subjects");
   }
 
@@ -76,6 +77,7 @@ class SaveSystem{
 
    static void saveLinkedSubjects(){
     storage.setItem("linkedSubjects", TimeTable.linkedSubjectsToJSONEncodable());
+
    }
 
    static getLinkedSubjects(){

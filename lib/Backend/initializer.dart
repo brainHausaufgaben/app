@@ -160,10 +160,15 @@ class Initializer {
       for (Map item in linkedSubjects) {
         List color = item["color"];
         List<Subject> linkSubjects = [];
+        List<int> evaluations = [];
         for(int i in item["subjectIDs"]){
           linkSubjects.add(TimeTable.getSubject(i)!);
         }
-        LinkedSubject(item["name"], Color.fromARGB(255, color[0], color[1], color[2]),linkSubjects,item["subjectEvaluations"]);
+        for(int i in item["subjectEvaluations"]){
+          evaluations.add(i);
+        }
+
+        LinkedSubject(item["name"], Color.fromARGB(255, color[0], color[1], color[2]),linkSubjects,evaluations);
       }
     }
     else {

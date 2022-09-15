@@ -15,9 +15,17 @@ class Subject{
 
   //Subject(this.name, this.startTime, this.endTime, this.color);
   Subject (this.name,this.color){
+    setID();
+    addToList();
+  }
+
+  void addToList(){
+    TimeTable.addSubject(this);
+  }
+
+  void setID(){
     id = lastID + 1;
     lastID++;
-    TimeTable.addSubject(this);
   }
 
   Subject.fromID(this.name,this.color,this.id){

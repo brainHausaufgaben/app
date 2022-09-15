@@ -48,6 +48,20 @@ class TimeTable {
       noAverageSubjects.add(s);
     }
     linkedSubjects.add(subject);
+    if(saveEnabled) SaveSystem.saveLinkedSubjects();
+
+  }
+
+  static void deleteLinkedSubject(LinkedSubject linkedSubject){
+    linkedSubjects.remove(linkedSubject);
+    if(saveEnabled) SaveSystem.saveLinkedSubjects();
+  }
+
+  static LinkedSubject? getLinkedSubject(Subject subject){
+    for(LinkedSubject s in linkedSubjects){
+      if(s.subjects.contains(subject))return s;
+    }
+    return null;
 
   }
 
@@ -62,6 +76,7 @@ class TimeTable {
     }
     deleteSubjectInstances(subject);
     GradingSystem.deleteSubject(subject);
+    if(getLinkedSubject(subject) != null) deleteLinkedSubject(getLinkedSubject(subject)!);
     if(saveEnabled) SaveSystem.saveSubjects();
   }
   static void deleteSubjectInstances(Subject subject){

@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
@@ -6,8 +9,23 @@ class LinkedSubject extends Subject{
   List<int> evaluations;
 
 
-  LinkedSubject(super.name, super.color,this.subjects,this.evaluations){
-    TimeTable.addLinkedSubject(this);
+  LinkedSubject(super.name, super.color,this.subjects,this.evaluations);
+
+  @override
+  void addToList() {
+   TimeTable.addLinkedSubject(this);
+  }
+
+  @override
+  void setID();
+
+  void editLinked(String? newName,Color? newColor,List<Subject>? newSubjects,List<int>? newEvaluations ){
+    if(newName != null) name = newName;
+    if(newColor != null) color = newColor;
+    if(newSubjects != null) subjects = newSubjects;
+    if(newEvaluations != null)evaluations = newEvaluations;
+
+    SaveSystem.saveLinkedSubjects();
   }
 
   @override
