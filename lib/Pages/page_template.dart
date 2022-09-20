@@ -55,7 +55,7 @@ class _PageTemplateState extends State<PageTemplate> {
   void _back() {
     Navigator.of(context).maybePop().then((didPop) {
       if (!didPop) {
-        NavigationHelper.pushNamedReplacement(context, "home");
+        NavigationHelper.pushNamedReplacement(context, "/");
         BrainToast toast = BrainToast(text: "Du wurdest auf die Homepage geschickt, da die vorherigen Seiten nicht zu existieren scheinen");
         toast.show();
       }

@@ -38,6 +38,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
     for (int day=0; day<5; day++) {
       List<Widget> entries = [];
       for (int i=0; i<10; i++) {
+        if (i == 6) {
+          entries.add(
+            const SizedBox(height: 10)
+          );
+        }
         entries.add(
           Padding(
             padding: const EdgeInsets.only(bottom: 5, left: 0),
@@ -50,8 +55,8 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                     child: Text(
                       TimeTable.lessonTimes[i].startTime.format(context),
                       style: AppDesign.textStyles.pointElementSecondary
-                    ),
-                  ),
+                    )
+                  )
                 ),
                 Expanded(
                   child: BrainDropdown(
@@ -163,7 +168,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
         ),
         // TODO: Very dumm aber es geht im moment
         child: SizedBox(
-          height: 600,
+          height: 650,
           child: NotificationListener<OverscrollNotification> (
             onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
             child: TabBarView(

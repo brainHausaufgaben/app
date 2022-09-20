@@ -168,9 +168,9 @@ class _GradesPage extends State<GradesPage> {
                       child: Text(
                         widget.previousGrade == null ? "Hinzufügen" : "Bearbeiten",
                         style: AppDesign.textStyles.buttonText
-                      ),
+                      )
                     )
-                ),
+                )
               ),
               if (widget.previousGrade != null) Padding(
                   padding: const EdgeInsets.only(left: 10),
@@ -225,10 +225,10 @@ class _GradesPage extends State<GradesPage> {
               dialogTitle: "Wähle ein Fach",
               defaultText: "Fach",
               currentValue: widget.selectedSubject,
-              items: BrainDropdown.getSubjectDropdowns(),
+              items: BrainDropdown.getSubjectDropdowns(includeLinked: false),
               onChanged: (subject) {
                 setState(() => widget.selectedSubject = subject);
-              },
+              }
             ),
             BrainDropdown.fromMap(
               dialogTitle: "Wähle eine Notenart",

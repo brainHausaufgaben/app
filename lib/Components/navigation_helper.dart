@@ -36,9 +36,9 @@ class NavigationHelper extends StatefulWidget {
 
   static NavigatorState getNavigator(BuildContext context, {bool forceNested = false, bool forceRoot = false}) {
     if ((MediaQuery.of(context).size.width > AppDesign.breakPointWidth || forceNested) && !forceRoot) {
-      return navigatorKey.currentState!;
+      return navigatorKey.currentState ?? Navigator.of(context);
     } else {
-      return rootKey.currentState!;
+      return rootKey.currentState ?? Navigator.of(context);
     }
   }
 

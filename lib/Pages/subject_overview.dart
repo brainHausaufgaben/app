@@ -61,13 +61,13 @@ class _SubjectOverview extends State<SubjectOverview> {
       child: Wrap(
         runSpacing: 20,
         children: [
-          if (TimeTable.subjects.isNotEmpty) HeadlineWrap(
-            headline: "Fächer",
-            children: getSubjectButtons()
-          ),
           if (TimeTable.linkedSubjects.isNotEmpty) HeadlineWrap(
               headline: "Verbindungen",
               children: getLinkedSubjectButtons()
+          ),
+          if (TimeTable.subjects.isNotEmpty) HeadlineWrap(
+            headline: "Fächer",
+            children: getSubjectButtons()
           )
         ]
       )

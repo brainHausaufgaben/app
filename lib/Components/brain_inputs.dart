@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -20,7 +21,8 @@ class BrainTextField extends StatefulWidget {
     this.minLines,
     this.maxLines,
     this.maxLength,
-    this.autofocus = false
+    this.autofocus = false,
+    this.digitsOnly = false
   }) : super(key: key);
 
   TextEditingController controller;
@@ -29,6 +31,7 @@ class BrainTextField extends StatefulWidget {
   final int? maxLines;
   final int? maxLength;
   final bool autofocus;
+  final bool digitsOnly;
 
   @override
   State<StatefulWidget> createState() => _BrainTextField();
@@ -45,6 +48,7 @@ class _BrainTextField extends State<BrainTextField> {
       child: Stack(
         children: [
           TextField(
+            keyboardType: widget.digitsOnly ? TextInputType.number : null,
             autofocus: widget.autofocus,
             minLines: widget.minLines ?? 1,
             maxLines: widget.maxLines ?? 5,
@@ -67,9 +71,10 @@ class _BrainTextField extends State<BrainTextField> {
                   style: AppDesign.textStyles.input
               ),
             ),
-            inputFormatters: widget.maxLength != null ? [
-              LengthLimitingTextInputFormatter(widget.maxLength),
-            ] : null,
+            inputFormatters: [
+              if (widget.maxLength != null) LengthLimitingTextInputFormatter(widget.maxLength),
+              if (widget.digitsOnly) FilteringTextInputFormatter.digitsOnly
+            ],
             onChanged: (_) => setState(() {}),
           ),
           if (widget.maxLength != null) Positioned(
@@ -194,16 +199,17 @@ class _BrainDropdown extends State<BrainDropdown> {
   }
 
   Widget? getCorrespondingChild() {
+    if (widget.currentValue == null) return null;
     for (BrainDropdownEntry entry in widget.items) {
       if (entry.value == widget.currentValue) return entry.child;
     }
+    BrainDebug.log("Es gibt kein Widget für den zugehörigen Wert! (${widget.currentValue.toString()} ist nicht in items vorhanden)");
     return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return BrainIconButton(
-      child: getCorrespondingChild() ?? Text(widget.defaultText, style: AppDesign.textStyles.input),
       icon: isOpen ? Icons.arrow_drop_up_outlined : Icons.arrow_drop_down_outlined,
       action: () {
         setState(() => isOpen = true);
@@ -241,7 +247,8 @@ class _BrainDropdown extends State<BrainDropdown> {
               );
             }
         ).then((value) => setState(() => isOpen = false));
-      }
+      },
+      child: getCorrespondingChild() ?? Text(widget.defaultText, style: AppDesign.textStyles.input)
     );
   }
 }

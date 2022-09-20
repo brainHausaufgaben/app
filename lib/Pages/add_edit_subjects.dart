@@ -107,12 +107,12 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
   Widget getLinkedSubjectEntries() {
     List<BrainDropdownEntry> firstSubjectEntries = BrainDropdown.getSubjectDropdowns(includeLinked: false);
     firstSubjectEntries.removeWhere((dropdownEntry) {
-      return (dropdownEntry.value == widget.linkedSubjects[1]) || TimeTable.noAverageSubjects.contains(dropdownEntry.value);
+      return (dropdownEntry.value == widget.linkedSubjects[1]) || (TimeTable.noAverageSubjects.contains(dropdownEntry.value) && widget.previousLinkedSubject == null);
     });
 
     List<BrainDropdownEntry> secondSubjectEntries = BrainDropdown.getSubjectDropdowns(includeLinked: false);
     secondSubjectEntries.removeWhere((dropdownEntry) {
-      return (dropdownEntry.value == widget.linkedSubjects[0]) || TimeTable.noAverageSubjects.contains(dropdownEntry.value);
+      return (dropdownEntry.value == widget.linkedSubjects[0]) || (TimeTable.noAverageSubjects.contains(dropdownEntry.value) && widget.previousLinkedSubject == null);
     });
 
     return Padding(
@@ -168,6 +168,8 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                               maxWidth: 100
                           ),
                           child: BrainTextField(
+                            digitsOnly: true,
+                            maxLength: 5,
                             placeholder: "Wertung",
                             controller: widget.firstEvaluationController,
                           )
@@ -197,6 +199,8 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                           maxWidth: 100
                       ),
                       child: BrainTextField(
+                        digitsOnly: true,
+                        maxLength: 5,
                         placeholder: "Wertung",
                         controller: widget.secondEvaluationController,
                       )

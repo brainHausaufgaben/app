@@ -102,7 +102,7 @@ class DeveloperOptions{
           hideControls: true,
           disableDragSeek: true,
           autoPlay: true
-      ),
+      )
     );
 
     return Container(

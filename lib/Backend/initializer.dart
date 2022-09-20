@@ -32,26 +32,33 @@ class Initializer {
         AppDesign.toggleTheme(BrainApp.preferences["design"]);
         GradingSystem.isAdvancedLevel = BrainApp.preferences["isAdvancedLevel"];
         GradingSystem.currentYear = BrainApp.preferences["currentYear"];
+
+        BrainDebug.log("Loaded preferences successfully");
         showAndroidPopup();
       }
     );
     TimeTable.init();
     CustomNotifications.init();
     await loadData();
+    BrainDebug.log("Loaded data successfully");
     await getBoxText();
+    BrainDebug.log("Gotten box text successfully");
     await getVersion();
+    BrainDebug.log("Gotten version successfully");
+
 
     initialized = true;
   }
 
   static void showAndroidPopup() {
     if (kIsWeb && defaultTargetPlatform == TargetPlatform.android && BrainApp.preferences["showPlayStorePopup"]) {
+      BrainDebug.log("Showing Android Popup");
       showDialog(
           context: NavigationHelper.rootKey.currentContext!,
           builder: (context) {
             return BrainConfirmationDialog(
-                title: "Für Android Benutzer",
-                description: "Die Brain App ist auch im Playstore erhältlich",
+                title: "Brain App im Playstore",
+                description: "Android Nutzer können die Brain App auch ganz bequem aus dem Playstore herunterladen",
                 onCancel: () {
                   BrainApp.updatePreference("showPlayStorePopup", false);
                   Navigator.of(context).pop();
@@ -64,6 +71,7 @@ class Initializer {
           }
       );
     }
+    return;
   }
 
   static Future getVersion() async {

@@ -1,6 +1,7 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/grades_box.dart';
@@ -15,7 +16,8 @@ import 'Primary Pages/grades.dart';
 class GradesPerSubjectPage extends StatefulWidget {
   GradesPerSubjectPage({Key? key}): super(key: key);
 
-  late Subject subject;
+  Subject? subject;
+  LinkedSubject? linkedSubject;
 
   @override
   State<GradesPerSubjectPage> createState() => _GradesPerSubjectPage();
@@ -25,16 +27,18 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
   List<int> get partsOfYear => GradeOverview.timeSelectors.value == TimeSelectors.thisYear ? [1, 2, 3] : [GradeOverview.timeSelectors.value.index];
   late Function() listener;
 
-  List<Widget> getShortTests() {
+  List<Widget> getShortTests(Subject subject) {
     List<Widget> buttons = [];
 
-    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject, onlyPartsOfYear: partsOfYear)) {
+    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(subject, onlyPartsOfYear: partsOfYear)) {
       if (grade.type != GradeType.smallTest) continue;
       buttons.add(
           BrainIconButton(
             dense: true,
+            icon: Icons.edit,
+            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
             child: PointElement(
-              color: widget.subject.color,
+              color: subject.color,
               primaryText: grade.name,
               child: Text(
                 GradingSystem.isAdvancedLevel
@@ -42,9 +46,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
                     : "Note ${grade.value.toString()}",
                 style: AppDesign.textStyles.pointElementSecondary
               )
-            ),
-            icon: Icons.edit,
-            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
+            )
           )
       );
     }
@@ -52,16 +54,18 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     return buttons;
   }
 
-  List<Widget> getOral() {
+  List<Widget> getOral(Subject subject) {
     List<Widget> buttons = [];
 
-    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(widget.subject, onlyPartsOfYear: partsOfYear)) {
+    for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(subject, onlyPartsOfYear: partsOfYear)) {
       if (grade.type != GradeType.oralGrade) continue;
       buttons.add(
           BrainIconButton(
             dense: true,
+            icon: Icons.edit,
+            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
             child: PointElement(
-              color: widget.subject.color,
+              color: subject.color,
               primaryText: grade.name,
               child: Text(
                 GradingSystem.isAdvancedLevel
@@ -69,9 +73,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
                     : "Note ${grade.value.toString()}",
                 style: AppDesign.textStyles.pointElementSecondary
               )
-            ),
-            icon: Icons.edit,
-            action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
+            )
           )
       );
     }
@@ -79,10 +81,10 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     return buttons;
   }
 
-  List<Widget> getTests() {
+  List<Widget> getTests(Subject subject) {
     List<Widget> buttons = [];
 
-    for (BigGrade grade in GradingSystem.getBigGradesBySubject(widget.subject, onlyPartsOfYear: partsOfYear)) {
+    for (BigGrade grade in GradingSystem.getBigGradesBySubject(subject, onlyPartsOfYear: partsOfYear)) {
       buttons.add(
           BrainIconButton(
             dense: true,
@@ -108,7 +110,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               }
             },
             child: PointElement(
-              color: widget.subject.color,
+              color: subject.color,
               primaryText: grade.name,
               child: Text(
                 GradingSystem.isAdvancedLevel
@@ -125,8 +127,17 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
   }
 
   void getData() {
+    dynamic data = ModalRoute.of(context)!.settings.arguments;
+
     setState(() {
-      widget.subject = ModalRoute.of(context)!.settings.arguments as Subject;
+      switch (data.runtimeType) {
+        case Subject:
+          widget.subject = ModalRoute.of(context)!.settings.arguments as Subject;
+          break;
+        case LinkedSubject:
+          widget.linkedSubject = ModalRoute.of(context)!.settings.arguments as LinkedSubject;
+          break;
+      }
     });
   }
 
@@ -145,20 +156,22 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
 
   @override
   Widget build(BuildContext context) {
-    getData();
+    if (widget.subject == widget.linkedSubject) getData();
 
     return PageTemplate(
-        title: widget.subject.name,
+        title: widget.subject?.name ?? widget.linkedSubject!.name,
         backButton: true,
         floatingActionButton: BrainMenuButton(
-          defaultAction: () => NavigationHelper.pushNamed(context, "gradesPage", payload: widget.subject),
+          defaultAction: () => NavigationHelper.pushNamed(context, "gradesPage", payload: widget.subject ?? widget.linkedSubject),
           defaultLabel: "Neue Note",
           icon: Icons.add,
           withEntries: false,
         ),
         floatingHeader: GradesBox(
           currentSelector: GradeOverview.timeSelectors.value,
-          value: GradingSystem.getAverage(widget.subject, onlyPartsOfYear: partsOfYear).toStringAsFixed(2),
+          value: widget.subject == null
+              ? GradingSystem.getLinkedAverage(widget.linkedSubject!, onlyPartsOfYear: partsOfYear).toStringAsFixed(2)
+              : GradingSystem.getAverage(widget.subject!, onlyPartsOfYear: partsOfYear).toStringAsFixed(2),
           onChanged: (value) {
             GradeOverview.timeSelectors.value = value;
           },
@@ -169,7 +182,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
                 backgroundColor: AppDesign.colors.secondaryBackground,
                 minimumSize: Size.zero
             ),
-            onPressed: () => NavigationHelper.pushNamed(context, "subjectPage", payload: widget.subject),
+            onPressed: () => NavigationHelper.pushNamed(context, "subjectPage", payload: widget.subject ?? widget.linkedSubject),
             child: Semantics(
               label: "Fach Bearbeiten",
               child: Icon(Icons.edit, color: AppDesign.colors.text),
@@ -180,20 +193,38 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
           child: Wrap(
             runSpacing: 20,
             children: [
-              if (getTests().isNotEmpty) HeadlineWrap(
+              if (getTests(widget.subject ?? widget.linkedSubject!.subjects[0]).isNotEmpty || (widget.linkedSubject != null ? getTests(widget.linkedSubject!.subjects[1]).isNotEmpty : false)) HeadlineWrap(
                   headline: "Schulaufgaben",
-                  children: getTests()
+                  children: [
+                    if (widget.subject != null) ...getTests(widget.subject!),
+                    if (widget.linkedSubject != null) ...[
+                      ...getTests(widget.linkedSubject!.subjects[0]),
+                      ...getTests(widget.linkedSubject!.subjects[1])
+                    ]
+                  ]
               ),
-              if (getShortTests().isNotEmpty) HeadlineWrap(
+              if (getShortTests(widget.subject ?? widget.linkedSubject!.subjects[0]).isNotEmpty || (widget.linkedSubject != null ? getShortTests(widget.linkedSubject!.subjects[1]).isNotEmpty : false)) HeadlineWrap(
                   headline: "Exen",
-                  children: getShortTests()
+                  children: [
+                    if (widget.subject != null) ...getShortTests(widget.subject!),
+                    if (widget.linkedSubject != null) ...[
+                      ...getShortTests(widget.linkedSubject!.subjects[0]),
+                      ...getShortTests(widget.linkedSubject!.subjects[1])
+                    ]
+                  ]
               ),
-              if (getOral().isNotEmpty) HeadlineWrap(
+              if (getOral(widget.subject ?? widget.linkedSubject!.subjects[0]).isNotEmpty || (widget.linkedSubject != null ? getOral(widget.linkedSubject!.subjects[1]).isNotEmpty : false)) HeadlineWrap(
                   headline: "Mündliche Noten",
-                  children: getOral()
+                  children: [
+                    if (widget.subject != null) ...getOral(widget.subject!),
+                    if (widget.linkedSubject != null) ...[
+                      ...getOral(widget.linkedSubject!.subjects[0]),
+                      ...getOral(widget.linkedSubject!.subjects[1])
+                    ]
+                  ]
               )
-            ],
-          ),
+            ]
+          )
         )
     );
   }

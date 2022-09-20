@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/notifier.dart';
@@ -7,8 +8,11 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
+
 
 void main() {
+  usePathUrlStrategy();
   runApp(const BrainApp());
 }
 
@@ -74,7 +78,9 @@ class _BrainApp extends State<BrainApp> {
   @override
   void initState() {
     BrainApp.notifier.addListener(() => setState(() {}));
-    Initializer.init().then((_) => setState(() {}));
+    Initializer.init().then((_) => setState(() {
+      BrainDebug.log("Initializer finished; reloading app");
+    }));
     super.initState();
   }
 
@@ -114,7 +120,7 @@ class StretchingIndicator extends ScrollBehavior {
   Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
     return StretchingOverscrollIndicator(
         axisDirection: details.direction,
-        child: child
+        child: child,
     );
   }
 }
