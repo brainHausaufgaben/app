@@ -8,11 +8,9 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 
 
 void main() {
-  usePathUrlStrategy();
   runApp(const BrainApp());
 }
 
