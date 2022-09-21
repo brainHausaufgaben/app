@@ -86,10 +86,10 @@ class _BrainTextField extends State<BrainTextField> {
                     color: AppDesign.colors.text,
                     fontSize: 10
                 )
-            ),
+            )
           )
-        ],
-      ),
+        ]
+      )
     );
   }
 }

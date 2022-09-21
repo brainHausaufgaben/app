@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';

@@ -43,9 +43,6 @@ class Initializer {
     BrainDebug.log("Loaded data successfully");
     await getBoxText();
     BrainDebug.log("Gotten box text successfully");
-    await getVersion();
-    BrainDebug.log("Gotten version successfully");
-
 
     initialized = true;
   }
@@ -72,11 +69,6 @@ class Initializer {
       );
     }
     return;
-  }
-
-  static Future getVersion() async {
-    PackageInfo info = await PackageInfo.fromPlatform();
-    BrainApp.appVersion = info.version;
   }
   
   static Future getPreferences() async {

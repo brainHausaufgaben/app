@@ -21,6 +21,7 @@ import 'package:brain_app/Pages/subject_overview.dart';
 import 'package:brain_app/Pages/time_table.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 
 import '../main.dart';
@@ -47,8 +48,7 @@ class NavigationHelper extends StatefulWidget {
   }
 
   static void pushNamedReplacement(BuildContext context, String route) {
-    // TODO: Pop alle seiten
-    getNavigator(context, forceNested: true).pushReplacementNamed(route);
+    getNavigator(context, forceNested: true).pushNamedAndRemoveUntil(route, (route) => false);
   }
 
   @override

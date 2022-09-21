@@ -19,7 +19,7 @@ class BrainApp extends StatefulWidget {
 
   static Notifier notifier = Notifier();
 
-  static String appVersion = "...";
+  static String appVersion = "1.2.0";
   static TodaysMedia? todaysMedia;
   static double screenWidth = 0;
 

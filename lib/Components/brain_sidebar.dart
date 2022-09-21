@@ -8,16 +8,10 @@ class CustomSidebar extends StatefulWidget {
   const CustomSidebar({Key? key}) : super(key: key);
 
   @override
-  _CustomSidebar createState() => _CustomSidebar();
+  State<StatefulWidget> createState() => _CustomSidebar();
 }
 
 class _CustomSidebar extends State<CustomSidebar> {
-  @override
-  void initState() {
-    NavigationHelper.selectedPrimaryPage.addListener(() => setState(() {}));
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,46 +38,43 @@ class _CustomSidebar extends State<CustomSidebar> {
               textAlign: TextAlign.center,
             )
           ),
-          SideBarMenuEntry(
-            title: "Noten",
-            icon: Icons.grading,
-            iconSize: 22,
-            activated: NavigationHelper.selectedPrimaryPage.value == 0,
-            onTap: () {
-              if (NavigationHelper.selectedPrimaryPage.value != 0) {
-                NavigationHelper.pushNamedReplacement(context, "gradesOverview");
-                setState(() {
-                  NavigationHelper.selectedPrimaryPage.value = 0;
-                });
-              }
-            }
-          ),
-          SideBarMenuEntry(
-            title: "Home",
-            icon: Icons.home_rounded,
-            iconSize: 22,
-            activated: NavigationHelper.selectedPrimaryPage.value == 1,
-            onTap: () {
-              if (NavigationHelper.selectedPrimaryPage.value != 1) {
-                NavigationHelper.pushNamedReplacement(context, "home");
-                setState(() {
-                  NavigationHelper.selectedPrimaryPage.value = 1;
-                });
-              }
-            }
-          ),
-          SideBarMenuEntry(
-            title: "Kalender",
-            icon: Icons.calendar_month_rounded,
-            iconSize: 22,
-            activated: NavigationHelper.selectedPrimaryPage.value == 2,
-            onTap: () {
-              if (NavigationHelper.selectedPrimaryPage.value != 2) {
-                NavigationHelper.pushNamedReplacement(context, "calendar");
-                setState(() {
-                  NavigationHelper.selectedPrimaryPage.value = 2;
-                });
-              }
+          AnimatedBuilder(
+            animation: NavigationHelper.selectedPrimaryPage,
+            builder: (context, child) {
+              return Column(
+                children: [
+                  SideBarMenuEntry(
+                      title: "Noten",
+                      icon: Icons.grading,
+                      iconSize: 22,
+                      activated: NavigationHelper.selectedPrimaryPage.value == 0,
+                      onTap: () {
+                        NavigationHelper.pushNamedReplacement(context, "gradesOverview");
+                        NavigationHelper.selectedPrimaryPage.value = 0;
+                      }
+                  ),
+                  SideBarMenuEntry(
+                      title: "Home",
+                      icon: Icons.home_rounded,
+                      iconSize: 22,
+                      activated: NavigationHelper.selectedPrimaryPage.value == 1,
+                      onTap: () {
+                        NavigationHelper.pushNamedReplacement(context, "home");
+                        NavigationHelper.selectedPrimaryPage.value = 1;
+                      }
+                  ),
+                  SideBarMenuEntry(
+                      title: "Kalender",
+                      icon: Icons.calendar_month_rounded,
+                      iconSize: 22,
+                      activated: NavigationHelper.selectedPrimaryPage.value == 2,
+                      onTap: () {
+                        NavigationHelper.pushNamedReplacement(context, "calendar");
+                        NavigationHelper.selectedPrimaryPage.value = 2;
+                      }
+                  )
+                ]
+              );
             }
           ),
           if (kIsWeb) ...[

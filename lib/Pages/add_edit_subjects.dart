@@ -40,6 +40,9 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
   void initState() {
     super.initState();
     tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() {
+
+    });
   }
 
   @override
@@ -277,6 +280,36 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             floatingHeaderIsCentered: true,
             floatingHeaderBorderRadius: BorderRadius.circular(100)
+          ),
+          secondaryTitleButton: TextButton(
+              style: TextButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                  backgroundColor: AppDesign.colors.secondaryBackground,
+                  minimumSize: Size.zero
+              ),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text("Verbindungen", style: AppDesign.textStyles.alertDialogHeader),
+                      content: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 400),
+                        child: Text(
+                          "Mit Hilfe von Verbindungen können die Durschnitte von 2 Fächern, bevor der allgemeine Durchschnitt ermittelt wird, zusammengerechnet werden."
+                          "\nDas geschieht unter Berücksichtung der Wertungen, also kann etwa eines der Fächer 2x so viel zu der kombinierten Note beitragen"
+                          "\n\n(zB. können Geschichte und Sozialkunde mit einer Wertung von 2 zu 1 verbunden werden)",
+                          style: AppDesign.textStyles.alertDialogDescription,
+                        )
+                      )
+                    );
+                  }
+                );
+              },
+              child: Semantics(
+                label: "Informationen zu Verbindungen",
+                child: Icon(Icons.info_outline_rounded, color: AppDesign.colors.text),
+              )
           ),
           floatingHeader: widget.previousLinkedSubject == widget.previousSubject
               ? Container(
