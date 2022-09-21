@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/linked_subject.dart';
@@ -6,8 +8,10 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Backend/todo.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +47,8 @@ class Initializer {
     BrainDebug.log("Loaded data successfully");
     await getBoxText();
     BrainDebug.log("Gotten box text successfully");
+    getVersion();
+
 
     initialized = true;
   }
@@ -137,6 +143,13 @@ class Initializer {
       }
     }
     return null;
+  }
+
+  static Future<void> getVersion() async {
+      PackageInfo info = await PackageInfo.fromPlatform();
+      BrainApp.appVersion = info.version;
+      BrainDebug.log("Gotten version successfully");
+
   }
   
   static Future loadData() async {
@@ -277,6 +290,19 @@ class Initializer {
     }
     else {
       BrainDebug.log("No Grades");
+    }
+
+    dynamic toDos = await SaveSystem.getToDos();
+    if(toDos != null){
+
+      for(Map item in toDos){
+        ToDoImportance importance = ToDoImportance.values[item["importance"]];
+        ToDoItem.load(item["content"], importance, item["done"]);
+
+      }
+    }
+    else {
+      BrainDebug.log("No to dos");
     }
 
     dynamic devOptions = await SaveSystem.getDeveloperOptions();

@@ -1,6 +1,7 @@
 
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Backend/todo_manager.dart';
 import 'package:localstorage/localstorage.dart';
 
 import 'grading_system.dart';
@@ -83,6 +84,15 @@ class SaveSystem{
    static getLinkedSubjects(){
      return storage.getItem("linkedSubjects");
    }
+
+   static void saveToDos(){
+     storage.setItem("toDos", ToDoManager.toDosToJSONEncodeble());
+   }
+
+   static getToDos(){
+     return storage.getItem("toDos");
+   }
+
 
 
 

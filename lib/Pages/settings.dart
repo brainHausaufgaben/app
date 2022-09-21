@@ -213,10 +213,6 @@ class _SettingsPage extends State<SettingsPage> {
                                     "Designer: Manuel Murmann",
                                     style: AppDesign.textStyles.pointElementPrimary
                                   ),
-                                ),
-                                Text(
-                                  "Project Manager: David Will (aber nicht wirklich)",
-                                  style: AppDesign.textStyles.pointElementPrimary
                                 )
                               ]
                             )
