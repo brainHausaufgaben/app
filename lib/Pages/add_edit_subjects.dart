@@ -108,12 +108,12 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
 
 
   Widget getLinkedSubjectEntries() {
-    List<BrainDropdownEntry> firstSubjectEntries = BrainDropdown.getSubjectDropdowns(includeLinked: false);
+    List<BrainDropdownEntry> firstSubjectEntries = BrainDropdown.getSubjectDropdowns();
     firstSubjectEntries.removeWhere((dropdownEntry) {
       return (dropdownEntry.value == widget.linkedSubjects[1]) || (TimeTable.noAverageSubjects.contains(dropdownEntry.value) && widget.previousLinkedSubject == null);
     });
 
-    List<BrainDropdownEntry> secondSubjectEntries = BrainDropdown.getSubjectDropdowns(includeLinked: false);
+    List<BrainDropdownEntry> secondSubjectEntries = BrainDropdown.getSubjectDropdowns();
     secondSubjectEntries.removeWhere((dropdownEntry) {
       return (dropdownEntry.value == widget.linkedSubjects[0]) || (TimeTable.noAverageSubjects.contains(dropdownEntry.value) && widget.previousLinkedSubject == null);
     });
@@ -281,17 +281,13 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
             floatingHeaderIsCentered: true,
             floatingHeaderBorderRadius: BorderRadius.circular(100)
           ),
-          secondaryTitleButton: TextButton(
-              style: TextButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-                  backgroundColor: AppDesign.colors.secondaryBackground,
-                  minimumSize: Size.zero
-              ),
-              onPressed: () {
+          secondaryTitleButton: widget.previousSubject != null ? null : BrainTitleButton(
+              action: () {
                 showDialog(
                   context: context,
                   builder: (context) {
                     return AlertDialog(
+                      backgroundColor: AppDesign.colors.secondaryBackground,
                       title: Text("Verbindungen", style: AppDesign.textStyles.alertDialogHeader),
                       content: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 400),
@@ -306,10 +302,8 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                   }
                 );
               },
-              child: Semantics(
-                label: "Informationen zu Verbindungen",
-                child: Icon(Icons.info_outline_rounded, color: AppDesign.colors.text),
-              )
+              icon: Icons.info_outline_rounded,
+              semantics: "Informationen zu Verbindungen"
           ),
           floatingHeader: widget.previousLinkedSubject == widget.previousSubject
               ? Container(

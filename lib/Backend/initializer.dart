@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/linked_subject.dart';
@@ -47,8 +45,7 @@ class Initializer {
     BrainDebug.log("Loaded data successfully");
     await getBoxText();
     BrainDebug.log("Gotten box text successfully");
-    getVersion();
-
+    await getVersion();
 
     initialized = true;
   }
@@ -85,11 +82,10 @@ class Initializer {
   }
 
   static Future getBoxText() async {
-    parseJokes().then((value) {
-      if (value != null) {
-        BrainApp.todaysMedia = value;
-      }
-    });
+    TodaysMedia? media = await parseJokes();
+    if (media != null) {
+      BrainApp.todaysMedia = media;
+    }
   }
 
   static Future<TodaysMedia?> parseJokes() async {
@@ -145,11 +141,14 @@ class Initializer {
     return null;
   }
 
-  static Future<void> getVersion() async {
+  static Future getVersion() async {
+    try {
       PackageInfo info = await PackageInfo.fromPlatform();
       BrainApp.appVersion = info.version;
       BrainDebug.log("Gotten version successfully");
-
+    } catch (error) {
+      BrainDebug.log("getVersion Error: $error");
+    }
   }
   
   static Future loadData() async {

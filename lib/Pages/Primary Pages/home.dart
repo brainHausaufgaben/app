@@ -1,22 +1,18 @@
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/export_import_system.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
-import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_infobox.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/home_page_day.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/Components/todo_dialog.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}): super(key: key);
@@ -193,9 +189,37 @@ class _HomePage extends State<HomePage>{
                         }
                     ),
                     if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysMedia != null) BrainInfobox(
-                        title: BrainApp.todaysMedia!.content,
+                        title: "${BrainApp.todaysMedia!.content.substring(0, 80)}...",
                         shortDescription: BrainApp.todaysMedia!.type,
-                        icon: BrainApp.todaysMedia!.icon
+                        icon: BrainApp.todaysMedia!.icon,
+                        action: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                backgroundColor: AppDesign.colors.secondaryBackground,
+                                title: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 10),
+                                      child: Icon(
+                                        BrainApp.todaysMedia!.icon,
+                                        color: AppDesign.colors.text,
+                                      )
+                                    ),
+                                    Text(BrainApp.todaysMedia!.type, style: AppDesign.textStyles.alertDialogHeader)
+                                  ]
+                                ),
+                                content: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 400
+                                  ),
+                                  child: Text(BrainApp.todaysMedia!.content, style: AppDesign.textStyles.alertDialogDescription)
+                                )
+                              );
+                            }
+                          );
+                        }
                     )
                   ]
               )
@@ -241,14 +265,26 @@ class _HomePage extends State<HomePage>{
           defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
           defaultLabel: "Neu",
         ),
+        secondaryTitleButton: true ? null : BrainTitleButton(
+          icon: Icons.task_outlined,
+          semantics: "To Do",
+          action: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return const ToDoDialog();
+              }
+            );
+          }
+        ),
+        floatingHeader: getHeader(),
         child: Wrap(
           runSpacing: 20,
           children: Initializer.initialized
             ? staggeredChildren()
             : []
-        ),
-        floatingHeader: getHeader()
-      ),
+        )
+      )
     );
   }
 }

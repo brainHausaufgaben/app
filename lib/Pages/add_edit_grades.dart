@@ -225,7 +225,7 @@ class _GradesPage extends State<GradesPage> {
               dialogTitle: "Wähle ein Fach",
               defaultText: "Fach",
               currentValue: widget.selectedSubject,
-              items: BrainDropdown.getSubjectDropdowns(includeLinked: false),
+              items: BrainDropdown.getSubjectDropdowns(),
               onChanged: (subject) {
                 setState(() => widget.selectedSubject = subject);
               }

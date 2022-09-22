@@ -13,6 +13,35 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+class BrainTitleButton extends StatelessWidget {
+  const BrainTitleButton({
+    super.key,
+    required this.icon,
+    required this.semantics,
+    required this.action
+  });
+
+  final IconData icon;
+  final String semantics;
+  final Function() action;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+          backgroundColor: AppDesign.colors.secondaryBackground,
+          minimumSize: Size.zero
+      ),
+      onPressed: action,
+      child: Semantics(
+        label: semantics,
+        child: Icon(icon, color: AppDesign.colors.text),
+      ),
+    );
+  }
+}
+
 class BrainTextField extends StatefulWidget {
   BrainTextField({
     Key? key,
@@ -143,7 +172,7 @@ class BrainDropdown<ItemType> extends StatefulWidget {
   final void Function(dynamic) onChanged;
   final void Function(dynamic)? onLongPress;
 
-  static List<BrainDropdownEntry> getSubjectDropdowns({bool includeLinked = true}){
+  static List<BrainDropdownEntry> getSubjectDropdowns({bool includeLinked = false}){
     List<BrainDropdownEntry> subjects = [];
     for(Subject subject in [...TimeTable.subjects, if(includeLinked) ...TimeTable.linkedSubjects]){
       subjects.add(

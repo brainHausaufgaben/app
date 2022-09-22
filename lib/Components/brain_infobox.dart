@@ -10,7 +10,7 @@ class BrainInfobox extends StatelessWidget {
   final bool isPrimary;
   final Function()? action;
 
-  BrainInfobox({
+  const BrainInfobox({
     Key? key,
     required this.title,
     required this.shortDescription,
@@ -22,8 +22,8 @@ class BrainInfobox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-        maxWidth: title.length > 50 ? 50 + title.length * 2 : 210,
+      constraints: const BoxConstraints(
+        maxWidth: 210,
         maxHeight: 150,
         minHeight: 150
       ),

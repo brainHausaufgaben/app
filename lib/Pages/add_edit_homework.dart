@@ -46,8 +46,11 @@ class _HomeworkPage extends State<HomeworkPage> {
 
         Homework(widget.selectedSubject!, date, widget.homeworkController.text);
       } else {
-        DateTime time = widget.selectedSubject!.getNextDate()!;
-        if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
+        DateTime? time = widget.selectedSubject!.getNextDate();
+        if (time == null) {
+          BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt!").show();
+          return;
+        } else if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
             time = time.add(const Duration(days: 7));
         }
         Homework(widget.selectedSubject!,time,widget.homeworkController.text);
