@@ -15,10 +15,10 @@ class SubjectOverview extends StatefulWidget {
 }
 
 class _SubjectOverview extends State<SubjectOverview> {
-  List<BrainIconButton> getSubjectButtons() {
-    List<BrainIconButton> buttons = [];
+  List<BrainButton> getSubjectButtons() {
+    List<BrainButton> buttons = [];
     for (Subject subject in TimeTable.subjects) {
-      buttons.add(BrainIconButton(
+      buttons.add(BrainButton(
         icon: Icons.edit,
         dense: true,
         action: () => NavigationHelper.pushNamed(context, "subjectPage", payload: subject),
@@ -31,10 +31,10 @@ class _SubjectOverview extends State<SubjectOverview> {
     return buttons;
   }
 
-  List<BrainIconButton> getLinkedSubjectButtons() {
-    List<BrainIconButton> buttons = [];
+  List<BrainButton> getLinkedSubjectButtons() {
+    List<BrainButton> buttons = [];
     for (Subject subject in TimeTable.linkedSubjects) {
-      buttons.add(BrainIconButton(
+      buttons.add(BrainButton(
           icon: Icons.edit,
           dense: true,
           action: () => NavigationHelper.pushNamed(context, "subjectPage", payload: subject),

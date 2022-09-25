@@ -238,7 +238,7 @@ class _BrainDropdown extends State<BrainDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return BrainIconButton(
+    return BrainButton(
       icon: isOpen ? Icons.arrow_drop_up_outlined : Icons.arrow_drop_down_outlined,
       action: () {
         setState(() => isOpen = true);
@@ -412,7 +412,7 @@ class BrainDateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BrainIconButton(
+    return BrainButton(
       child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.textStyles.input),
       icon: Icons.date_range,
       action: () {
@@ -427,18 +427,18 @@ class BrainDateButton extends StatelessWidget {
   }
 }
 
-class BrainIconButton extends StatelessWidget {
-  const BrainIconButton({
+class BrainButton extends StatelessWidget {
+  const BrainButton({
     Key? key,
     required this.action,
-    required this.icon,
     required this.child,
+    this.icon,
     this.dense = false
   }) : super(key: key);
 
   final Function() action;
   final Widget child;
-  final IconData icon;
+  final IconData? icon;
   final bool dense;
 
   @override
@@ -453,7 +453,7 @@ class BrainIconButton extends StatelessWidget {
         style: TextButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: dense ? 11 : 15, horizontal: 12),
             backgroundColor: AppDesign.colors.secondaryBackground,
-            minimumSize: Size.zero
+            minimumSize: const Size(0, 55)
         ),
         child: Flex(
           direction: Axis.horizontal,
@@ -461,7 +461,7 @@ class BrainIconButton extends StatelessWidget {
             Expanded(
               child: child
             ),
-            Icon(icon, color: AppDesign.colors.text, size: dense ? 20 : 24)
+            if (icon != null) Icon(icon, color: AppDesign.colors.text, size: dense ? 20 : 24)
           ]
         )
       )

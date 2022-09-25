@@ -7,6 +7,7 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../main.dart';
 
@@ -49,12 +50,59 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
             child: Flex(
               direction: Axis.horizontal,
               children: [
-                SizedBox(
-                  width: 75,
-                  child: Center(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                        backgroundColor: AppDesign.colors.primary,
+                        foregroundColor: AppDesign.colors.contrast,
+                        minimumSize: Size.zero
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text("Zeiten", style: AppDesign.textStyles.alertDialogHeader),
+                            backgroundColor: AppDesign.colors.secondaryBackground,
+                            content: StatefulBuilder(
+                              builder: (context, setBuilderState) {
+                                return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SettingsTimePicker(
+                                          text: "Start",
+                                          onSelect: (time) {
+                                            setBuilderState(() {
+                                              TimeTable.lessonTimes[i].startTime = time;
+                                            });
+                                          },
+                                          currentTime: TimeTable.lessonTimes[i].startTime
+                                      ),
+                                      SettingsTimePicker(
+                                          text: "Ende",
+                                          onSelect: (time) {
+                                            setBuilderState(() {
+                                              TimeTable.lessonTimes[i].endTime = time;
+                                            });
+                                          },
+                                          currentTime: TimeTable.lessonTimes[i].endTime
+                                      )
+                                    ]
+                                );
+                              },
+                            )
+                          );
+                        }
+                      ).then((value) {
+                        // TODO: Hier dann die zeiten speichern
+                        BrainApp.notifier.notifyOfChanges();
+                      });
+                    },
                     child: Text(
                       TimeTable.lessonTimes[i].startTime.format(context),
-                      style: AppDesign.textStyles.pointElementSecondary
+                      style: AppDesign.textStyles.pointElementSecondary.copyWith(color: AppDesign.colors.contrast)
                     )
                   )
                 ),
@@ -172,7 +220,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           child: NotificationListener<OverscrollNotification> (
             onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
             child: TabBarView(
-              children: getTimetableTabs(),
+              children: getTimetableTabs()
             )
           )
         )

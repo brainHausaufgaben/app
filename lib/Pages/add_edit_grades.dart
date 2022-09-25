@@ -210,7 +210,7 @@ class _GradesPage extends State<GradesPage> {
                   constraints: const BoxConstraints(
                     maxWidth: 100
                   ),
-                  child: BrainIconButton(
+                  child: BrainButton(
                       icon: Icons.numbers,
                       action: numberPickerDialog,
                       child: Text(

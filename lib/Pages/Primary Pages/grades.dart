@@ -98,7 +98,7 @@ class _GradeOverview extends State<GradeOverview>{
 
     sortedMap.forEach((key, value) {
       buttons.add(
-        BrainIconButton(
+        BrainButton(
           dense: true,
           icon: Icons.edit,
           action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),

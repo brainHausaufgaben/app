@@ -33,7 +33,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(subject, onlyPartsOfYear: partsOfYear)) {
       if (grade.type != GradeType.smallTest) continue;
       buttons.add(
-          BrainIconButton(
+          BrainButton(
             dense: true,
             icon: Icons.edit,
             action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
@@ -60,7 +60,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
     for (SmallGrade grade in GradingSystem.getSmallGradesBySubject(subject, onlyPartsOfYear: partsOfYear)) {
       if (grade.type != GradeType.oralGrade) continue;
       buttons.add(
-          BrainIconButton(
+          BrainButton(
             dense: true,
             icon: Icons.edit,
             action: () => NavigationHelper.pushNamed(context, "gradesPage", payload: grade),
@@ -86,7 +86,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
 
     for (BigGrade grade in GradingSystem.getBigGradesBySubject(subject, onlyPartsOfYear: partsOfYear)) {
       buttons.add(
-          BrainIconButton(
+          BrainButton(
             dense: true,
             icon: Icons.edit,
             action: () {

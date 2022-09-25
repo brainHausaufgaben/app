@@ -70,7 +70,7 @@ class HomePageDay extends StatefulWidget {
           PointElement(
               color: subject.subject.color,
               primaryText: subject.subject.name,
-              secondaryText: "${subject.getStartTimeString()} ${BrainApp.preferences["showLessonEndTimes"] ? " - ${subject.getEndTimeString()}" : ""}",
+              secondaryText: "${subject.getStartTimeString()} ${BrainApp.preferences["showLessonEndTimes"] ? "- ${subject.getEndTimeString()}" : ""}",
               child: homework.isEmpty ? null : Wrap(
                 runSpacing: 3,
                 children: homework
