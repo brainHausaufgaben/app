@@ -38,7 +38,6 @@ class GradingSystem{
     11 : true,
     12 : true,
     13 : true,
-
   };
 
   static Map yearsToLevelJsonEncodable(){
@@ -218,11 +217,11 @@ class GradingSystem{
     for(int i = 0; i < linkedSubject.subjects.length; i++){
       double average =  getAverage(linkedSubject.subjects[i],onlyCurrentYear: onlyCurrentYear,onlyPartsOfYear: onlyPartsOfYear);
       if(average < 0) continue;
-      subjectAverages += average * (linkedSubject.evaluations[i] as double);
+      subjectAverages += average * (linkedSubject.evaluations[i].toDouble());
       a += linkedSubject.evaluations[i];
     }
     if(a == 0) return -1;
-    return subjectAverages / (a as double);
+    return subjectAverages / (a.toDouble());
   }
 }
 
