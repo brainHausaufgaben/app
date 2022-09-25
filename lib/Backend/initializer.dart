@@ -5,6 +5,7 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/test.dart';
+import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Backend/todo.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
@@ -14,6 +15,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -154,6 +156,8 @@ class Initializer {
   static Future loadData() async {
     TimeTable.saveEnabled = false;
 
+
+
     dynamic subjects = await SaveSystem.getSubjects();
     if (subjects != null) {
       for (Map item in subjects) {
@@ -165,6 +169,18 @@ class Initializer {
     }
     else {
       BrainDebug.log("No Subjects");
+    }
+
+    dynamic lessonTimes = await SaveSystem.getLessonTimes();
+    if(lessonTimes != null){
+      for(int i = 0; i < TimeTable.lessonTimes.length; i++){
+        List l = lessonTimes[i];
+        TimeTable.lessonTimes[i] = TimeInterval( TimeOfDay(hour: l[0][0],minute:l[0][1]), TimeOfDay(hour: l[1][0],minute:l[1][1]));
+
+      }
+    }
+    else{
+      BrainDebug.log("No Lesson Times");
     }
 
     dynamic linkedSubjects = await SaveSystem.getLinkedSubjects();

@@ -93,6 +93,14 @@ class SaveSystem{
      return storage.getItem("toDos");
    }
 
+   static void saveLessonTimes(){
+     storage.setItem("lessonTimes", TimeTable.lessonTimesToJSONEncodable());
+   }
+
+   static getLessonTimes(){
+     return storage.getItem("lessonTimes");
+   }
+
 
 
 

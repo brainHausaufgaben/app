@@ -271,6 +271,17 @@ class TimeTable {
 
   }
 
+  static List lessonTimesToJSONEncodable(){
+    List out = [];
+    for(int i = 0; i < lessonTimes.length;i++){
+      TimeInterval lesson =  lessonTimes[i];
+      List<List> time = [[lesson.startTime.hour,lesson.startTime.minute],[lesson.endTime.hour,lesson.endTime.minute]];
+      out.add(time);
+
+    }
+    return out;
+  }
+
   static List homeworkToJSONEncodable(){
     return homeworks.map((item)
     {

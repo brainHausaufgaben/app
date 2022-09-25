@@ -96,7 +96,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                           );
                         }
                       ).then((value) {
-                        // TODO: Hier dann die zeiten speichern
+                        SaveSystem.saveLessonTimes();
                         BrainApp.notifier.notifyOfChanges();
                       });
                     },
