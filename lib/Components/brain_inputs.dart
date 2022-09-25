@@ -453,7 +453,6 @@ class BrainButton extends StatelessWidget {
         style: TextButton.styleFrom(
             padding: EdgeInsets.symmetric(vertical: dense ? 11 : 15, horizontal: 12),
             backgroundColor: AppDesign.colors.secondaryBackground,
-            minimumSize: const Size(0, 55)
         ),
         child: Flex(
           direction: Axis.horizontal,

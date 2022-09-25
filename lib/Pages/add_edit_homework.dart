@@ -10,50 +10,56 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class HomeworkPage extends StatefulWidget {
-  HomeworkPage({Key? key}) : super(key: key);
-
-  Homework? previousHomework;
-  TextEditingController homeworkController = TextEditingController();
-  Subject? selectedSubject;
-  DateTime selectedDate = DateTime(10);
+  const HomeworkPage({Key? key}) : super(key: key);
 
   @override
   State<HomeworkPage> createState() => _HomeworkPage();
 }
 
 class _HomeworkPage extends State<HomeworkPage> {
+  TextEditingController homeworkController = TextEditingController();
+  Homework? previousHomework;
+  Subject? selectedSubject;
+  DateTime selectedDate = DateTime(10);
+
+  @override
+  void dispose() {
+    homeworkController.dispose();
+    super.dispose();
+  }
+
   void onPressed() {
-    if (widget.homeworkController.text.isEmpty) {
+    if (homeworkController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
       toast.show();
       return;
-    } else if (widget.selectedSubject == null) {
+    } else if (selectedSubject == null) {
       BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
       toast.show();
       return;
     } else {
-      if (widget.previousHomework != null) {
-        widget.previousHomework?.edit(widget.selectedSubject, widget.selectedDate, widget.homeworkController.text);
+      if (previousHomework != null) {
+        previousHomework?.edit(selectedSubject, selectedDate, homeworkController.text);
         BrainApp.notifier.notifyOfChanges();
-      } else if(widget.selectedDate.year != 10) {
-        TimeInterval? time = widget.selectedSubject?.getTime(TimeTable.getDayFromDate(widget.selectedDate));
+      } else if(selectedDate.year != 10) {
+        TimeInterval? time = selectedSubject?.getTime(TimeTable.getDayFromDate(selectedDate));
 
         DateTime date = DateTime(
-            widget.selectedDate.year, widget.selectedDate.month,
-            widget.selectedDate.day, time?.startTime.hour ?? 0,
+            selectedDate.year, selectedDate.month,
+            selectedDate.day, time?.startTime.hour ?? 0,
             time?.startTime.minute ?? 0
         );
 
-        Homework(widget.selectedSubject!, date, widget.homeworkController.text);
+        Homework(selectedSubject!, date, homeworkController.text);
       } else {
-        DateTime? time = widget.selectedSubject!.getNextDate();
+        DateTime? time = selectedSubject!.getNextDate();
         if (time == null) {
           BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt!").show();
           return;
         } else if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
             time = time.add(const Duration(days: 7));
         }
-        Homework(widget.selectedSubject!,time,widget.homeworkController.text);
+        Homework(selectedSubject!,time,homeworkController.text);
       }
       Navigator.of(context).pop();
     }
@@ -63,21 +69,21 @@ class _HomeworkPage extends State<HomeworkPage> {
     Homework? data = ModalRoute.of(context)!.settings.arguments as Homework?;
     if (data != null) {
       setState(() {
-        widget.previousHomework = data;
-        widget.homeworkController.text = data.name;
-        widget.selectedSubject = data.subject;
-        widget.selectedDate = data.dueTime;
+        previousHomework = data;
+        homeworkController.text = data.name;
+        selectedSubject = data.subject;
+        selectedDate = data.dueTime;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.previousHomework == null) getData();
+    if (previousHomework == null) getData();
 
     return PageTemplate(
       backButton: true,
-      title: widget.previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
+      title: previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
@@ -94,7 +100,7 @@ class _HomeworkPage extends State<HomeworkPage> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   child: Text(
-                    widget.previousHomework == null ? "Hinzufügen" : "Bearbeiten",
+                      previousHomework == null ? "Hinzufügen" : "Bearbeiten",
                     style: AppDesign.textStyles.buttonText
                   )
                 )
@@ -108,28 +114,28 @@ class _HomeworkPage extends State<HomeworkPage> {
         children: [
           BrainTextField(
             autofocus: true,
-            controller: widget.homeworkController,
+            controller: homeworkController,
             placeholder: "Hausaufgabe",
           ),
           BrainDropdown(
             dialogTitle: "Wähle ein Fach",
             defaultText: "Fach",
             items: BrainDropdown.getSubjectDropdowns(),
-            currentValue: widget.selectedSubject,
+            currentValue: selectedSubject,
             onChanged: (newValue) {
               setState(() {
-                widget.selectedSubject = newValue;
+                selectedSubject = newValue;
               });
             }
           ),
           BrainDateButton(
-            value: widget.selectedDate,
+            value: selectedDate,
             text: "Nächste Stunde",
-            selectedSubject: widget.selectedSubject,
-            todayAsDefault: widget.selectedDate.year == 10,
+            selectedSubject: selectedSubject,
+            todayAsDefault: selectedDate.year == 10,
             onDateSelect: (value) {
               setState((){
-                 widget.selectedDate = value;
+                selectedDate = value;
               });
             }
           )

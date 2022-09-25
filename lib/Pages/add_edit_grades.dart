@@ -10,20 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 class GradesPage extends StatefulWidget {
-  GradesPage({Key? key}) : super(key: key);
-
-  Grade? previousGrade;
-  int grade = GradingSystem.isAdvancedLevel ? 0 : 1;
-  Subject? selectedSubject;
-  GradeType? type;
-  int? semester;
-  TextEditingController nameController = TextEditingController();
+  const GradesPage({Key? key}) : super(key: key);
 
   @override
   State<GradesPage> createState() => _GradesPage();
 }
 
 class _GradesPage extends State<GradesPage> {
+  Grade? previousGrade;
+  int grade = GradingSystem.isAdvancedLevel ? 0 : 1;
+  Subject? selectedSubject;
+  GradeType? type;
+  int? semester;
+  TextEditingController nameController = TextEditingController();
+  
   void numberPickerDialog() {
     showDialog(
         context: context,
@@ -41,11 +41,11 @@ class _GradesPage extends State<GradesPage> {
                         color: AppDesign.colors.primary,
                         fontWeight: FontWeight.w700
                       ),
-                      value: widget.grade,
+                      value: grade,
                       minValue: GradingSystem.isAdvancedLevel ? 0 : 1,
                       maxValue: GradingSystem.isAdvancedLevel ? 15 : 6,
                       onChanged: (value) {
-                        setBuilderState(() => widget.grade = value);
+                        setBuilderState(() => grade = value);
                       }
                   );
                 }
@@ -67,7 +67,7 @@ class _GradesPage extends State<GradesPage> {
 
   @override
   void initState() {
-    widget.semester = BrainApp.preferences["currentSemester"] == 0
+    semester = BrainApp.preferences["currentSemester"] == 0
         ? null
         : BrainApp.preferences["currentSemester"];
     super.initState();
@@ -82,15 +82,15 @@ class _GradesPage extends State<GradesPage> {
         case BigGrade:
         case SmallGrade:
         case Grade:
-          widget.previousGrade = args;
-          widget.grade = args.value;
-          widget.selectedSubject = args.subject;
-          widget.type = args.type;
-          widget.semester = args.time.partOfYear;
-          widget.nameController.text = args.name;
+          previousGrade = args;
+          grade = args.value;
+          selectedSubject = args.subject;
+          type = args.type;
+          semester = args.time.partOfYear;
+          nameController.text = args.name;
           break;
         case Subject:
-          widget.selectedSubject = args;
+          selectedSubject = args;
           break;
       }
     });
@@ -98,10 +98,10 @@ class _GradesPage extends State<GradesPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.selectedSubject == null) getData();
+    if (selectedSubject == null) getData();
     return PageTemplate(
       backButton: true,
-      title: widget.previousGrade == null ? "Neue Note" : "Note Bearbeiten",
+      title: previousGrade == null ? "Neue Note" : "Note Bearbeiten",
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
@@ -115,49 +115,49 @@ class _GradesPage extends State<GradesPage> {
                         backgroundColor: AppDesign.colors.primary
                     ),
                     onPressed: () {
-                      if (widget.selectedSubject == null) {
+                      if (selectedSubject == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
                         toast.show();
                         return;
-                      } else if (widget.type == null) {
+                      } else if (type == null) {
                         BrainToast toast = BrainToast(text: "Du hast keine Art der Note angegeben!");
                         toast.show();
                         return;
-                      } else if (widget.semester == null) {
+                      } else if (semester == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Semester angegeben!");
                         toast.show();
                         return;
                       } else {
-                        if(widget.nameController.text == ""){
-                          switch(widget.type){
+                        if(nameController.text == ""){
+                          switch(type){
                             case GradeType.bigTest:
-                              widget.nameController.text = "Schulaufgabe";
+                              nameController.text = "Schulaufgabe";
                               break;
                             case GradeType.smallTest:
-                              widget.nameController.text = "Ex";
+                              nameController.text = "Ex";
                               break;
                             case GradeType.oralGrade:
-                              widget.nameController.text = "Mündliche Note";
+                              nameController.text = "Mündliche Note";
                               break;
                             default:
-                              widget.nameController.text = "Note";
+                              nameController.text = "Note";
                           }
                         }
-                        BrainApp.updatePreference("currentSemester", widget.semester);
-                        if (widget.previousGrade == null) {
-                          switch(widget.type) {
+                        BrainApp.updatePreference("currentSemester", semester);
+                        if (previousGrade == null) {
+                          switch(type) {
                             case GradeType.bigTest:
-                              BigGrade(widget.grade, widget.selectedSubject!,widget.nameController.text, widget.semester!);
+                              BigGrade(grade, selectedSubject!,nameController.text, semester!);
                               break;
                             case GradeType.smallTest:
                             case GradeType.oralGrade:
-                              SmallGrade(widget.grade, widget.selectedSubject!, widget.type!,widget.nameController.text, widget.semester!);
+                              SmallGrade(grade, selectedSubject!, type!,nameController.text, semester!);
                               break;
                             default:
                               return;
                           }
                         } else {
-                          widget.previousGrade!.edit(widget.grade, widget.selectedSubject, widget.type, GradeTime(GradingSystem.currentYear, widget.semester!),widget.nameController.text);
+                          previousGrade!.edit(grade, selectedSubject, type, GradeTime(GradingSystem.currentYear, semester!),nameController.text);
                         }
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.pop(context);
@@ -166,20 +166,20 @@ class _GradesPage extends State<GradesPage> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: Text(
-                        widget.previousGrade == null ? "Hinzufügen" : "Bearbeiten",
+                        previousGrade == null ? "Hinzufügen" : "Bearbeiten",
                         style: AppDesign.textStyles.buttonText
                       )
                     )
                 )
               ),
-              if (widget.previousGrade != null) Padding(
+              if (previousGrade != null) Padding(
                   padding: const EdgeInsets.only(left: 10),
                   child: ElevatedButton (
                       style: ElevatedButton.styleFrom(
                           backgroundColor: AppDesign.colors.primary
                       ),
                       onPressed: () {
-                        GradingSystem.removeGrade(widget.previousGrade!);
+                        GradingSystem.removeGrade(previousGrade!);
                         BrainApp.notifier.notifyOfChanges();
                         Navigator.of(context).pop();
                       },
@@ -201,7 +201,7 @@ class _GradesPage extends State<GradesPage> {
                 Expanded(
                   child: BrainTextField(
                     placeholder: "Noten Name",
-                    controller: widget.nameController,
+                    controller: nameController,
                     maxLines: 1,
                   )
                 ),
@@ -214,7 +214,7 @@ class _GradesPage extends State<GradesPage> {
                       icon: Icons.numbers,
                       action: numberPickerDialog,
                       child: Text(
-                          widget.grade.toString(),
+                          grade.toString(),
                           style: AppDesign.textStyles.input
                       )
                   )
@@ -224,16 +224,16 @@ class _GradesPage extends State<GradesPage> {
             BrainDropdown(
               dialogTitle: "Wähle ein Fach",
               defaultText: "Fach",
-              currentValue: widget.selectedSubject,
+              currentValue: selectedSubject,
               items: BrainDropdown.getSubjectDropdowns(),
               onChanged: (subject) {
-                setState(() => widget.selectedSubject = subject);
+                setState(() => selectedSubject = subject);
               }
             ),
             BrainDropdown.fromMap(
               dialogTitle: "Wähle eine Notenart",
               defaultText: "Art der Note",
-              currentValue: widget.type,
+              currentValue: type,
               entries: {
                 GradeType.smallTest : Text(
                     "Ex",
@@ -249,13 +249,13 @@ class _GradesPage extends State<GradesPage> {
                 )
               },
               onChanged: (newType) {
-                setState(() => widget.type = newType);
+                setState(() => type = newType);
               },
             ),
             BrainDropdown.fromMap(
               dialogTitle: "Semester des Jahres",
               defaultText: "Semester des Jahres",
-              currentValue: widget.semester,
+              currentValue: semester,
               entries: {
                 1 : Text(
                     "1. Semester",
@@ -272,7 +272,7 @@ class _GradesPage extends State<GradesPage> {
               },
               onChanged: (newSemester) {
                 setState(() {
-                  widget.semester = newSemester;
+                  semester = newSemester;
                   BrainApp.preferences["currentSemester"] = newSemester;
                 });
               }

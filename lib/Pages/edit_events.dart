@@ -8,32 +8,32 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class EditEventPage extends StatefulWidget {
-  EditEventPage({Key? key}) : super(key: key);
-
-  Event? previousEvent;
-  EventSubpage eventSubpage = EventSubpage();
+  const EditEventPage({Key? key}) : super(key: key);
 
   @override
   State<EditEventPage> createState() => _TestPage();
 }
 
 class _TestPage extends State<EditEventPage> {
+  Event? previousEvent;
+  EventSubpage eventSubpage = EventSubpage();
+
   void getData() {
     Event data = ModalRoute.of(context)!.settings.arguments as Event;
     setState(() {
-      widget.previousEvent = data;
-      widget.eventSubpage = EventSubpage(previousEvent: data);
+      previousEvent = data;
+      eventSubpage = EventSubpage(previousEvent: data);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.previousEvent == null) getData();
+    if (previousEvent == null) getData();
 
     return PageTemplate(
       backButton: true,
       title: "Termin Bearbeiten",
-      child: widget.eventSubpage,
+      child: eventSubpage,
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
       ),
@@ -44,16 +44,16 @@ class _TestPage extends State<EditEventPage> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  String title = widget.eventSubpage.titleController.text;
-                  String description = widget.eventSubpage.descriptionController.text;
-                  DateTime date = widget.eventSubpage.selectedDate;
+                  String title = eventSubpage.titleController.text;
+                  String description = eventSubpage.descriptionController.text;
+                  DateTime date = eventSubpage.selectedDate;
 
                   if (title.isEmpty) {
                     BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
                     toast.show();
                     return;
                   } else {
-                    widget.previousEvent!.edit(date, title, description);
+                    previousEvent!.edit(date, title, description);
                     BrainApp.notifier.notifyOfChanges();
                     Navigator.pop(context);
                   }
@@ -71,7 +71,7 @@ class _TestPage extends State<EditEventPage> {
               padding: const EdgeInsets.only(left: 10),
               child: ElevatedButton(
                 onPressed: () {
-                  TimeTable.removeEvent(widget.previousEvent!);
+                  TimeTable.removeEvent(previousEvent!);
                   BrainApp.notifier.notifyOfChanges();
                   Navigator.pop(context);
                 },

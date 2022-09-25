@@ -69,8 +69,8 @@ class _CalendarPage extends State<CalendarPage> {
     return boxes;
   }
 
-  List<Widget> getSelectedHomework() {
-    List<Widget> boxes = [];
+  Widget getSelectedHomework() {
+    List<Widget> entries = [];
 
     for (Subject subject in TimeTable.subjects) {
       List<Homework> homework = TimeTable.getHomework(CalendarPage.selectedDay, subject);
@@ -83,21 +83,25 @@ class _CalendarPage extends State<CalendarPage> {
       }
 
       if (dismissableBoxes.isNotEmpty) {
-        boxes.add(
-            Box(
-              child: PointElement(
-                  color: subject.color,
-                  primaryText: subject.name,
-                  child: Column(
-                    children: dismissableBoxes,
-                  )
-              ),
+        entries.add(
+            PointElement(
+                color: subject.color,
+                primaryText: subject.name,
+                child: Wrap(
+                  runSpacing: 3,
+                  children: dismissableBoxes,
+                )
             )
         );
       }
     }
 
-    return boxes;
+    return Box(
+      child: Wrap(
+        runSpacing: 10,
+        children: entries,
+      )
+    );
   }
 
   List<Homework> getHomeworkByDay(DateTime day) {
@@ -174,8 +178,15 @@ class _CalendarPage extends State<CalendarPage> {
                             BoxShape shape = BoxShape.circle;
                             switch (event.runtimeType) {
                               case Event:
-                                shape = BoxShape.rectangle;
-                                color = AppDesign.colors.primary;
+                                return Container(
+                                    decoration: BoxDecoration(
+                                      color: AppDesign.colors.primary,
+                                      border: Border.all(color: AppDesign.colors.secondaryBackground, width: 1)
+                                    ),
+                                    width: 8.0,
+                                    height: 8.0,
+                                    margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                                );
                                 break;
                               case Homework:
                                 Homework hm = event as Homework;
@@ -235,7 +246,7 @@ class _CalendarPage extends State<CalendarPage> {
                 ),
                 if (getHomeworkByDay(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
                   headline: "Hausaufgaben",
-                  children: getSelectedHomework(),
+                  children: [getSelectedHomework()],
                 ),
                 if (TimeTable.getEvents(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
                   headline: "Termine",

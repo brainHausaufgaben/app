@@ -10,12 +10,7 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class AddEventsPage extends StatefulWidget {
-  AddEventsPage({Key? key}) : super(key: key);
-
-  final List<Widget> subpages = [
-    EventSubpage(withPadding: true),
-    TestSubpage(withPadding: true)
-  ];
+  const AddEventsPage({Key? key}) : super(key: key);
 
   @override
   State<AddEventsPage> createState() => _EventsPage();
@@ -23,6 +18,10 @@ class AddEventsPage extends StatefulWidget {
 
 class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMixin {
   late TabController tabController;
+  final List<Widget> subpages = [
+    EventSubpage(withPadding: true),
+    TestSubpage(withPadding: true)
+  ];
 
   @override
   void dispose() {
@@ -37,7 +36,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
   }
 
   void addEvent() {
-    EventSubpage eventSubpage = widget.subpages[tabController.index] as EventSubpage;
+    EventSubpage eventSubpage = subpages[tabController.index] as EventSubpage;
 
     String title = eventSubpage.titleController.text;
     String description = eventSubpage.descriptionController.text;
@@ -56,7 +55,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
   }
 
   void addTest() {
-    TestSubpage testSubpage = widget.subpages[tabController.index] as TestSubpage;
+    TestSubpage testSubpage = subpages[tabController.index] as TestSubpage;
 
     String description = testSubpage.descriptionController.text;
     Subject? subject = testSubpage.selectedSubject;
@@ -133,7 +132,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                             backgroundColor: AppDesign.colors.primary
                           ),
                           onPressed: () {
-                            switch (widget.subpages[tabController.index].runtimeType) {
+                            switch (subpages[tabController.index].runtimeType) {
                               case EventSubpage:
                                 addEvent();
                                 break;
@@ -157,7 +156,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
             onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
             child: TabBarView(
               controller: tabController,
-              children: widget.subpages,
+              children: subpages,
             )
           )
         )

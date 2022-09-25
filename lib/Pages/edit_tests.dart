@@ -10,27 +10,27 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class EditTestPage extends StatefulWidget {
-  EditTestPage({Key? key}) : super(key: key);
-
-  Test? previousTest;
-  TestSubpage testSubpage = TestSubpage();
+  const EditTestPage({Key? key}) : super(key: key);
 
   @override
   State<EditTestPage> createState() => _EditTestPage();
 }
 
 class _EditTestPage extends State<EditTestPage> {
+  Test? previousTest;
+  TestSubpage testSubpage = TestSubpage();
+  
   void getData() {
     Test data = ModalRoute.of(context)!.settings.arguments as Test;
     setState(() {
-      widget.previousTest = data;
-      widget.testSubpage = TestSubpage(previousTest: data);
+      previousTest = data;
+      testSubpage = TestSubpage(previousTest: data);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.previousTest == null) getData();
+    if (previousTest == null) getData();
 
     return PageTemplate(
       backButton: true,
@@ -43,7 +43,7 @@ class _EditTestPage extends State<EditTestPage> {
                 runSpacing: 10,
                 children: [
                   BrainTextField(
-                    controller: widget.testSubpage.descriptionController,
+                    controller: testSubpage.descriptionController,
                     placeholder: "Test Inhalte",
                     maxLines: 10,
                   ),
@@ -51,20 +51,20 @@ class _EditTestPage extends State<EditTestPage> {
                     dialogTitle: "Wähle ein Fach",
                     defaultText: "Fach",
                     items: BrainDropdown.getSubjectDropdowns(),
-                    currentValue: widget.testSubpage.selectedSubject,
+                    currentValue: testSubpage.selectedSubject,
                     onChanged: (newValue) {
                       setState(() {
-                        widget.testSubpage.selectedSubject = newValue;
+                        testSubpage.selectedSubject = newValue;
                       });
                     }
                   ),
                   BrainDateButton(
-                      value: widget.testSubpage.selectedDate,
+                      value: testSubpage.selectedDate,
                       text: "Nächste Stunde",
-                      selectedSubject: widget.testSubpage.selectedSubject,
+                      selectedSubject: testSubpage.selectedSubject,
                       onDateSelect: (value) {
                         setState(() {
-                          widget.testSubpage.selectedDate = value;
+                          testSubpage.selectedDate = value;
                         });
                       }
                   )
@@ -82,9 +82,9 @@ class _EditTestPage extends State<EditTestPage> {
                 Expanded(
                   child: ElevatedButton(
                       onPressed: () {
-                        String description = widget.testSubpage.descriptionController.text;
-                        Subject? subject = widget.testSubpage.selectedSubject;
-                        DateTime date = widget.testSubpage.selectedDate;
+                        String description = testSubpage.descriptionController.text;
+                        Subject? subject = testSubpage.selectedSubject;
+                        DateTime date = testSubpage.selectedDate;
 
                         if (description.isEmpty) {
                           BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
@@ -95,7 +95,7 @@ class _EditTestPage extends State<EditTestPage> {
                           toast.show();
                           return;
                         } else {
-                          widget.previousTest!.edit(subject, date, description);
+                          previousTest!.edit(subject, date, description);
                           BrainApp.notifier.notifyOfChanges();
                           Navigator.pop(context);
                         }
@@ -113,7 +113,7 @@ class _EditTestPage extends State<EditTestPage> {
                     padding: const EdgeInsets.only(left: 10),
                     child: ElevatedButton(
                         onPressed: () {
-                          TimeTable.removeTest(widget.previousTest!);
+                          TimeTable.removeTest(previousTest!);
                           BrainApp.notifier.notifyOfChanges();
                           Navigator.pop(context);
                         },
