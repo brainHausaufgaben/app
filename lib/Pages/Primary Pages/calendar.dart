@@ -15,6 +15,8 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../Components/todo_dialog.dart';
+
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}): super(key: key);
 
@@ -130,6 +132,18 @@ class _CalendarPage extends State<CalendarPage> {
           floatingActionButton: BrainMenuButton(
             defaultAction: () => NavigationHelper.pushNamed(context, "addEventPage"),
             defaultLabel: "Neu",
+          ),
+          secondaryTitleButton: BrainTitleButton(
+              icon: Icons.task_outlined,
+              semantics: "To Do",
+              action: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ToDoDialog();
+                    }
+                );
+              }
           ),
           child: Wrap(
               runSpacing: 20,

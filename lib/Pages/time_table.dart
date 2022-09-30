@@ -54,10 +54,11 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: TextButton(
                     style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
-                        backgroundColor: AppDesign.colors.primary,
-                        foregroundColor: AppDesign.colors.contrast,
-                        minimumSize: Size.zero
+                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 0),
+                      backgroundColor: AppDesign.colors.primary,
+                      foregroundColor: AppDesign.colors.contrast,
+                      minimumSize: Size.zero,
+                      fixedSize: const Size.fromWidth(70)
                     ),
                     onPressed: () {
                       showDialog(

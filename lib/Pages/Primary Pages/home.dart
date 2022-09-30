@@ -189,7 +189,7 @@ class _HomePage extends State<HomePage>{
                         }
                     ),
                     if (BrainApp.preferences["showMediaBox"] && BrainApp.todaysMedia != null) BrainInfobox(
-                        title: "${BrainApp.todaysMedia!.content.substring(0, 80)}...",
+                        title: BrainApp.todaysMedia!.content.length > 81 ? "${BrainApp.todaysMedia!.content.substring(0, 80)}..." : BrainApp.todaysMedia!.content,
                         shortDescription: BrainApp.todaysMedia!.type,
                         icon: BrainApp.todaysMedia!.icon,
                         action: () {
@@ -265,7 +265,7 @@ class _HomePage extends State<HomePage>{
           defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
           defaultLabel: "Neu",
         ),
-        secondaryTitleButton: true ? null : BrainTitleButton(
+        secondaryTitleButton: BrainTitleButton(
           icon: Icons.task_outlined,
           semantics: "To Do",
           action: () {
