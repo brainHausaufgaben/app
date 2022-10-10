@@ -36,6 +36,10 @@ class _ToDoDialog extends State<ToDoDialog> {
           state: todo.done,
           description: conversion[todo.importance],
           text: todo.content,
+          style: todo.done ? AppDesign.textStyles.settingsSubMenu.copyWith(
+            decoration: TextDecoration.lineThrough,
+            color: AppDesign.colors.text06
+          ) : null,
         )
       );
     }

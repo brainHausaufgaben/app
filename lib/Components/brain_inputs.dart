@@ -645,12 +645,14 @@ class SettingsSwitchButton extends StatefulWidget {
   const SettingsSwitchButton({
     Key? key,
     required this.text,
+    this.style,
     this.description,
     required this.action,
     required this.state
   }) : super(key: key);
 
   final String text;
+  final TextStyle? style;
   final String? description;
   final Function() action;
   final bool state;
@@ -682,7 +684,7 @@ class _SettingsSwitchButton extends State<SettingsSwitchButton> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.text, style: AppDesign.textStyles.settingsSubMenu),
+                  Text(widget.text, style: widget.style ?? AppDesign.textStyles.settingsSubMenu),
                   if (widget.description != null) Text(widget.description!, style: AppDesign.textStyles.settingsSubMenuDescription)
                 ],
               ),
