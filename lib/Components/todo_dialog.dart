@@ -15,7 +15,7 @@ class ToDoDialog extends StatefulWidget {
 
 class _ToDoDialog extends State<ToDoDialog> {
   TextEditingController controller = TextEditingController();
-  ToDoImportance importance = ToDoImportance.low;
+  ToDoImportance importance = ToDoImportance.mid;
 
   List<Widget> getTodos() {
     Map<ToDoImportance, String> conversion = {
@@ -52,6 +52,7 @@ class _ToDoDialog extends State<ToDoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: AppDesign.colors.secondaryBackground,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -81,7 +82,7 @@ class _ToDoDialog extends State<ToDoDialog> {
         ]
       ),
       content: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: 350, maxHeight: 500),
+          constraints: const BoxConstraints(minWidth: 350, maxHeight: 500, maxWidth: 350),
           child: SingleChildScrollView(
           child: Column(
               mainAxisSize: MainAxisSize.min,

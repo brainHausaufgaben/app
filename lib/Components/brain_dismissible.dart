@@ -46,8 +46,8 @@ class BrainDismissible extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.only(right: 10),
                 child: Align(
-                    child: Icon(Icons.edit, color: Colors.black),
-                    alignment: Alignment.centerRight
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.edit, color: Colors.black)
                 ),
               )
           ),
@@ -59,8 +59,8 @@ class BrainDismissible extends StatelessWidget {
               child: const Padding(
                 padding: EdgeInsets.only(left: 10),
                 child: Align(
-                    child: Icon(Icons.check_circle, color: Colors.white),
-                    alignment: Alignment.centerLeft
+                    alignment: Alignment.centerLeft,
+                    child: Icon(Icons.check_circle, color: Colors.white)
                 ),
               )
           ),
@@ -80,11 +80,11 @@ class BrainDismissible extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(10),
                   child: Text(homework.name, style: AppDesign.textStyles.pointElementSecondary),
-                ),
+                )
               )
-            ],
+            ]
           )
-        ),
+        )
     );
   }
 }

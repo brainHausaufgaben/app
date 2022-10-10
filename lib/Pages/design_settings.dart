@@ -71,7 +71,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
         title: "Design & Ansicht",
-        subtitle: "Version " + BrainApp.appVersion,
+        subtitle: "Version ${BrainApp.appVersion}",
         backButton: true,
         child: Wrap(
           runSpacing: 10,
@@ -124,7 +124,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                   state: BrainApp.preferences["showMediaBox"],
                 ),
                 SettingsSwitchButton(
-                  text: "Endzeiten eines Fachs",
+                  text: "Endzeiten im Stundenplan",
                   description: "Ob auf der Übersicht auch das Ende einer Stunde angezeigt werden soll",
                   action: () {
                     setState(() {

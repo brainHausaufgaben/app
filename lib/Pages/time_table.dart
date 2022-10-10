@@ -3,6 +3,7 @@ import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -61,10 +62,37 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                       fixedSize: const Size.fromWidth(70)
                     ),
                     onPressed: () {
+                      TimeOfDay start = TimeTable.lessonTimes[i].startTime;
+                      TimeOfDay end = TimeTable.lessonTimes[i].endTime;
+
                       showDialog(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
+                            actions: [
+                              TextButton(
+                                  child: Text("Abbrechen"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  }
+                              ),
+                              TextButton(
+                                child: Text("Ok"),
+                                onPressed: () {
+                                  if (DateTime(0, 0, 0, start.hour, start.minute).isBefore(DateTime(0, 0, 0, end.hour, end.minute))) {
+                                    TimeTable.lessonTimes[i].startTime = start;
+                                    TimeTable.lessonTimes[i].endTime = end;
+                                    SaveSystem.saveLessonTimes();
+                                    BrainApp.notifier.notifyOfChanges();
+                                    Navigator.of(context).pop();
+                                  } else {
+                                    BrainToast toast = BrainToast(text: "Die Stunde kann nicht enden bevor sie beginnt");
+                                    toast.show();
+                                    return;
+                                  }
+                                }
+                              )
+                            ],
                             title: Text("Zeiten", style: AppDesign.textStyles.alertDialogHeader),
                             backgroundColor: AppDesign.colors.secondaryBackground,
                             content: StatefulBuilder(
@@ -76,19 +104,19 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                                           text: "Start",
                                           onSelect: (time) {
                                             setBuilderState(() {
-                                              TimeTable.lessonTimes[i].startTime = time;
+                                              start = time;
                                             });
                                           },
-                                          currentTime: TimeTable.lessonTimes[i].startTime
+                                          currentTime: start
                                       ),
                                       SettingsTimePicker(
                                           text: "Ende",
                                           onSelect: (time) {
                                             setBuilderState(() {
-                                              TimeTable.lessonTimes[i].endTime = time;
+                                              end = time;
                                             });
                                           },
-                                          currentTime: TimeTable.lessonTimes[i].endTime
+                                          currentTime: end
                                       )
                                     ]
                                 );
@@ -96,10 +124,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                             )
                           );
                         }
-                      ).then((value) {
-                        SaveSystem.saveLessonTimes();
-                        BrainApp.notifier.notifyOfChanges();
-                      });
+                      );
                     },
                     child: Text(
                       TimeTable.lessonTimes[i].startTime.format(context),
