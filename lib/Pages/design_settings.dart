@@ -92,8 +92,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                 SettingsColorPicker(
                     pickerColor: Color(BrainApp.preferences["overridePrimaryWith"]),
                     onColorSelect: (color) {
-                      BrainApp.updatePreference("overridePrimaryWith", color.value);
-                      AppDesign.setAccentColor();
+                      AppDesign.setAccentColor(color);
                       Navigator.of(NavigationHelper.rootKey.currentContext!).pop();
                     }
                 )

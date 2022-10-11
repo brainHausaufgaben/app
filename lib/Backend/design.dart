@@ -19,22 +19,22 @@ class AppDesign {
     BrainApp.updatePreference("design", theme);
 
     if (theme == "Monochrome") {
-      setAccentColor();
+      setAccentColor(Color(BrainApp.preferences["overridePrimaryWith"]));
     } else {
       BrainApp.notifier.notifyOfChanges();
     }
   }
 
-  static void setAccentColor() {
-    Color primaryColor = Color(BrainApp.preferences["overridePrimaryWith"]);
+  static void setAccentColor(Color color, {bool saveColor = true}) {
+    if (saveColor) BrainApp.updatePreference("overridePrimaryWith", color.value);
 
     setFromPackage(
         generateDesign(
-            primaryColor,
+            color,
             colors.background,
             colors.secondaryBackground,
             colors.text,
-            primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white
+            color.computeLuminance() > 0.5 ? Colors.black : Colors.white
         )
     );
   }
@@ -58,7 +58,7 @@ class AppDesign {
     setAttributes(package);
 
     if (BrainApp.preferences["design"] == "Monochrome") {
-      setAccentColor();
+      setAccentColor(Color(BrainApp.preferences["overridePrimaryWith"]));
     } else {
       BrainApp.notifier.notifyOfChanges();
     }
