@@ -1,5 +1,8 @@
+import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/quick_actions.dart';
+import 'package:brain_app/Backend/time_interval.dart';
+import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_navigation_bar.dart';
 import 'package:brain_app/Components/brain_sidebar.dart';
 import 'package:brain_app/Pages/Primary%20Pages/calendar.dart';
@@ -78,6 +81,18 @@ class _NavigationHelper extends State<NavigationHelper> {
     );
   }
 
+  void changeTheme(){
+    if(!BrainApp.preferences["lessonColor"]) return;
+    for(int i = 0; i < TimeTable.lessonTimes.length; i++){
+      if(TimeTable.lessonTimes[i].isDuring(TimeOfDay.now())){
+        BrainApp.updatePreference("overridePrimaryWith", TimeTable.week[DateTime.now().weekday].subjects[i-1]!.subject.color.value);
+        AppDesign.setAccentColor();
+        return;
+      }
+    }
+    BrainApp.updatePreference("overridePrimaryWith", Colors.grey.value);
+    AppDesign.setAccentColor();
+  }
 
 
   @override
@@ -87,7 +102,7 @@ class _NavigationHelper extends State<NavigationHelper> {
       initialRoute: "home",
       onGenerateRoute: NavigationRoutes.onGenerateRoute
     );
-
+    changeTheme();
     return WillPopScope(
       onWillPop: () async {
         return !await NavigationHelper.navigatorKey.currentState!.maybePop();

@@ -88,7 +88,7 @@ class CustomNotifications{
     if(!scheduleZonedTime.isBefore(TZDateTime.now(getLocation("Europe/Zurich")))) {
       await notificationsPlugin.zonedSchedule(currentHomeworkNotificationID, title, body, scheduleZonedTime, platformChannelSpecifics, androidAllowWhileIdle: true);
     } else {
-      await notificationsPlugin.show(currentHomeworkNotificationID, title, body,notificationDetails: platformChannelSpecifics);
+      //await notificationsPlugin.show(currentHomeworkNotificationID, title, body,notificationDetails: platformChannelSpecifics);
       BrainDebug.log("added too late, showing now");
     }
   }
@@ -96,7 +96,10 @@ class CustomNotifications{
   static void testNotification(Test test) async{
     if(!testNotificationsEnabled || !notificationsPossible) return;
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
-    String title = "Test in " + test.subject.name + " in " + daysBeforeTest.toString() + " Tagen";
+    int day =  test.dueTime.weekday - DateTime.now().weekday;
+    if(day < 0) day+= 5; //Keine ahnung
+    String title = "Test in ${test.subject.name} in $day Tagen";
+    if(day == 0) title = "Test in ${test.subject.name} Heute";
     String body = test.description;
     currentTestNotificationID++;
     const AndroidNotificationDetails platformChannelSpecifics =
@@ -111,7 +114,7 @@ class CustomNotifications{
       await notificationsPlugin.zonedSchedule(currentTestNotificationID, title, body, scheduleZonedTime, platformChannelSpecifics, androidAllowWhileIdle: true);
     } else {
       await notificationsPlugin.show(currentTestNotificationID, title, body,notificationDetails: platformChannelSpecifics);
-      BrainDebug.log("added to late, showing now");
+      BrainDebug.log("added to late");
     }
   }
 
