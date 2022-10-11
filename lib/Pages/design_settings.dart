@@ -95,8 +95,19 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                       AppDesign.setAccentColor(color);
                       Navigator.of(NavigationHelper.rootKey.currentContext!).pop();
                     }
+                ),
+                SettingsSwitchButton(
+                  text: "Jetziges Fach als Akzent Farbe",
+                  description: "Wenn aktiviert, wird die Akzentfarbe immer auf die Farbe des jetzigen Fachs gesetzt",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("lessonColor", !BrainApp.preferences["lessonColor"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["lessonColor"],
                 )
-              ],
+              ]
             ),
             SettingsEntry(
               children: [
