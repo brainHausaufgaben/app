@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../Backend/linked_subject.dart';
+import '../../Backend/todo_manager.dart';
 import '../../Components/todo_dialog.dart';
 
 enum SortMethods {
@@ -151,14 +152,21 @@ class _GradeOverview extends State<GradeOverview>{
             defaultAction: () => NavigationHelper.pushNamed(context, "gradesPage"),
             defaultLabel: "Neu",
           ),
-          secondaryTitleButton: BrainTitleButton(
-              icon: Icons.task_outlined,
-              semantics: "To Do",
-              action: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const ToDoDialog();
+          secondaryTitleButton: StatefulBuilder(
+              builder: (context, setBuilderState) {
+                return BrainTitleButton(
+                    indicator: ToDoManager.toDos.isEmpty ? null : ToDoManager.toDos.length,
+                    icon: Icons.task_outlined,
+                    semantics: "To Do",
+                    action: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ToDoDialog();
+                          }
+                      ).then((value) {
+                        setBuilderState(() {});
+                      });
                     }
                 );
               }

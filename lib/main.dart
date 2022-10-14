@@ -43,8 +43,7 @@ class BrainApp extends StatefulWidget {
     "isAdvancedLevel" : false,
     "currentYear" : 10,
     "manuelClickerScore" : 0,
-    "showLessonEndTimes" : false,
-    "lessonColor" : false,
+    "showLessonEndTimes" : false
   };
 
   static void clearPreferences() async {

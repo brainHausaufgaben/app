@@ -18,26 +18,48 @@ class BrainTitleButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.semantics,
-    required this.action
+    required this.action,
+    this.indicator
   });
 
   final IconData icon;
   final String semantics;
   final Function() action;
+  final int? indicator;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
-          backgroundColor: AppDesign.colors.secondaryBackground,
-          minimumSize: Size.zero
-      ),
-      onPressed: action,
-      child: Semantics(
-        label: semantics,
-        child: Icon(icon, color: AppDesign.colors.text),
-      ),
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        TextButton(
+            style: TextButton.styleFrom(
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 6),
+                backgroundColor: AppDesign.colors.secondaryBackground,
+                minimumSize: Size.zero
+            ),
+            onPressed: action,
+            child: Semantics(
+                label: semantics,
+                child: Icon(icon, color: AppDesign.colors.text)
+            )
+        ),
+        if (indicator != null) Positioned(
+            bottom: -3,
+            left: -3,
+            child: Container(
+              width: 18,
+              height: 18,
+              decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(100)
+              ),
+              child: Center(
+                child: Text(indicator.toString(), style: const TextStyle(fontSize: 10, color: Colors.white)),
+              )
+            )
+        )
+      ]
     );
   }
 }

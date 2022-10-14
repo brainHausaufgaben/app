@@ -61,11 +61,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
     Subject? subject = testSubpage.selectedSubject;
     DateTime date = testSubpage.selectedDate;
 
-    if (description.isEmpty) {
-      BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
-      toast.show();
-      return;
-    } else if (subject == null) {
+    if (subject == null) {
       BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
       toast.show();
       return;

@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Backend/todo_manager.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/brain_infobox.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
@@ -265,15 +266,22 @@ class _HomePage extends State<HomePage>{
           defaultAction: () => NavigationHelper.pushNamed(context, "homework"),
           defaultLabel: "Neu",
         ),
-        secondaryTitleButton: BrainTitleButton(
-          icon: Icons.task_outlined,
-          semantics: "To Do",
-          action: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return const ToDoDialog();
-              }
+        secondaryTitleButton: StatefulBuilder(
+          builder: (context, setBuilderState) {
+            return BrainTitleButton(
+                indicator: ToDoManager.toDos.isEmpty ? null : ToDoManager.toDos.length,
+                icon: Icons.task_outlined,
+                semantics: "To Do",
+                action: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return const ToDoDialog();
+                      }
+                  ).then((value) {
+                    setBuilderState(() {});
+                  });
+                }
             );
           }
         ),

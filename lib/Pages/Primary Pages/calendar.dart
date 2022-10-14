@@ -15,6 +15,7 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../Backend/todo_manager.dart';
 import '../../Components/todo_dialog.dart';
 
 class CalendarPage extends StatefulWidget {
@@ -133,14 +134,21 @@ class _CalendarPage extends State<CalendarPage> {
             defaultAction: () => NavigationHelper.pushNamed(context, "addEventPage"),
             defaultLabel: "Neu",
           ),
-          secondaryTitleButton: BrainTitleButton(
-              icon: Icons.task_outlined,
-              semantics: "To Do",
-              action: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const ToDoDialog();
+          secondaryTitleButton: StatefulBuilder(
+              builder: (context, setBuilderState) {
+                return BrainTitleButton(
+                    indicator: ToDoManager.toDos.isEmpty ? null : ToDoManager.toDos.length,
+                    icon: Icons.task_outlined,
+                    semantics: "To Do",
+                    action: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ToDoDialog();
+                          }
+                      ).then((value) {
+                        setBuilderState(() {});
+                      });
                     }
                 );
               }
@@ -188,24 +196,26 @@ class _CalendarPage extends State<CalendarPage> {
                         ),
                         calendarBuilders: CalendarBuilders(
                           singleMarkerBuilder: (context, date, event) {
-                            Color color = Colors.deepOrange;
-                            BoxShape shape = BoxShape.circle;
                             switch (event.runtimeType) {
                               case Event:
                                 return Container(
                                     decoration: BoxDecoration(
                                       color: AppDesign.colors.primary,
-                                      border: Border.all(color: AppDesign.colors.secondaryBackground, width: 1)
+                                      border: Border.all(color: AppDesign.colors.secondaryBackground, width: 1, strokeAlign: StrokeAlign.outside)
                                     ),
-                                    width: 8.0,
-                                    height: 8.0,
+                                    width: 7.0,
+                                    height: 7.0,
                                     margin: const EdgeInsets.symmetric(horizontal: 1.5)
                                 );
                                 break;
                               case Homework:
                                 Homework hm = event as Homework;
-                                color =  hm.subject.color;
-                                break;
+                                return Container(
+                                    decoration: BoxDecoration(shape: BoxShape.circle, color: hm.subject.color),
+                                    width: 7.0,
+                                    height: 7.0,
+                                    margin: const EdgeInsets.symmetric(horizontal: 1.5)
+                                );
                               case Test:
                                 Test test = event as Test;
                                 return Container(
@@ -221,12 +231,6 @@ class _CalendarPage extends State<CalendarPage> {
                                     margin: const EdgeInsets.symmetric(horizontal: 1.5)
                                 );
                             }
-                            return Container(
-                                decoration: BoxDecoration(shape: shape, color: color),
-                                width: 7.0,
-                                height: 7.0,
-                                margin: const EdgeInsets.symmetric(horizontal: 1.5)
-                            );
                           },
                         ),
                         formatAnimationCurve: Curves.easeOutBack,

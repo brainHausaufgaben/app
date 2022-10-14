@@ -154,20 +154,7 @@ class NavigationRoutes {
     };
   }
 
-  static void changeTheme(){
-    WidgetsBinding.instance.addPostFrameCallback((duration) {
-      for(int i = 0; i < TimeTable.lessonTimes.length; i++){
-        if(TimeTable.lessonTimes[i].isDuring(TimeOfDay.now()) && TimeTable.week[DateTime.now().weekday-1].subjects[i] != null){
-          AppDesign.setAccentColor(TimeTable.week[DateTime.now().weekday-1].subjects[i]!.subject.color, saveColor: false);
-          return;
-        }
-      }
-      AppDesign.setAccentColor(Color(BrainApp.preferences["overridePrimaryWith"]), saveColor: true);
-    });
-  }
-
   static PageRouteBuilder onGenerateRoute(settings) {
-    if(BrainApp.preferences["lessonColor"]) changeTheme();
     Map<String, WidgetBuilder> routes = NavigationRoutes.get();
 
     String routeName = settings.name!;
