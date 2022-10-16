@@ -137,7 +137,7 @@ class _CalendarPage extends State<CalendarPage> {
           secondaryTitleButton: StatefulBuilder(
               builder: (context, setBuilderState) {
                 return BrainTitleButton(
-                    indicator: ToDoManager.toDos.isEmpty ? null : ToDoManager.toDos.length,
+                    indicator: ToDoManager.getDoneStateToDos(false).isEmpty ? null : ToDoManager.getDoneStateToDos(false).length,
                     icon: Icons.task_outlined,
                     semantics: "To Do",
                     action: () {
