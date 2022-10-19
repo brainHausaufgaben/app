@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -31,10 +32,12 @@ class _HomeworkPage extends State<HomeworkPage> {
   void onPressed() {
     if (homeworkController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
+      BrainVibrations.errorVibrate();
       toast.show();
       return;
     } else if (selectedSubject == null) {
       BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
+      BrainVibrations.errorVibrate();
       toast.show();
       return;
     } else {
@@ -55,6 +58,7 @@ class _HomeworkPage extends State<HomeworkPage> {
         DateTime? time = selectedSubject!.getNextDate();
         if (time == null) {
           BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt!").show();
+          BrainVibrations.errorVibrate();
           return;
         } else if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
             time = time.add(const Duration(days: 7));

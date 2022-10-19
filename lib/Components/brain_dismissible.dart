@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -19,7 +20,7 @@ class BrainDismissible extends StatelessWidget {
           confirmDismiss: (DismissDirection direction) async {
             if (direction == DismissDirection.startToEnd) {
               TimeTable.removeHomework(homework);
-
+              BrainVibrations.successVibrate();
               BrainToast toast = BrainToast(
                 text: "Hausaufgabe gelöscht!",
                 buttonText: "Rückgängig",
@@ -32,6 +33,7 @@ class BrainDismissible extends StatelessWidget {
 
               return true;
             } else if (direction == DismissDirection.endToStart) {
+
               NavigationHelper.pushNamed(context, "homework", payload: homework);
               return false;
             }

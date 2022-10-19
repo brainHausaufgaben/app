@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
@@ -118,14 +119,17 @@ class _GradesPage extends State<GradesPage> {
                       if (selectedSubject == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
                         toast.show();
+                        BrainVibrations.errorVibrate();
                         return;
                       } else if (type == null) {
                         BrainToast toast = BrainToast(text: "Du hast keine Art der Note angegeben!");
                         toast.show();
+                        BrainVibrations.errorVibrate();
                         return;
                       } else if (semester == null) {
                         BrainToast toast = BrainToast(text: "Du hast kein Semester angegeben!");
                         toast.show();
+                        BrainVibrations.errorVibrate();
                         return;
                       } else {
                         if(nameController.text == ""){

@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -45,6 +46,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
     if (title.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
       toast.show();
+      BrainVibrations.errorVibrate();
       return;
     } else {
       Event(date, title, description);
@@ -64,6 +66,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
     if (subject == null) {
       BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
       toast.show();
+      BrainVibrations.errorVibrate();
       return;
     } else {
       Test(subject, date, description);

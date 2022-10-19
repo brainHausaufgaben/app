@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/linked_subject.dart';
@@ -46,7 +47,7 @@ class Initializer {
     await getBoxText();
     BrainDebug.log("Gotten box text successfully");
     await getVersion();
-
+    BrainVibrations.init();
     initialized = true;
   }
 

@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/todo.dart';
 import 'package:brain_app/Backend/todo_manager.dart';
@@ -31,6 +32,7 @@ class _ToDoDialog extends State<ToDoDialog> {
           action: () {
             setState(() {
               ToDoManager.changeToDoState(todo, !todo.done);
+              if(todo.done) BrainVibrations.successVibrate();
             });
           },
           state: todo.done,

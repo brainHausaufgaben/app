@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
@@ -89,10 +90,12 @@ class _EditTestPage extends State<EditTestPage> {
                         if (description.isEmpty) {
                           BrainToast toast = BrainToast(text: "Du hast keine Inhalte angegeben!");
                           toast.show();
+                          BrainVibrations.errorVibrate();
                           return;
                         } else if (subject == null) {
                           BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
                           toast.show();
+                          BrainVibrations.errorVibrate();
                           return;
                         } else {
                           previousTest!.edit(subject, date, description);

@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/time_table.dart';
@@ -51,6 +52,7 @@ class _TestPage extends State<EditEventPage> {
                   if (title.isEmpty) {
                     BrainToast toast = BrainToast(text: "Du hast keinen Titel angegeben!");
                     toast.show();
+                    BrainVibrations.errorVibrate();
                     return;
                   } else {
                     previousEvent!.edit(date, title, description);

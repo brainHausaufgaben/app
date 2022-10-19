@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -87,6 +88,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                                     Navigator.of(context).pop();
                                   } else {
                                     BrainToast toast = BrainToast(text: "Die Stunde kann nicht enden bevor sie beginnt");
+                                    BrainVibrations.errorVibrate();
                                     toast.show();
                                     return;
                                   }

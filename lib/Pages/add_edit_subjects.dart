@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/subject.dart';
@@ -82,10 +83,12 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
   bool evaluateLinkedSubjectEntries() {
     if (linkedSubjectController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keinen Namen angegeben!");
+      BrainVibrations.errorVibrate();
       toast.show();
       return false;
     } else if (linkedSubjects.contains(TimeTable.emptySubject)) {
       BrainToast toast = BrainToast(text: "Du musst 2 Fächer auswählen!");
+      BrainVibrations.errorVibrate();
       toast.show();
       return false;
     } else {
@@ -94,6 +97,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
           if (previousLinkedSubject?.id != subject.id) {
             BrainToast toast = BrainToast(
                 text: "Ein Fach oder eine Verbindung mit diesem Namen existiert bereits!");
+            BrainVibrations.errorVibrate();
             toast.show();
             return false;
           }
@@ -216,6 +220,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
     if (subjectController.text.isEmpty) {
       BrainToast toast = BrainToast(text: "Du hast keinen Namen angegeben!");
       toast.show();
+      BrainVibrations.errorVibrate();
       return false;
     } else {
       for (Subject subject in TimeTable.subjects) {
@@ -224,6 +229,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
             BrainToast toast = BrainToast(
                 text: "Ein Fach oder eine Verbindung mit diesem Namen existiert bereits!");
             toast.show();
+            BrainVibrations.errorVibrate();
             return false;
           }
         }
