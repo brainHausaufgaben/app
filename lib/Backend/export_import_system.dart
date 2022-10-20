@@ -210,6 +210,10 @@ class ExportImport {
     }).toList();
   }
 
+  static void parseSubjects() {
+
+  }
+
   static List getGrades() {
     List<Grade> grades = List.from(GradingSystem.smallGrades)
       ..addAll(GradingSystem.bigGrades);
@@ -231,6 +235,7 @@ class ExportImport {
 
   static Future<void> writeFile(String name,bool timetable, bool homework, bool grades, bool events) async {
     Map data = getFile(timetable, homework, grades, events);
+
     FileSaver.instance.saveFile("export.brain", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.TEXT);
   }
 }
