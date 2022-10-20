@@ -261,9 +261,7 @@ class _SettingsPage extends State<SettingsPage> {
             children: [
               SettingsNavigatorButton(
                 text: "Import",
-                action: () {
-
-                }
+                action: () => ExportImport.userSelectedFile()
               ),
               SettingsNavigatorButton(
                 text: "Export",
