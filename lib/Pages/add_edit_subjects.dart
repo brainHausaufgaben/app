@@ -9,6 +9,7 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Components/animated_delete_button.dart';
 import '../Components/brain_toast.dart';
 
 class SubjectPage extends StatefulWidget {
@@ -143,7 +144,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                           controller: linkedSubjectController,
                           placeholder: "Verbindungs Name",
                           maxLines: 1,
-                          maxLength: 20
+                          maxLength: 30
                       )
                   )
                 ]
@@ -262,7 +263,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                   controller: subjectController,
                   placeholder: "Fach Name",
                   maxLines: 1,
-                  maxLength: 20,
+                  maxLength: 30,
                 )
             )
           ]
@@ -392,11 +393,8 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                     ),
                     if (previousSubject != null || previousLinkedSubject != null) Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: ElevatedButton (
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppDesign.colors.primary
-                            ),
-                            onPressed: () {
+                        child: AnimatedDeleteButton(
+                            onDelete: () {
                               if (previousSubject != null) {
                                 TimeTable.deleteSubject(previousSubject!);
                               } else {
@@ -404,11 +402,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                               }
                               Navigator.of(context).pop();
                               BrainApp.notifier.notifyOfChanges();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 15),
-                              child: Icon(Icons.delete_forever, color: AppDesign.colors.contrast),
-                            )
+                            }
                         )
                     )
                   ]

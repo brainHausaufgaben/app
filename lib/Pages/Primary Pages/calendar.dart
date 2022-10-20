@@ -34,6 +34,7 @@ class _CalendarPage extends State<CalendarPage> {
     for (int i=0; i<events.length; i++) {
       boxes.add(
           BrainButton(
+            centered: false,
             dense: true,
             action: () => NavigationHelper.pushNamed(context, "editEventsPage", payload: events[i]),
             icon: Icons.edit,
@@ -56,6 +57,7 @@ class _CalendarPage extends State<CalendarPage> {
     for (int i=0; i<tests.length; i++) {
       boxes.add(
         BrainButton(
+          centered: false,
           action: () => NavigationHelper.pushNamed(context, "editTestPage", payload: tests[i]),
           icon: Icons.edit,
           dense: true,

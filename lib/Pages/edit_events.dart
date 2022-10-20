@@ -8,6 +8,8 @@ import 'package:brain_app/Pages/page_template.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
+import '../Components/animated_delete_button.dart';
+
 class EditEventPage extends StatefulWidget {
   const EditEventPage({Key? key}) : super(key: key);
 
@@ -34,7 +36,6 @@ class _TestPage extends State<EditEventPage> {
     return PageTemplate(
       backButton: true,
       title: "Termin Bearbeiten",
-      child: eventSubpage,
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
       ),
@@ -71,21 +72,18 @@ class _TestPage extends State<EditEventPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: ElevatedButton(
-                onPressed: () {
+              child: AnimatedDeleteButton(
+                onDelete: () {
                   TimeTable.removeEvent(previousEvent!);
                   BrainApp.notifier.notifyOfChanges();
                   Navigator.pop(context);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: Icon(Icons.delete_forever, color: AppDesign.colors.contrast),
-                )
+                }
               )
             )
           ]
         )
       ),
+      child: eventSubpage
     );
   }
 }

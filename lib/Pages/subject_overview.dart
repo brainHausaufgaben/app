@@ -19,6 +19,7 @@ class _SubjectOverview extends State<SubjectOverview> {
     List<BrainButton> buttons = [];
     for (Subject subject in TimeTable.subjects) {
       buttons.add(BrainButton(
+        centered: false,
         icon: Icons.edit,
         dense: true,
         action: () => NavigationHelper.pushNamed(context, "subjectPage", payload: subject),
@@ -35,6 +36,7 @@ class _SubjectOverview extends State<SubjectOverview> {
     List<BrainButton> buttons = [];
     for (Subject subject in TimeTable.linkedSubjects) {
       buttons.add(BrainButton(
+          centered: false,
           icon: Icons.edit,
           dense: true,
           action: () => NavigationHelper.pushNamed(context, "subjectPage", payload: subject),

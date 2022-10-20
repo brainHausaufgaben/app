@@ -106,7 +106,7 @@ class _BrainTextField extends State<BrainTextField> {
             textCapitalization: TextCapitalization.sentences,
             autocorrect: true,
             controller: widget.controller,
-            style: AppDesign.textStyles.input.copyWith(height: 0.9),
+            style: AppDesign.textStyles.input,
             decoration: InputDecoration (
               filled: true,
               enabledBorder: UnderlineInputBorder(
@@ -455,13 +455,15 @@ class BrainButton extends StatelessWidget {
     required this.action,
     required this.child,
     this.icon,
-    this.dense = false
+    this.dense = false,
+    this.centered = true
   }) : super(key: key);
 
   final Function() action;
   final Widget child;
   final IconData? icon;
   final bool dense;
+  final bool centered;
 
   @override
   Widget build(BuildContext context) {
@@ -476,11 +478,14 @@ class BrainButton extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: dense ? 11 : 15, horizontal: 12),
             backgroundColor: AppDesign.colors.secondaryBackground,
         ),
-        child: Flex(
-          direction: Axis.horizontal,
+        child: Row(
+          crossAxisAlignment: centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: child
+              child: Padding(
+                padding: dense ? const EdgeInsets.symmetric(vertical: 3) : const EdgeInsets.symmetric(vertical: 4.5),
+                child: child,
+              )
             ),
             if (icon != null) Icon(icon, color: AppDesign.colors.text, size: dense ? 20 : 24)
           ]

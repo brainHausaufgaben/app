@@ -5,6 +5,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/notifier.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,11 +76,13 @@ class BrainApp extends StatefulWidget {
 class _BrainApp extends State<BrainApp> {
   @override
   void initState() {
+    super.initState();
+
     BrainApp.notifier.addListener(() => setState(() {}));
-    Initializer.init().then((_) => setState(() {
+
+    compute(Initializer.init, 1).then((value) => setState(() {
       BrainDebug.log("Initializer finished; reloading app");
     }));
-    super.initState();
   }
 
   @override
