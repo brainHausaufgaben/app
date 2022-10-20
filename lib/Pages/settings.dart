@@ -1,4 +1,5 @@
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/export_import_system.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
@@ -258,8 +259,78 @@ class _SettingsPage extends State<SettingsPage> {
           SettingsEntry(
             children: [
               SettingsNavigatorButton(
-                text: "Export / Import",
+                text: "Import",
                 action: () {
+
+                }
+              ),
+              SettingsNavigatorButton(
+                text: "Export",
+                action: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      bool timeTable = false;
+                      bool homework = false;
+                      bool grades = false;
+                      bool events = false;
+
+                      return AlertDialog(
+                        title: Text("Export", style: AppDesign.textStyles.alertDialogHeader),
+                        content: StatefulBuilder(
+                          builder: (context, setBuilderState) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SettingsSwitchButton(
+                                    text: "Stundenplan",
+                                    action: () => setBuilderState(() => timeTable = !timeTable),
+                                    state: timeTable
+                                ),
+                                SettingsSwitchButton(
+                                    text: "Hausaufgaben",
+                                    action: () => setBuilderState(() => homework = !homework),
+                                    state: homework
+                                ),
+                                SettingsSwitchButton(
+                                    text: "Noten",
+                                    action: () => setBuilderState(() => grades = !grades),
+                                    state: grades
+                                ),
+                                SettingsSwitchButton(
+                                    text: "Termine",
+                                    action: () => setBuilderState(() => events = !events),
+                                    state: events
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: TextButton(
+                                      style: TextButton.styleFrom(
+                                          backgroundColor: AppDesign.colors.primary,
+                                          foregroundColor: AppDesign.colors.contrast,
+                                          padding: const EdgeInsets.symmetric(vertical: 12)
+                                      ),
+                                      onPressed: () => ExportImport.writeFile(
+                                          "brainExport",
+                                          timeTable,
+                                          homework,
+                                          grades,
+                                          events
+                                      ),
+                                      child: Text(
+                                        "Exportieren",
+                                        style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)
+                                      )
+                                  )
+                                )
+                              ]
+                            );
+                          }
+                        )
+                      );
+                    }
+                  );
                 }
               )
             ]

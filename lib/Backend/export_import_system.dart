@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
@@ -14,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'grade.dart';
@@ -222,8 +224,7 @@ class ExportImport {
     }).toList();
   }
 
-  static Future<void> writeFile(String name, bool timetable, bool homework,
-      bool grades, bool events) async {
+  static Future<void> writeFile(String name,bool timetable, bool homework, bool grades, bool events) async {
     Map data = getFile(timetable, homework, grades, events);
     BrainDebug.log(data);
     if (!kIsWeb) {
@@ -231,6 +232,8 @@ class ExportImport {
       final path = directory.path;
       final file = File('$path/name.brain');
       file.writeAsString(data.toString());
+    } else {
+      launchUrl(Uri.parse("data:application/octet-stream;base64,${base64Encode(data.toString().codeUnits)}"));
     }
   }
 }
