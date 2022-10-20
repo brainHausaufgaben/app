@@ -32,14 +32,13 @@ class Initializer {
 
   static Future init() async {
     getPreferences().then((value) {
-        AppDesign.toggleTheme(BrainApp.preferences["design"]);
-        GradingSystem.isAdvancedLevel = BrainApp.preferences["isAdvancedLevel"];
-        GradingSystem.currentYear = BrainApp.preferences["currentYear"];
+      AppDesign.toggleTheme(BrainApp.preferences["design"]);
+      GradingSystem.isAdvancedLevel = BrainApp.preferences["isAdvancedLevel"];
+      GradingSystem.currentYear = BrainApp.preferences["currentYear"];
 
-        BrainDebug.log("Loaded preferences successfully");
-        showAndroidPopup();
-      }
-    );
+      BrainDebug.log("Loaded preferences successfully");
+      showAndroidPopup();
+    });
     TimeTable.init();
     CustomNotifications.init();
     await loadData();
@@ -52,29 +51,31 @@ class Initializer {
   }
 
   static void showAndroidPopup() {
-    if (kIsWeb && defaultTargetPlatform == TargetPlatform.android && BrainApp.preferences["showPlayStorePopup"]) {
+    if (kIsWeb &&
+        defaultTargetPlatform == TargetPlatform.android &&
+        BrainApp.preferences["showPlayStorePopup"]) {
       BrainDebug.log("Showing Android Popup");
       showDialog(
           context: NavigationHelper.rootKey.currentContext!,
           builder: (context) {
             return BrainConfirmationDialog(
                 title: "Brain App im Playstore",
-                description: "Android Nutzer können die Brain App auch ganz bequem aus dem Playstore herunterladen",
+                description:
+                    "Android Nutzer können die Brain App auch ganz bequem aus dem Playstore herunterladen",
                 onCancel: () {
                   BrainApp.updatePreference("showPlayStorePopup", false);
                   Navigator.of(context).pop();
                 },
                 onContinue: () {
-                  Uri url = Uri.parse("https://play.google.com/store/apps/details?id=com.brain.brain_app");
+                  Uri url = Uri.parse(
+                      "https://play.google.com/store/apps/details?id=com.brain.brain_app");
                   launchUrl(url, mode: LaunchMode.externalApplication);
-                }
-            );
-          }
-      );
+                });
+          });
     }
     return;
   }
-  
+
   static Future getPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     BrainApp.preferences.forEach((key, value) {
@@ -95,10 +96,13 @@ class Initializer {
     for (List<dynamic> entry in listData) {
       List<String> splitDate = (entry[0] as String).split(".");
       if (splitDate.length <= 2) return null;
-      DateTime parsedTime = DateTime.parse("${splitDate[2]}-${splitDate[1]}-${splitDate[0]}");
+      DateTime parsedTime =
+          DateTime.parse("${splitDate[2]}-${splitDate[1]}-${splitDate[0]}");
       DateTime now = DateTime.now();
 
-      if (parsedTime.year == now.year && parsedTime.month == now.month && parsedTime.day == now.day) {
+      if (parsedTime.year == now.year &&
+          parsedTime.month == now.month &&
+          parsedTime.day == now.day) {
         IconData icon;
         String type = entry[1];
         type = type.trim();
@@ -132,11 +136,7 @@ class Initializer {
             return null;
         }
 
-        return TodaysMedia(
-            icon: icon,
-            content: content,
-            type: type
-        );
+        return TodaysMedia(icon: icon, content: content, type: type);
       }
     }
     return null;
@@ -151,57 +151,55 @@ class Initializer {
       BrainDebug.log("getVersion Error: $error");
     }
   }
-  
+
   static Future loadData() async {
     TimeTable.saveEnabled = false;
-
-
 
     dynamic subjects = await SaveSystem.getSubjects();
     if (subjects != null) {
       for (Map item in subjects) {
         List color = item["color"];
-        Subject.fromID(
-            item["name"], Color.fromARGB(255, color[0], color[1], color[2]),
-            item["id"]);
+        Subject.fromID(item["name"],
+            Color.fromARGB(255, color[0], color[1], color[2]), item["id"]);
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Subjects");
     }
 
     dynamic lessonTimes = await SaveSystem.getLessonTimes();
-    if(lessonTimes != null){
-      for(int i = 0; i < TimeTable.lessonTimes.length; i++){
+    if (lessonTimes != null) {
+      for (int i = 0; i < TimeTable.lessonTimes.length; i++) {
         List l = lessonTimes[i];
-        TimeTable.lessonTimes[i] = TimeInterval( TimeOfDay(hour: l[0][0],minute:l[0][1]), TimeOfDay(hour: l[1][0],minute:l[1][1]));
-
+        TimeTable.lessonTimes[i] = TimeInterval(
+            TimeOfDay(hour: l[0][0], minute: l[0][1]),
+            TimeOfDay(hour: l[1][0], minute: l[1][1]));
       }
-    }
-    else{
+    } else {
       BrainDebug.log("No Lesson Times");
     }
 
     dynamic linkedSubjects = await SaveSystem.getLinkedSubjects();
-    if(linkedSubjects!= null){
+    if (linkedSubjects != null) {
       for (Map item in linkedSubjects) {
         List color = item["color"];
         List<Subject> linkSubjects = [];
         List<int> evaluations = [];
-        for(int i in item["subjectIDs"]){
+        for (int i in item["subjectIDs"]) {
           linkSubjects.add(TimeTable.getSubject(i)!);
         }
-        for(int i in item["subjectEvaluations"]){
+        for (int i in item["subjectEvaluations"]) {
           evaluations.add(i);
         }
 
-        LinkedSubject(item["name"], Color.fromARGB(255, color[0], color[1], color[2]),linkSubjects,evaluations);
+        LinkedSubject(
+            item["name"],
+            Color.fromARGB(255, color[0], color[1], color[2]),
+            linkSubjects,
+            evaluations);
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Linked Subjects");
     }
-
 
     dynamic timetable = await SaveSystem.getTimeTable();
     if (timetable != null) {
@@ -211,51 +209,47 @@ class Initializer {
           Subject? subject = TimeTable.getSubject(id);
           if (id != 0 && subject != null) {
             SubjectInstance(subject, i + 1, j);
-          } else if(id != 0) {
+          } else if (id != 0) {
             BrainDebug.log("loadData() Timetable Error: Fach existiert nicht!");
-
           }
         }
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Time Table");
     }
 
     dynamic homework = await SaveSystem.getHomework();
-    if(homework != null) {
+    if (homework != null) {
       for (Map item in homework) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         int id = item["SubjectID"];
         Subject? subject = TimeTable.getSubject(id);
         if (subject != null) {
-          if (TimeTable.getSubject(id)!.getTime(TimeTable.getDayFromDate(time)) !=
+          if (TimeTable.getSubject(id)!
+                  .getTime(TimeTable.getDayFromDate(time)) !=
               null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
         } else {
           BrainDebug.log("loadData() Homework Error: Fach existiert nicht!");
         }
       }
-
-    }
-    else {
+    } else {
       BrainDebug.log("No Homework");
     }
 
     dynamic events = await SaveSystem.getEvents();
-    if(events != null) {
+    if (events != null) {
       for (Map item in events) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
         Event(time, item["name"], item["description"]);
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Events");
     }
 
     dynamic tests = await SaveSystem.getTests();
-    if(tests != null) {
+    if (tests != null) {
       for (Map item in tests) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
@@ -267,66 +261,62 @@ class Initializer {
           BrainDebug.log("loadData() Test Error: Fach existiert nicht!");
         }
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Tests");
     }
 
     Map? advancedLevels = await SaveSystem.getAdvancedLevels();
-    if(advancedLevels != null){
+    if (advancedLevels != null) {
       advancedLevels.forEach((key, value) {
         GradingSystem.yearsToLevel[int.parse(key)] = value;
-
       });
     }
 
-
     dynamic grades = await SaveSystem.getGrades();
-    if(grades != null) {
+    if (grades != null) {
       for (Map item in await SaveSystem.getGrades()) {
         int value = item["value"];
         int id = item["SubjectID"];
-        GradeTime time = GradeTime.createOnLoad(item["year"],item["partOfYear"],item["isAdvanced"]);
+        GradeTime time = GradeTime.createOnLoad(
+            item["year"], item["partOfYear"], item["isAdvanced"]);
         String? name = item["name"];
         name ??= "Note";
 
         if (TimeTable.getSubject(id) != null) {
-          if(item["isBig"]) {
-            BigGrade.createWithTime(value,TimeTable.getSubject(id)!,time,name);
+          if (item["isBig"]) {
+            BigGrade.createWithTime(
+                value, TimeTable.getSubject(id)!, time, name);
           } else {
             GradeType type = Grade.stringToGradeType(item["type"]);
-            SmallGrade.createWithTime(value,TimeTable.getSubject(id)!,type,time,name);
+            SmallGrade.createWithTime(
+                value, TimeTable.getSubject(id)!, type, time, name);
           }
         } else {
           BrainDebug.log("loadData() Grades Error: Fach existiert nicht!");
         }
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Grades");
     }
 
     dynamic toDos = await SaveSystem.getToDos();
-    if(toDos != null){
-
-      for(Map item in toDos){
+    if (toDos != null) {
+      for (Map item in toDos) {
         ToDoImportance importance = ToDoImportance.values[item["importance"]];
         ToDoItem.load(item["content"], importance, item["done"]);
-
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No to dos");
     }
 
     dynamic devOptions = await SaveSystem.getDeveloperOptions();
-    if(devOptions != null){
-      for (String code in devOptions){
+    if (devOptions != null) {
+      for (String code in devOptions) {
         BrainDebug.log(code);
-        if(!DeveloperOptions.activatedCodes.contains(code)) DeveloperOptions.activatedCodes.add(code);
+        if (!DeveloperOptions.activatedCodes.contains(code))
+          DeveloperOptions.activatedCodes.add(code);
       }
-    }
-    else {
+    } else {
       BrainDebug.log("No Dev Options");
     }
 
