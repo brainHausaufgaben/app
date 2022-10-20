@@ -11,6 +11,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -34,7 +35,8 @@ class ExportImport {
 
     if (result != null) {
       File file = File(result.files.single.path!);
-      // TODO fortnite
+      print(file);
+      load(jsonDecode(file.readAsStringSync()));
     }
   }
 
@@ -237,14 +239,7 @@ class ExportImport {
   static Future<void> writeFile(String name,bool timetable, bool homework, bool grades, bool events) async {
     Map data = getFile(timetable, homework, grades, events);
     BrainDebug.log(data);
-    if (!kIsWeb) {
-      final directory = await getApplicationDocumentsDirectory();
-      final path = directory.path;
-      final file = File('$path/name.brain');
-      file.writeAsString(data.toString());
-    } else {
-      launchUrl(Uri.parse("data:application/octet-stream;base64,${base64Encode(data.toString().codeUnits)}"));
-    }
+    FileSaver.instance.saveFile("export.brain", Uint8List.fromList(data.toString().codeUnits), "ahh");
   }
 }
 
