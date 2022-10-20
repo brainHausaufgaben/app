@@ -11,6 +11,7 @@ import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:localstorage/localstorage.dart';
@@ -27,6 +28,15 @@ class ExportImport {
     FileType.all: "all",
     FileType.none: "nan",
   };
+
+  static void userSelectedFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      // TODO fortnite
+    }
+  }
 
   static Map getFile(bool timetable, bool homework, bool grades, bool events) {
     FileType type;

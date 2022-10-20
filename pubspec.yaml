@@ -36,6 +36,7 @@ dependencies:
   flutter_staggered_animations: ^1.1.1
   youtube_player_flutter: ^8.1.0
   vibration: ^1.7.5
+  file_picker: ^5.2.2
 
 dev_dependencies:
   flutter_test:
