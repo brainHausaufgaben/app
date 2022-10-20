@@ -6,7 +6,7 @@ import '../Backend/notifications.dart';
 import '../main.dart';
 
 class NotificationSettings extends StatefulWidget {
-  NotificationSettings({Key? key}) : super(key: key);
+  const NotificationSettings({Key? key}) : super(key: key);
 
   @override
   State<NotificationSettings> createState() => _NotificationSettings();
@@ -22,8 +22,8 @@ class _NotificationSettings extends State<NotificationSettings> {
   Widget build(BuildContext context) {
     return PageTemplate(
         title: "Benachrichtigungen",
-        subtitle: "Version " + BrainApp.appVersion,
-        backButton: true,
+        subtitle: "Version ${BrainApp.appVersion}",
+        secondaryPage: true,
         child: Wrap(
             runSpacing: 10,
             children: [

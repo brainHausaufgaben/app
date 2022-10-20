@@ -27,6 +27,17 @@ class ToDoManager{
     return out;
   }
 
+  static ToDoImportance getHighestImportance() {
+    ToDoImportance highestImportance = ToDoImportance.low;
+    for(ToDoItem toDo in toDos){
+      if(toDo.importance.index > highestImportance.index && !toDo.done) {
+        highestImportance = toDo.importance;
+      }
+    }
+
+    return highestImportance;
+  }
+
   static List<ToDoItem> getImportanceToDos(ToDoImportance importance, {bool? state}){
     List<ToDoItem> out = [];
     List<ToDoItem> inp = [];

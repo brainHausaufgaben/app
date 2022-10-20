@@ -101,7 +101,7 @@ class _GradesPage extends State<GradesPage> {
   Widget build(BuildContext context) {
     if (selectedSubject == null) getData();
     return PageTemplate(
-      backButton: true,
+      secondaryPage: true,
       title: previousGrade == null ? "Neue Note" : "Note Bearbeiten",
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

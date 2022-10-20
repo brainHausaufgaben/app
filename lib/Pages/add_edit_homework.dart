@@ -31,12 +31,12 @@ class _HomeworkPage extends State<HomeworkPage> {
 
   void onPressed() {
     if (homeworkController.text.isEmpty) {
-      BrainToast toast = BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
+      BrainToast toast = const BrainToast(text: "Du hast keine Hausaufgabe angegeben!");
       BrainVibrations.errorVibrate();
       toast.show();
       return;
     } else if (selectedSubject == null) {
-      BrainToast toast = BrainToast(text: "Du hast kein Fach angegeben!");
+      BrainToast toast = const BrainToast(text: "Du hast kein Fach angegeben!");
       BrainVibrations.errorVibrate();
       toast.show();
       return;
@@ -57,7 +57,8 @@ class _HomeworkPage extends State<HomeworkPage> {
       } else {
         DateTime? time = selectedSubject!.getNextDate();
         if (time == null) {
-          BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt!").show();
+          BrainToast toast = const BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt!");
+          toast.show();
           BrainVibrations.errorVibrate();
           return;
         } else if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
@@ -86,7 +87,7 @@ class _HomeworkPage extends State<HomeworkPage> {
     if (previousHomework == null) getData();
 
     return PageTemplate(
-      backButton: true,
+      secondaryPage: true,
       title: previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

@@ -88,7 +88,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
     return PageTemplate(
       title: "Developer Options",
       subtitle: "Spezifische Einstellungen für die Entwickler",
-      backButton: true,
+      secondaryPage: true,
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
       ),

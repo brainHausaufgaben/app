@@ -114,26 +114,19 @@ double getScreenSize(BuildContext context) {
 class NavigationRoutes {
   static Map<String, WidgetBuilder> get() {
     return {
-      "/": (context) {
-        BrainApp.screenWidth = getScreenSize(context);
-        if (kIsWeb) {
-          return CallbackShortcuts(
-            bindings: {
-              const SingleActivator(LogicalKeyboardKey.keyH, alt: true): () => NavigationHelper.pushNamed(context, "homework"),
-              const SingleActivator(LogicalKeyboardKey.keyS, alt: true): () => NavigationHelper.pushNamed(context, "timeTable"),
-              const SingleActivator(LogicalKeyboardKey.keyN, alt: true): () => NavigationHelper.pushNamed(context, "gradesPage"),
-              const SingleActivator(LogicalKeyboardKey.keyE, alt: true): () => NavigationHelper.pushNamed(context, "addEventPage"),
-              const SingleActivator(LogicalKeyboardKey.escape): () => NavigationHelper.navigatorKey.currentState!.maybePop(),
-            },
-            child: Focus(
-              autofocus: true,
-              child: NavigationHelper(),
-            ),
-          );
-        } else {
-          return CustomQuickActions(child: NavigationHelper());
-        }
-      },
+      "/": (context) => CallbackShortcuts(
+        bindings: {
+          const SingleActivator(LogicalKeyboardKey.keyH, alt: true): () => NavigationHelper.pushNamed(context, "homework"),
+          const SingleActivator(LogicalKeyboardKey.keyS, alt: true): () => NavigationHelper.pushNamed(context, "timeTable"),
+          const SingleActivator(LogicalKeyboardKey.keyN, alt: true): () => NavigationHelper.pushNamed(context, "gradesPage"),
+          const SingleActivator(LogicalKeyboardKey.keyE, alt: true): () => NavigationHelper.pushNamed(context, "addEventPage"),
+          const SingleActivator(LogicalKeyboardKey.escape): () => NavigationHelper.navigatorKey.currentState!.maybePop(),
+        },
+        child: Focus(
+          autofocus: true,
+          child: CustomQuickActions(child: NavigationHelper()),
+        )
+      ),
       "home": (context) => HomePage(),
       "calendar": (context) => CalendarPage(),
       "editEventsPage": (context) => EditEventPage(),

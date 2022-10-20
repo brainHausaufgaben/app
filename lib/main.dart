@@ -22,7 +22,6 @@ class BrainApp extends StatefulWidget {
 
   static String appVersion = "...";
   static TodaysMedia? todaysMedia;
-  static double screenWidth = 0;
 
   static Map<String, dynamic> preferences = {
     "showPlayStorePopup" : true,
@@ -80,7 +79,7 @@ class _BrainApp extends State<BrainApp> {
 
     BrainApp.notifier.addListener(() => setState(() {}));
 
-    compute(Initializer.init, 1).then((value) => setState(() {
+    Initializer.init().then((value) => setState(() {
       BrainDebug.log("Initializer finished; reloading app");
     }));
   }

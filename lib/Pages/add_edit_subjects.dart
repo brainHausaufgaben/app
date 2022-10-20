@@ -278,12 +278,12 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
     return DefaultTabController(
       length: 2,
       child: PageTemplate(
-          backButton: true,
+          secondaryPage: true,
           title: previousSubject != null ? "Fach Bearbeiten" : (previousLinkedSubject != null ? "Verbindung Bearbeiten" : "Neues Fach"),
           pageSettings: PageSettings(
             floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
             floatingHeaderIsCentered: true,
-            floatingHeaderBorderRadius: BorderRadius.circular(100)
+            floatingHeaderBorderRadius: BorderRadius.circular(20)
           ),
           secondaryTitleButton: previousSubject != null ? null : BrainTitleButton(
               action: () {
@@ -314,7 +314,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
               constraints: const BoxConstraints(maxWidth: 350, minHeight: 55),
               decoration: BoxDecoration(
                   color: AppDesign.colors.secondaryBackground,
-                  borderRadius: BorderRadius.circular(100)
+                  borderRadius: BorderRadius.circular(20)
               ),
               clipBehavior: Clip.antiAlias,
               child: DefaultTextStyle(
@@ -332,7 +332,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                           unselectedLabelColor: AppDesign.colors.text,
                           indicator: BoxDecoration(
                               color: AppDesign.colors.primary,
-                              borderRadius: BorderRadius.circular(100)
+                              borderRadius: BorderRadius.circular(20)
                           ),
                           tabs: const [
                             Tab(child: Text("Fach")),

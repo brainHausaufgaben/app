@@ -36,7 +36,7 @@ class _EditTestPage extends State<EditTestPage> {
     if (previousTest == null) getData();
 
     return PageTemplate(
-      backButton: true,
+      secondaryPage: true,
       title: "Test Bearbeiten",
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

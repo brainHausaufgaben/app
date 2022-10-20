@@ -160,7 +160,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
 
     return PageTemplate(
         title: widget.subject?.name ?? widget.linkedSubject!.name,
-        backButton: true,
+        secondaryPage: true,
         floatingActionButton: BrainMenuButton(
           defaultAction: () => NavigationHelper.pushNamed(context, "gradesPage", payload: widget.subject ?? widget.linkedSubject),
           defaultLabel: "Neue Note",

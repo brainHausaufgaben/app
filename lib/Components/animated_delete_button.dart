@@ -63,8 +63,8 @@ class _AnimatedDeleteButton extends State<AnimatedDeleteButton> with TickerProvi
                     color: AppDesign.colors.secondaryBackground,
                     borderRadius: AppDesign.boxStyle.inputBorderRadius
                 ),
-                width: 45,
-                height: 45,
+                width: 50,
+                height: 50,
                 child: Stack(
                     alignment: Alignment.center,
                     children: [
@@ -75,8 +75,8 @@ class _AnimatedDeleteButton extends State<AnimatedDeleteButton> with TickerProvi
                             return ClipRect(
                               clipper: ScaleClipper(animation.value * 51),
                               child: Container(
-                                  height: 45,
-                                  width: 45,
+                                  height: 50,
+                                  width: 50,
                                   decoration: BoxDecoration(
                                       color: AppDesign.colors.primary,
                                       borderRadius: AppDesign.boxStyle.inputBorderRadius

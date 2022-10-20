@@ -118,12 +118,7 @@ class ExportImport{
       final file =  File('$path/name.brain');
       file.writeAsString(data.toString());
     }
-
-
-
-
   }
-
 }
 
 

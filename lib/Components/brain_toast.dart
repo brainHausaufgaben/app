@@ -4,15 +4,15 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 
 class BrainToast {
-  BrainToast({
+  const BrainToast({
     required this.text,
     this.action,
     this.buttonText
   });
 
-  String text;
-  String? buttonText;
-  Function()? action;
+  final String text;
+  final String? buttonText;
+  final Function()? action;
 
   SnackBar build() {
     return SnackBar(
@@ -46,7 +46,7 @@ class BrainToast {
               if (buttonText != null) TextButton(
                 onPressed: action,
                 style: TextButton.styleFrom(
-                  primary: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
+                  foregroundColor: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
                   padding: EdgeInsets.zero,
                   side: BorderSide(
                       color: BrainApp.preferences["darkMode"] ? const Color(0xFF303540) : const Color(0xFFFFFFFF),
@@ -71,7 +71,7 @@ class BrainToast {
 
   void show() {
     WidgetsBinding.instance.addPostFrameCallback((_){
-      if (BrainApp.screenWidth > AppDesign.breakPointWidth) {
+      if (MediaQuery.of(NavigationHelper.rootKey.currentContext!).size.width > AppDesign.breakPointWidth) {
         NavigationHelper.messengerKey.currentState!.showSnackBar(build());
       } else {
         ScaffoldMessenger.of(NavigationHelper.rootKey.currentContext!).showSnackBar(build());
@@ -80,7 +80,7 @@ class BrainToast {
   }
 
   static void close() {
-    if (BrainApp.screenWidth > AppDesign.breakPointWidth) {
+    if (MediaQuery.of(NavigationHelper.rootKey.currentContext!).size.width > AppDesign.breakPointWidth) {
       NavigationHelper.messengerKey.currentState!.hideCurrentSnackBar();
     } else {
       ScaffoldMessenger.of(NavigationHelper.rootKey.currentContext!).hideCurrentSnackBar();

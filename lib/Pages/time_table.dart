@@ -87,7 +87,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
                                     BrainApp.notifier.notifyOfChanges();
                                     Navigator.of(context).pop();
                                   } else {
-                                    BrainToast toast = BrainToast(text: "Die Stunde kann nicht enden bevor sie beginnt");
+                                    BrainToast toast = const BrainToast(text: "Die Stunde kann nicht enden bevor sie beginnt");
                                     BrainVibrations.errorVibrate();
                                     toast.show();
                                     return;
@@ -197,7 +197,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
       length: 5,
       child: PageTemplate(
         title: "Stundenplan",
-        backButton: true,
+        secondaryPage: true,
         floatingActionButton: BrainMenuButton(
           defaultAction: () => NavigationHelper.pushNamed(context, "subjectOverview"),
           defaultLabel: "Fächer Bearbeiten",
@@ -205,7 +205,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           withEntries: false,
         ),
         pageSettings: PageSettings(
-          floatingHeaderBorderRadius: BorderRadius.circular(100),
+          floatingHeaderBorderRadius: BorderRadius.circular(20),
           floatingHeaderIsCentered: true
         ),
         floatingHeader: Container(
@@ -215,7 +215,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           ),
           decoration: BoxDecoration(
             color: AppDesign.colors.secondaryBackground,
-            borderRadius: BorderRadius.circular(100)
+            borderRadius: BorderRadius.circular(20)
           ),
           clipBehavior: Clip.antiAlias,
           child: Theme(
@@ -230,7 +230,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
               unselectedLabelColor: AppDesign.colors.text,
               indicator: BoxDecoration(
                   color: AppDesign.colors.primary,
-                  borderRadius: BorderRadius.circular(100)
+                  borderRadius: BorderRadius.circular(20)
               ),
               tabs: const [
                 Tab(child: Text("Mo")),

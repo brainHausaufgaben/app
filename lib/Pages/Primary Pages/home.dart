@@ -2,6 +2,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Backend/todo.dart';
 import 'package:brain_app/Backend/todo_manager.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/brain_infobox.dart';
@@ -270,6 +271,16 @@ class _HomePage extends State<HomePage>{
           builder: (context, setBuilderState) {
             return BrainTitleButton(
                 indicator: ToDoManager.getDoneStateToDos(false).isEmpty ? null : ToDoManager.getDoneStateToDos(false).length,
+                indicatorColor: () {
+                  switch (ToDoManager.getHighestImportance()) {
+                    case ToDoImportance.low:
+                      return Colors.green;
+                    case ToDoImportance.mid:
+                      return Colors.deepOrangeAccent;
+                    case ToDoImportance.high:
+                      return Colors.red;
+                  }
+                }(),
                 icon: Icons.task_outlined,
                 semantics: "To Do",
                 action: () {

@@ -82,18 +82,18 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
       initialIndex: 0,
       length: 2,
       child: PageTemplate(
-        backButton: true,
+        secondaryPage: true,
         title: "Neues Event",
         pageSettings: PageSettings(
           floatingHeaderIsCentered: true,
-          floatingHeaderBorderRadius: BorderRadius.circular(100),
+          floatingHeaderBorderRadius: BorderRadius.circular(20),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         ),
         floatingHeader: Container(
           constraints: const BoxConstraints(maxWidth: 250, minHeight: 55),
           decoration: BoxDecoration(
               color: AppDesign.colors.secondaryBackground,
-              borderRadius: BorderRadius.circular(100)
+              borderRadius: BorderRadius.circular(20)
           ),
           clipBehavior: Clip.antiAlias,
           child: DefaultTextStyle(
@@ -111,7 +111,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                 unselectedLabelColor: AppDesign.colors.text,
                 indicator: BoxDecoration(
                     color: AppDesign.colors.primary,
-                    borderRadius: BorderRadius.circular(100)
+                    borderRadius: BorderRadius.circular(20)
                 ),
                 tabs: const [
                   Tab(child: Text("Termin")),

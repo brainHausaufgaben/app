@@ -30,7 +30,7 @@ import 'notifications.dart';
 class Initializer {
   static bool initialized = false;
 
-  static Future init(int hello) async {
+  static Future init() async {
     getPreferences().then((value) {
         AppDesign.toggleTheme(BrainApp.preferences["design"]);
         GradingSystem.isAdvancedLevel = BrainApp.preferences["isAdvancedLevel"];

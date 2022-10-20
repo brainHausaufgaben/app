@@ -19,13 +19,15 @@ class BrainTitleButton extends StatelessWidget {
     required this.icon,
     required this.semantics,
     required this.action,
-    this.indicator
+    this.indicator,
+    this.indicatorColor
   });
 
   final IconData icon;
   final String semantics;
   final Function() action;
   final int? indicator;
+  final Color? indicatorColor;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class BrainTitleButton extends StatelessWidget {
               width: 18,
               height: 18,
               decoration: BoxDecoration(
-                  color: Colors.red,
+                  color: indicatorColor ?? Colors.red,
                   borderRadius: BorderRadius.circular(100)
               ),
               child: Center(
@@ -65,7 +67,7 @@ class BrainTitleButton extends StatelessWidget {
 }
 
 class BrainTextField extends StatefulWidget {
-  BrainTextField({
+  const BrainTextField({
     Key? key,
     required this.placeholder,
     required this.controller,
@@ -76,7 +78,7 @@ class BrainTextField extends StatefulWidget {
     this.digitsOnly = false
   }) : super(key: key);
 
-  TextEditingController controller;
+  final TextEditingController controller;
   final String placeholder;
   final int? minLines;
   final int? maxLines;
@@ -435,7 +437,6 @@ class BrainDateButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BrainButton(
-      child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.textStyles.input),
       icon: Icons.date_range,
       action: () {
         Future<DateTime?> selectedDate = showDialog(
@@ -444,7 +445,8 @@ class BrainDateButton extends StatelessWidget {
         );
 
         selectedDate.then((selectedDate) => onDateSelect(selectedDate ?? value));
-      }
+      },
+      child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.textStyles.input)
     );
   }
 }

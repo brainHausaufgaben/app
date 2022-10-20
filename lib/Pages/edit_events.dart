@@ -34,7 +34,7 @@ class _TestPage extends State<EditEventPage> {
     if (previousEvent == null) getData();
 
     return PageTemplate(
-      backButton: true,
+      secondaryPage: true,
       title: "Termin Bearbeiten",
       pageSettings: const PageSettings(
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat

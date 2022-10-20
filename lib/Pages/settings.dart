@@ -27,8 +27,8 @@ class _SettingsPage extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return PageTemplate(
       title: "Einstellungen",
-      subtitle: "Version " + BrainApp.appVersion,
-      backButton: true,
+      subtitle: "Version ${BrainApp.appVersion}",
+      secondaryPage: true,
       pageSettings: const PageSettings(
         developerOptions: true
       ),
@@ -245,13 +245,22 @@ class _SettingsPage extends State<SettingsPage> {
                                   style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16, color: AppDesign.colors.text)
                               ),
                               onPressed: () => showLicensePage(context: context),
-                            ),
+                            )
                           )
                         ]
                       )
                     )
                   )
                 )
+              )
+            ]
+          ),
+          SettingsEntry(
+            children: [
+              SettingsNavigatorButton(
+                text: "Export / Import",
+                action: () {
+                }
               )
             ]
           )

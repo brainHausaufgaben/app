@@ -1,4 +1,3 @@
-
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Backend/todo_manager.dart';
@@ -8,7 +7,6 @@ import 'grading_system.dart';
 
 class SaveSystem{
    static LocalStorage storage = LocalStorage("brain_app");
-
 
   static void saveSubjects(){
      storage.setItem("subjects", TimeTable.subjectsToJSONEncodeble());

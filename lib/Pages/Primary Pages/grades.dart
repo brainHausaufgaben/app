@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 import '../../Backend/linked_subject.dart';
+import '../../Backend/todo.dart';
 import '../../Backend/todo_manager.dart';
 import '../../Components/todo_dialog.dart';
 
@@ -101,6 +102,7 @@ class _GradeOverview extends State<GradeOverview>{
     sortedMap.forEach((key, value) {
       buttons.add(
         BrainButton(
+          centered: false,
           dense: true,
           icon: Icons.edit,
           action: () => NavigationHelper.pushNamed(context, "gradesPerSubject", payload: key),
@@ -156,6 +158,16 @@ class _GradeOverview extends State<GradeOverview>{
               builder: (context, setBuilderState) {
                 return BrainTitleButton(
                     indicator: ToDoManager.getDoneStateToDos(false).isEmpty ? null : ToDoManager.getDoneStateToDos(false).length,
+                    indicatorColor: () {
+                      switch (ToDoManager.getHighestImportance()) {
+                        case ToDoImportance.low:
+                          return Colors.green;
+                        case ToDoImportance.mid:
+                          return Colors.deepOrangeAccent;
+                        case ToDoImportance.high:
+                          return Colors.red;
+                      }
+                    }(),
                     icon: Icons.task_outlined,
                     semantics: "To Do",
                     action: () {

@@ -59,7 +59,7 @@ class _SubjectOverview extends State<SubjectOverview> {
         icon: Icons.add,
         withEntries: false,
       ),
-      backButton: true,
+      secondaryPage: true,
       child: Wrap(
         runSpacing: 20,
         children: [

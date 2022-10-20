@@ -15,6 +15,7 @@ import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../Backend/todo.dart';
 import '../../Backend/todo_manager.dart';
 import '../../Components/todo_dialog.dart';
 
@@ -140,6 +141,16 @@ class _CalendarPage extends State<CalendarPage> {
               builder: (context, setBuilderState) {
                 return BrainTitleButton(
                     indicator: ToDoManager.getDoneStateToDos(false).isEmpty ? null : ToDoManager.getDoneStateToDos(false).length,
+                    indicatorColor: () {
+                      switch (ToDoManager.getHighestImportance()) {
+                        case ToDoImportance.low:
+                          return Colors.green;
+                        case ToDoImportance.mid:
+                          return Colors.deepOrangeAccent;
+                        case ToDoImportance.high:
+                          return Colors.red;
+                      }
+                    }(),
                     icon: Icons.task_outlined,
                     semantics: "To Do",
                     action: () {
@@ -242,9 +253,9 @@ class _CalendarPage extends State<CalendarPage> {
                             BrainApp.updatePreference("calendarFormat", format.index);
                           });
                         },
-                        onDaySelected: (_selectedDay, _focusedDay) {
+                        onDaySelected: (selectedDay, focusedDay) {
                           setState(() {
-                            CalendarPage.selectedDay = _selectedDay;
+                            CalendarPage.selectedDay = selectedDay;
                           });
                         },
                         selectedDayPredicate: (day) {

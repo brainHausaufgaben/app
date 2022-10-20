@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ImagePage extends StatelessWidget{
-
-
   const ImagePage({Key? key}) : super(key: key);
 
 
