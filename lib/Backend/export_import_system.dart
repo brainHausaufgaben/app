@@ -1,20 +1,17 @@
 import 'dart:convert';
-import 'dart:ui';
 
-import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/day.dart';
-import 'package:brain_app/Backend/event.dart';
+import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grading_system.dart';
-import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
-import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/subject.dart';
-import 'package:brain_app/Backend/subject_instance.dart';
-import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
-import 'package:file_saver/file_saver.dart';
+import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
 import 'grade.dart';
@@ -27,11 +24,117 @@ class ExportImport {
     FileType.none: "nan",
   };
 
+  static List<Widget> getImportPages(Map names) {
+    List<Widget> output = [];
+
+    names.forEach((key, value) {
+      output.add(
+          Flex(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: MainAxisAlignment.center,
+            direction: Axis.vertical,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppDesign.colors.background,
+                  borderRadius: AppDesign.boxStyle.inputBorderRadius
+                ),
+                padding: const EdgeInsets.all(10),
+                child: Text(key),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: Icon(Icons.arrow_circle_down_rounded, color: AppDesign.colors.text),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                    color: AppDesign.colors.background,
+                    borderRadius: AppDesign.boxStyle.inputBorderRadius
+                ),
+                padding: const EdgeInsets.all(10),
+                child: StatefulBuilder(
+                  builder: (context, setBuilderState) {
+                    return BrainDropdown(
+                        currentValue: value[0],
+                        dialogTitle: "Wähle ein Fach",
+                        defaultText: "Wähle ein Fach",
+                        items: BrainDropdown.getSubjectDropdowns(),
+                        onChanged: (chosenSubject) {
+                          setBuilderState(() {
+                            value[0] = chosenSubject;
+                          });
+                        }
+                    );
+                  }
+                )
+              )
+            ]
+          )
+      );
+    });
+
+    return output;
+  }
+
   static void userSelectedFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      load(jsonDecode(String.fromCharCodes(result.files[0].bytes!)));
+      Map decodedData = jsonDecode(String.fromCharCodes(result.files[0].bytes!));
+      Map names = getSubjectNames(decodedData["idToName"]);
+
+      PageController pageController = PageController();
+      List<Widget> pages = getImportPages(names);
+
+      showDialog(
+        context: NavigationHelper.rootKey.currentContext!,
+        builder: (context) {
+          return AlertDialog(
+            title: StatefulBuilder(
+              builder: (context, setBuilderState) {
+                pageController.addListener(() {
+                  setBuilderState(() {});
+                });
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Fächer Zuweisung", style: AppDesign.textStyles.alertDialogHeader),
+                    Text("${pageController.hasClients ? pageController.page!.round() + 1 : 1}/${pages.length}", style: AppDesign.textStyles.alertDialogHeader)
+                  ]
+                );
+              }
+            ),
+            actionsAlignment: MainAxisAlignment.spaceBetween,
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    if (pageController.page == 0) Navigator.of(context).pop();
+                    pageController.previousPage(duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
+                  },
+                  child: Text("Zurück")
+              ),
+              TextButton(
+                  onPressed: () {
+                    if (pageController.page == pages.length - 1) {
+                      load(decodedData, loadSubjectToSubject: convertSubjectNamesMap(names));
+                      Navigator.of(context).pop();
+                    }
+                    pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
+                  },
+                  child: Text("Weiter")
+              )
+            ],
+            content: SizedBox(
+              width: 250,
+              height: 180,
+              child: PageView(
+                controller: pageController,
+                children: pages,
+              )
+            )
+          );
+        }
+      );
     }
   }
 
@@ -44,7 +147,7 @@ class ExportImport {
     List gradesData = [];
     List eventsData = [];
     List testData = [];
-    Map idToName = {};
+    Map<String, String> idToName = {};
     Map file = {};
     if (timetable && !homework && !grades && !events) {
       type = FileType.timetableOnly;
@@ -62,7 +165,7 @@ class ExportImport {
     }
     else{
       for(Subject subject in TimeTable.subjects){
-        idToName[subject.id] = subject.name;
+        idToName[subject.id.toString()] = subject.name;
       }
     }
     if (homework) homeworkData = getHomework();
@@ -176,7 +279,7 @@ class ExportImport {
         if(value.toString().toLowerCase() == subject.name.toLowerCase()){
           out[value] = [subject,key];
         }
-        else {
+        else if (!out.containsKey(value)){
           out[value] = [null,key];
         }
       }
@@ -185,10 +288,10 @@ class ExportImport {
     return out;
   }
 
-  static Map convertSubjectNamesMap(Map<String,List> map){
+  static Map<int,Subject> convertSubjectNamesMap(Map<dynamic, dynamic> map){
     Map<int,Subject> out = {};
     map.forEach((key, value) {
-      out[value[0]] = value[1];
+      out[int.parse(value[1])] = value[0];
     });
     return out;
   }

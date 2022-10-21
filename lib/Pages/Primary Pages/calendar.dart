@@ -29,6 +29,25 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPage extends State<CalendarPage> {
+  List<Widget> getSelectedNotes() {
+    List<Widget> boxes = [];
+    List<Note> notes = TimeTable.getNotes(CalendarPage.selectedDay);
+
+    for (Note note in notes) {
+      boxes.add(
+        BrainButton(
+          action: () {},
+          dense: true,
+          centered: false,
+          icon: Icons.edit,
+          child: Text(note.description, style: AppDesign.textStyles.pointElementPrimary)
+        )
+      );
+    }
+
+    return boxes;
+  }
+
   List<Widget> getSelectedEvents() {
     List<Widget> boxes = [];
     List<Event> events = TimeTable.getEvents(CalendarPage.selectedDay);
@@ -282,6 +301,53 @@ class _CalendarPage extends State<CalendarPage> {
                 if (TimeTable.getEvents(CalendarPage.selectedDay).isNotEmpty) HeadlineWrap(
                   headline: "Termine",
                   children: getSelectedEvents(),
+                ),
+                HeadlineWrap(
+                  headline: "Notizen",
+                  action: TextButton(
+                    onPressed: () {
+                      TextEditingController controller = TextEditingController();
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
+                            title: Text("Neue Notiz", style: AppDesign.textStyles.alertDialogHeader),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text("Abbrechen")
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Note(CalendarPage.selectedDay, controller.text);
+                                    BrainApp.notifier.notifyOfChanges();
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text("Hinzufügen")
+                              )
+                            ],
+                            content: Container(
+                              constraints: const BoxConstraints(minWidth: 350, maxHeight: 500, maxWidth: 350),
+                              decoration: BoxDecoration(
+                                color: AppDesign.colors.background,
+                                borderRadius: AppDesign.boxStyle.inputBorderRadius
+                              ),
+                              padding: const EdgeInsets.all(11),
+                              child: BrainTextField(
+                                autofocus: true,
+                                maxLines: 10,
+                                placeholder: "Inhalt",
+                                controller: controller,
+                              )
+                            )
+                          );
+                        }
+                      );
+                    },
+                    child: const Text("Neu +"),
+                  ),
+                  children: getSelectedNotes(),
                 )
               ]
           )

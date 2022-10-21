@@ -126,6 +126,16 @@ class TimeTable {
     SaveSystem.saveEvents();
   }
 
+  static List<Note> getNotes(DateTime date){
+    List<Note> output = [];
+    for(Note note in notes){
+      if(note.isDue(date) ){
+        output.add(note);
+      }
+    }
+    return output;
+  }
+
   static List<Test> getTests(DateTime day) {
     List<Test> _tests = [];
 

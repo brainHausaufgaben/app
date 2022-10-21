@@ -123,7 +123,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                   state: BrainApp.preferences["showMediaBox"],
                 ),
                 SettingsSwitchButton(
-                  text: "Endzeiten im Stundenplan",
+                  text: "Endzeiten auf der Übersicht",
                   description: "Ob auf der Übersicht auch das Ende einer Stunde angezeigt werden soll",
                   action: () {
                     setState(() {
