@@ -152,10 +152,7 @@ class Initializer {
     }
   }
 
-  static Future loadData() async {
-    TimeTable.saveEnabled = false;
-
-    dynamic subjects = await SaveSystem.getSubjects();
+  static void loadSubjects(dynamic subjects) {
     if (subjects != null) {
       for (Map item in subjects) {
         List color = item["color"];
@@ -165,20 +162,9 @@ class Initializer {
     } else {
       BrainDebug.log("No Subjects");
     }
+  }
 
-    dynamic lessonTimes = await SaveSystem.getLessonTimes();
-    if (lessonTimes != null) {
-      for (int i = 0; i < TimeTable.lessonTimes.length; i++) {
-        List l = lessonTimes[i];
-        TimeTable.lessonTimes[i] = TimeInterval(
-            TimeOfDay(hour: l[0][0], minute: l[0][1]),
-            TimeOfDay(hour: l[1][0], minute: l[1][1]));
-      }
-    } else {
-      BrainDebug.log("No Lesson Times");
-    }
-
-    dynamic linkedSubjects = await SaveSystem.getLinkedSubjects();
+  static void loadLinkedSubjects(dynamic linkedSubjects) {
     if (linkedSubjects != null) {
       for (Map item in linkedSubjects) {
         List color = item["color"];
@@ -200,8 +186,9 @@ class Initializer {
     } else {
       BrainDebug.log("No Linked Subjects");
     }
+  }
 
-    dynamic timetable = await SaveSystem.getTimeTable();
+  static void loadTimeTable(dynamic timetable) {
     if (timetable != null) {
       for (int i = 0; i < 7; i++) {
         for (int j = 0; j < 10; j++) {
@@ -217,8 +204,9 @@ class Initializer {
     } else {
       BrainDebug.log("No Time Table");
     }
+  }
 
-    dynamic homework = await SaveSystem.getHomework();
+  static void loadHomework(dynamic homework) {
     if (homework != null) {
       for (Map item in homework) {
         List t = item["dueTime"];
@@ -236,8 +224,9 @@ class Initializer {
     } else {
       BrainDebug.log("No Homework");
     }
+  }
 
-    dynamic events = await SaveSystem.getEvents();
+  static void loadEvents(dynamic events) {
     if (events != null) {
       for (Map item in events) {
         List t = item["dueTime"];
@@ -247,8 +236,9 @@ class Initializer {
     } else {
       BrainDebug.log("No Events");
     }
+  }
 
-    dynamic tests = await SaveSystem.getTests();
+  static void loadTests(dynamic tests) {
     if (tests != null) {
       for (Map item in tests) {
         List t = item["dueTime"];
@@ -264,17 +254,11 @@ class Initializer {
     } else {
       BrainDebug.log("No Tests");
     }
+  }
 
-    Map? advancedLevels = await SaveSystem.getAdvancedLevels();
-    if (advancedLevels != null) {
-      advancedLevels.forEach((key, value) {
-        GradingSystem.yearsToLevel[int.parse(key)] = value;
-      });
-    }
-
-    dynamic grades = await SaveSystem.getGrades();
+  static void loadGrades(dynamic grades) {
     if (grades != null) {
-      for (Map item in await SaveSystem.getGrades()) {
+      for (Map item in grades) {
         int value = item["value"];
         int id = item["SubjectID"];
         GradeTime time = GradeTime.createOnLoad(
@@ -298,8 +282,30 @@ class Initializer {
     } else {
       BrainDebug.log("No Grades");
     }
+  }
 
-    dynamic toDos = await SaveSystem.getToDos();
+  static void loadLessonTimes(lessonTimes){
+    if (lessonTimes != null) {
+      for (int i = 0; i < TimeTable.lessonTimes.length; i++) {
+        List l = lessonTimes[i];
+        TimeTable.lessonTimes[i] = TimeInterval(
+            TimeOfDay(hour: l[0][0], minute: l[0][1]),
+            TimeOfDay(hour: l[1][0], minute: l[1][1]));
+      }
+    } else {
+      BrainDebug.log("No Lesson Times");
+    }
+  }
+
+  static void loadAdvancedLevels(advancedLevels){
+    if (advancedLevels != null) {
+      advancedLevels.forEach((key, value) {
+        GradingSystem.yearsToLevel[int.parse(key)] = value;
+      });
+    }
+  }
+
+  static void loadToDos(toDos){
     if (toDos != null) {
       for (Map item in toDos) {
         ToDoImportance importance = ToDoImportance.values[item["importance"]];
@@ -309,16 +315,48 @@ class Initializer {
       BrainDebug.log("No to dos");
     }
 
-    dynamic devOptions = await SaveSystem.getDeveloperOptions();
+  }
+
+  static void loadDevOptions(devOptions){
     if (devOptions != null) {
       for (String code in devOptions) {
         BrainDebug.log(code);
-        if (!DeveloperOptions.activatedCodes.contains(code))
+        if (!DeveloperOptions.activatedCodes.contains(code)) {
           DeveloperOptions.activatedCodes.add(code);
+        }
       }
     } else {
       BrainDebug.log("No Dev Options");
     }
+  }
+
+  static Future loadData() async {
+    TimeTable.saveEnabled = false;
+
+    dynamic lessonTimes = await SaveSystem.getLessonTimes();
+    dynamic subjects = await SaveSystem.getSubjects();
+    dynamic linkedSubjects = await SaveSystem.getLinkedSubjects();
+    dynamic timetable = await SaveSystem.getTimeTable();
+    dynamic homework = await SaveSystem.getHomework();
+    dynamic events = await SaveSystem.getEvents();
+    dynamic tests = await SaveSystem.getTests();
+    dynamic advancedLevels = await SaveSystem.getAdvancedLevels();
+    dynamic grades = await SaveSystem.getGrades();
+    dynamic toDos = await SaveSystem.getToDos();
+    dynamic devOptions = await SaveSystem.getDeveloperOptions();
+
+    loadLessonTimes(lessonTimes);
+    loadSubjects(subjects);
+    loadLinkedSubjects(linkedSubjects);
+    loadTimeTable(timetable);
+    loadHomework(homework);
+    loadEvents(events);
+    loadTests(tests);
+    loadAdvancedLevels(advancedLevels);
+    loadGrades(grades);
+    loadToDos(toDos);
+    loadDevOptions(devOptions);
+
 
     TimeTable.saveEnabled = true;
   }

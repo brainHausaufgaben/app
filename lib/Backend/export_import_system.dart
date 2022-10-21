@@ -3,9 +3,11 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:brain_app/Backend/brain_debug.dart';
+import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/homework.dart';
+import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/linked_subject.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/subject_instance.dart';
@@ -14,7 +16,6 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -49,6 +50,7 @@ class ExportImport {
     List gradesData = [];
     List eventsData = [];
     List testData = [];
+    Map idToName = {};
     Map file = {};
     if (timetable && !homework && !grades && !events) {
       type = FileType.timetableOnly;
@@ -63,6 +65,11 @@ class ExportImport {
       timetableData = TimeTable.timeTableToJSONEncodable();
       subjectData = TimeTable.subjectsToJSONEncodeble();
       linkedSubjectData = TimeTable.linkedSubjectsToJSONEncodable();
+    }
+    else{
+      for(Subject subject in TimeTable.subjects){
+        idToName[subject.id] = subject.name;
+      }
     }
     if (homework) homeworkData = getHomework();
     if (grades) gradesData = getGrades();
@@ -79,133 +86,117 @@ class ExportImport {
     file["events"] = eventsData;
     file["tests"] = testData;
     file["linked"] = linkedSubjectData;
+    file["idToName"] = idToName;
     return file;
   }
 
-  static void load(Map map) {
+
+  static void load(Map map, {Map<int, Subject>? loadSubjectToSubject}) {
     String type = map["type"];
     LocalStorage storage = LocalStorage("brain_app");
     switch (type) {
       case "all":
-        storage.setItem("subjects", map["subjects"]);
-        storage.setItem("time_table", map["timetable"]);
-        storage.setItem("homework", map["homework"]);
-        storage.setItem("grades", map["grades"]);
-        storage.setItem("events", map["events"]);
-        storage.setItem("tests", map["tests"]);
-        storage.setItem("linkedSubjects", map["linked"]);
-        //TODO: sachen die machen das die app neu startet miau :3
+        dynamic timetable = map["timetable"];
+        dynamic subjects = map["subjects"];
+        dynamic linkedSubjects = map["linked"];
+        dynamic homework = map["homework"];
+        dynamic grades = map["grades"];
+        dynamic tests = map["tests"];
+        dynamic events = map["events"];
+        int lastID = Subject.lastID;
+        if(homework != null) {
+          for (Map item in homework) {
+            item["SubjectID"] = item["SubjectID"] + lastID;
+          }
+        }
+        if(grades != null) {
+          for (Map item in grades) {
+            item["SubjectID"] = item["SubjectID"] + lastID;
+          }
+        }
+        if(tests != null) {
+          for (Map item in tests) {
+            item["SubjectID"] = item["SubjectID"] + lastID;
+          }
+        }
+
+        deleteTimeTable();
+        Initializer.loadTimeTable(timetable);
+        Initializer.loadSubjects(subjects);
+        Initializer.loadLinkedSubjects(linkedSubjects);
+        Initializer.loadHomework(homework);
+        Initializer.loadGrades(grades);
+        Initializer.loadTests(tests);
+        Initializer.loadEvents(events);
+        //TODO: das geht jetzt villeciht aber bisschen testen oder so
         break;
       case "tto":
-        dynamic subjects = map["subjects"];
-        if (subjects != null) {
-          for (Map item in subjects) {
-            List color = item["color"];
-            Subject.fromID(item["name"],
-                Color.fromARGB(255, color[0], color[1], color[2]), item["id"]);
-          }
-        }
-        dynamic linkedSubjects = map["linked"];
-        if (linkedSubjects != null) {
-          for (Map item in linkedSubjects) {
-            List color = item["color"];
-            List<Subject> linkSubjects = [];
-            List<int> evaluations = [];
-            for (int i in item["subjectIDs"]) {
-              linkSubjects.add(TimeTable.getSubject(i)!);
-            }
-            for (int i in item["subjectEvaluations"]) {
-              evaluations.add(i);
-            }
-            LinkedSubject(
-                item["name"],
-                Color.fromARGB(255, color[0], color[1], color[2]),
-                linkSubjects,
-                evaluations);
-          }
-        }
         dynamic timetable = map["timetable"];
-        if (timetable != null) {
-          for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 10; j++) {
-              int id = timetable[i][j];
-              Subject? subject = TimeTable.getSubject(id);
-              if (id != 0 && subject != null) {
-                SubjectInstance(subject, i + 1, j);
-              } else if (id != 0) {
-                BrainDebug.log(
-                    "loadData() Timetable Error: Fach existiert nicht!");
-              }
-            }
-          }
-        }
+        dynamic subjects = map["subjects"];
+        dynamic linkedSubjects = map["linked"];
+        deleteTimeTable();
+        Initializer.loadTimeTable(timetable);
+        Initializer.loadSubjects(subjects);
+        Initializer.loadLinkedSubjects(linkedSubjects);
         break;
       case "tro":
         dynamic homework = map["homework"];
-        if (homework != null) {
-          for (Map item in homework) {
-            List t = item["dueTime"];
-            DateTime time = DateTime(t[0], t[1], t[2]);
-            int id = item["SubjectID"];
-            Subject? subject = TimeTable.getSubject(id);
-            if (subject != null) {
-              if (TimeTable.getSubject(id)!
-                      .getTime(TimeTable.getDayFromDate(time)) !=
-                  null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
-            } else {
-              BrainDebug.log(
-                  "loadData() Homework Error: Fach existiert nicht!");
-            }
-          }
-        }
-        dynamic events = map["events"];
-        if (events != null) {
-          for (Map item in events) {
-            List t = item["dueTime"];
-            DateTime time = DateTime(t[0], t[1], t[2]);
-            Event(time, item["name"], item["description"]);
-          }
-        }
-        dynamic tests = map["test"];
-        if (tests != null) {
-          for (Map item in tests) {
-            List t = item["dueTime"];
-            DateTime time = DateTime(t[0], t[1], t[2]);
-            int id = item["SubjectID"];
-            Subject? subject = TimeTable.getSubject(id);
-            if (subject != null) {
-              Test(subject, time, item["description"]);
-            } else {
-              BrainDebug.log("loadData() Test Error: Fach existiert nicht!");
-            }
-          }
-        }
         dynamic grades = map["grades"];
-        if (grades != null) {
-          for (Map item in grades) {
-            int value = item["value"];
-            int id = item["SubjectID"];
-            GradeTime time = GradeTime.createOnLoad(
-                item["year"], item["partOfYear"], item["isAdvanced"]);
-            String? name = item["name"];
-            name ??= "Note";
-
-            if (TimeTable.getSubject(id) != null) {
-              if (item["isBig"]) {
-                BigGrade.createWithTime(
-                    value, TimeTable.getSubject(id)!, time, name);
-              } else {
-                GradeType type = Grade.stringToGradeType(item["type"]);
-                SmallGrade.createWithTime(
-                    value, TimeTable.getSubject(id)!, type, time, name);
-              }
-            } else {
-              BrainDebug.log("loadData() Grades Error: Fach existiert nicht!");
-            }
+        dynamic tests = map["tests"];
+        dynamic events = map["events"];
+        if(homework != null){
+          for(Map item in homework){
+            item["SubjectID"] = loadSubjectToSubject![item["SubjectID"]]!.id;
           }
         }
+        if(grades != null){
+          for(Map item in grades){
+            item["SubjectID"] = loadSubjectToSubject![item["SubjectID"]]!.id;
+          }
+        }
+        if(tests != null){
+          for(Map item in tests){
+            item["SubjectID"] = loadSubjectToSubject![item["SubjectID"]]!.id;
+          }
+        }
+        Initializer.loadHomework(homework);
+        Initializer.loadGrades(grades);
+        Initializer.loadTests(tests);
+        Initializer.loadEvents(events);
         break;
     }
+  }
+
+  static void deleteTimeTable(){
+    for(Day day in TimeTable.week){
+      for(int i = 0; i < day.subjects.length; i++){
+        day.subjects[i] = null;
+      }
+    }
+  }
+
+  static Map getSubjectNames(Map idToName){
+    Map<String,List> out = {};
+    idToName.forEach((key, value) {
+      for(Subject subject in TimeTable.subjects){
+        if(value.toString().toLowerCase() == subject.name.toLowerCase()){
+          out[value] = [subject,key];
+        }
+        else {
+          out[value] = [null,key];
+        }
+      }
+
+    });
+    return out;
+  }
+
+  static Map convertSubjectNamesMap(Map<String,List> map){
+    Map<int,Subject> out = {};
+    map.forEach((key, value) {
+      out[value[0]] = value[1];
+    });
+    return out;
   }
 
   static List getHomework() {
