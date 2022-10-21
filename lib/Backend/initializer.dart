@@ -231,7 +231,13 @@ class Initializer {
       for (Map item in events) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
-        Event(time, item["name"], item["description"]);
+        if(item["isNote"] != null){
+          Note(time,item["description"]);
+        }
+        else{
+          Event(time, item["name"], item["description"]);
+        }
+
       }
     } else {
       BrainDebug.log("No Events");

@@ -46,3 +46,21 @@ class Event{
 
 
 }
+
+class Note extends Event{
+  Note(dueTime,content) : super(dueTime, "null", content){
+    TimeTable.addNote(this);
+
+  }
+
+  @override
+  Map toJSONEncodable() {
+
+    Map map = super.toJSONEncodable();
+    map["isNote"] = true;
+    return map;
+
+  }
+
+
+}

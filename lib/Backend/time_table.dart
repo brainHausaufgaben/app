@@ -23,6 +23,7 @@ class TimeTable {
   static List<Homework> deletedHomeworks = [];
   static List<Event> events = [];
   static List<Test> tests = [];
+  static List<Note> notes = [];
   static List<TimeInterval> lessonTimes = [
     TimeInterval(const TimeOfDay(hour: 8, minute: 00), const TimeOfDay(hour: 8, minute: 45)),
     TimeInterval(const TimeOfDay(hour: 8, minute: 45), const TimeOfDay(hour: 9, minute: 30)),
@@ -112,6 +113,16 @@ class TimeTable {
 
   static void removeEvent(Event event){
     if(events.contains(event))events.remove(event);
+    SaveSystem.saveEvents();
+  }
+
+  static void addNote(Note note){
+    notes.add(note);
+    SaveSystem.saveEvents();
+  }
+
+  static void removeNote(Note note){
+    if(notes.contains(note))notes.remove(note);
     SaveSystem.saveEvents();
   }
 
@@ -291,12 +302,15 @@ class TimeTable {
 
   }
   static List eventsToJSONEncodable(){
-    return events.map((item)
-    {
-      return item.toJSONEncodable();
-    }
-    ).toList();
 
+    List out = [];
+    for(Event event in events){
+      out.add(event);
+    }
+    for(Note note in notes){
+      out.add(note);
+    }
+    return out;
   }
   static List testsToJSONEncodable(){
     return tests.map((item)
