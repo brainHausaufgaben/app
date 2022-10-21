@@ -9,8 +9,12 @@ class Event{
 
 
   Event(this.dueTime,this.name,this.description){
-    TimeTable.addEvent(this);
+    addToTimeTable();
 
+  }
+
+  void addToTimeTable(){
+    TimeTable.addEvent(this);
   }
 
   void edit(DateTime? newDueTime, String? newName,String? newDescription){
@@ -48,10 +52,13 @@ class Event{
 }
 
 class Note extends Event{
-  Note(dueTime,content) : super(dueTime, "null", content){
-    TimeTable.addNote(this);
+  Note(dueTime,content) : super(dueTime, "null", content);
 
+  @override
+  void addToTimeTable() {
+    TimeTable.addNote(this);
   }
+
 
   @override
   Map toJSONEncodable() {
