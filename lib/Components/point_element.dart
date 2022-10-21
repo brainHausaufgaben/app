@@ -20,7 +20,6 @@ class PointElement extends StatefulWidget {
 }
 
 class _PointElementState extends  State<PointElement>{
-  
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
@@ -31,7 +30,7 @@ class _PointElementState extends  State<PointElement>{
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Flex(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             direction: Axis.horizontal,
             children: [
               Padding(

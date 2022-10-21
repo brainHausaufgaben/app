@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:brain_app/Backend/brain_debug.dart';
@@ -17,9 +16,6 @@ import 'package:file_saver/file_saver.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'grade.dart';
 
@@ -35,9 +31,7 @@ class ExportImport {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      File file = File(result.files.single.path!);
-      print(file);
-      load(jsonDecode(file.readAsStringSync()));
+      load(jsonDecode(String.fromCharCodes(result.files[0].bytes!)));
     }
   }
 
@@ -208,6 +202,10 @@ class ExportImport {
     }).toList();
   }
 
+  static void parseSubjects() {
+
+  }
+
   static List getGrades() {
     List<Grade> grades = List.from(GradingSystem.smallGrades)
       ..addAll(GradingSystem.bigGrades);
@@ -229,8 +227,8 @@ class ExportImport {
 
   static Future<void> writeFile(String name,bool timetable, bool homework, bool grades, bool events) async {
     Map data = getFile(timetable, homework, grades, events);
-    BrainDebug.log(data);
-    FileSaver.instance.saveFile("export.brain", Uint8List.fromList(data.toString().codeUnits), "ahh");
+
+    FileSaver.instance.saveFile("export.brain", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.TEXT);
   }
 }
 
