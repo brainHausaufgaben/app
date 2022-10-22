@@ -315,13 +315,14 @@ class TimeTable {
 
     List out = [];
     for(Event event in events){
-      out.add(event);
+      out.add(event.toJSONEncodable());
     }
     for(Note note in notes){
-      out.add(note);
+      out.add(note.toJSONEncodable());
     }
     return out;
   }
+
   static List testsToJSONEncodable(){
     return tests.map((item)
     {

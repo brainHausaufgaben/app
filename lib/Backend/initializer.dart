@@ -231,6 +231,7 @@ class Initializer {
       for (Map item in events) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
+        print(item);
         if(item["isNote"] != null){
           Note(time,item["description"]);
         }

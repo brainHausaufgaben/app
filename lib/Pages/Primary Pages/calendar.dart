@@ -7,6 +7,7 @@ import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/box.dart';
 import 'package:brain_app/Components/brain_dismissible.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
+import 'package:brain_app/Components/brain_notes_dialog.dart';
 import 'package:brain_app/Components/headline_wrap.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/Components/point_element.dart';
@@ -36,7 +37,16 @@ class _CalendarPage extends State<CalendarPage> {
     for (Note note in notes) {
       boxes.add(
         BrainButton(
-          action: () {},
+          action: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return BrainNotesDialog(
+                  note: note
+                );
+              }
+            );
+          },
           dense: true,
           centered: false,
           icon: Icons.edit,
@@ -151,6 +161,7 @@ class _CalendarPage extends State<CalendarPage> {
         }
       },
       child: PageTemplate(
+          pageSettings: const PageSettings(bottomPadding: 45),
           title: "Kalender",
           floatingActionButton: BrainMenuButton(
             defaultAction: () => NavigationHelper.pushNamed(context, "addEventPage"),
@@ -185,7 +196,7 @@ class _CalendarPage extends State<CalendarPage> {
                 );
               }
           ),
-          child: Wrap(
+          body: Wrap(
               runSpacing: 20,
               children: [
                 Box(
@@ -306,42 +317,10 @@ class _CalendarPage extends State<CalendarPage> {
                   headline: "Notizen",
                   action: TextButton(
                     onPressed: () {
-                      TextEditingController controller = TextEditingController();
                       showDialog(
                         context: context,
                         builder: (context) {
-                          return AlertDialog(
-                            contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
-                            title: Text("Neue Notiz", style: AppDesign.textStyles.alertDialogHeader),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: Text("Abbrechen")
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Note(CalendarPage.selectedDay, controller.text);
-                                    BrainApp.notifier.notifyOfChanges();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text("Hinzufügen")
-                              )
-                            ],
-                            content: Container(
-                              constraints: const BoxConstraints(minWidth: 350, maxHeight: 500, maxWidth: 350),
-                              decoration: BoxDecoration(
-                                color: AppDesign.colors.background,
-                                borderRadius: AppDesign.boxStyle.inputBorderRadius
-                              ),
-                              padding: const EdgeInsets.all(11),
-                              child: BrainTextField(
-                                autofocus: true,
-                                maxLines: 10,
-                                placeholder: "Inhalt",
-                                controller: controller,
-                              )
-                            )
-                          );
+                          return BrainNotesDialog();
                         }
                       );
                     },

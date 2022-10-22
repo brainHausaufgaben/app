@@ -24,7 +24,7 @@ class _NotificationSettings extends State<NotificationSettings> {
         title: "Benachrichtigungen",
         subtitle: "Version ${BrainApp.appVersion}",
         secondaryPage: true,
-        child: Wrap(
+        body: Wrap(
             runSpacing: 10,
             children: [
               SettingsEntry(

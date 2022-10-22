@@ -38,7 +38,7 @@ class _EditTestPage extends State<EditTestPage> {
     return PageTemplate(
       secondaryPage: true,
       title: "Test Bearbeiten",
-      child: Column(
+      body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

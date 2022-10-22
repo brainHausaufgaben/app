@@ -1,4 +1,3 @@
-import 'package:brain_app/Backend/notifications.dart';
 import 'package:brain_app/Backend/save_system.dart';
 import 'package:brain_app/Backend/time_table.dart';
 
@@ -10,7 +9,6 @@ class Event{
 
   Event(this.dueTime,this.name,this.description){
     addToTimeTable();
-
   }
 
   void addToTimeTable(){

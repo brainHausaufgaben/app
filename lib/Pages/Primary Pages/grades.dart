@@ -265,7 +265,7 @@ class _GradeOverview extends State<GradeOverview>{
               )
             ],
           ),
-          child: TimeTable.subjects.isEmpty
+          body: TimeTable.subjects.isEmpty
               ? Container()
               : HeadlineWrap(
               headline: "Alle Fächer",

@@ -141,7 +141,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
             )
           ]
       ),
-      child: HeadlineWrap(
+      body: HeadlineWrap(
         headline: 'Funktionen',
         children: getDeveloperOptions()
       )

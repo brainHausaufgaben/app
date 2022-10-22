@@ -114,7 +114,7 @@ class _HomeworkPage extends State<HomeworkPage> {
           ]
         )
       ),
-      child: Wrap(
+      body: Wrap(
         runSpacing: 10,
         children: [
           BrainTextField(

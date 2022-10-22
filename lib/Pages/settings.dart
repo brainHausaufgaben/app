@@ -34,7 +34,7 @@ class _SettingsPage extends State<SettingsPage> {
       pageSettings: const PageSettings(
         developerOptions: true
       ),
-      child: Wrap(
+      body: Wrap(
         runSpacing: 10,
         children: [
           SettingsEntry(

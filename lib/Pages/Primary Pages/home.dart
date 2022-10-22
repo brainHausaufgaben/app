@@ -297,7 +297,7 @@ class _HomePage extends State<HomePage>{
           }
         ),
         floatingHeader: getHeader(),
-        child: Wrap(
+        body: Wrap(
           runSpacing: 20,
           children: Initializer.initialized
             ? staggeredChildren()

@@ -83,7 +83,7 @@ class _TestPage extends State<EditEventPage> {
           ]
         )
       ),
-      child: eventSubpage
+      body: eventSubpage
     );
   }
 }

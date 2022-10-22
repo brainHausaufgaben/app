@@ -196,7 +196,7 @@ class _GradesPage extends State<GradesPage> {
             ],
           )
       ),
-      child: Wrap(
+      body: Wrap(
           runSpacing: 10,
           children: [
             Flex(

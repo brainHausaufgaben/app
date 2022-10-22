@@ -243,7 +243,7 @@ class _TimeTablePage extends State<TimeTablePage> with TickerProviderStateMixin 
           )
         ),
         // TODO: Very dumm aber es geht im moment
-        child: SizedBox(
+        body: SizedBox(
           height: 650,
           child: NotificationListener<OverscrollNotification> (
             onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,

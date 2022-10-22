@@ -188,7 +188,7 @@ class _GradesPerSubjectPage extends State<GradesPerSubjectPage>{
               child: Icon(Icons.edit, color: AppDesign.colors.text),
             )
         ),
-        child: Padding(
+        body: Padding(
           padding: const EdgeInsets.only(bottom: 20),
           child: Wrap(
             runSpacing: 20,

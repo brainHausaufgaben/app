@@ -73,7 +73,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
         title: "Design & Ansicht",
         subtitle: "Version ${BrainApp.appVersion}",
         secondaryPage: true,
-        child: Wrap(
+        body: Wrap(
           runSpacing: 10,
           children: [
             SettingsEntry(

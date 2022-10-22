@@ -408,7 +408,7 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
                   ]
               )
           ),
-          child: previousSubject == previousLinkedSubject 
+          body: previousSubject == previousLinkedSubject 
               ? SizedBox(
                 height: 300,
                 child: NotificationListener<OverscrollNotification> (

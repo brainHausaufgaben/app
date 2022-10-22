@@ -60,7 +60,7 @@ class _SubjectOverview extends State<SubjectOverview> {
         withEntries: false,
       ),
       secondaryPage: true,
-      child: Wrap(
+      body: Wrap(
         runSpacing: 20,
         children: [
           if (TimeTable.linkedSubjects.isNotEmpty) HeadlineWrap(

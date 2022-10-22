@@ -149,7 +149,7 @@ class _EventsPage extends State<AddEventsPage> with SingleTickerProviderStateMix
                 ]
             )
         ),
-        child: SizedBox(
+        body: SizedBox(
           height: 400,
           child: NotificationListener<OverscrollNotification> (
             onNotification: (notification) => notification.metrics.axisDirection != AxisDirection.down,
