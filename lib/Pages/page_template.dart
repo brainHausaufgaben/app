@@ -85,7 +85,7 @@ class PageTemplate extends StatelessWidget {
                         color: AppDesign.colors.background.withOpacity(0.8),
                         curve: Curves.ease,
                         size: 15,
-                        child: ListView (
+                        child: ListView(
                             padding: EdgeInsets.only(top: 10, bottom: 25 + pageSettings.bottomPadding),
                             children: [
                               Row(

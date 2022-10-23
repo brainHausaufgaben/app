@@ -9,9 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
+import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'brain_scroll_shadow.dart';
 
 class BrainTitleButton extends StatelessWidget {
   const BrainTitleButton({
@@ -216,6 +219,13 @@ class BrainDropdown<ItemType> extends StatefulWidget {
 class _BrainDropdown extends State<BrainDropdown> {
   late List<bool> radioValues;
   bool isOpen = false;
+  ScrollController controller = ScrollController();
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -279,22 +289,26 @@ class _BrainDropdown extends State<BrainDropdown> {
                         child: Text("Abbrechen", style: TextStyle(color: AppDesign.colors.primary)),
                         onPressed: () {
                           Navigator.pop(context);
-                        },
+                        }
                       )
-                    ],
+                    ]
                   )
                 ],
                 backgroundColor: AppDesign.colors.secondaryBackground,
                 title: Text(widget.dialogTitle, style: AppDesign.textStyles.alertDialogHeader),
                 content: Container(
                   constraints: const BoxConstraints(maxHeight: 400),
-                  child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: getButtons(context),
-                      )
+                  child: BrainScrollShadow(
+                    controller: controller,
+                    child: SingleChildScrollView(
+                        controller: controller,
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: getButtons(context),
+                        )
+                    ),
                   )
                 )
               );

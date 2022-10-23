@@ -3,6 +3,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/todo.dart';
 import 'package:brain_app/Backend/todo_manager.dart';
 import 'package:brain_app/Components/brain_confirmation_dialog.dart';
+import 'package:brain_app/Components/brain_scroll_shadow.dart';
 import 'package:flutter/material.dart';
 
 import 'brain_inputs.dart';
@@ -16,6 +17,7 @@ class ToDoDialog extends StatefulWidget {
 
 class _ToDoDialog extends State<ToDoDialog> {
   TextEditingController controller = TextEditingController();
+  ScrollController scrollController = ScrollController();
   ToDoImportance importance = ToDoImportance.mid;
 
   List<Widget> getTodos() {
@@ -52,6 +54,7 @@ class _ToDoDialog extends State<ToDoDialog> {
   @override
   void dispose() {
     controller.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -89,142 +92,146 @@ class _ToDoDialog extends State<ToDoDialog> {
       ),
       content: ConstrainedBox(
           constraints: const BoxConstraints(minWidth: 350, maxHeight: 500, maxWidth: 350),
-          child: SingleChildScrollView(
-          child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                    decoration: BoxDecoration(
-                        color: AppDesign.colors.background,
-                        borderRadius: AppDesign.boxStyle.inputBorderRadius
-                    ),
-                    margin: const EdgeInsets.only(bottom: 10),
-                    padding: const EdgeInsets.all(11),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Flex(
-                            direction: Axis.horizontal,
-                            children: [
-                              Expanded(
-                                  child: BrainTextField(
-                                      placeholder: "Neues Todo",
-                                      controller: controller
-                                  )
-                              ),
-                              Padding(
-                                  padding: const EdgeInsets.only(left: 10),
-                                  child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          backgroundColor: AppDesign.colors.primary,
-                                          foregroundColor: AppDesign.colors.contrast,
-                                          padding: const EdgeInsets.all(8),
-                                          minimumSize: Size.zero
-                                      ),
-                                      child: const Icon(Icons.keyboard_arrow_right_rounded),
-                                      onPressed: () {
-                                        if (controller.text.isEmpty) return;
-                                        setState(() {
-                                          ToDoManager.addToDo(
-                                              ToDoItem(controller.text, importance)
-                                          );
-                                          controller.clear();
-                                        });
-                                      }
-                                  )
-                              )
-                            ]
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 10),
-                          child: Wrap(
-                              runSpacing: 5,
-                              spacing: 7,
-                              direction: Axis.horizontal,
+          child: BrainScrollShadow(
+            controller: scrollController,
+            child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          decoration: BoxDecoration(
+                              color: AppDesign.colors.background,
+                              borderRadius: AppDesign.boxStyle.inputBorderRadius
+                          ),
+                          margin: const EdgeInsets.only(bottom: 10),
+                          padding: const EdgeInsets.all(11),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  clipBehavior: Clip.antiAlias,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: importance == ToDoImportance.high
-                                        ? AppDesign.colors.primary
-                                        : AppDesign.colors.secondaryBackground
-                                  ),
-                                  child: TextButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        importance = ToDoImportance.high;
-                                      });
-                                    },
-                                    child: Text(
-                                        "Wichtig",
-                                        style: TextStyle(
-                                            color: importance == ToDoImportance.high
-                                                ? AppDesign.colors.contrast
-                                                : AppDesign.colors.text
-                                        )
-                                    )
-                                  )
-                                ),
-                                Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(100),
-                                        color: importance == ToDoImportance.mid
-                                            ? AppDesign.colors.primary
-                                            : AppDesign.colors.secondaryBackground
-                                    ),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          importance = ToDoImportance.mid;
-                                        });
-                                      },
-                                      child: Text(
-                                          "Mittel",
-                                          style: TextStyle(
-                                              color: importance == ToDoImportance.mid
-                                                  ? AppDesign.colors.contrast
-                                                  : AppDesign.colors.text
+                                Flex(
+                                    direction: Axis.horizontal,
+                                    children: [
+                                      Expanded(
+                                          child: BrainTextField(
+                                              placeholder: "Neues Todo",
+                                              controller: controller
+                                          )
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.only(left: 10),
+                                          child: TextButton(
+                                              style: TextButton.styleFrom(
+                                                  backgroundColor: AppDesign.colors.primary,
+                                                  foregroundColor: AppDesign.colors.contrast,
+                                                  padding: const EdgeInsets.all(8),
+                                                  minimumSize: Size.zero
+                                              ),
+                                              child: const Icon(Icons.keyboard_arrow_right_rounded),
+                                              onPressed: () {
+                                                if (controller.text.isEmpty) return;
+                                                setState(() {
+                                                  ToDoManager.addToDo(
+                                                      ToDoItem(controller.text, importance)
+                                                  );
+                                                  controller.clear();
+                                                });
+                                              }
                                           )
                                       )
-                                    )
+                                    ]
                                 ),
-                                Container(
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(100),
-                                        color: importance == ToDoImportance.low
-                                            ? AppDesign.colors.primary
-                                            : AppDesign.colors.secondaryBackground
-                                    ),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          importance = ToDoImportance.low;
-                                        });
-                                      },
-                                      child: Text(
-                                          "Unwichtig",
-                                          style: TextStyle(
-                                              color: importance == ToDoImportance.low
-                                                  ? AppDesign.colors.contrast
-                                                  : AppDesign.colors.text
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: Wrap(
+                                        runSpacing: 5,
+                                        spacing: 7,
+                                        direction: Axis.horizontal,
+                                        children: [
+                                          Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(100),
+                                                  color: importance == ToDoImportance.high
+                                                      ? AppDesign.colors.primary
+                                                      : AppDesign.colors.secondaryBackground
+                                              ),
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      importance = ToDoImportance.high;
+                                                    });
+                                                  },
+                                                  child: Text(
+                                                      "Wichtig",
+                                                      style: TextStyle(
+                                                          color: importance == ToDoImportance.high
+                                                              ? AppDesign.colors.contrast
+                                                              : AppDesign.colors.text
+                                                      )
+                                                  )
+                                              )
+                                          ),
+                                          Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(100),
+                                                  color: importance == ToDoImportance.mid
+                                                      ? AppDesign.colors.primary
+                                                      : AppDesign.colors.secondaryBackground
+                                              ),
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      importance = ToDoImportance.mid;
+                                                    });
+                                                  },
+                                                  child: Text(
+                                                      "Mittel",
+                                                      style: TextStyle(
+                                                          color: importance == ToDoImportance.mid
+                                                              ? AppDesign.colors.contrast
+                                                              : AppDesign.colors.text
+                                                      )
+                                                  )
+                                              )
+                                          ),
+                                          Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(100),
+                                                  color: importance == ToDoImportance.low
+                                                      ? AppDesign.colors.primary
+                                                      : AppDesign.colors.secondaryBackground
+                                              ),
+                                              child: TextButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      importance = ToDoImportance.low;
+                                                    });
+                                                  },
+                                                  child: Text(
+                                                      "Unwichtig",
+                                                      style: TextStyle(
+                                                          color: importance == ToDoImportance.low
+                                                              ? AppDesign.colors.contrast
+                                                              : AppDesign.colors.text
+                                                      )
+                                                  )
+                                              )
                                           )
-                                      )
+                                        ]
                                     )
                                 )
                               ]
                           )
-                        )
-                      ]
-                    )
-                ),
-                ...getTodos()
-              ]
+                      ),
+                      ...getTodos()
+                    ]
+                )
+            )
           )
-        )
       )
     );
   }

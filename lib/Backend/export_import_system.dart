@@ -9,8 +9,10 @@ import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/subject.dart';
 import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
+import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
+import 'package:brain_app/main.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
@@ -151,8 +153,19 @@ class ExportImport {
         );
       }
       else{
-        load(decodedData);
-        //TODO: dialog machen der sagt das dein stundenplan überschrieben wird ok ist das was x3
+        showDialog(
+          context: NavigationHelper.rootKey.currentContext!,
+          builder: (context) {
+            return BrainConfirmationDialog(
+              description: "Dein Stundenplan wird überschrieben wenn die diese Datei importierst",
+              onCancel: () => Navigator.of(context).pop(),
+              onContinue: () {
+                load(decodedData);
+                Navigator.of(context).pop();
+              }
+            );
+          }
+        );
       }
     }
   }
@@ -228,7 +241,6 @@ class ExportImport {
     String type = map["type"];
     switch (type) {
       case "all":
-        print("sus");
         dynamic timetable = map["timetable"];
         dynamic subjects = map["subjects"];
         dynamic linkedSubjects = map["linked"];
@@ -254,24 +266,24 @@ class ExportImport {
         }
 
         deleteTimeTable();
-        Initializer.loadTimeTable(timetable);
         Initializer.loadSubjects(subjects);
         Initializer.loadLinkedSubjects(linkedSubjects);
+        Initializer.loadTimeTable(timetable);
         Initializer.loadHomework(homework);
         Initializer.loadGrades(grades);
         Initializer.loadTests(tests);
         Initializer.loadEvents(events);
-        //TODO: machen das sachen refreshen du weist sicher was ich mein
+        BrainApp.notifier.notifyOfChanges();
         break;
       case "tto":
         dynamic timetable = map["timetable"];
         dynamic subjects = map["subjects"];
         dynamic linkedSubjects = map["linked"];
         deleteTimeTable();
-        Initializer.loadTimeTable(timetable);
         Initializer.loadSubjects(subjects);
         Initializer.loadLinkedSubjects(linkedSubjects);
-        //TODO: machen das sachen refreshen du weist sicher was ich mein
+        Initializer.loadTimeTable(timetable);
+        BrainApp.notifier.notifyOfChanges();
         break;
       case "tro":
         dynamic homework = map["homework"];
