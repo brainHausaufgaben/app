@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
+import 'dart:html';
 
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/design.dart';
-import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
@@ -18,7 +17,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
 
 import 'grade.dart';
 
@@ -89,8 +87,6 @@ class ExportImport {
       Map decodedData = {};
       if (kIsWeb) {
         decodedData = jsonDecode(String.fromCharCodes(result.files.first.bytes!));
-      } else {
-        decodedData = jsonDecode(String.fromCharCodes(await File(result.files.first.path!).readAsBytes()));
       }
       Map names = getSubjectNames(decodedData["idToName"]);
 
@@ -101,6 +97,7 @@ class ExportImport {
             context: NavigationHelper.rootKey.currentContext!,
             builder: (context) {
               return AlertDialog(
+                backgroundColor: AppDesign.colors.secondaryBackground,
                   title: StatefulBuilder(
                       builder: (context, setBuilderState) {
                         pageController.addListener(() {
@@ -214,8 +211,10 @@ class ExportImport {
         }
       }
       if(grades){
-        List<Grade> grades = GradingSystem.bigGrades;
-        grades.addAll(GradingSystem.smallGrades);
+        List<Grade> grades = [
+          ...GradingSystem.bigGrades,
+          ...GradingSystem.smallGrades
+        ];
         for(Grade grade in grades){
           Subject subject = grade.subject;
           idToName[subject.id.toString()] = subject.name;
@@ -386,7 +385,7 @@ class ExportImport {
     if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
       FileSaver.instance.saveAs("export", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", MimeType.OTHER);
     } else {
-      FileSaver.instance.saveFile("export.brain", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.TEXT);
+      FileSaver.instance.saveFile("export", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.OTHER);
     }
   }
 }

@@ -9,12 +9,12 @@ class BrainDebug{
 
   static LocalStorage localStorage = LocalStorage("brain_app_logs");
 
-  static void log(dynamic text){
+  static void log(dynamic text, {bool forcePrint = false}){
     if(BrainApp.preferences["showLogsOnScreen"]){
       BrainToast toast = BrainToast(text: text.toString());
       toast.show();
     }
-    if (kDebugMode) {
+    if (kDebugMode || forcePrint) {
       print(text);
     }
     if(BrainApp.preferences["saveLogs"]){

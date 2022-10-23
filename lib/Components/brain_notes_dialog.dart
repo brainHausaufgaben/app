@@ -21,6 +21,7 @@ class BrainNotesDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+        backgroundColor: AppDesign.colors.secondaryBackground,
         contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 14),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

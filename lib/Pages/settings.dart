@@ -275,8 +275,9 @@ class _SettingsPage extends State<SettingsPage> {
                       bool events = false;
 
                       return AlertDialog(
-                        title: Text("Export", style: AppDesign.textStyles.alertDialogHeader),
-                        content: StatefulBuilder(
+                          title: Text("Export", style: AppDesign.textStyles.alertDialogHeader),
+                          backgroundColor: AppDesign.colors.secondaryBackground,
+                          content: StatefulBuilder(
                           builder: (context, setBuilderState) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
