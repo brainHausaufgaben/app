@@ -328,10 +328,14 @@ class ExportImport {
     }).toList();
   }
 
-  static Future<void> writeFile(String name,bool timetable, bool homework, bool grades, bool events) async {
+  static void writeFile(String name,bool timetable, bool homework, bool grades, bool events) {
     Map data = getFile(timetable, homework, grades, events);
 
-    FileSaver.instance.saveFile("export.brain", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.TEXT);
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      FileSaver.instance.saveAs("export", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", MimeType.OTHER);
+    } else {
+      FileSaver.instance.saveFile("export.brain", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.TEXT);
+    }
   }
 }
 
