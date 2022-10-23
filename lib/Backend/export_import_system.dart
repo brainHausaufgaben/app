@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+import 'dart:io';
 
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/design.dart';
@@ -87,6 +87,8 @@ class ExportImport {
       Map decodedData = {};
       if (kIsWeb) {
         decodedData = jsonDecode(String.fromCharCodes(result.files.first.bytes!));
+      } else {
+        decodedData = jsonDecode(String.fromCharCodes(await File(result.files.first.path!).readAsBytes()));
       }
       Map names = getSubjectNames(decodedData["idToName"]);
 
