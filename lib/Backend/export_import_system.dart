@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/design.dart';
@@ -85,7 +86,12 @@ class ExportImport {
     FilePickerResult? result = await FilePicker.platform.pickFiles();
 
     if (result != null) {
-      Map decodedData = jsonDecode(String.fromCharCodes(result.files[0].bytes!));
+      Map decodedData = {};
+      if (kIsWeb) {
+        decodedData = jsonDecode(String.fromCharCodes(result.files.first.bytes!));
+      } else {
+        decodedData = jsonDecode(String.fromCharCodes(await File(result.files.first.path!).readAsBytes()));
+      }
       Map names = getSubjectNames(decodedData["idToName"]);
 
       PageController pageController = PageController();
@@ -117,8 +123,7 @@ class ExportImport {
                   actions: [
                     TextButton(
                         onPressed: () {
-                          if (pageController.page == 0) Navigator.of(context)
-                              .pop();
+                          if (pageController.page == 0) Navigator.of(context).pop();
                           pageController.previousPage(
                               duration: const Duration(milliseconds: 200),
                               curve: Curves.easeInOut);
