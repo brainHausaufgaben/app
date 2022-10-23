@@ -214,8 +214,7 @@ class ExportImport {
         }
       }
       if(grades){
-        List<Grade> grades = GradingSystem.bigGrades;
-        grades.addAll(GradingSystem.smallGrades);
+        List<Grade> grades = List.from(GradingSystem.smallGrades)..addAll(GradingSystem.bigGrades);
         for(Grade grade in grades){
           Subject subject = grade.subject;
           idToName[subject.id.toString()] = subject.name;
