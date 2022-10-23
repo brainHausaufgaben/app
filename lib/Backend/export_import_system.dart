@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/design.dart';
+import 'package:brain_app/Backend/event.dart';
 import 'package:brain_app/Backend/grading_system.dart';
+import 'package:brain_app/Backend/homework.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
@@ -85,56 +88,72 @@ class ExportImport {
 
       PageController pageController = PageController();
       List<Widget> pages = getImportPages(names);
-
-      showDialog(
-        context: NavigationHelper.rootKey.currentContext!,
-        builder: (context) {
-          return AlertDialog(
-            title: StatefulBuilder(
-              builder: (context, setBuilderState) {
-                pageController.addListener(() {
-                  setBuilderState(() {});
-                });
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Fächer Zuweisung", style: AppDesign.textStyles.alertDialogHeader),
-                    Text("${pageController.hasClients ? pageController.page!.round() + 1 : 1}/${pages.length}", style: AppDesign.textStyles.alertDialogHeader)
-                  ]
-                );
-              }
-            ),
-            actionsAlignment: MainAxisAlignment.spaceBetween,
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    if (pageController.page == 0) Navigator.of(context).pop();
-                    pageController.previousPage(duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
-                  },
-                  child: Text("Zurück")
-              ),
-              TextButton(
-                  onPressed: () {
-                    if (pageController.page == pages.length - 1) {
-                      load(decodedData, loadSubjectToSubject: convertSubjectNamesMap(names));
-                      Navigator.of(context).pop();
-                    }
-                    pageController.nextPage(duration: const Duration(milliseconds: 200), curve: Curves.easeInOut);
-                  },
-                  child: Text("Weiter")
-              )
-            ],
-            content: SizedBox(
-              width: 250,
-              height: 180,
-              child: PageView(
-                controller: pageController,
-                children: pages,
-              )
-            )
-          );
-        }
-      );
+      if(decodedData["type"] == "tro") {
+        showDialog(
+            context: NavigationHelper.rootKey.currentContext!,
+            builder: (context) {
+              return AlertDialog(
+                  title: StatefulBuilder(
+                      builder: (context, setBuilderState) {
+                        pageController.addListener(() {
+                          setBuilderState(() {});
+                        });
+                        return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Fächer Zuweisung",
+                                  style: AppDesign.textStyles
+                                      .alertDialogHeader),
+                              Text("${pageController.hasClients ? pageController
+                                  .page!.round() + 1 : 1}/${pages.length}",
+                                  style: AppDesign.textStyles.alertDialogHeader)
+                            ]
+                        );
+                      }
+                  ),
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          if (pageController.page == 0) Navigator.of(context)
+                              .pop();
+                          pageController.previousPage(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeInOut);
+                        },
+                        child: Text("Zurück")
+                    ),
+                    TextButton(
+                        onPressed: () {
+                          if (pageController.page == pages.length - 1) {
+                            load(decodedData,
+                                loadSubjectToSubject: convertSubjectNamesMap(
+                                    names));
+                            Navigator.of(context).pop();
+                          }
+                          pageController.nextPage(
+                              duration: const Duration(milliseconds: 200),
+                              curve: Curves.easeInOut);
+                        },
+                        child: Text("Weiter")
+                    )
+                  ],
+                  content: SizedBox(
+                      width: 250,
+                      height: 180,
+                      child: PageView(
+                        controller: pageController,
+                        children: pages,
+                      )
+                  )
+              );
+            }
+        );
+      }
+      else{
+        load(decodedData);
+        //TODO: dialog machen der sagt das dein stundenplan überschrieben wird ok ist das was x3
+      }
     }
   }
 
@@ -164,8 +183,25 @@ class ExportImport {
       linkedSubjectData = TimeTable.linkedSubjectsToJSONEncodable();
     }
     else{
-      for(Subject subject in TimeTable.subjects){
-        idToName[subject.id.toString()] = subject.name;
+      if(homework){
+        for(Homework homework in TimeTable.homeworks){
+            Subject subject = homework.subject;
+            idToName[subject.id.toString()] = subject.name;
+        }
+      }
+      if(events){
+        for(Test test in TimeTable.tests){
+          Subject subject = test.subject;
+          idToName[subject.id.toString()] = subject.name;
+        }
+      }
+      if(grades){
+        List<Grade> grades = GradingSystem.bigGrades;
+        grades.addAll(GradingSystem.smallGrades);
+        for(Grade grade in grades){
+          Subject subject = grade.subject;
+          idToName[subject.id.toString()] = subject.name;
+        }
       }
     }
     if (homework) homeworkData = getHomework();
@@ -190,9 +226,9 @@ class ExportImport {
 
   static void load(Map map, {Map<int, Subject>? loadSubjectToSubject}) {
     String type = map["type"];
-    LocalStorage storage = LocalStorage("brain_app");
     switch (type) {
       case "all":
+        print("sus");
         dynamic timetable = map["timetable"];
         dynamic subjects = map["subjects"];
         dynamic linkedSubjects = map["linked"];
@@ -225,7 +261,7 @@ class ExportImport {
         Initializer.loadGrades(grades);
         Initializer.loadTests(tests);
         Initializer.loadEvents(events);
-        //TODO: das geht jetzt villeciht aber bisschen testen oder so
+        //TODO: machen das sachen refreshen du weist sicher was ich mein
         break;
       case "tto":
         dynamic timetable = map["timetable"];
@@ -235,6 +271,7 @@ class ExportImport {
         Initializer.loadTimeTable(timetable);
         Initializer.loadSubjects(subjects);
         Initializer.loadLinkedSubjects(linkedSubjects);
+        //TODO: machen das sachen refreshen du weist sicher was ich mein
         break;
       case "tro":
         dynamic homework = map["homework"];
@@ -305,9 +342,7 @@ class ExportImport {
     }).toList();
   }
 
-  static void parseSubjects() {
 
-  }
 
   static List getGrades() {
     List<Grade> grades = List.from(GradingSystem.smallGrades)
