@@ -70,7 +70,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return PageTemplate(
-        title: "Design & Ansicht",
+        title: "Design & Verhalten",
         subtitle: "Version ${BrainApp.appVersion}",
         secondaryPage: true,
         body: Wrap(
@@ -134,6 +134,21 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                   state: BrainApp.preferences["showLessonEndTimes"],
                 )
               ]
+            ),
+            SettingsEntry(
+              children: [
+                SettingsSwitchButton(
+                  text: "Automatisches Löschen vergangener Hausaufgaben",
+                  description: "Alle Hausaufgaben vor dem Tag an dem die App gestarted wird werden gelöscht",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("deleteOldHomework", !BrainApp.preferences["deleteOldHomework"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["deleteOldHomework"],
+                )
+              ]
             )
           ]
         )
@@ -154,7 +169,7 @@ class IconRadio extends StatelessWidget {
   final Design design;
 
   String colorToString(Color color) {
-    return "#" + color.value.toRadixString(16);
+    return "#${color.value.toRadixString(16)}";
   }
 
   Widget getSvgIcon(BuildContext context) {
@@ -202,8 +217,8 @@ class IconRadio extends StatelessWidget {
         ),
         child: Center(
           child: getSvgIcon(context),
-        ),
-      ),
+        )
+      )
     );
   }
 }

@@ -48,7 +48,7 @@ class _SettingsPage extends State<SettingsPage> {
           SettingsEntry(
             children: [
               SettingsNavigatorButton(
-                text: "Design & Ansicht",
+                text: "Design & Verhalten",
                 action: () => NavigationHelper.pushNamed(context, "designSettings")
               ),
               SettingsNavigatorButton(

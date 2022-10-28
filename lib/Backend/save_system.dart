@@ -30,7 +30,7 @@ class SaveSystem{
    static void saveHomework(){
     storage.setItem("homework", TimeTable.homeworkToJSONEncodable());
    }
-   static  getHomework(){
+   static getHomework(){
      return storage.getItem("homework");
    }
 

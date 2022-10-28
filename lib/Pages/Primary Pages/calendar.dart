@@ -94,7 +94,7 @@ class _CalendarPage extends State<CalendarPage> {
           child: PointElement(
             color: tests[i].subject.color,
             primaryText: tests[i].subject.name,
-            child: Text(tests[i].description,
+            child: tests[i].description.isEmpty ? null : Text(tests[i].description,
               style: AppDesign.textStyles.pointElementSecondary),
           )
         )

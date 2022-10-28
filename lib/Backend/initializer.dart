@@ -9,6 +9,7 @@ import 'package:brain_app/Backend/test.dart';
 import 'package:brain_app/Backend/time_interval.dart';
 import 'package:brain_app/Backend/time_table.dart';
 import 'package:brain_app/Backend/todo.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:csv/csv.dart';
@@ -207,6 +208,8 @@ class Initializer {
   }
 
   static void loadHomework(dynamic homework) {
+    int deletedHomework = 0;
+
     if (homework != null) {
       for (Map item in homework) {
         List t = item["dueTime"];
@@ -214,15 +217,25 @@ class Initializer {
         int id = item["SubjectID"];
         Subject? subject = TimeTable.getSubject(id);
         if (subject != null) {
-          if (TimeTable.getSubject(id)!
-                  .getTime(TimeTable.getDayFromDate(time)) !=
-              null) Homework(TimeTable.getSubject(id)!, time, item["name"]);
+          if (!(BrainApp.preferences["deleteOldHomework"] && time.isBefore(DateTime.now()))) {
+            Homework(TimeTable.getSubject(id)!, time, item["name"]);
+          } else {
+            deletedHomework++;
+          }
         } else {
           BrainDebug.log("loadData() Homework Error: Fach existiert nicht!");
         }
       }
     } else {
       BrainDebug.log("No Homework");
+    }
+
+    if (deletedHomework > 0) {
+      SaveSystem.saveHomework();
+      BrainToast toast = BrainToast(text: "${deletedHomework == 1
+          ? "1 Hausaufgabe wurde"
+          : "$deletedHomework Hausaufgaben wurden"} gelöscht");
+      toast.show();
     }
   }
 
@@ -231,7 +244,6 @@ class Initializer {
       for (Map item in events) {
         List t = item["dueTime"];
         DateTime time = DateTime(t[0], t[1], t[2]);
-        print(item);
         if(item["isNote"] != null){
           Note(time,item["description"]);
         }
