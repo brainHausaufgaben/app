@@ -87,21 +87,21 @@ class GradesBox extends StatelessWidget {
                           BrainDropdownEntry(
                               value: TimeSelectors.firstSemester,
                               child: Text(
-                                "1. Semester",
+                                "1. Teiljahr",
                                 style: AppDesign.textStyles.input,
                               )
                           ),
                           BrainDropdownEntry(
                               value: TimeSelectors.secondSemester,
                               child: Text(
-                                "2. Semester",
+                                "2. Teiljahr",
                                 style: AppDesign.textStyles.input,
                               )
                           ),
                           if (!GradingSystem.isAdvancedLevel) BrainDropdownEntry(
                               value: TimeSelectors.thirdSemester,
                               child: Text(
-                                "3. Semester",
+                                "3. Teiljahr",
                                 style: AppDesign.textStyles.input,
                               )
                           )

@@ -44,7 +44,8 @@ class BrainApp extends StatefulWidget {
     "currentYear" : 10,
     "manuelClickerScore" : 0,
     "showLessonEndTimes" : false,
-    "deleteOldHomework" : false
+    "deleteOldHomework" : false,
+    "vibration": true
   };
 
   static void clearPreferences() async {

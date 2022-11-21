@@ -241,6 +241,8 @@ class TimeTable {
 
 
 
+
+
   static List<Homework> getHomework(DateTime date,Subject subject){
     List<Homework> homework = [];
     for(Homework hom in homeworks){

@@ -1,3 +1,4 @@
+import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/theming_utilities.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
@@ -147,6 +148,17 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
                     });
                   },
                   state: BrainApp.preferences["deleteOldHomework"],
+                ),
+                if(BrainVibrations.canVibrate)SettingsSwitchButton(
+                  text: "Vibrationen",
+                  description: "Manche Aktionen machen Vibrationen",
+                  action: () {
+                    setState(() {
+                      BrainApp.updatePreference("vibration", !BrainApp.preferences["vibration"]);
+                      BrainApp.notifier.notifyOfChanges();
+                    });
+                  },
+                  state: BrainApp.preferences["vibration"],
                 )
               ]
             )

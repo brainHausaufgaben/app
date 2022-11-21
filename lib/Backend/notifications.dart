@@ -96,7 +96,7 @@ class CustomNotifications{
   static void testNotification(Test test) async{
     if(!testNotificationsEnabled || !notificationsPossible) return;
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
-    int day =  test.dueTime.subtract(Duration(days: DateTime.now().day)).day;
+    int day =  test.dueTime.difference(DateTime.now()).inDays;
     String title = "Test in ${test.subject.name} in $day Tagen";
     if(day == 0) title = "Test in ${test.subject.name} Heute";
     String body = test.description;

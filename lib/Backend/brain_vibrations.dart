@@ -1,5 +1,7 @@
 import 'package:vibration/vibration.dart';
 
+import '../main.dart';
+
 class BrainVibrations{
   static bool canVibrate = false;
   static bool hasCustom = false;
@@ -12,10 +14,11 @@ class BrainVibrations{
   }
 
   static void defaultVibrate(){
-    if(canVibrate) Vibration.vibrate();
+    if(canVibrate && BrainApp.preferences["vibration"]) Vibration.vibrate();
   }
 
   static void successVibrate(){
+    if(!BrainApp.preferences["vibration"])return;
     if(!canVibrate)return;
     if(!hasCustom ||!hasAmplitude) {
       defaultVibrate();
@@ -25,6 +28,7 @@ class BrainVibrations{
   }
 
   static void errorVibrate() async{
+    if(!BrainApp.preferences["vibration"])return;
     if(!canVibrate)return;
     if(!hasCustom ||!hasAmplitude) {
       defaultVibrate();

@@ -127,7 +127,7 @@ class _GradesPage extends State<GradesPage> {
                         BrainVibrations.errorVibrate();
                         return;
                       } else if (semester == null) {
-                        BrainToast toast = BrainToast(text: "Du hast kein Semester angegeben!");
+                        BrainToast toast = BrainToast(text: "Du hast kein Teiljahr angegeben!");
                         toast.show();
                         BrainVibrations.errorVibrate();
                         return;
@@ -257,20 +257,20 @@ class _GradesPage extends State<GradesPage> {
               },
             ),
             BrainDropdown.fromMap(
-              dialogTitle: "Semester des Jahres",
-              defaultText: "Semester des Jahres",
+              dialogTitle: "Teiljahr",
+              defaultText: "Teiljahr",
               currentValue: semester,
               entries: {
                 1 : Text(
-                    "1. Semester",
+                    "1. Teiljahr",
                     style: AppDesign.textStyles.input
                 ),
                 2 : Text(
-                    "2. Semester",
+                    "2. Teiljahr",
                     style: AppDesign.textStyles.input
                 ),
                 if (!GradingSystem.isAdvancedLevel) 3 : Text(
-                    "3. Semester",
+                    "3. Teiljahr",
                     style: AppDesign.textStyles.input
                 )
               },

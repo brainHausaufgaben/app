@@ -8,17 +8,17 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new GradleException("uhh uhh ehm uh uhhh")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '3'
+    flutterVersionCode = '5'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.2'
+    flutterVersionName = '1.3'
 }
 
 apply plugin: 'com.android.application'
@@ -34,7 +34,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("key.jks")
+            storeFile file("C:/Users/theha/desktop/key.jks")
             storePassword "123456"
             keyAlias "key0"
             keyPassword "123456"
