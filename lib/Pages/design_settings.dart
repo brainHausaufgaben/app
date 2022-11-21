@@ -139,7 +139,7 @@ class _DesignSettingsPage extends State<DesignSettingsPage> {
               children: [
                 SettingsSwitchButton(
                   text: "Automatisches Löschen vergangener Hausaufgaben",
-                  description: "Alle Hausaufgaben vor dem Tag an dem die App gestarted wird werden gelöscht",
+                  description: "Alle schon vergangenen Hausaufgaben werden automatisch gelöscht",
                   action: () {
                     setState(() {
                       BrainApp.updatePreference("deleteOldHomework", !BrainApp.preferences["deleteOldHomework"]);

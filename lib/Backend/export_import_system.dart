@@ -1,6 +1,4 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:brain_app/Backend/Filesystem/filesystem_manager.dart';
 import 'package:brain_app/Backend/day.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grading_system.dart';
@@ -13,9 +11,6 @@ import 'package:brain_app/Components/brain_confirmation_dialog.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:file_saver/file_saver.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'grade.dart';
@@ -81,15 +76,9 @@ class ExportImport {
   }
 
   static void userSelectedFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    Map decodedData = await FilesystemManager.getFile();
 
-    if (result != null) {
-      Map decodedData = {};
-      if (kIsWeb) {
-        decodedData = jsonDecode(String.fromCharCodes(result.files.first.bytes!));
-      } else {
-        decodedData = jsonDecode(String.fromCharCodes(await File(result.files.first.path!).readAsBytes()));
-      }
+    if (decodedData.isNotEmpty) {
       Map names = getSubjectNames(decodedData["idToName"]);
 
       PageController pageController = PageController();
@@ -99,7 +88,7 @@ class ExportImport {
             context: NavigationHelper.rootKey.currentContext!,
             builder: (context) {
               return AlertDialog(
-                backgroundColor: AppDesign.colors.secondaryBackground,
+                  backgroundColor: AppDesign.colors.secondaryBackground,
                   title: StatefulBuilder(
                       builder: (context, setBuilderState) {
                         pageController.addListener(() {
@@ -158,17 +147,17 @@ class ExportImport {
       }
       else{
         showDialog(
-          context: NavigationHelper.rootKey.currentContext!,
-          builder: (context) {
-            return BrainConfirmationDialog(
-              description: "Dein Stundenplan wird überschrieben wenn die diese Datei importierst",
-              onCancel: () => Navigator.of(context).pop(),
-              onContinue: () {
-                load(decodedData);
-                Navigator.of(context).pop();
-              }
-            );
-          }
+            context: NavigationHelper.rootKey.currentContext!,
+            builder: (context) {
+              return BrainConfirmationDialog(
+                  description: "Dein Stundenplan wird überschrieben wenn die diese Datei importierst",
+                  onCancel: () => Navigator.of(context).pop(),
+                  onContinue: () {
+                    load(decodedData);
+                    Navigator.of(context).pop();
+                  }
+              );
+            }
         );
       }
     }
@@ -384,11 +373,7 @@ class ExportImport {
   static void writeFile(String name,bool timetable, bool homework, bool grades, bool events) {
     Map data = getFile(timetable, homework, grades, events);
 
-    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
-      FileSaver.instance.saveAs("export", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", MimeType.OTHER);
-    } else {
-      FileSaver.instance.saveFile("export", Uint8List.fromList(jsonEncode(data).codeUnits), "brain", mimeType: MimeType.OTHER);
-    }
+    FilesystemManager.saveFile(data);
   }
 }
 
