@@ -16,9 +16,8 @@ import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:brain_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class DeveloperOptions{
+class DeveloperOptions {
   static bool videoPlaying = false;
   static AudioPlayer audioPlayer = AudioPlayer();
   static List<String> activatedCodes = ["onscreenlogging","logsaves", "savelogs"];
@@ -37,7 +36,7 @@ class DeveloperOptions{
     "onscreenlogging" : [onScreenLogging,"On Screen Logging", "Zeigt alle Logs auf dem Bildschirm an"],
     "logsaves" : [logSaves, "Log Saves", "onScreenLogging sollte aktiviert sein"],
     "savelogs" : [saveLogs, "Save Logs", "Speichert alle Logs ACHTUNG: VERBRAUCHT VIEL SPEICHER"],
-    "habhax" : [HabHax, "HabHax", "Schaut euch das populäre Fortnite playthrough des berühmten Youtubers HabHax in der Übersicht an!"]
+    "habhax" : [HabHax, "HabHax", "Temporär deaktiviert ;("]
   };
 
 
@@ -91,32 +90,6 @@ class DeveloperOptions{
   static void HabHax() {
     videoPlaying = true;
     BrainApp.notifier.notifyOfChanges();
-  }
-
-  static Widget getVideoPlayer() {
-    YoutubePlayerController videoController = YoutubePlayerController(
-      initialVideoId: 'MRonk2k6-ac',
-      flags: const YoutubePlayerFlags(
-          loop: true,
-          enableCaption: false,
-          hideControls: true,
-          disableDragSeek: true,
-          autoPlay: true
-      )
-    );
-
-    return Container(
-      color: AppDesign.colors.primary,
-      padding: const EdgeInsets.all(10),
-      child: YoutubePlayer(
-        controller: videoController,
-        showVideoProgressIndicator: true,
-        progressColors: const ProgressBarColors(
-          playedColor: Colors.amber,
-          handleColor: Colors.amberAccent,
-        ),
-      ),
-    );
   }
 
   static void Ninja() {

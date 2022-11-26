@@ -60,8 +60,9 @@ class _AnimatedDeleteButton extends State<AnimatedDeleteButton> with TickerProvi
             onTapCancel: () => controller.forward(),
             child: Container(
                 decoration: BoxDecoration(
-                    color: AppDesign.colors.secondaryBackground,
-                    borderRadius: AppDesign.boxStyle.inputBorderRadius
+                  color: AppDesign.colors.secondaryBackground,
+                  borderRadius: AppDesign.boxStyle.inputBorderRadius,
+                  boxShadow: [AppDesign.boxStyle.boxShadow]
                 ),
                 width: 50,
                 height: 50,

@@ -1,7 +1,6 @@
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:flutter/material.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class BrainInfobox extends StatelessWidget {
   final String title;
@@ -31,7 +30,7 @@ class BrainInfobox extends StatelessWidget {
         borderRadius: AppDesign.boxStyle.borderRadius,
       ),
       clipBehavior: Clip.antiAlias,
-      child: DeveloperOptions.videoPlaying && isPrimary ? DeveloperOptions.getVideoPlayer() : TextButton(
+      child: TextButton(
         style: TextButton.styleFrom(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.all(10),

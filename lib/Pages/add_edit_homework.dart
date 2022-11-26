@@ -22,6 +22,7 @@ class _HomeworkPage extends State<HomeworkPage> {
   Homework? previousHomework;
   Subject? selectedSubject;
   DateTime selectedDate = DateTime(10);
+  bool splitAtNewline = false;
 
   @override
   void dispose() {
@@ -41,8 +42,13 @@ class _HomeworkPage extends State<HomeworkPage> {
       toast.show();
       return;
     } else {
+      List<String> seperatedHomework = splitAtNewline ? homeworkController.text.split("\n\n") : [homeworkController.text];
       if (previousHomework != null) {
-        previousHomework?.edit(selectedSubject, selectedDate, homeworkController.text);
+        previousHomework?.edit(selectedSubject, selectedDate, seperatedHomework[0]);
+
+        for (String homework in seperatedHomework.skip(1)) {
+          Homework(selectedSubject!, selectedDate, homework);
+        }
         BrainApp.notifier.notifyOfChanges();
       } else if(selectedDate.year != 10) {
         TimeInterval? time = selectedSubject?.getTime(TimeTable.getDayFromDate(selectedDate));
@@ -53,18 +59,22 @@ class _HomeworkPage extends State<HomeworkPage> {
             time?.startTime.minute ?? 0
         );
 
-        Homework(selectedSubject!, date, homeworkController.text);
+        for (String homework in seperatedHomework) {
+          Homework(selectedSubject!, date, homework);
+        }
       } else {
         DateTime? time = selectedSubject!.getNextDate();
         if (time == null) {
-          BrainToast toast = const BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt!");
+          BrainToast toast = const BrainToast(text: "Es gibt keine nächste Stunde, da dieses Fach nicht in deinem Stundenplan vorkommt");
           toast.show();
           BrainVibrations.errorVibrate();
           return;
         } else if(time.year == DateTime.now().year && time.month == DateTime.now().month && time.day == DateTime.now().day){
             time = time.add(const Duration(days: 7));
         }
-        Homework(selectedSubject!,time,homeworkController.text);
+        for (String homework in seperatedHomework) {
+          Homework(selectedSubject!, time, homework);
+        }
       }
       Navigator.of(context).pop();
     }
@@ -121,6 +131,12 @@ class _HomeworkPage extends State<HomeworkPage> {
             autofocus: true,
             controller: homeworkController,
             placeholder: "Hausaufgabe",
+          ),
+          BrainToggleButton(
+            state: splitAtNewline,
+            action: () => setState(() {
+              splitAtNewline = !splitAtNewline;
+            })
           ),
           BrainDropdown(
             dialogTitle: "Wähle ein Fach",

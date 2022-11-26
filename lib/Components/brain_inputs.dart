@@ -9,7 +9,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:flutter_rounded_date_picker/src/dialogs/flutter_rounded_date_picker_dialog.dart';
-import 'package:flutter_scroll_shadow/flutter_scroll_shadow.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -461,6 +460,51 @@ class BrainDateButton extends StatelessWidget {
         selectedDate.then((selectedDate) => onDateSelect(selectedDate ?? value));
       },
       child: Text(value.year == 10 ? text : getDateString(value), style: AppDesign.textStyles.input)
+    );
+  }
+}
+
+class BrainToggleButton extends StatelessWidget {
+  const BrainToggleButton({
+    super.key,
+    required this.state,
+    required this.action
+  });
+
+  final bool state;
+  final Function() action;
+
+  @override
+  Widget build(BuildContext context) {
+    return BrainButton(
+        action: action,
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("Bei leeren Linien aufteilen", style: AppDesign.textStyles.input),
+              Container(
+                  width: 22,
+                  height: 22,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      border: Border.all(
+                          color: AppDesign.colors.text,
+                          width: 2
+                      )
+                  ),
+                  child: Center(
+                      child: Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                              color: state ? AppDesign.colors.text : Colors.transparent,
+                              borderRadius: BorderRadius.circular(3)
+                          )
+                      )
+                  )
+              )
+            ]
+        )
     );
   }
 }
