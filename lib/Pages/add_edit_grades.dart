@@ -3,6 +3,7 @@ import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/grade.dart';
 import 'package:brain_app/Backend/grading_system.dart';
 import 'package:brain_app/Backend/subject.dart';
+import 'package:brain_app/Components/animated_delete_button.dart';
 import 'package:brain_app/Components/brain_inputs.dart';
 import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Pages/page_template.dart';
@@ -178,22 +179,15 @@ class _GradesPage extends State<GradesPage> {
               ),
               if (previousGrade != null) Padding(
                   padding: const EdgeInsets.only(left: 10),
-                  child: ElevatedButton (
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppDesign.colors.primary
-                      ),
-                      onPressed: () {
-                        GradingSystem.removeGrade(previousGrade!);
-                        BrainApp.notifier.notifyOfChanges();
-                        Navigator.of(context).pop();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 15),
-                        child: Icon(Icons.delete_forever, color: AppDesign.colors.contrast),
-                      )
+                  child: AnimatedDeleteButton(
+                    onDelete: () {
+                      GradingSystem.removeGrade(previousGrade!);
+                      BrainApp.notifier.notifyOfChanges();
+                      Navigator.of(context).pop();
+                    }
                   )
               )
-            ],
+            ]
           )
       ),
       body: Wrap(

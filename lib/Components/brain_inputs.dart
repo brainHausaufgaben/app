@@ -477,6 +477,7 @@ class BrainToggleButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BrainButton(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
         action: action,
         child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -516,7 +517,8 @@ class BrainButton extends StatelessWidget {
     required this.child,
     this.icon,
     this.dense = false,
-    this.centered = true
+    this.centered = true,
+    this.padding = const EdgeInsets.symmetric(vertical: 15, horizontal: 12)
   }) : super(key: key);
 
   final Function() action;
@@ -524,6 +526,7 @@ class BrainButton extends StatelessWidget {
   final IconData? icon;
   final bool dense;
   final bool centered;
+  final EdgeInsets padding;
 
   @override
   Widget build(BuildContext context) {
@@ -535,7 +538,7 @@ class BrainButton extends StatelessWidget {
       child: TextButton(
         onPressed: action,
         style: TextButton.styleFrom(
-            padding: EdgeInsets.symmetric(vertical: dense ? 11 : 15, horizontal: 12),
+            padding: dense ? padding.copyWith(top: 11, bottom: 11) : padding,
             backgroundColor: AppDesign.colors.secondaryBackground,
         ),
         child: Row(

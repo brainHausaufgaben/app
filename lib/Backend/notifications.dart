@@ -96,9 +96,13 @@ class CustomNotifications{
   static void testNotification(Test test) async{
     if(!testNotificationsEnabled || !notificationsPossible) return;
     const StyleInformation defStyleInformation = DefaultStyleInformation(true, true);
-    int day =  test.dueTime.difference(DateTime.now()).inDays;
+    int day =  test.dueTime.difference(DateTime.now()).inDays + 1;
     String title = "Test in ${test.subject.name} in $day Tagen";
-    if(day == 0) title = "Test in ${test.subject.name} Heute";
+    if (day == 0) {
+      title = "Test in ${test.subject.name} Heute";
+    } else if (day < 0) {
+      return;
+    }
     String body = test.description;
     currentTestNotificationID++;
     const AndroidNotificationDetails platformChannelSpecifics =

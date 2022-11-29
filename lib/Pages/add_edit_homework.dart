@@ -22,7 +22,7 @@ class _HomeworkPage extends State<HomeworkPage> {
   Homework? previousHomework;
   Subject? selectedSubject;
   DateTime selectedDate = DateTime(10);
-  bool splitAtNewline = false;
+  bool splitAtNewline = BrainApp.preferences["splitOnEmptyLine"];
 
   @override
   void dispose() {
@@ -136,6 +136,7 @@ class _HomeworkPage extends State<HomeworkPage> {
             state: splitAtNewline,
             action: () => setState(() {
               splitAtNewline = !splitAtNewline;
+              BrainApp.updatePreference("splitOnEmptyLine", splitAtNewline);
             })
           ),
           BrainDropdown(
