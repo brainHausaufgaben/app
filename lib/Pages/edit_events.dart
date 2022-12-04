@@ -23,16 +23,18 @@ class _TestPage extends State<EditEventPage> {
 
   void getData() {
     Event data = ModalRoute.of(context)!.settings.arguments as Event;
-    setState(() {
-      previousEvent = data;
-      eventSubpage = EventSubpage(previousEvent: data);
-    });
+    previousEvent = data;
+    eventSubpage = EventSubpage(previousEvent: data);
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (previousEvent == null) getData();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (previousEvent == null) getData();
-
     return PageTemplate(
       secondaryPage: true,
       title: "Termin Bearbeiten",

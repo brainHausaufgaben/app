@@ -83,19 +83,21 @@ class _HomeworkPage extends State<HomeworkPage> {
   void getData() {
     Homework? data = ModalRoute.of(context)!.settings.arguments as Homework?;
     if (data != null) {
-      setState(() {
-        previousHomework = data;
-        homeworkController.text = data.name;
-        selectedSubject = data.subject;
-        selectedDate = data.dueTime;
-      });
+      previousHomework = data;
+      homeworkController.text = data.name;
+      selectedSubject = data.subject;
+      selectedDate = data.dueTime;
     }
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     if (previousHomework == null) getData();
+    super.didChangeDependencies();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return PageTemplate(
       secondaryPage: true,
       title: previousHomework == null ? "Neue Hausaufgabe" : "Hausaufgabe Bearbeiten",

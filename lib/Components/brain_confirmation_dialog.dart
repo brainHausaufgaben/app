@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import '../Backend/design.dart';
@@ -8,16 +10,20 @@ class BrainConfirmationDialog extends StatelessWidget {
     required this.description,
     required this.onCancel,
     required this.onContinue,
-    this.title = "Bist du dir sicher?"
+    this.title = "Bist du dir sicher?",
+    this.withCountdown = true
   }) : super(key: key);
 
   final String title;
   final String description;
   final Function() onCancel;
   final Function() onContinue;
+  final bool withCountdown;
 
   @override
   Widget build(BuildContext context) {
+    int countdown = withCountdown ? 5 : 0;
+
     return AlertDialog(
         contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),
         title: Text(
@@ -41,7 +47,7 @@ class BrainConfirmationDialog extends StatelessWidget {
                 child: TextButton(
                     style: TextButton.styleFrom(
                         backgroundColor: AppDesign.colors.primary,
-                        primary: AppDesign.colors.contrast,
+                        foregroundColor: AppDesign.colors.contrast,
                         padding: const EdgeInsets.symmetric(vertical: 12)
                     ),
                     onPressed: onCancel,
@@ -51,20 +57,30 @@ class BrainConfirmationDialog extends StatelessWidget {
                     )
                 ),
               ),
-              TextButton(
-                  style: TextButton.styleFrom(
-                      side: BorderSide(color: AppDesign.colors.primary, width: 2),
-                      primary: AppDesign.colors.primary,
-                      padding: const EdgeInsets.symmetric(vertical: 12)
-                  ),
-                  onPressed: onContinue,
-                  child: Text(
-                      "Fortfahren",
-                      style: AppDesign.textStyles.buttonText.copyWith(
-                          fontSize: 16,
-                          color: AppDesign.colors.primary
+              StatefulBuilder(
+                builder: (context, setBuilderState) {
+                  if (countdown != 0) {
+                    Timer(const Duration(seconds: 1), () => setBuilderState(() {
+                      countdown--;
+                    }));
+                  }
+
+                  return TextButton(
+                      style: TextButton.styleFrom(
+                          side: BorderSide(color: countdown == 0 ? AppDesign.colors.primary : AppDesign.colors.text05, width: 2),
+                          foregroundColor: countdown == 0 ? AppDesign.colors.primary : AppDesign.colors.text05,
+                          padding: const EdgeInsets.symmetric(vertical: 12)
+                      ),
+                      onPressed: countdown == 0 ? onContinue : null,
+                      child: Text(
+                          countdown == 0 ? "Fortfahren" : "Fortfahren in $countdown",
+                          style: AppDesign.textStyles.buttonText.copyWith(
+                              fontSize: 16,
+                              color: countdown == 0 ? AppDesign.colors.primary : AppDesign.colors.text05
+                          )
                       )
-                  )
+                  );
+                }
               )
             ]
         )

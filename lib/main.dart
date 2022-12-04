@@ -4,6 +4,7 @@ import 'package:brain_app/Backend/brain_debug.dart';
 import 'package:brain_app/Backend/design.dart';
 import 'package:brain_app/Backend/initializer.dart';
 import 'package:brain_app/Backend/notifier.dart';
+import 'package:brain_app/Components/brain_toast.dart';
 import 'package:brain_app/Components/navigation_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +80,6 @@ class _BrainApp extends State<BrainApp> {
   @override
   void initState() {
     super.initState();
-
     BrainApp.notifier.addListener(() => setState(() {}));
 
     Initializer.init().then((value) => setState(() {

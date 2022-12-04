@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:brain_app/Backend/brain_vibrations.dart';
 import 'package:brain_app/Backend/developer_options.dart';
 import 'package:brain_app/Backend/grading_system.dart';
@@ -47,6 +49,8 @@ class Initializer {
     await getBoxText();
     BrainDebug.log("Gotten box text successfully");
     await getVersion();
+    BrainDebug.log("Gotten version successfully");
+
     BrainVibrations.init();
     initialized = true;
   }
@@ -147,7 +151,6 @@ class Initializer {
     try {
       PackageInfo info = await PackageInfo.fromPlatform();
       BrainApp.appVersion = info.version;
-      BrainDebug.log("Gotten version successfully");
     } catch (error) {
       BrainDebug.log("getVersion Error: $error");
     }
@@ -217,7 +220,7 @@ class Initializer {
         int id = item["SubjectID"];
         Subject? subject = TimeTable.getSubject(id);
         if (subject != null) {
-          if (!(BrainApp.preferences["deleteOldHomework"] && time.isBefore(DateTime.now()))) {
+          if (!(BrainApp.preferences["deleteOldHomework"] && time.add(const Duration(days: 1)).isBefore(DateTime.now()))) {
             Homework(TimeTable.getSubject(id)!, time, item["name"]);
           } else {
             deletedHomework++;

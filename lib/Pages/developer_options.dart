@@ -99,7 +99,7 @@ class _DeveloperOptionsPage extends State<DeveloperOptionsPage> with SingleTicke
             Expanded(
               child: TextButton(
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
+                    foregroundColor: Colors.white,
                     backgroundColor: const Color(0xFFB40000),
                     padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15)
                   ),

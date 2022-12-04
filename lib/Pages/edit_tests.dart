@@ -25,16 +25,18 @@ class _EditTestPage extends State<EditTestPage> {
   
   void getData() {
     Test data = ModalRoute.of(context)!.settings.arguments as Test;
-    setState(() {
-      previousTest = data;
-      testSubpage = TestSubpage(previousTest: data);
-    });
+    previousTest = data;
+    testSubpage = TestSubpage(previousTest: data);
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (previousTest == null) getData();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (previousTest == null) getData();
-
     return PageTemplate(
       secondaryPage: true,
       title: "Test Bearbeiten",

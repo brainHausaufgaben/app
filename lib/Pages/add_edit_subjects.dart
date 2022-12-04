@@ -60,21 +60,17 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
 
     switch (data.runtimeType) {
       case LinkedSubject:
-        setState(() {
-          previousLinkedSubject = data;
-          linkedSubjectController.text = data.name;
-          linkedPickerColor = data.color;
-          linkedSubjects = data.subjects;
-          firstEvaluationController.text = data.evaluations[0].toString();
-          secondEvaluationController.text = data.evaluations[1].toString();
-        });
+        previousLinkedSubject = data;
+        linkedSubjectController.text = data.name;
+        linkedPickerColor = data.color;
+        linkedSubjects = data.subjects;
+        firstEvaluationController.text = data.evaluations[0].toString();
+        secondEvaluationController.text = data.evaluations[1].toString();
         break;
       case Subject:
-        setState(() {
-          previousSubject = data;
-          subjectController.text = data.name;
-          pickerColor = data.color;
-        });
+        previousSubject = data;
+        subjectController.text = data.name;
+        pickerColor = data.color;
         break;
       default:
         break;
@@ -272,9 +268,13 @@ class _SubjectPage extends State<SubjectPage> with SingleTickerProviderStateMixi
   }
 
   @override
-  Widget build(BuildContext context) {
+  void didChangeDependencies() {
     if (!alreadyFetchedData) getData();
+    super.didChangeDependencies();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
       child: PageTemplate(

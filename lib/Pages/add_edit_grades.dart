@@ -79,28 +79,31 @@ class _GradesPage extends State<GradesPage> {
     dynamic args = ModalRoute.of(context)!.settings.arguments;
     if (args == null) return;
 
-    setState(() {
-      switch(args.runtimeType) {
-        case BigGrade:
-        case SmallGrade:
-        case Grade:
-          previousGrade = args;
-          grade = args.value;
-          selectedSubject = args.subject;
-          type = args.type;
-          semester = args.time.partOfYear;
-          nameController.text = args.name;
-          break;
-        case Subject:
-          selectedSubject = args;
-          break;
-      }
-    });
+    switch(args.runtimeType) {
+      case BigGrade:
+      case SmallGrade:
+      case Grade:
+        previousGrade = args;
+        grade = args.value;
+        selectedSubject = args.subject;
+        type = args.type;
+        semester = args.time.partOfYear;
+        nameController.text = args.name;
+        break;
+      case Subject:
+        selectedSubject = args;
+        break;
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (selectedSubject == null) getData();
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (selectedSubject == null) getData();
     return PageTemplate(
       secondaryPage: true,
       title: previousGrade == null ? "Neue Note" : "Note Bearbeiten",

@@ -9,7 +9,8 @@ Future<Map> parseSystemFile() async {
 
   Map decodedData = {};
   if (result != null) {
-    decodedData = jsonDecode(String.fromCharCodes(await File(result.files.first.path!).readAsBytes()));
+    String fileContents = String.fromCharCodes(await File(result.files.first.path!).readAsBytes());
+    decodedData = jsonDecode(fileContents);
   }
 
   return decodedData;

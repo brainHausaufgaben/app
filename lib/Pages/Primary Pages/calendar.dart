@@ -277,7 +277,7 @@ class _CalendarPage extends State<CalendarPage> {
                                 return Container(
                                     decoration: BoxDecoration(
                                         color: date.difference(DateTime.now()).inDays != 0 ? AppDesign.colors.secondaryBackground : AppDesign.colors.background,
-                                        border: Border.all(color: AppDesign.colors.primary, width: 1, strokeAlign: StrokeAlign.outside)
+                                        border: Border.all(color: AppDesign.colors.primary, width: 2, strokeAlign: StrokeAlign.outside)
                                     ),
                                     width: 5.0,
                                     height: 5.0,
