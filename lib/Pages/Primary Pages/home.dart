@@ -230,7 +230,7 @@ class _HomePage extends State<HomePage>{
   }
 
   List<Widget> staggeredChildren() {
-    if (HomePage.timesRun <= 1) {
+    if (HomePage.timesRun == 0) {
       HomePage.timesRun++;
       return AnimationConfiguration.toStaggeredList(
           duration: const Duration(milliseconds: 500),

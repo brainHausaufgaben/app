@@ -311,13 +311,16 @@ class _SettingsPage extends State<SettingsPage> {
                                           foregroundColor: AppDesign.colors.contrast,
                                           padding: const EdgeInsets.symmetric(vertical: 12)
                                       ),
-                                      onPressed: () => ExportImport.writeFile(
-                                          "brainExport",
-                                          timeTable,
-                                          homework,
-                                          grades,
-                                          events
-                                      ),
+                                      onPressed: () {
+                                        if (!timeTable && !homework && !grades && !events) return;
+                                        ExportImport.writeFile(
+                                            "brainExport",
+                                            timeTable,
+                                            homework,
+                                            grades,
+                                            events
+                                        );
+                                      },
                                       child: Text(
                                         "Exportieren",
                                         style: AppDesign.textStyles.buttonText.copyWith(fontSize: 16)

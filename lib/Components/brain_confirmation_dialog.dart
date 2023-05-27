@@ -22,7 +22,7 @@ class BrainConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int countdown = withCountdown ? 5 : 0;
+    int countdown = withCountdown ? 3 : 0;
 
     return AlertDialog(
         contentPadding: const EdgeInsets.fromLTRB(24, 10, 24, 24),

@@ -72,6 +72,7 @@ class _ToDoDialog extends State<ToDoDialog> {
             action: () {
               showDialog(context: context, builder: (context) {
                 return BrainConfirmationDialog(
+                  withCountdown: false,
                   description: "Willst du wirklich alle erledigten ToDos löschen?",
                   onCancel: () {
                     Navigator.of(context).pop();
@@ -115,7 +116,7 @@ class _ToDoDialog extends State<ToDoDialog> {
                                     children: [
                                       Expanded(
                                           child: BrainTextField(
-                                              placeholder: "Neues Todo",
+                                              placeholder: "Neues To Do",
                                               controller: controller
                                           )
                                       ),
